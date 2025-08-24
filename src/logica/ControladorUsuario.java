@@ -50,4 +50,32 @@ public class ControladorUsuario implements IControladorUsuario {
         if (usuarios.isEmpty()) throw new UsuarioNoExisteException("No hay usuarios registrados.");
         return usuarios.values().toArray(new DataUsuario[0]);
     }
+    
+    @Override
+    public void modificarUsuario(String nickname, String nombre, String tipo, 
+                                 String descripcion, String link, String apellido, String fechaNac) 
+                                 throws UsuarioNoExisteException {
+        if (!usuarios.containsKey(nickname)) {
+            throw new UsuarioNoExisteException("Usuario no encontrado: " + nickname);
+        }
+
+        DataUsuario u = usuarios.get(nickname);
+        u.setNombre(nombre);
+        u.setTipo(tipo);
+
+        // limpiar campos opcionales
+        u.setDescripcion(null);
+        u.setLink(null);
+        u.setApellido(null);
+        u.setFechaNacimiento(null);
+
+        if ("Organizador".equals(tipo)) {
+            u.setDescripcion(descripcion);
+            u.setLink(link);
+        } else if ("Asistente".equals(tipo)) {
+            u.setApellido(apellido);
+            u.setFechaNacimiento(fechaNac);
+        }
+    }
+
 }

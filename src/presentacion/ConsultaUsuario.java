@@ -179,4 +179,9 @@ public class ConsultaUsuario extends JInternalFrame {
         }
         infoUsuario.setText(sb.toString());
     }
+    
+    public DataUsuario getUsuarioSeleccionado() {
+        return listaUsuarios.getSelectedValue();
+    }
+
 }

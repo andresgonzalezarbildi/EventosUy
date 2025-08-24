@@ -36,6 +36,9 @@ public class DataUsuario {
     public void setLink(String link) { this.link = link; }
     public void setApellido(String apellido) { this.apellido = apellido; }
     public void setFechaNacimiento(String fechaNacimiento) { this.fechaNacimiento = fechaNacimiento; }
+    public void setNombre(String nombre) {this.nombre = nombre;}
+    public void setTipo(String tipo) { this.tipo = tipo;}
+
 
     // ToString opcional para mostrar en JList
     @Override

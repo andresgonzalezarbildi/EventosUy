@@ -7,6 +7,8 @@ import javax.swing.*;
 
 import logica.Fabrica;
 import logica.IControladorUsuario;
+import logica.DataUsuario;
+
 
 public class Principal {
 
@@ -16,6 +18,8 @@ public class Principal {
 
     private AltaUsuario altaUsuarioInternalFrame;
     private ConsultaUsuario consultaUsuarioInternalFrame;
+    private ModificarUsuario modificarUsuarioInternalFrame;
+
 
     public static void main(String[] args) {
         EventQueue.invokeLater(() -> {
@@ -45,6 +49,13 @@ public class Principal {
         consultaUsuarioInternalFrame.setClosable(true);
         desktop.add(consultaUsuarioInternalFrame);
         consultaUsuarioInternalFrame.setVisible(false);
+        
+        modificarUsuarioInternalFrame = new ModificarUsuario(ICU);
+        modificarUsuarioInternalFrame.setLocation(10, 23);
+        modificarUsuarioInternalFrame.setClosable(true);
+        desktop.add(modificarUsuarioInternalFrame);
+        modificarUsuarioInternalFrame.setVisible(false);
+
     }
 
     private void initialize() {
@@ -96,7 +107,19 @@ public class Principal {
 
 
         JMenuItem miModificarUsuario = new JMenuItem("Modificar Usuario");
-        // miModificarUsuario.addActionListener(e -> showModificarUsuario());
+        miModificarUsuario.addActionListener(e -> {
+            if (!modificarUsuarioInternalFrame.isVisible()) {
+                modificarUsuarioInternalFrame.setVisible(true);
+                modificarUsuarioInternalFrame.toFront();
+                modificarUsuarioInternalFrame.cargarUsuarios();
+            } else {
+                modificarUsuarioInternalFrame.toFront();
+            }
+        });
+
+
+
+
 
         menuUsuario.add(miAltaUsuario);
         menuUsuario.add(miConsultaUsuario);

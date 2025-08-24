@@ -12,4 +12,8 @@ public interface IControladorUsuario {
     DataUsuario verInfoUsuario(String ni) throws UsuarioNoExisteException;
 
     DataUsuario[] getUsuarios() throws UsuarioNoExisteException;
+
+    void modificarUsuario(String nickname, String nombre, String tipo,
+                          String descripcion, String link, String apellido, String fechaNac)
+                          throws UsuarioNoExisteException;
 }
