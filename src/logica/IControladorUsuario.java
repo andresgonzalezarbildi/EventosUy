@@ -28,13 +28,13 @@ public interface IControladorUsuario {
      * @return Información del usuario.
      * @throws UsuarioNoExisteException Si la cédula del usuario no está registrada en el sistema.
      */
-  //  public abstract DataUsuario verInfoUsuario(String ci) throws UsuarioNoExisteException;
+    public abstract DataUsuario verInfoUsuario(String ni) throws UsuarioNoExisteException;
 
     /**
      * Retorna la información de todos los usuarios registrados en el sistema.
      * @return Información de los usuarios del sistema.
      * @throws UsuarioNoExisteException Si no existen usuarios registrados en el sistema.
      */
-  //  public abstract DataUsuario[] getUsuarios() throws UsuarioNoExisteException;
-//
+    public abstract DataUsuario[] getUsuarios() throws UsuarioNoExisteException;
+
     }

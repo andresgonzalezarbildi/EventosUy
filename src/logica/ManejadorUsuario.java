@@ -8,9 +8,6 @@ public class ManejadorUsuario {
     private Map<String, Usuario> usuarios; // map nickname -> usuario
     private static ManejadorUsuario instancia = null;
 
-    private ManejadorUsuario() {
-        usuarios = new HashMap<>();
-    }
 
     public static ManejadorUsuario getinstance() {
         if (instancia == null)

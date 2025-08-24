@@ -24,7 +24,7 @@ import javax.swing.ListCellRenderer;
 /**
  * JInternalFrame que permite registrar un nuevo usuario al sistema.
  * 
- * @author TProg2017
+
  *
  */
 @SuppressWarnings("serial")
