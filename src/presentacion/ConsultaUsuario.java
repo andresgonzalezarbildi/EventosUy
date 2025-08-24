@@ -29,6 +29,9 @@ public class ConsultaUsuario extends JInternalFrame {
 
         // Panel izquierdo (buscador + lista)
         JPanel panelIzq = new JPanel(new BorderLayout());
+        panelIzq.setPreferredSize(new Dimension(200, 0)); // ancho fijo 200px, altura ajustable
+        panelIzq.setMinimumSize(new Dimension(200, 0));   // no puede hacerse más chico
+
 
         // Label arriba
         JLabel lblLista = new JLabel("Usuarios", SwingConstants.CENTER);
