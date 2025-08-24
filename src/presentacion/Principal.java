@@ -89,11 +89,30 @@ public class Principal {
         menuEvento.add(miAltaEdicion);
         menuBar.add(menuEvento);
 
-        // Menú Institución
+     // Menú Institución
         JMenu menuInstitucion = new JMenu("Instituciónes");
+
+        // Items existentes
         JMenuItem miAltaInstitucion = new JMenuItem("Alta de Institución");
         menuInstitucion.add(miAltaInstitucion);
+
+        // Nuevos items de Patrocinio
+        JMenuItem miAltaPatrocinio = new JMenuItem("Alta de Patrocinio");
+        miAltaPatrocinio.addActionListener(e -> {
+            // abrir internal frame correspondiente
+            // ejemplo: showInternal(altaPatrocinioInternalFrame);
+        });
+        menuInstitucion.add(miAltaPatrocinio);
+
+        JMenuItem miConsultaPatrocinio = new JMenuItem("Consulta de Patrocinio");
+        miConsultaPatrocinio.addActionListener(e -> {
+            // abrir internal frame correspondiente
+            // ejemplo: showInternal(consultaPatrocinioInternalFrame);
+        });
+        menuInstitucion.add(miConsultaPatrocinio);
+
         menuBar.add(menuInstitucion);
+
     }
 
 	    
