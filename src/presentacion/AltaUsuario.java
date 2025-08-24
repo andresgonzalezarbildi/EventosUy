@@ -364,7 +364,7 @@ public class AltaUsuario extends JInternalFrame {
 
         if (checkFormulario()) {
             try {
-                controlUsr.registrarUsuario(nicknameU, nombreU, correoU);
+                controlUsr.altaUsuario(nicknameU, nombreU, correoU);
 
                 // Muestro éxito de la operación
                 JOptionPane.showMessageDialog(this, "El Usuario se ha creado con éxito", "Registrar Usuario",

@@ -23,16 +23,6 @@ public class ControladorUsuario implements IControladorUsuario {
         mu.addUsuario(u);
     }
 
-    public DataUsuario verInfoUsuario(String ci) throws UsuarioNoExisteException {
-        ManejadorUsuario mu = ManejadorUsuario.getinstance();
-        Usuario u = mu.obtenerUsuario(ci);
-        if (u != null)
-            return new DataUsuario(u.getNombre(), u.getApellido(), u.getCedulaIdentidad());
-        else
-            throw new UsuarioNoExisteException("El usuario " + ci + " no existe");
-
-    }
-
     public DataUsuario[] getUsuarios() throws UsuarioNoExisteException {
         ManejadorUsuario mu = ManejadorUsuario.getinstance();
         Usuario[] usrs = mu.getUsuarios();
@@ -45,7 +35,7 @@ public class ControladorUsuario implements IControladorUsuario {
             // sino los DataUsuario
             for (int i = 0; i < usrs.length; i++) {
                 usuario = usrs[i];
-                du[i] = new DataUsuario(usuario.getNombre(), usuario.getApellido(), usuario.getCedulaIdentidad());
+                du[i] = new DataUsuario(usuario.getNickname(), usuario.getNombre(), usuario.getCorreo());
             }
 
             return du;
