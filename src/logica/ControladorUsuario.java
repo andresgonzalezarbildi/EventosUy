@@ -14,11 +14,27 @@ public class ControladorUsuario implements IControladorUsuario {
     }
 
     @Override
-    public void altaUsuario(String nickname, String nombre, String correo) throws UsuarioRepetidoException {
+    public void altaUsuario(String nickname, String nombre, String correo, String tipo, 
+                            String descripcion, String link, String apellido, String fechaNac) 
+                            throws UsuarioRepetidoException {
         if (usuarios.containsKey(nickname)) {
             throw new UsuarioRepetidoException("El usuario ya existe: " + nickname);
         }
-        usuarios.put(nickname, new DataUsuario(nickname, nombre, correo));
+
+        DataUsuario nuevo;
+        if (tipo.equals("Organizador")) {
+            nuevo = new DataUsuario(nickname, nombre, correo, tipo);
+            nuevo.setDescripcion(descripcion);
+            nuevo.setLink(link);
+        } else if (tipo.equals("Asistente")) {
+            nuevo = new DataUsuario(nickname, nombre, correo, tipo);
+            nuevo.setApellido(apellido);
+            nuevo.setFechaNacimiento(fechaNac);
+        } else {
+            throw new IllegalArgumentException("Tipo de usuario desconocido: " + tipo);
+        }
+
+        usuarios.put(nickname, nuevo);
     }
 
     @Override

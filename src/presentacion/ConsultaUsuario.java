@@ -42,23 +42,25 @@ public class ConsultaUsuario extends JInternalFrame {
         });
     }
 
-    public void cargarUsuarios() {
+    public boolean cargarUsuarios() {
+        listaModel.clear();
         try {
             DataUsuario[] usuarios = ICU.getUsuarios();
-            listaModel.clear(); // limpiar antes de agregar
             if (usuarios.length == 0) {
                 JOptionPane.showMessageDialog(this, "No hay usuarios registrados.");
-                dispose();
-                return;
+                return false; // indicamos que no hay usuarios
             }
             for (DataUsuario u : usuarios) {
                 listaModel.addElement(u);
             }
+            return true; // sí hay usuarios
         } catch (UsuarioNoExisteException e) {
             JOptionPane.showMessageDialog(this, "No hay usuarios registrados.");
-            dispose();
+            return false;
         }
     }
+
+
 
 
     private void mostrarInfoUsuario(DataUsuario usuario) {
@@ -68,11 +70,16 @@ public class ConsultaUsuario extends JInternalFrame {
         sb.append("Nickname: ").append(usuario.getNickname()).append("\n");
         sb.append("Nombre: ").append(usuario.getNombre()).append("\n");
         sb.append("Correo: ").append(usuario.getCorreo()).append("\n");
+        sb.append("Tipo: ").append(usuario.getTipo()).append("\n");
 
-        // Aquí iría la lógica para mostrar ediciones o registros según tipo
-        // sb.append("Ediciones: ...\n");
-        // sb.append("Registros: ...\n");
-
+        if (usuario.getTipo().equals("Organizador")) {
+            sb.append("Descripción: ").append(usuario.getDescripcion()).append("\n");
+            sb.append("Link: ").append(usuario.getLink()).append("\n");
+        } else if (usuario.getTipo().equals("Asistente")) {
+            sb.append("Apellido: ").append(usuario.getApellido()).append("\n");
+            sb.append("Fecha Nac.: ").append(usuario.getFechaNacimiento()).append("\n");
+        }
         infoUsuario.setText(sb.toString());
     }
 }
+

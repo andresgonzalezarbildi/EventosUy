@@ -79,10 +79,21 @@ public class Principal {
         });
         JMenuItem miConsultaUsuario = new JMenuItem("Consulta de Usuario");
         miConsultaUsuario.addActionListener(e -> {
+            if (consultaUsuarioInternalFrame == null || consultaUsuarioInternalFrame.isClosed()) {
+                consultaUsuarioInternalFrame = new ConsultaUsuario(ICU);
+                desktop.add(consultaUsuarioInternalFrame);
+            }
             ensureSize(consultaUsuarioInternalFrame, 600, 400);
-            consultaUsuarioInternalFrame.cargarUsuarios();
-            showInternal(consultaUsuarioInternalFrame);
+
+            if (consultaUsuarioInternalFrame.cargarUsuarios()) {
+                showInternal(consultaUsuarioInternalFrame);
+            } else {
+                consultaUsuarioInternalFrame.setVisible(false);
+            }
         });
+
+
+
 
         JMenuItem miModificarUsuario = new JMenuItem("Modificar Usuario");
         // miModificarUsuario.addActionListener(e -> showModificarUsuario());
