@@ -174,9 +174,13 @@ public class Principal {
         mnRegistros.add(mntmConsultaDeRegistro);
 
         JMenuItem mntmRegistroAEdicion = new JMenuItem("Registro a Edición de Evento");
-        // mntmRegistroAEdicion.addActionListener(e -> showRegistroAEdicion());
+        mntmRegistroAEdicion.addActionListener(e -> {
+            RegistroAEdicionEvento ventana = new RegistroAEdicionEvento();
+            ventana.setLocationRelativeTo(null); // null = centrado en pantalla
+            ventana.setVisible(true);
+        });
         mnRegistros.add(mntmRegistroAEdicion);
-
+        
         // Submenú Tipos de Registro
         JMenu mnTipoDeRegistros = new JMenu("Tipos de Registro");
         mnRegistros.add(mnTipoDeRegistros);
