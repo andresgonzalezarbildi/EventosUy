@@ -1,7 +1,9 @@
-package logica;
+package logica.manejadores;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import logica.clases.Evento;
 
 public class ManejadorEvento {
 

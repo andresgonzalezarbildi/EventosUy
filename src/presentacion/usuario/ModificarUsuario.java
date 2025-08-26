@@ -1,4 +1,4 @@
-package presentacion;
+package presentacion.usuario;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -8,8 +8,8 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import javax.swing.border.TitledBorder;
 
-import logica.IControladorUsuario;
-import logica.DataUsuario;
+import logica.datatypes.DataUsuario;
+import logica.interfaces.IControladorUsuario;
 import excepciones.UsuarioNoExisteException;
 
 @SuppressWarnings("serial")

@@ -1,4 +1,4 @@
-package presentacion;
+package presentacion.evento;
 
 import java.awt.*;
 
@@ -6,8 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import logica.IControladorEvento;
-import logica.Evento;
+
+import logica.clases.Evento;
+import logica.interfaces.IControladorEvento;
 
 public class AltaEvento extends JInternalFrame {
 

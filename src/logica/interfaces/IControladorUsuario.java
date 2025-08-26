@@ -1,7 +1,8 @@
-package logica;
+package logica.interfaces;
 
 import excepciones.UsuarioNoExisteException;
 import excepciones.UsuarioRepetidoException;
+import logica.datatypes.DataUsuario;
 
 public interface IControladorUsuario {
 

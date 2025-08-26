@@ -1,8 +1,10 @@
-package logica;
+package logica.manejadores;
 
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+
+import logica.clases.Usuario;
 
 public class ManejadorUsuario {
     private Map<String, Usuario> usuarios; // map nickname -> usuario

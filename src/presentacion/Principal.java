@@ -6,10 +6,14 @@ import java.beans.PropertyVetoException;
 import javax.swing.*;
 
 import logica.Fabrica;
-import logica.IControladorUsuario;
-import logica.DataUsuario;
-
-import logica.IControladorEvento;
+import logica.datatypes.DataUsuario;
+import logica.interfaces.IControladorEvento;
+import logica.interfaces.IControladorUsuario;
+import presentacion.evento.AltaEvento;
+import presentacion.registros.RegistroAEdicionEvento;
+import presentacion.usuario.AltaUsuario;
+import presentacion.usuario.ConsultaUsuario;
+import presentacion.usuario.ModificarUsuario;
 
 
 public class Principal {

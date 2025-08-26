@@ -1,4 +1,4 @@
-package presentacion;
+package presentacion.registros;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;

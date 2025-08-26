@@ -1,5 +1,10 @@
 package logica;
 
+import logica.controladores.ControladorEvento;
+import logica.controladores.ControladorUsuario;
+import logica.interfaces.IControladorEvento;
+import logica.interfaces.IControladorUsuario;
+
 public class Fabrica {
 
     private static Fabrica instancia = null;
