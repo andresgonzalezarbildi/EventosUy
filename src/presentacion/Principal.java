@@ -16,6 +16,7 @@ public class Principal {
     private JDesktopPane desktop;
     private IControladorUsuario ICU;
 
+   
     private AltaUsuario altaUsuarioInternalFrame;
     private ConsultaUsuario consultaUsuarioInternalFrame;
     private ModificarUsuario modificarUsuarioInternalFrame;
@@ -159,6 +160,12 @@ public class Principal {
         // miConsultaEvento.addActionListener(e -> showConsultaEvento());
         menuEvento.add(miConsultaEvento);
 
+        JMenuItem miConsultaEdicionEvento = new JMenuItem("Consulta Edicion de Evento");
+        // miConsultaEdicionEvento.addActionListener(e -> showConsultaEdicionEvento());
+        menuEvento.add(miConsultaEdicionEvento);
+        
+        
+        
         JMenuItem miAltaEdicion = new JMenuItem("Alta de Edición de Evento");
         // miAltaEdicion.addActionListener(e -> showAltaEdicion());
         menuEvento.add(miAltaEdicion);
@@ -175,9 +182,9 @@ public class Principal {
 
         JMenuItem mntmRegistroAEdicion = new JMenuItem("Registro a Edición de Evento");
         mntmRegistroAEdicion.addActionListener(e -> {
-            RegistroAEdicionEvento ventana = new RegistroAEdicionEvento();
-            ventana.setLocationRelativeTo(null); // null = centrado en pantalla
-            ventana.setVisible(true);
+        RegistroAEdicionEvento ventana = new RegistroAEdicionEvento();
+        ventana.setLocationRelativeTo(null); // null = centrado en pantalla
+        ventana.setVisible(true);
         });
         mnRegistros.add(mntmRegistroAEdicion);
         
