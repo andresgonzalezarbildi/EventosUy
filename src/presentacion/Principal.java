@@ -9,13 +9,16 @@ import logica.Fabrica;
 import logica.IControladorUsuario;
 import logica.DataUsuario;
 
+import logica.IControladorEvento;
+
 
 public class Principal {
 
     private JFrame frmGestion;
     private JDesktopPane desktop;
     private IControladorUsuario ICU;
-
+    private IControladorEvento IEV;
+    private AltaEvento altaEventoInternalFrame;
    
     private AltaUsuario altaUsuarioInternalFrame;
     private ConsultaUsuario consultaUsuarioInternalFrame;
@@ -38,6 +41,7 @@ public class Principal {
 
         Fabrica fabrica = Fabrica.getInstance();
         ICU = fabrica.getControladorUsuario();
+        IEV = fabrica.getControladorEvento();
 
         altaUsuarioInternalFrame = new AltaUsuario(ICU);
         altaUsuarioInternalFrame.setLocation(10, 23);
@@ -56,7 +60,13 @@ public class Principal {
         modificarUsuarioInternalFrame.setClosable(true);
         desktop.add(modificarUsuarioInternalFrame);
         modificarUsuarioInternalFrame.setVisible(false);
-
+        
+        altaEventoInternalFrame = new AltaEvento(IEV);
+        altaEventoInternalFrame.setLocation(10, 23);
+        altaEventoInternalFrame.setClosable(true);
+        desktop.add(altaEventoInternalFrame);
+        altaEventoInternalFrame.setVisible(false);
+        
     }
 
     private void initialize() {
@@ -118,10 +128,6 @@ public class Principal {
             }
         });
 
-
-
-
-
         menuUsuario.add(miAltaUsuario);
         menuUsuario.add(miConsultaUsuario);
         menuUsuario.add(miModificarUsuario);
@@ -153,8 +159,9 @@ public class Principal {
         JMenu menuEvento = new JMenu("Eventos");
 
         JMenuItem miAltaEvento = new JMenuItem("Alta de Evento");
-        // miAltaEvento.addActionListener(e -> showAltaEvento());
+        miAltaEvento.addActionListener(e -> abrirAltaEvento());
         menuEvento.add(miAltaEvento);
+        
 
         JMenuItem miConsultaEvento = new JMenuItem("Consulta de Evento");
         // miConsultaEvento.addActionListener(e -> showConsultaEvento());
@@ -215,5 +222,13 @@ public class Principal {
 
     private void ensureSize(JInternalFrame f, int w, int h) {
         if (f.getWidth() == 0 || f.getHeight() == 0) f.setSize(w, h);
+    }
+    private void abrirAltaEvento() {
+        altaEventoInternalFrame.setVisible(true);
+        try {
+            altaEventoInternalFrame.setSelected(true); // lo trae al frente
+        } catch (java.beans.PropertyVetoException e) {
+            e.printStackTrace();
+        }
     }
 }

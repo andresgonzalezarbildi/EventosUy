@@ -8,11 +8,11 @@ public class Evento {
     private String sigla;
     private LocalDate FechaAltaEnPlataforma;  
 
-    public Evento(String nom, String desc, String sigla, LocalDate fecha) {
+    public Evento(String nom, String desc, String sigla) {
         this.DescripcionEvento = desc;
         this.nombre = nom;
         this.sigla = sigla;
-        this.FechaAltaEnPlataforma = fecha;
+        this.FechaAltaEnPlataforma = LocalDate.now();;
     }
     
     public LocalDate getFecha() {
@@ -22,7 +22,13 @@ public class Evento {
     public void setFecha(LocalDate fecha) {
         this.FechaAltaEnPlataforma = fecha;
     }
+
+    public String getNombre() {
+        return nombre;
+    }
 }
+
+
     
 
     
