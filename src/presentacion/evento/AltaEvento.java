@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-
+import logica.clases.Categoria;
 import logica.clases.Evento;
 import logica.interfaces.IControladorEvento;
 
@@ -120,13 +120,21 @@ public class AltaEvento extends JInternalFrame {
         String descripcion = tfDescripcion.getText();
         String sigla = tfSigla.getText();
 
-        List<String> categorias = new ArrayList<>();
+        // Convertir las categorías seleccionadas en objetos Categoria
+        List<Categoria> categoriasEvento = new ArrayList<>();
         for (int i = 0; i < modeloSeleccionadas.size(); i++) {
-            categorias.add(modeloSeleccionadas.get(i));
+            categoriasEvento.add(new Categoria(modeloSeleccionadas.get(i)));
         }
 
-        controlEvento.altaEvento(nombre, descripcion, sigla, null);
+    
+
+        // Llamada al controlador
+        controlEvento.altaEvento(nombre, descripcion, sigla, null, categoriasEvento);
+
+        // Mensaje de éxito
         JOptionPane.showMessageDialog(this, "Evento guardado correctamente");
-        setVisible(false); // lo oculta, no destruye el frame
+
+        // Cerrar ventana
+        setVisible(false); 
     }
 }
