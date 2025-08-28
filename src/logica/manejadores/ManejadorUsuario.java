@@ -7,7 +7,7 @@ import java.util.Map;
 import logica.clases.Usuario;
 
 public class ManejadorUsuario {
-    private Map<String, Usuario> usuarios; // map nickname -> usuario
+    private Map<String, Usuario> usuarios; 
     private static ManejadorUsuario instancia = null;
 
 

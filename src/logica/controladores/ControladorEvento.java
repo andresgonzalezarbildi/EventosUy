@@ -14,24 +14,30 @@ import logica.manejadores.ManejadorEvento;
 import java.time.LocalDate;
 
 public class ControladorEvento implements IControladorEvento {
-	private ManejadorEvento manejador;
+	private ManejadorEvento manejadorEvento;
+	
     public  ControladorEvento() {
-     manejador = ManejadorEvento.getInstance();
+    	manejadorEvento = ManejadorEvento.getInstance();
     }
+    
     public void altaEvento(String nombre,String descripcion,String sigla,LocalDate date,List<Categoria> categorias)  {
     		Evento nuevo = new Evento(nombre,descripcion,sigla);
         for (Categoria c : categorias) {
             nuevo.agregarCategoria(c);
         }
-        manejador.agregarEvento(nuevo);
     };
     
+//    public void consultaEvento(){
+//    	}
+    
+    //el altaCategoria es sin GUI
     public void altaCategoria(String nombre) {
     		Categoria nueva = new Categoria(nombre);
-    		manejador.agregarCategoria(nueva);
+    		manejadorEvento.agregarCategoria(nueva);
     }
     
     public DataEvento[] getEventosDTO() {
-        return manejador.getEventosDTO();  // llama al método del manejador
+        return manejadorEvento.getEventosDTO(); 
     }
-}	
+    
+	

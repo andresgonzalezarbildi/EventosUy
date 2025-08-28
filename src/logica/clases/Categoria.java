@@ -2,7 +2,9 @@ package logica.clases;
 
 
 public class Categoria {	
+	
 	private String nombre;  
+	
 	public Categoria(String nom){
 		nombre = nom;
 	}

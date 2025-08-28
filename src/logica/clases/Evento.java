@@ -33,13 +33,20 @@ public class Evento {
     public String getNombre() {
         return nombre;
     }
-    public Map<String, Categoria> getCategorias() { return categoriasDeEvento; }
+    public Map<String, Categoria> getCategorias() { 
+    		return categoriasDeEvento; }
+    
     public void agregarCategoria(Categoria c) {
         categoriasDeEvento.put(c.getNombre(), c);
     }
-    public List<String> getCategoriasLista() {
-        return new ArrayList<>(categoriasDeEvento.keySet());
-    }
+    
+    //getCategoriasLista convierte el Map en una List
+    public List<String> getCategoriasLista() { 				//categoriasDeEvento.keySet() devuelve un Set<String> con 
+        return new ArrayList<>(categoriasDeEvento.keySet());	//todas las claves (los nombres de las categorías).
+    }														//new ArrayList<>(...) transforma ese Set en una List<String>
+    
+    
+    
     //public Map<String, Edicion> getEdiciones() { return edicionesDeEvento; }
     //public void agregarEdicion(Edicion e) {
     // edicionesDeEvento.put(e.getNombre(), e);
