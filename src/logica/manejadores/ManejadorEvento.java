@@ -1,10 +1,12 @@
 package logica.manejadores;
+import logica.datatypes.DataEdicion;
 import logica.datatypes.DataEvento;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
 import logica.clases.Categoria;
+import logica.clases.EdicionEvento;
 import logica.clases.Evento;
 
 public class ManejadorEvento {
@@ -49,4 +51,5 @@ public class ManejadorEvento {
         }
         return lista.toArray(new DataEvento[0]);
     }
-}
+    
+ }

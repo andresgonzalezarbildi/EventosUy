@@ -10,13 +10,15 @@ public class Evento {
     private String sigla;
     private LocalDate FechaAltaEnPlataforma; 
     private Map<String, Categoria> categoriasDeEvento;
-    //private Map<String, Edicion> edicionesDeEvento;
+    private Map<String, EdicionEvento> edicionesDeEvento;
+    
     public Evento(String nom, String desc, String sigla) {
         this.DescripcionEvento = desc;
         this.nombre = nom;
         this.sigla = sigla;
         this.FechaAltaEnPlataforma = LocalDate.now();;
         this.categoriasDeEvento = new HashMap<>();
+        this.edicionesDeEvento = new HashMap<>();
     }
     public LocalDate getFecha() {
         return FechaAltaEnPlataforma;
@@ -39,6 +41,7 @@ public class Evento {
     public void agregarCategoria(Categoria c) {
         categoriasDeEvento.put(c.getNombre(), c);
     }
+
     
     //getCategoriasLista convierte el Map en una List
     public List<String> getCategoriasLista() { 				//categoriasDeEvento.keySet() devuelve un Set<String> con 
@@ -51,6 +54,15 @@ public class Evento {
     //public void agregarEdicion(Edicion e) {
     // edicionesDeEvento.put(e.getNombre(), e);
     //}
+
+  
+    public Map<String, EdicionEvento> getEdiciones() { 
+    	return edicionesDeEvento;
+    }
+    
+    public void agregarEdicion(EdicionEvento e) {
+    	edicionesDeEvento.put(e.getNombre(), e);
+    }
 }
 
 
