@@ -19,9 +19,17 @@ public class ConsultaEvento extends JInternalFrame {
     private JLabel lblExtra;
     private JTextArea extraInfo;
     private DataEvento[] eventos;
-    public ConsultaEvento(IControladorEvento iEV) {
-        setSize(600, 400);
-
+    public ConsultaEvento(IControladorEvento IEV) {
+    	
+    	
+        setSize(600, 400); //establece el tamaño incial de la ventana
+        setResizable(true); //permite al user redimenzioanr la ventana manualment
+        setIconifiable(true); // permite minimzar la ventana
+        setMaximizable(true); // permite maximzar la vent
+        setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE); // oculta la ventana, no la destruye VER BIEN ESTO
+        setClosable(true); // aparece la x para cerrar
+        
+        
         // Panel izquierdo (buscador + lista)
         JPanel panelIzq = new JPanel(new BorderLayout());
         panelIzq.setBounds(0, 0, 200, 370);
@@ -31,6 +39,7 @@ public class ConsultaEvento extends JInternalFrame {
 
         listaModel = new DefaultListModel<>();
         getContentPane().setLayout(null);
+        
         listaEventos = new JList<>(listaModel);
         JScrollPane scrollLista = new JScrollPane(listaEventos);
         panelIzq.add(scrollLista, BorderLayout.CENTER);
@@ -101,8 +110,7 @@ public class ConsultaEvento extends JInternalFrame {
         }
     }    
        
-        
-        
+  
     private void mostrarInfoEvento(DataEvento evento) {
         if (evento == null) return;
         StringBuilder sb = new StringBuilder();
@@ -110,7 +118,16 @@ public class ConsultaEvento extends JInternalFrame {
         sb.append("Sigla: ").append(evento.getSigla()).append("\n");
         sb.append("Descripción: ").append(evento.getDescripcion()).append("\n");
         sb.append("Fecha Alta: ").append(evento.getFechaAlta()).append("\n");
-    }       
+
+        
+        List<String> cats = evento.getCategorias();
+        if (cats != null && !cats.isEmpty()) {
+            sb.append("Categorías: ").append(String.join(", ", cats)).append("\n");
+        } else {
+            sb.append("Categorías: Ninguna\n");
+        }
+        infoEvento.setText(sb.toString()); // MOSTRAR EN PANEL DERECHO
+    }
     
     
     

@@ -31,6 +31,8 @@ public class Principal {
     private AltaUsuario altaUsuarioInternalFrame;
     private ConsultaUsuario consultaUsuarioInternalFrame;
     private ModificarUsuario modificarUsuarioInternalFrame;
+    
+    private RegistroAEdicionEvento registrarEdicionEvento;
 
 
     public static void main(String[] args) {
@@ -81,6 +83,8 @@ public class Principal {
         desktop.add(consultaEventoInternalFrame);
         consultaEventoInternalFrame.setVisible(false);
         
+ 
+        
         
     }
 
@@ -107,7 +111,8 @@ public class Principal {
         menuSistema.add(menuSalir);
         menuBar.add(menuSistema);
 
-        // Menú Usuario
+////////////////////////////////////////////////////////////////////////////////USUARIO
+
         JMenu menuUsuario = new JMenu("Usuarios");
         JMenuItem miAltaUsuario = new JMenuItem("Alta de Usuario");
         miAltaUsuario.addActionListener(e -> {
@@ -128,10 +133,6 @@ public class Principal {
                 consultaUsuarioInternalFrame.setVisible(false);
             }
         });
-
-
-
-
         JMenuItem miModificarUsuario = new JMenuItem("Modificar Usuario");
         miModificarUsuario.addActionListener(e -> {
             if (!modificarUsuarioInternalFrame.isVisible()) {
@@ -142,23 +143,20 @@ public class Principal {
                 modificarUsuarioInternalFrame.toFront();
             }
         });
-
         menuUsuario.add(miAltaUsuario);
         menuUsuario.add(miConsultaUsuario);
         menuUsuario.add(miModificarUsuario);
         menuBar.add(menuUsuario);
 
-     // Menú Instituciones
+////////////////////////////////////////////////////////////////////////////////INSTITUCIONES
         JMenu menuInstitucion = new JMenu("Instituciones");
-
-        // Items existentes
         JMenuItem miAltaInstitucion = new JMenuItem("Alta de Institución");
         // miAltaInstitucion.addActionListener(e -> showAltaInstitucion());
         menuInstitucion.add(miAltaInstitucion);
-
         menuBar.add(menuInstitucion);
+        
+///////////////////////////////////////////////////////////////////////////////PATROCINIOS
 
-        // Submenú Patrocinios
         JMenu mnPatrocinios = new JMenu("Patrocinios");
         menuInstitucion.add(mnPatrocinios);
 
@@ -170,37 +168,50 @@ public class Principal {
         // miConsultaPatrocinio_1.addActionListener(e -> showConsultaPatrocinio());
         mnPatrocinios.add(miConsultaPatrocinio_1);
 
-        // Menú Eventos
+////////////////////////////////////////////////////////////////////////////////EVENTOS
+
         JMenu menuEvento = new JMenu("Eventos");
 
         JMenuItem miAltaEvento = new JMenuItem("Alta de Evento");
-        miAltaEvento.addActionListener(e -> abrirAltaEvento());
+        miAltaEvento.addActionListener(e -> {
+        	// Al hacer clic en "Alta Evento":
+        	if (altaEventoInternalFrame == null || altaEventoInternalFrame.isClosed()) {
+        		altaEventoInternalFrame = new AltaEvento(IEV);
+        	    desktop.add(altaEventoInternalFrame);
+        	} else {
+        	    altaEventoInternalFrame.limpiarFormulario(); //  limpiar para mostrar de nuevo
+        	}
+        	altaEventoInternalFrame.setVisible(true);
+        	altaEventoInternalFrame.toFront(); // Traerla al frente
+            ensureSize(altaEventoInternalFrame, 600, 400);
+            showInternal(altaEventoInternalFrame);
+        });
         menuEvento.add(miAltaEvento);
-        
-/////////////////////////////////////////////////////////////////////////////////////////////////////
         JMenuItem miConsultaEvento = new JMenuItem("Consulta de Evento");
         miConsultaEvento.addActionListener(e -> abrirConsultaEvento());  
         menuEvento.add(miConsultaEvento);
-
+        
+        
+////////////////////////////////////////////////////////////////////////////////EDICION
+      
+        JMenuItem miAltaEdicion = new JMenuItem("Alta de Edición de Evento");
+        // miAltaEdicion.addActionListener(e -> showAltaEdicion());
+        menuEvento.add(miAltaEdicion);
+      
         JMenuItem miConsultaEdicionEvento = new JMenuItem("Consulta Edicion de Evento");
         // miConsultaEdicionEvento.addActionListener(e -> showConsultaEdicionEvento());
         menuEvento.add(miConsultaEdicionEvento);
         
-        
-        
-        JMenuItem miAltaEdicion = new JMenuItem("Alta de Edición de Evento");
-        // miAltaEdicion.addActionListener(e -> showAltaEdicion());
-        menuEvento.add(miAltaEdicion);
-
         menuBar.add(menuEvento);
-
+        
+//////////////////////////////////////////////////////////////////////////////////REGISTROS        
         // Menú Registros
         JMenu mnRegistros = new JMenu("Registros");
         menuBar.add(mnRegistros);
 
         JMenuItem mntmConsultaDeRegistro = new JMenuItem("Consulta de Registro");
-        // mntmConsultaDeRegistro.addActionListener(e -> showConsultaRegistro());
-        mnRegistros.add(mntmConsultaDeRegistro);
+        // mntmConsultaDeRegistro.addActionListener(e -> {
+        	
 
         JMenuItem mntmRegistroAEdicion = new JMenuItem("Registro a Edición de Evento");
         mntmRegistroAEdicion.addActionListener(e -> {
@@ -210,7 +221,7 @@ public class Principal {
         });
         mnRegistros.add(mntmRegistroAEdicion);
         
-        // Submenú Tipos de Registro
+
         JMenu mnTipoDeRegistros = new JMenu("Tipos de Registro");
         mnRegistros.add(mnTipoDeRegistros);
 
@@ -238,14 +249,14 @@ public class Principal {
     private void ensureSize(JInternalFrame f, int w, int h) {
         if (f.getWidth() == 0 || f.getHeight() == 0) f.setSize(w, h);
     }
-    private void abrirAltaEvento() {
-        altaEventoInternalFrame.setVisible(true);
-        try {
-            altaEventoInternalFrame.setSelected(true); // lo trae al frente
-        } catch (java.beans.PropertyVetoException e) {
-            e.printStackTrace();
-        }
-    }
+//    private void abrirAltaEvento() {
+//        altaEventoInternalFrame.setVisible(true);
+//        try {
+//            altaEventoInternalFrame.setSelected(true); // lo trae al frente
+//        } catch (java.beans.PropertyVetoException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
 
 private void abrirConsultaEvento() {

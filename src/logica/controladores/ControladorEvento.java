@@ -25,10 +25,13 @@ public class ControladorEvento implements IControladorEvento {
         for (Categoria c : categorias) {
             nuevo.agregarCategoria(c);
         }
+        manejadorEvento.agregarEvento(nuevo);
     };
     
-//    public void consultaEvento(){
-//    	}
+   public void consultaEvento(){
+	   
+    
+   	}
     
     //el altaCategoria es sin GUI
     public void altaCategoria(String nombre) {

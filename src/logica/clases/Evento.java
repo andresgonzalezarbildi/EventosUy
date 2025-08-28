@@ -47,14 +47,7 @@ public class Evento {
     public List<String> getCategoriasLista() { 				//categoriasDeEvento.keySet() devuelve un Set<String> con 
         return new ArrayList<>(categoriasDeEvento.keySet());	//todas las claves (los nombres de las categorías).
     }														//new ArrayList<>(...) transforma ese Set en una List<String>
-    
-    
-    
-    //public Map<String, Edicion> getEdiciones() { return edicionesDeEvento; }
-    //public void agregarEdicion(Edicion e) {
-    // edicionesDeEvento.put(e.getNombre(), e);
-    //}
-
+   
   
     public Map<String, EdicionEvento> getEdiciones() { 
     	return edicionesDeEvento;

@@ -25,7 +25,7 @@ public class AltaEvento extends JInternalFrame {
         super("Alta de Evento", true, true, true, true); 
 
         this.controlEvento = controlEvento;
-
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setBounds(100, 100, 650, 400);
         getContentPane().setLayout(new BorderLayout());
 
@@ -114,7 +114,24 @@ public class AltaEvento extends JInternalFrame {
         getContentPane().add(botones, BorderLayout.SOUTH);
     }
 
+    public void limpiarFormulario() {
+        tfNombre.setText("");
+        tfDescripcion.setText("");
+        tfSigla.setText("");
 
+        // Limpiar listas
+        modeloSeleccionadas.clear();
+
+        // También podés deseleccionar elementos seleccionados por si quedaron seleccionados
+        listaCategoriasDisponibles.clearSelection();
+        listaCategoriasSeleccionadas.clearSelection();
+
+        // Si querés dejar la ventana en su estado inicial visualmente
+        getContentPane().revalidate();
+        getContentPane().repaint();
+    }
+
+    
     private void guardarEvento() {
         String nombre = tfNombre.getText();
         String descripcion = tfDescripcion.getText();
@@ -126,7 +143,6 @@ public class AltaEvento extends JInternalFrame {
             categoriasEvento.add(new Categoria(modeloSeleccionadas.get(i)));
         }
 
-    
 
         // Llamada al controlador
         controlEvento.altaEvento(nombre, descripcion, sigla, null, categoriasEvento);

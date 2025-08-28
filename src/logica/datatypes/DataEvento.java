@@ -35,6 +35,6 @@ public class DataEvento {
     // ToString para mostrar en UI, por ejemplo en JList
     @Override
     public String toString() {
-        return nombre + " (" + sigla + ")";
+        return nombre;
     }
 }

@@ -1,4 +1,4 @@
-package presentacion;
+package presentacion.registros;
 
 import javax.swing.JDialog;
 import javax.swing.JInternalFrame;

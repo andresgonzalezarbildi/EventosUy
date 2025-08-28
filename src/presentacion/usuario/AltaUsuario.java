@@ -44,7 +44,7 @@ public class AltaUsuario extends JInternalFrame {
         setResizable(true);
         setIconifiable(true);
         setMaximizable(true);
-        setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setClosable(true);
         setTitle("Alta de Usuario");
         setBounds(10, 40, 360, 190);
