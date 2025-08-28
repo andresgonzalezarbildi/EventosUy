@@ -1,9 +1,11 @@
-package logica;
+package logica.controladores;
 
 import java.util.HashMap;
 import java.util.Map;
 import excepciones.UsuarioNoExisteException;
 import excepciones.UsuarioRepetidoException;
+import logica.datatypes.DataUsuario;
+import logica.interfaces.IControladorUsuario;
 
 public class ControladorUsuario implements IControladorUsuario {
 

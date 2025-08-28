@@ -1,11 +1,12 @@
-package presentacion;
+package presentacion.usuario;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.*;
-import logica.IControladorUsuario;
-import logica.DataUsuario;
+
+import logica.datatypes.DataUsuario;
+import logica.interfaces.IControladorUsuario;
 import excepciones.UsuarioNoExisteException;
 import java.awt.Color;
 import java.awt.event.FocusListener;

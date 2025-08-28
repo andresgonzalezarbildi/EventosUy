@@ -6,8 +6,17 @@ import java.beans.PropertyVetoException;
 import javax.swing.*;
 
 import logica.Fabrica;
-import logica.IControladorUsuario;
-import logica.DataUsuario;
+import logica.datatypes.DataUsuario;
+import logica.manejadores.ManejadorEvento;
+import logica.datatypes.DataEvento;
+import logica.interfaces.IControladorEvento;
+import logica.interfaces.IControladorUsuario;
+import presentacion.evento.AltaEvento;
+import presentacion.evento.ConsultaEvento;
+import presentacion.registros.RegistroAEdicionEvento;
+import presentacion.usuario.AltaUsuario;
+import presentacion.usuario.ConsultaUsuario;
+import presentacion.usuario.ModificarUsuario;
 
 
 public class Principal {
@@ -15,8 +24,10 @@ public class Principal {
     private JFrame frmGestion;
     private JDesktopPane desktop;
     private IControladorUsuario ICU;
-
+    private IControladorEvento IEV;
+    private AltaEvento altaEventoInternalFrame;
    
+    private ConsultaEvento consultaEventoInternalFrame;
     private AltaUsuario altaUsuarioInternalFrame;
     private ConsultaUsuario consultaUsuarioInternalFrame;
     private ModificarUsuario modificarUsuarioInternalFrame;
@@ -38,6 +49,7 @@ public class Principal {
 
         Fabrica fabrica = Fabrica.getInstance();
         ICU = fabrica.getControladorUsuario();
+        IEV = fabrica.getControladorEvento();
 
         altaUsuarioInternalFrame = new AltaUsuario(ICU);
         altaUsuarioInternalFrame.setLocation(10, 23);
@@ -56,7 +68,20 @@ public class Principal {
         modificarUsuarioInternalFrame.setClosable(true);
         desktop.add(modificarUsuarioInternalFrame);
         modificarUsuarioInternalFrame.setVisible(false);
-
+        
+        altaEventoInternalFrame = new AltaEvento(IEV);
+        altaEventoInternalFrame.setLocation(10, 23);
+        altaEventoInternalFrame.setClosable(true);
+        desktop.add(altaEventoInternalFrame);
+        altaEventoInternalFrame.setVisible(false);
+        
+        consultaEventoInternalFrame = new ConsultaEvento(IEV);
+        consultaEventoInternalFrame.setLocation(10, 23);
+        consultaEventoInternalFrame.setClosable(true);
+        desktop.add(consultaEventoInternalFrame);
+        consultaEventoInternalFrame.setVisible(false);
+        
+        
     }
 
     private void initialize() {
@@ -118,10 +143,6 @@ public class Principal {
             }
         });
 
-
-
-
-
         menuUsuario.add(miAltaUsuario);
         menuUsuario.add(miConsultaUsuario);
         menuUsuario.add(miModificarUsuario);
@@ -153,11 +174,12 @@ public class Principal {
         JMenu menuEvento = new JMenu("Eventos");
 
         JMenuItem miAltaEvento = new JMenuItem("Alta de Evento");
-        // miAltaEvento.addActionListener(e -> showAltaEvento());
+        miAltaEvento.addActionListener(e -> abrirAltaEvento());
         menuEvento.add(miAltaEvento);
-
+        
+/////////////////////////////////////////////////////////////////////////////////////////////////////
         JMenuItem miConsultaEvento = new JMenuItem("Consulta de Evento");
-        // miConsultaEvento.addActionListener(e -> showConsultaEvento());
+        miConsultaEvento.addActionListener(e -> abrirConsultaEvento());  
         menuEvento.add(miConsultaEvento);
 
         JMenuItem miConsultaEdicionEvento = new JMenuItem("Consulta Edicion de Evento");
@@ -216,4 +238,25 @@ public class Principal {
     private void ensureSize(JInternalFrame f, int w, int h) {
         if (f.getWidth() == 0 || f.getHeight() == 0) f.setSize(w, h);
     }
-}
+    private void abrirAltaEvento() {
+        altaEventoInternalFrame.setVisible(true);
+        try {
+            altaEventoInternalFrame.setSelected(true); // lo trae al frente
+        } catch (java.beans.PropertyVetoException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+private void abrirConsultaEvento() {
+    IControladorEvento ctrlEvento = Fabrica.getInstance().getControladorEvento();
+    ConsultaEvento consulta = new ConsultaEvento(ctrlEvento);
+    consulta.cargarEventos(ctrlEvento.getEventosDTO()); // cargamos los datos
+    desktop.add(consulta);   // agregamos al JDesktopPane
+    consulta.setVisible(true);   // hacemos visible la ventana
+    try {
+        consulta.setSelected(true); // lo trae al frente
+    } catch (java.beans.PropertyVetoException e) {
+        e.printStackTrace();
+    }
+}}

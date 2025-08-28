@@ -1,12 +1,18 @@
 package logica;
 
+import logica.controladores.ControladorEvento;
+import logica.controladores.ControladorUsuario;
+import logica.interfaces.IControladorEvento;
+import logica.interfaces.IControladorUsuario;
+
 public class Fabrica {
 
     private static Fabrica instancia = null;
     private IControladorUsuario controladorUsuario;
+    private IControladorEvento controladorEvento;
 
     private Fabrica() {
-        controladorUsuario = new ControladorUsuario();
+        
     }
 
     public static Fabrica getInstance() {
@@ -17,6 +23,18 @@ public class Fabrica {
     }
 
     public IControladorUsuario getControladorUsuario() {
+        if (controladorUsuario == null) {
+            controladorUsuario = new ControladorUsuario();
+        }
         return controladorUsuario;
     }
+
+    public IControladorEvento getControladorEvento() {
+        if (controladorEvento == null) {
+            controladorEvento = new ControladorEvento();
+        }
+        return controladorEvento;
+    }
 }
+
+

@@ -1,4 +1,4 @@
-package presentacion;
+package presentacion.usuario;
 
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
@@ -17,7 +17,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.DefaultListCellRenderer;
 
 import excepciones.UsuarioRepetidoException;
-import logica.IControladorUsuario;
+import logica.interfaces.IControladorUsuario;
 
 @SuppressWarnings("serial")
 public class AltaUsuario extends JInternalFrame {
