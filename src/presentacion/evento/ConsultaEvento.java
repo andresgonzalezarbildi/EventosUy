@@ -137,13 +137,14 @@ public class ConsultaEvento extends JInternalFrame {
         gbc_lblCategoria.gridy = 4;
         panel.add(lblCategoria, gbc_lblCategoria);
         
-        JList list = new JList();
+        listCategorias = new JList<>();
+        listCategorias.setEnabled(false); // 👈 solo lectura
         GridBagConstraints gbc_list = new GridBagConstraints();
         gbc_list.insets = new Insets(0, 0, 5, 0);
         gbc_list.fill = GridBagConstraints.BOTH;
         gbc_list.gridx = 2;
         gbc_list.gridy = 4;
-        panel.add(list, gbc_list);
+        panel.add(new JScrollPane(listCategorias), gbc_list);
         
         JLabel lblEdicion = new JLabel("Consultar edicion: ");
         GridBagConstraints gbc_lblEdicion = new GridBagConstraints();
@@ -181,22 +182,7 @@ public class ConsultaEvento extends JInternalFrame {
     }    
        
   
-//    private void mostrarInfoEvento(DataEvento evento) {
-//        if (evento == null) return;
-//        StringBuilder sb = new StringBuilder();
-//        sb.append("Nombre: ").append(evento.getNombre()).append("\n");
-//        sb.append("Sigla: ").append(evento.getSigla()).append("\n");
-//        sb.append("Descripción: ").append(evento.getDescripcion()).append("\n");
-//        sb.append("Fecha Alta: ").append(evento.getFechaAlta()).append("\n");
-//
-//        
-//        List<String> cats = evento.getCategorias();
-//        if (cats != null && !cats.isEmpty()) {
-//            sb.append("Categorías: ").append(String.join(", ", cats)).append("\n");
-//        } else {
-//            sb.append("Categorías: Ninguna\n");
-//        }
-//    }
+
     
     private void mostrarInfoEvento(DataEvento evento) {
         if (evento == null) return;
@@ -206,15 +192,16 @@ public class ConsultaEvento extends JInternalFrame {
         textArea.setText(evento.getDescripcion());
         textField_1.setText(evento.getSigla());
         textField_2.setText(evento.getFechaAlta().toString());
+        DefaultListModel<String> catModel = new DefaultListModel<>();
+        List<String> cats = evento.getCategorias();
+        if (cats != null) {
+            for (String cat : cats) {
+                catModel.addElement(cat);
+            }
+        }
+        listCategorias.setModel(catModel);
 
-        // Si querés mostrar categorías en el JList (en vez de solo texto plano)
-        // Podés actualizar el JList de categorías aquí
-        // Ejemplo: 
-//        DefaultListModel<String> catModel = new DefaultListModel<>();
-//        for (String cat : evento.getCategorias()) {
-//             catModel.addElement(cat);
-//         }
-//         listEventos.setModel(catModel);
+        
     }
     
     
