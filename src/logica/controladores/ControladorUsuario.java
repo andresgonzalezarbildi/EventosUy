@@ -6,6 +6,7 @@ import excepciones.UsuarioNoExisteException;
 import excepciones.UsuarioRepetidoException;
 import logica.datatypes.DataUsuario;
 import logica.interfaces.IControladorUsuario;
+import logica.manejadores.ManejadorUsuario;
 
 public class ControladorUsuario implements IControladorUsuario {
 
@@ -47,13 +48,11 @@ public class ControladorUsuario implements IControladorUsuario {
         return usuarios.get(nickname);
     }
 
-    @Override
     public DataUsuario[] getUsuarios() throws UsuarioNoExisteException {
         if (usuarios.isEmpty()) throw new UsuarioNoExisteException("No hay usuarios registrados.");
         return usuarios.values().toArray(new DataUsuario[0]);
     }
     
-    @Override
     public void modificarUsuario(String nickname, String nombre, String tipo, 
                                  String descripcion, String link, String apellido, String fechaNac) 
                                  throws UsuarioNoExisteException {
@@ -81,3 +80,5 @@ public class ControladorUsuario implements IControladorUsuario {
     }
 
 }
+
+

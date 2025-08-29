@@ -4,6 +4,7 @@ import java.util.Map;
 
 import excepciones.EventoNoExisteException;
 import logica.clases.Evento;
+import logica.clases.TipoRegistro;
 import logica.clases.Categoria;
 import logica.clases.EdicionEvento;
 import logica.datatypes.DataEdicion;
@@ -42,10 +43,10 @@ public class ControladorEvento implements IControladorEvento {
     public DataEvento[] getEventosDTO() {
         return manejadorEvento.getEventosDTO(); 
     }
-
     
     public DataEvento[] listarEventoExistentes() throws EventoNoExisteException {
     	 Map<String,Evento> eventos = manejadorEvento.getEventos();
+
     	 if (eventos != null) {
     		 DataEvento[] de = new DataEvento[eventos.size()];
     		 int i = 0;
@@ -61,6 +62,7 @@ public class ControladorEvento implements IControladorEvento {
     
     public DataEdicion[] listarEdiciones(String nombreEvento) throws EventoNoExisteException {
     	Evento eve = manejadorEvento.obtenerEvento(nombreEvento);
+
     	Map<String,EdicionEvento> ediciones = eve.getEdiciones();
     	if (ediciones != null) {
     		DataEdicion[] dEdi = new DataEdicion[ediciones.size()];
@@ -72,8 +74,5 @@ public class ControladorEvento implements IControladorEvento {
     	}else {
     		throw new EventoNoExisteException("No existen ediciones registradas del Evento");
     	}
-    	
-   	
    }
 }	
-
