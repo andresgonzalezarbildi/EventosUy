@@ -39,6 +39,9 @@ public class ControladorEvento implements IControladorEvento {
 				cats.add(c);
 			}
 		}
+		if (cats.isEmpty()) {
+	        throw new IllegalArgumentException("El evento debe tener al menos una categoría asociada.");
+	    }
 		Evento e = new Evento(nombre, descripcion, sigla);
 		for (Categoria c : cats) {
             e.agregarCategoria(c);
