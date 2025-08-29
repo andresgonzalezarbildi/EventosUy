@@ -302,9 +302,11 @@ public class AltaUsuario extends JInternalFrame {
     if (checkFormulario()) {
         try {
             if ("Organizador".equals(tipoU)) {
-                controlUsr.altaUsuario(nicknameU, nombreU, correoU, "Organizador", descripcionU, linkU, null, null);
+                controlUsr.altaUsuario(nicknameU, nombreU, correoU, "Organizador",
+                        descripcionU, linkU, null, null);
             } else if ("Asistente".equals(tipoU)) {
-                controlUsr.altaUsuario(nicknameU, nombreU, correoU, "Asistente", null, null, apellidoU, fechaNacLD);
+                controlUsr.altaUsuario(nicknameU, nombreU, correoU, "Asistente",
+                        null, null, apellidoU, fechaNacLD);
             }
 
             JOptionPane.showMessageDialog(this, "El Usuario se ha creado con éxito",
