@@ -1,34 +1,36 @@
 package presentacion.evento;
 
-import javax.swing.JInternalFrame;
 import java.awt.BorderLayout;
-import javax.swing.JLabel;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.SwingConstants;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JComboBox;
-import javax.swing.JDialog;
-
+import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.GridBagConstraints;
-import javax.swing.JTextField;
-import javax.swing.JProgressBar;
+
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
+import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+
+import logica.interfaces.IControladorEvento;
 
 public class ConsultaEdicionEvento extends JInternalFrame {
 	
 	private JTextField textField;
-	public ConsultaEdicionEvento() {
-		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+	private IControladorEvento controlEvento;
+	
+	public ConsultaEdicionEvento(IControladorEvento controlEvento) {
+		
+		super("Alta Edicion Evento", false, true, true, true);
+		this.controlEvento = controlEvento;;
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setResizable(false);
 		setTitle("Consulta Edicion Evento");
 		setBounds(100, 100, 450, 300);
+		
+		
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{30, 39, 360, 0};
 		gridBagLayout.rowHeights = new int[]{22, 22, 216, 0};
@@ -125,19 +127,19 @@ public class ConsultaEdicionEvento extends JInternalFrame {
 		
 		JLabel lblNewLabel_1 = new JLabel("Consultar tipo de registro:");
 		GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
-		gbc_lblNewLabel_1.anchor = GridBagConstraints.WEST;
+		gbc_lblNewLabel_1.anchor = GridBagConstraints.EAST;
 		gbc_lblNewLabel_1.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel_1.gridx = 0;
 		gbc_lblNewLabel_1.gridy = 3;
 		panel_1.add(lblNewLabel_1, gbc_lblNewLabel_1);
 		
-		JList list_1 = new JList();
-		GridBagConstraints gbc_list_1 = new GridBagConstraints();
-		gbc_list_1.insets = new Insets(0, 0, 5, 0);
-		gbc_list_1.fill = GridBagConstraints.BOTH;
-		gbc_list_1.gridx = 1;
-		gbc_list_1.gridy = 3;
-		panel_1.add(list_1, gbc_list_1);
+		JComboBox comboBox_1 = new JComboBox();
+		GridBagConstraints gbc_comboBox_1 = new GridBagConstraints();
+		gbc_comboBox_1.insets = new Insets(0, 0, 5, 0);
+		gbc_comboBox_1.fill = GridBagConstraints.HORIZONTAL;
+		gbc_comboBox_1.gridx = 1;
+		gbc_comboBox_1.gridy = 3;
+		panel_1.add(comboBox_1, gbc_comboBox_1);
 		
 		JLabel lblPatrocinio = new JLabel("Consultar Patrocinio");
 		GridBagConstraints gbc_lblPatrocinio = new GridBagConstraints();
@@ -147,11 +149,11 @@ public class ConsultaEdicionEvento extends JInternalFrame {
 		gbc_lblPatrocinio.gridy = 4;
 		panel_1.add(lblPatrocinio, gbc_lblPatrocinio);
 		
-		JList list_2 = new JList();
-		GridBagConstraints gbc_list_2 = new GridBagConstraints();
-		gbc_list_2.fill = GridBagConstraints.BOTH;
-		gbc_list_2.gridx = 1;
-		gbc_list_2.gridy = 4;
-		panel_1.add(list_2, gbc_list_2);
+		JComboBox comboBox_2 = new JComboBox();
+		GridBagConstraints gbc_comboBox_2 = new GridBagConstraints();
+		gbc_comboBox_2.fill = GridBagConstraints.HORIZONTAL;
+		gbc_comboBox_2.gridx = 1;
+		gbc_comboBox_2.gridy = 4;
+		panel_1.add(comboBox_2, gbc_comboBox_2);
 	}
 }

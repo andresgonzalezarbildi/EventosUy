@@ -1,23 +1,31 @@
 package presentacion.evento;
 
-import javax.swing.DefaultListModel;
-import javax.swing.JInternalFrame;
-import javax.swing.JList;
-import javax.swing.JTextField;
-import logica.interfaces.IControladorEvento;
-import java.awt.GridBagLayout;
-import javax.swing.JLabel;
+import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Insets;
-import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JPanel;
+
 import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+import logica.interfaces.IControladorEvento;
 
 public class AltaEdicionEvento extends JInternalFrame {
-	public AltaEdicionEvento() {
+	
+	public AltaEdicionEvento(IControladorEvento controlEvento) {
+		
+		super("Alta Edicion Evento", false, true, true, true); 
+		
+		this.controlEvento = controlEvento;
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setBounds(100, 100, 650, 400);
+        getContentPane().setLayout(new BorderLayout());
+		
 		setTitle("Alta Edicion Evento");
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0, 0, 0};
@@ -35,7 +43,6 @@ public class AltaEdicionEvento extends JInternalFrame {
 		getContentPane().add(lblListaEventos, gbc_lblListaEventos);
 		
 		JComboBox cbListaEventos = new JComboBox();
-		cbListaEventos.setModel(new DefaultComboBoxModel(new String[] {"Seleccione...", "Evento A", "Evento B", "Evento C"}));
 		GridBagConstraints gbc_cbListaEventos = new GridBagConstraints();
 		gbc_cbListaEventos.insets = new Insets(0, 0, 5, 0);
 		gbc_cbListaEventos.fill = GridBagConstraints.HORIZONTAL;
@@ -52,7 +59,6 @@ public class AltaEdicionEvento extends JInternalFrame {
 		getContentPane().add(lblOganizadores, gbc_lblOganizadores);
 		
 		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Seleccione...", "Oganizador A", "Organizador B", "Organizador C"}));
 		GridBagConstraints gbc_comboBox = new GridBagConstraints();
 		gbc_comboBox.insets = new Insets(0, 0, 5, 0);
 		gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
@@ -192,7 +198,7 @@ public class AltaEdicionEvento extends JInternalFrame {
 		gbl_panel.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
 		panel.setLayout(gbl_panel);
 		
-		JButton btnAceptar = new JButton("Aceptar");
+		JButton  btnAceptar = new JButton("Aceptar");
 		GridBagConstraints gbc_btnAceptar = new GridBagConstraints();
 		gbc_btnAceptar.insets = new Insets(0, 0, 5, 5);
 		gbc_btnAceptar.gridx = 5;
@@ -200,10 +206,6 @@ public class AltaEdicionEvento extends JInternalFrame {
 		panel.add(btnAceptar, gbc_btnAceptar);
 		
 		JButton btnCancelar = new JButton("Cancelar");
-		btnCancelar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
 		GridBagConstraints gbc_btnCancelar = new GridBagConstraints();
 		gbc_btnCancelar.insets = new Insets(0, 0, 5, 5);
 		gbc_btnCancelar.gridx = 6;
@@ -211,14 +213,8 @@ public class AltaEdicionEvento extends JInternalFrame {
 		panel.add(btnCancelar, gbc_btnCancelar);
 	}
 	
+	
 	    private IControladorEvento controlEvento;
-	    private JTextField tfNombre;
-	    private JTextField tfDescripcion;
-	    private JTextField tfSigla;
-	    private DefaultListModel<String> modeloDisponibles;
-	    private DefaultListModel<String> modeloSeleccionadas;
-	    private JList<String> listaCategoriasDisponibles;
-	    private JList<String> listaCategoriasSeleccionadas;
 	    private JTextField textFieldNombre;
 	    private JTextField textFieldSigla;
 	    private JTextField Ciudad;

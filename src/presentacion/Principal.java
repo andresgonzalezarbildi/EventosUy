@@ -1,6 +1,8 @@
 package presentacion;
 
 import java.awt.EventQueue;
+import presentacion.evento.AltaEdicionEvento;
+import presentacion.evento.ConsultaEdicionEvento;
 import java.awt.BorderLayout;
 import java.beans.PropertyVetoException;
 import javax.swing.*;
@@ -32,6 +34,8 @@ public class Principal {
     private AltaUsuario altaUsuarioInternalFrame;
     private ConsultaUsuario consultaUsuarioInternalFrame;
     private ModificarUsuario modificarUsuarioInternalFrame;
+    private AltaEdicionEvento altaEdicionInternalFrame;
+    private ConsultaEdicionEvento consultaEdicionInternalFrame;
     
     private RegistroAEdicionEvento registrarEdicionEvento;
 
@@ -95,6 +99,19 @@ public class Principal {
         consultaEventoInternalFrame.setClosable(true);
         desktop.add(consultaEventoInternalFrame);
         consultaEventoInternalFrame.setVisible(false);
+        
+        altaEdicionInternalFrame = new AltaEdicionEvento(IEV);
+        altaEdicionInternalFrame.setLocation(10, 23);
+        altaEdicionInternalFrame.setClosable(true);
+        desktop.add(altaEdicionInternalFrame);
+        altaEdicionInternalFrame.setVisible(false);
+        
+        consultaEdicionInternalFrame = new ConsultaEdicionEvento(IEV);
+        consultaEdicionInternalFrame.setLocation(10, 23);
+        consultaEdicionInternalFrame.setClosable(true);
+        desktop.add(consultaEdicionInternalFrame);
+        consultaEdicionInternalFrame.setVisible(false);
+        
         
  
         
@@ -208,13 +225,34 @@ public class Principal {
 ////////////////////////////////////////////////////////////////////////////////EDICION
       
         JMenuItem miAltaEdicion = new JMenuItem("Alta de Edición de Evento");
-        // miAltaEdicion.addActionListener(e -> showAltaEdicion());
+        miAltaEdicion.addActionListener(e -> {
+        	if (altaEdicionInternalFrame == null || altaEdicionInternalFrame.isClosed()) {
+        		altaEdicionInternalFrame = new AltaEdicionEvento(IEV);
+        	    desktop.add(altaEdicionInternalFrame);
+      	} //else {
+//        	    altaEdicionInternalFrame.limpiarFormulario(); //  limpiar para mostrar de nuevo
+//        	}
+        	altaEdicionInternalFrame.setVisible(true);
+        	altaEdicionInternalFrame.toFront(); // Traerla al frente
+            ensureSize(altaEdicionInternalFrame, 600, 400);
+            showInternal(altaEdicionInternalFrame);
+        });
         menuEvento.add(miAltaEdicion);
       
         JMenuItem miConsultaEdicionEvento = new JMenuItem("Consulta Edicion de Evento");
-        // miConsultaEdicionEvento.addActionListener(e -> showConsultaEdicionEvento());
+        miConsultaEdicionEvento.addActionListener(e -> {
+    	if (consultaEdicionInternalFrame == null || consultaEdicionInternalFrame.isClosed()) {
+    		consultaEdicionInternalFrame = new ConsultaEdicionEvento(IEV);
+    	    desktop.add(altaEdicionInternalFrame);
+  	} //else {
+//    	    altaEdicionInternalFrame.limpiarFormulario(); //  limpiar para mostrar de nuevo
+//    	}
+    	consultaEdicionInternalFrame.setVisible(true);
+    	consultaEdicionInternalFrame.toFront(); // Traerla al frente
+        ensureSize(consultaEdicionInternalFrame, 600, 400);
+        showInternal(consultaEdicionInternalFrame);
+    });
         menuEvento.add(miConsultaEdicionEvento);
-        
         menuBar.add(menuEvento);
         
 //////////////////////////////////////////////////////////////////////////////////REGISTROS        
