@@ -210,11 +210,11 @@ public class ConsultaEvento extends JInternalFrame {
         // Si querés mostrar categorías en el JList (en vez de solo texto plano)
         // Podés actualizar el JList de categorías aquí
         // Ejemplo: 
-        DefaultListModel<String> catModel = new DefaultListModel<>();
-        for (String cat : evento.getCategorias()) {
-             catModel.addElement(cat);
-         }
-         listEventos.setModel(catModel);
+//        DefaultListModel<String> catModel = new DefaultListModel<>();
+//        for (String cat : evento.getCategorias()) {
+//             catModel.addElement(cat);
+//         }
+//         listEventos.setModel(catModel);
     }
     
     
