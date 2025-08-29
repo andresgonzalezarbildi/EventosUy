@@ -16,7 +16,7 @@ public class Evento {
         this.DescripcionEvento = desc;
         this.nombre = nom;
         this.sigla = sigla;
-        this.FechaAltaEnPlataforma = LocalDate.now();;
+        this.FechaAltaEnPlataforma = LocalDate.now();
         this.categoriasDeEvento = new HashMap<>();
         this.edicionesDeEvento = new HashMap<>();
     }

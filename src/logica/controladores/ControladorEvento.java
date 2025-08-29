@@ -1,18 +1,17 @@
 package logica.controladores;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import excepciones.EventoNoExisteException;
-import logica.clases.Evento;
-import logica.clases.TipoRegistro;
 import logica.clases.Categoria;
 import logica.clases.EdicionEvento;
+import logica.clases.Evento;
 import logica.datatypes.DataEdicion;
 import logica.datatypes.DataEvento;
 import logica.interfaces.IControladorEvento;
 import logica.manejadores.ManejadorEvento;
-
-import java.time.LocalDate;
 
 public class ControladorEvento implements IControladorEvento {
 	private ManejadorEvento manejadorEvento;
@@ -21,13 +20,32 @@ public class ControladorEvento implements IControladorEvento {
     	manejadorEvento = ManejadorEvento.getInstance();
     }
     
-    public void altaEvento(String nombre,String descripcion,String sigla,LocalDate date,List<Categoria> categorias)  {
-    		Evento nuevo = new Evento(nombre,descripcion,sigla);
-        for (Categoria c : categorias) {
-            nuevo.agregarCategoria(c);
+	public void altaEvento(String nombre, String descripcion, String sigla, Set<String> nombresCategorias) {
+		if (nombre == null || nombre.isBlank()) 
+			throw new IllegalArgumentException("El nombre no puede ser vacío.");
+		if (sigla == null || sigla.isBlank())
+			throw new IllegalArgumentException("La sigla no puede ser vacía.");
+		if (manejadorEvento.existeEvento(nombre)) {
+			throw new IllegalArgumentException("Ya existe un evento con nombre: " + nombre);
+		}
+		
+		List<Categoria> cats = new ArrayList<>();
+		if (nombresCategorias != null) {
+			for (String nc : nombresCategorias) {
+				Categoria c = manejadorEvento.obtenerCategoria(nc);
+				if (c == null) {
+					throw new IllegalArgumentException("Categoría inexistente: " + nc);
+				}
+				cats.add(c);
+			}
+		}
+		Evento e = new Evento(nombre, descripcion, sigla);
+		for (Categoria c : cats) {
+            e.agregarCategoria(c);
         }
-        manejadorEvento.agregarEvento(nuevo);
-    };
+
+		manejadorEvento.agregarEvento(e);
+	}
     
    public void consultaEvento(){
 	   
