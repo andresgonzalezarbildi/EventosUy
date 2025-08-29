@@ -4,31 +4,52 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import logica.clases.Asistente;
+import logica.clases.Organizador;
 import logica.clases.Usuario;
 
 public class ManejadorUsuario {
-    private Map<String, Usuario> usuarios; 
-    private static ManejadorUsuario instancia = null;
 
+    private static ManejadorUsuario instancia;
 
-    public static ManejadorUsuario getinstance() {
-        if (instancia == null)
+    private final Map<String, Organizador> organizadores;
+    private final Map<String, Asistente>  asistentes;
+
+    private ManejadorUsuario() {
+        this.organizadores = new HashMap<>();
+        this.asistentes    = new HashMap<>();
+    }
+
+    public static ManejadorUsuario getInstance() {
+        if (instancia == null) {
             instancia = new ManejadorUsuario();
+        }
         return instancia;
     }
 
-    public void addUsuario(Usuario usu) {
-        usuarios.put(usu.getNickname(), usu);
+    public boolean existeNickname(String nickname) {
+        return organizadores.containsKey(nickname) || asistentes.containsKey(nickname);
     }
 
-    public Usuario obtenerUsuario(String nickname) {
-        return usuarios.get(nickname);
+    public void agregarOrganizador(Organizador org) {
+        organizadores.put(org.getNickname(), org);
     }
 
-    public Usuario[] getUsuarios() {
-        if (usuarios.isEmpty())
-            return null;
-        Collection<Usuario> usrs = usuarios.values();
-        return usrs.toArray(new Usuario[0]);
+    public void agregarAsistente(Asistente asis) {
+        asistentes.put(asis.getNickname(), asis);
+    }
+
+    public Usuario obtenerPorNickname(String nickname) {
+        Usuario u = organizadores.get(nickname);
+        if (u != null) return u;
+        return asistentes.get(nickname);
+    }
+
+    public Collection<Organizador> obtenerTodosOrganizadores() {
+        return organizadores.values();
+    }
+
+    public Collection<Asistente> obtenerTodosAsistentes() {
+        return asistentes.values();
     }
 }

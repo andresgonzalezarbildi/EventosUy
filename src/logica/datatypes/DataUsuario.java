@@ -1,5 +1,7 @@
 package logica.datatypes;
 
+import java.time.LocalDate;
+
 public class DataUsuario {
     private String nickname;
     private String nombre;
@@ -10,7 +12,7 @@ public class DataUsuario {
     private String descripcion;       // solo Organizador
     private String link;              // solo Organizador
     private String apellido;          // solo Asistente
-    private String fechaNacimiento;   // solo Asistente
+    private LocalDate fechaNacimiento;   // solo Asistente
 
     // Constructor mínimo
     public DataUsuario(String nickname, String nombre, String correo, String tipo) {
@@ -29,13 +31,13 @@ public class DataUsuario {
     public String getDescripcion() { return descripcion; }
     public String getLink() { return link; }
     public String getApellido() { return apellido; }
-    public String getFechaNacimiento() { return fechaNacimiento; }
+    public LocalDate getFechaNacimiento() { return fechaNacimiento; }
 
     // Setters para los campos opcionales
     public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
     public void setLink(String link) { this.link = link; }
     public void setApellido(String apellido) { this.apellido = apellido; }
-    public void setFechaNacimiento(String fechaNacimiento) { this.fechaNacimiento = fechaNacimiento; }
+    public void setFechaNacimiento(LocalDate fechaNacimiento) { this.fechaNacimiento = fechaNacimiento; }
     public void setNombre(String nombre) {this.nombre = nombre;}
     public void setTipo(String tipo) { this.tipo = tipo;}
 

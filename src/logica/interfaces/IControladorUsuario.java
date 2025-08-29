@@ -1,20 +1,14 @@
 package logica.interfaces;
 
+import java.time.LocalDate;
+
 import excepciones.UsuarioNoExisteException;
 import excepciones.UsuarioRepetidoException;
 import logica.datatypes.DataUsuario;
 
 public interface IControladorUsuario {
-
-    void altaUsuario(String nickname, String nombre, String correo, String tipo,
-                     String descripcion, String link, String apellido, String fechaNac)
-                     throws UsuarioRepetidoException;
-
-    DataUsuario verInfoUsuario(String ni) throws UsuarioNoExisteException;
-
+	public void altaUsuario(String nickname, String nombre, String correo, String tipo, String descripcion, String link, String apellido, LocalDate fechaNac) throws UsuarioRepetidoException ;
+	DataUsuario verInfoUsuario(String ni) throws UsuarioNoExisteException;
     DataUsuario[] getUsuarios() throws UsuarioNoExisteException;
-
-    void modificarUsuario(String nickname, String nombre, String tipo,
-                          String descripcion, String link, String apellido, String fechaNac)
-                          throws UsuarioNoExisteException;
+    public void modificarUsuario(String nickname, String nombre, String descripcion, String link, String apellido, LocalDate fechaNac) throws UsuarioNoExisteException ;
 }

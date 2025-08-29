@@ -1,13 +1,13 @@
 
 package logica.clases;
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Asistente extends Usuario {
     private String apellido;
-    private Date fechaNacimiento;
+    private LocalDate fechaNacimiento;
 
     public Asistente(String nickname, String nombre, String correo,
-                     String apellido, Date fechaNacimiento) {
+                     String apellido, LocalDate fechaNacimiento) {
         super(nickname, nombre, correo);
         this.apellido = apellido;
         this.fechaNacimiento = fechaNacimiento;
@@ -21,11 +21,11 @@ public class Asistente extends Usuario {
         this.apellido = apellido;
     }
 
-    public Date getFechaNacimiento() {
+    public LocalDate getFechaNacimiento() {
         return fechaNacimiento;
     }
 
-    public void setFechaNacimiento(Date fechaNacimiento) {
+    public void setFechaNacimiento(LocalDate fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
 }

@@ -1,84 +1,110 @@
 package logica.controladores;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 import excepciones.UsuarioNoExisteException;
 import excepciones.UsuarioRepetidoException;
+import logica.clases.Asistente;
+import logica.clases.Organizador;
+import logica.clases.Usuario;
 import logica.datatypes.DataUsuario;
 import logica.interfaces.IControladorUsuario;
 import logica.manejadores.ManejadorUsuario;
 
 public class ControladorUsuario implements IControladorUsuario {
 
-    private Map<String, DataUsuario> usuarios;
+    private final ManejadorUsuario manejador;
 
     public ControladorUsuario() {
-        usuarios = new HashMap<>();
+        this.manejador = ManejadorUsuario.getInstance();
     }
 
-    @Override
-    public void altaUsuario(String nickname, String nombre, String correo, String tipo, 
-                            String descripcion, String link, String apellido, String fechaNac) 
+    public void altaUsuario(String nickname, String nombre, String correo, String tipo,
+                            String descripcion, String link, String apellido, LocalDate fechaNac)
                             throws UsuarioRepetidoException {
-        if (usuarios.containsKey(nickname)) {
-            throw new UsuarioRepetidoException("El usuario ya existe: " + nickname);
+
+        if (nickname == null || nickname.isBlank())
+            throw new IllegalArgumentException("El nickname no puede ser vacío.");
+        if (nombre == null || nombre.isBlank())
+            throw new IllegalArgumentException("El nombre no puede ser vacío.");
+        if (correo == null || correo.isBlank())
+            throw new IllegalArgumentException("El correo no puede ser vacío.");
+
+        if (manejador.existeNickname(nickname)) {
+            throw new UsuarioRepetidoException("El usuario " + nickname + " ya existe");
         }
 
-        DataUsuario nuevo;
-        if (tipo.equals("Organizador")) {
-            nuevo = new DataUsuario(nickname, nombre, correo, tipo);
-            nuevo.setDescripcion(descripcion);
-            nuevo.setLink(link);
-        } else if (tipo.equals("Asistente")) {
-            nuevo = new DataUsuario(nickname, nombre, correo, tipo);
-            nuevo.setApellido(apellido);
-            nuevo.setFechaNacimiento(fechaNac);
+        if ("Organizador".equalsIgnoreCase(tipo)) {
+            Organizador org = new Organizador(nickname, nombre, correo,
+                                              descripcion, link);
+            manejador.agregarOrganizador(org);
+
+        } else if ("Asistente".equalsIgnoreCase(tipo)) {
+            Asistente asis = new Asistente(nickname, nombre, correo,
+                                           apellido, fechaNac);
+            manejador.agregarAsistente(asis);
+
         } else {
-            throw new IllegalArgumentException("Tipo de usuario desconocido: " + tipo);
+            throw new IllegalArgumentException("Tipo de usuario inválido: " + tipo);
         }
-
-        usuarios.put(nickname, nuevo);
     }
 
-    @Override
     public DataUsuario verInfoUsuario(String nickname) throws UsuarioNoExisteException {
-        if (!usuarios.containsKey(nickname)) {
+        Usuario u = manejador.obtenerPorNickname(nickname);
+        if (u == null)
             throw new UsuarioNoExisteException("Usuario no encontrado: " + nickname);
-        }
-        return usuarios.get(nickname);
+        return aDataUsuario(u);
     }
 
     public DataUsuario[] getUsuarios() throws UsuarioNoExisteException {
-        if (usuarios.isEmpty()) throw new UsuarioNoExisteException("No hay usuarios registrados.");
-        return usuarios.values().toArray(new DataUsuario[0]);
+        Collection<Organizador> orgs = manejador.obtenerTodosOrganizadores();
+        Collection<Asistente>  asis  = manejador.obtenerTodosAsistentes();
+
+        if (orgs.isEmpty() && asis.isEmpty())
+            throw new UsuarioNoExisteException("No hay usuarios registrados.");
+
+        List<DataUsuario> lista = new ArrayList<>(orgs.size() + asis.size());
+        for (Organizador o : orgs) lista.add(aDataUsuario(o));
+        for (Asistente  a : asis)  lista.add(aDataUsuario(a));
+
+        return lista.toArray(new DataUsuario[0]);
     }
-    
-    public void modificarUsuario(String nickname, String nombre, String tipo, 
-                                 String descripcion, String link, String apellido, String fechaNac) 
+
+    public void modificarUsuario(String nickname, String nombre, String descripcion,
+                                 String link, String apellido, LocalDate fechaNac)
                                  throws UsuarioNoExisteException {
-        if (!usuarios.containsKey(nickname)) {
+        Usuario u = manejador.obtenerPorNickname(nickname);
+        if (u == null)
             throw new UsuarioNoExisteException("Usuario no encontrado: " + nickname);
+
+        // comunes
+        if (nombre != null && !nombre.isBlank()) {
+            u.setNombre(nombre);
         }
 
-        DataUsuario u = usuarios.get(nickname);
-        u.setNombre(nombre);
-        u.setTipo(tipo);
+        if (u instanceof Organizador o) {
+            if (descripcion != null) o.setDescripcionGeneral(descripcion);
+            if (link != null)        o.setLinkSitioWeb(link);
 
-        // limpiar campos opcionales
-        u.setDescripcion(null);
-        u.setLink(null);
-        u.setApellido(null);
-        u.setFechaNacimiento(null);
-
-        if ("Organizador".equals(tipo)) {
-            u.setDescripcion(descripcion);
-            u.setLink(link);
-        } else if ("Asistente".equals(tipo)) {
-            u.setApellido(apellido);
-            u.setFechaNacimiento(fechaNac);
+        } else if (u instanceof Asistente a) {
+            if (apellido != null)   a.setApellido(apellido);
+            if (fechaNac != null)   a.setFechaNacimiento(fechaNac);
         }
     }
 
+    private DataUsuario aDataUsuario(Usuario u) {
+        DataUsuario du = new DataUsuario(u.getNickname(), u.getNombre(), u.getCorreo(),
+                                         (u instanceof Organizador) ? "Organizador" : "Asistente");
+        if (u instanceof Organizador o) {
+            du.setDescripcion(o.getDescripcionGeneral());
+            du.setLink(o.getLinkSitioWeb());
+        } else if (u instanceof Asistente a) {
+            du.setApellido(a.getApellido());
+            du.setFechaNacimiento(a.getFechaNacimiento());
+        }
+        return du;
+    }
 }
-
-
