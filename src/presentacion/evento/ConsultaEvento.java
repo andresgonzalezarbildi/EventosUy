@@ -14,8 +14,6 @@ public class ConsultaEvento extends JInternalFrame {
 	private JList<DataEvento> listaEventos;
     private DefaultListModel<DataEvento> listaModel;
     private JTextArea infoEvento;
-    private JTextField buscador;
-    // Panel inferior dinámico
     private JLabel lblExtra;
     private JTextArea extraInfo;
     private DataEvento[] eventos;
@@ -23,7 +21,7 @@ public class ConsultaEvento extends JInternalFrame {
     	
     	
         setSize(600, 400); //establece el tamaño incial de la ventana
-        setResizable(true); //permite al user redimenzioanr la ventana manualment
+        setResizable(false); //permite al user redimenzioanr la ventana manualment
         setIconifiable(true); // permite minimzar la ventana
         setMaximizable(true); // permite maximzar la vent
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE); // oculta la ventana, no la destruye VER BIEN ESTO
@@ -44,9 +42,7 @@ public class ConsultaEvento extends JInternalFrame {
         JScrollPane scrollLista = new JScrollPane(listaEventos);
         panelIzq.add(scrollLista, BorderLayout.CENTER);
 
-        buscador = new JTextField("Buscar por nombre o sigla...");
-        buscador.setForeground(Color.GRAY);
-        panelIzq.add(buscador, BorderLayout.SOUTH);
+      
 
         getContentPane().add(panelIzq);
 
@@ -78,29 +74,8 @@ public class ConsultaEvento extends JInternalFrame {
                 mostrarInfoEvento(listaEventos.getSelectedValue());
             }
         });
-
-        // Filtrado dinámico
-        buscador.getDocument().addDocumentListener(new DocumentListener() {
-            private void filtrar() {
-                String filtro = buscador.getText().trim();
-                if (filtro.equals("Buscar por nombre o sigla...")) filtro = "";
-
-                listaModel.clear();
-                if (eventos != null) {
-                    for (DataEvento ev : eventos) {
-                        if (ev.getNombre().toLowerCase().contains(filtro.toLowerCase()) ||
-                            ev.getSigla().toLowerCase().contains(filtro.toLowerCase())) {
-                            listaModel.addElement(ev);
-                        }
-                    }
-                }
-            }
-            public void insertUpdate(DocumentEvent e) { filtrar(); }
-            public void removeUpdate(DocumentEvent e) { filtrar(); }
-            public void changedUpdate(DocumentEvent e) { filtrar(); }
-        });
     }
-
+       
     // Método para cargar eventos desde la lógica
     public void cargarEventos(DataEvento[] lista) {
         this.eventos = lista;

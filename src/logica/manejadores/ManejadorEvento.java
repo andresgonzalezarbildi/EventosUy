@@ -15,6 +15,7 @@ public class ManejadorEvento {
     private Map<String, Categoria> categorias;
     private ManejadorEvento() {
         eventos = new HashMap<>();
+        categorias = new HashMap<>();
     }	
     public static ManejadorEvento getInstance() {
         if (instancia == null) {
@@ -51,5 +52,15 @@ public class ManejadorEvento {
         }
         return lista.toArray(new DataEvento[0]);
     }
-    
+    public List<Categoria> getCategorias() {
+        return new ArrayList<>(categorias.values());
+    }
+
+    public List<String> getNombresCategorias() {
+        return new ArrayList<>(categorias.keySet());
+    }
+
+    public Categoria[] getCategoriasArray() {
+        return categorias.values().toArray(new Categoria[0]);
+    }
  }

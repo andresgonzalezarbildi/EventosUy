@@ -10,6 +10,7 @@ import logica.datatypes.DataUsuario;
 import logica.manejadores.ManejadorEvento;
 import logica.datatypes.DataEvento;
 import logica.interfaces.IControladorEvento;
+import logica.clases.Categoria;
 import logica.interfaces.IControladorUsuario;
 import presentacion.evento.AltaEvento;
 import presentacion.evento.ConsultaEvento;
@@ -36,6 +37,17 @@ public class Principal {
 
 
     public static void main(String[] args) {
+    	// 1. Obtengo la instancia del manejador
+        ManejadorEvento manejador = ManejadorEvento.getInstance();
+
+        // 2. Agrego categorías de ejemplo
+        manejador.agregarCategoria(new Categoria("CA01"));
+        manejador.agregarCategoria(new Categoria("CA02"));
+        manejador.agregarCategoria(new Categoria("CA03"));
+        manejador.agregarCategoria(new Categoria("CA04"));
+        manejador.agregarCategoria(new Categoria("CA05"));
+
+        
         EventQueue.invokeLater(() -> {
             try {
                 Principal window = new Principal();
@@ -47,6 +59,7 @@ public class Principal {
     }
 
     public Principal() {
+    	
         initialize();
 
         Fabrica fabrica = Fabrica.getInstance();

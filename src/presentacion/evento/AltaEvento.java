@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import logica.manejadores.ManejadorEvento;
 import logica.clases.Categoria;
 import logica.clases.Evento;
 import logica.interfaces.IControladorEvento;
@@ -14,15 +15,18 @@ public class AltaEvento extends JInternalFrame {
 
     private IControladorEvento controlEvento;
     private JTextField tfNombre;
-    private JTextField tfDescripcion;
+    private JTextArea tfDescripcion;
     private JTextField tfSigla;
-    private DefaultListModel<String> modeloDisponibles;
-    private DefaultListModel<String> modeloSeleccionadas;
-    private JList<String> listaCategoriasDisponibles;
-    private JList<String> listaCategoriasSeleccionadas;
+    private DefaultListModel<Categoria> modeloDisponibles;
+    private DefaultListModel<Categoria> modeloSeleccionadas;
+    private JList<Categoria> listaCategoriasDisponibles;
+    private JList<Categoria> listaCategoriasSeleccionadas;
 
     public AltaEvento(IControladorEvento controlEvento) {
-        super("Alta de Evento", true, true, true, true); 
+       
+    	// super(title, resizable, closable, maximizable, iconifiable); SON LAS BANDERAS RESPECTIVAS
+    		super("Alta de Evento", false, true, true, true); 
+   
 
         this.controlEvento = controlEvento;
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -38,61 +42,99 @@ public class AltaEvento extends JInternalFrame {
         gbc.insets = new Insets(6, 6, 6, 6);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        // --- Nombre ---
-        gbc.gridx = 0; gbc.gridy = 0; gbc.anchor = GridBagConstraints.EAST;
-        panel.add(new JLabel("Nombre:"), gbc);
-
+     // --- Nombre ---
+        gbc.gridx = 0; gbc.gridy = 0;
+        gbc.gridwidth = 1; gbc.weightx = 0;
+        gbc.anchor = GridBagConstraints.EAST;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.insets = new Insets(5, 5, 5, 5); // mismo margen en todos lados
+        panel.add(new JLabel("Nombre:"), cloneGbc(gbc));
+        	
         tfNombre = new JTextField();
-        gbc.gridx = 1; gbc.gridy = 0; gbc.gridwidth = 2; gbc.weightx = 1.0;
-        panel.add(tfNombre, gbc);
+        gbc.gridx = 1; gbc.gridy = 0;
+        gbc.weightx = 1.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        panel.add(tfNombre, cloneGbc(gbc));
 
-        // --- Descripción ---
-        gbc.gridx = 0; gbc.gridy = 1; gbc.gridwidth = 1; gbc.weightx = 0;
-        panel.add(new JLabel("Descripción:"), gbc);
-
-        tfDescripcion = new JTextField();
-        gbc.gridx = 1; gbc.gridy = 1; gbc.gridwidth = 2; gbc.weightx = 1.0;
-        panel.add(tfDescripcion, gbc);
-
+       
         // --- Sigla ---
-        gbc.gridx = 0; gbc.gridy = 2; gbc.gridwidth = 1; gbc.weightx = 0;
-        panel.add(new JLabel("Sigla:"), gbc);
+        gbc.gridx = 0; gbc.gridy = 1;
+        gbc.weightx = 0;
+        gbc.anchor = GridBagConstraints.EAST;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.insets = new Insets(5, 5, 5, 5);
+        panel.add(new JLabel("Sigla:"), cloneGbc(gbc));
 
         tfSigla = new JTextField();
-        gbc.gridx = 1; gbc.gridy = 2; gbc.gridwidth = 2; gbc.weightx = 1.0;
-        panel.add(tfSigla, gbc);
+        gbc.gridx = 1; gbc.gridy = 1;
+        gbc.weightx = 1.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        panel.add(tfSigla, cloneGbc(gbc));
+        
+        
+     // Descripcion
+        gbc.gridx = 0; gbc.gridy = 2;
+        gbc.gridwidth = 1; gbc.weightx = 0;
+        gbc.anchor = GridBagConstraints.EAST;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.insets = new Insets(5, 5, 5, 5);
+        panel.add(new JLabel("Descripción:"), cloneGbc(gbc));
+
+        // Campo multilínea
+        tfDescripcion = new JTextArea(4, 20);
+        tfDescripcion.setLineWrap(true);
+        tfDescripcion.setWrapStyleWord(true);
+
+        JScrollPane scrollDescripcion = new JScrollPane(tfDescripcion);
+        scrollDescripcion.setPreferredSize(new Dimension(300, 80));
+
+        gbc.gridx = 1; gbc.gridy = 2;
+        gbc.gridwidth = 1;              // <--- acá el cambio
+        gbc.weightx = 1.0; gbc.weighty = 1.0;
+        gbc.fill = GridBagConstraints.BOTH;
+        panel.add(scrollDescripcion, cloneGbc(gbc));
+
+
+        
+
+
+
 
         // --- Categorías labels ---
         gbc.gridx = 0; gbc.gridy = 3; gbc.gridwidth = 1; gbc.anchor = GridBagConstraints.CENTER;
-        panel.add(new JLabel("Categorías Disponibles:"), gbc);
+        panel.add(new JLabel("Categorías Disponibles:"), cloneGbc(gbc));
 
         gbc.gridx = 2; gbc.gridy = 3;
-        panel.add(new JLabel("Categorías Seleccionadas:"), gbc);
+        panel.add(new JLabel("Categorías Seleccionadas:"), cloneGbc(gbc));
 
         // --- Listas ---
-        modeloDisponibles = new DefaultListModel<>();
-        modeloDisponibles.addElement("Categoria 1");
-        modeloDisponibles.addElement("Categoria 2");
-        modeloDisponibles.addElement("Categoria 3");
-
-        listaCategoriasDisponibles = new JList<>(modeloDisponibles);
+        // Modelo y lista de disponibles
+        DefaultListModel<Categoria> modeloDisponibles = new DefaultListModel<>();
+        ManejadorEvento manejador = ManejadorEvento.getInstance();
+        for (Categoria c : manejador.getCategorias()) {
+            modeloDisponibles.addElement(c);
+        }
+        listaCategoriasDisponibles = new JList<Categoria>(modeloDisponibles);
         listaCategoriasDisponibles.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         JScrollPane scrollDisponibles = new JScrollPane(listaCategoriasDisponibles);
+
         gbc.gridx = 0; gbc.gridy = 4; gbc.weightx = 1; gbc.weighty = 1;
         gbc.fill = GridBagConstraints.BOTH;
         panel.add(scrollDisponibles, gbc);
 
-        modeloSeleccionadas = new DefaultListModel<>();
+        // Modelo y lista de seleccionadas
+        modeloSeleccionadas = new DefaultListModel<>();   // 👈 ahora se asigna al atributo
         listaCategoriasSeleccionadas = new JList<>(modeloSeleccionadas);
         listaCategoriasSeleccionadas.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         JScrollPane scrollSeleccionadas = new JScrollPane(listaCategoriasSeleccionadas);
+
         gbc.gridx = 2; gbc.gridy = 4;
-        panel.add(scrollSeleccionadas, gbc);
+        panel.add(scrollSeleccionadas, cloneGbc(gbc));
 
         // --- Botón para pasar categorías ---
         JButton btnAgregar = new JButton(">>");
         btnAgregar.addActionListener(e -> {
-            for (String cat : listaCategoriasDisponibles.getSelectedValuesList()) {
+            for (Categoria cat : listaCategoriasDisponibles.getSelectedValuesList()) {
                 if (!modeloSeleccionadas.contains(cat)) {
                     modeloSeleccionadas.addElement(cat);
                 }
@@ -100,7 +142,7 @@ public class AltaEvento extends JInternalFrame {
         });
         gbc.gridx = 1; gbc.gridy = 4; gbc.weightx = 0; gbc.weighty = 0; 
         gbc.fill = GridBagConstraints.NONE; gbc.anchor = GridBagConstraints.CENTER;
-        panel.add(btnAgregar, gbc);
+        panel.add(btnAgregar, cloneGbc(gbc));
 
         // --- Panel inferior de botones ---
         JPanel botones = new JPanel(new FlowLayout(FlowLayout.RIGHT));
@@ -110,6 +152,23 @@ public class AltaEvento extends JInternalFrame {
         btnCancelar.addActionListener(e -> setVisible(false));
         botones.add(btnAceptar);
         botones.add(btnCancelar);
+        
+     // --- Botón para quitar categorías ---
+        JButton btnQuitar = new JButton("<<");
+        btnQuitar.addActionListener(e -> {
+            for (Categoria cat : listaCategoriasSeleccionadas.getSelectedValuesList()) {
+                if (!modeloDisponibles.contains(cat)) {
+                    modeloDisponibles.addElement(cat);
+                }
+                modeloSeleccionadas.removeElement(cat);
+            }
+        });
+        gbc.insets = new Insets(-80, 0, 0, 0); // mueve el botón hacia arriba
+        
+        gbc.weightx = 0; gbc.weighty = 0;
+        gbc.fill = GridBagConstraints.NONE; 
+        gbc.anchor = GridBagConstraints.CENTER;
+        panel.add(btnQuitar, cloneGbc(gbc));
 
         getContentPane().add(botones, BorderLayout.SOUTH);
     }
@@ -137,12 +196,11 @@ public class AltaEvento extends JInternalFrame {
         String descripcion = tfDescripcion.getText();
         String sigla = tfSigla.getText();
 
-        // Convertir las categorías seleccionadas en objetos Categoria
+        // Convertir las categorías seleccionadas en lista (pero sin crear objetos nuevos)
         List<Categoria> categoriasEvento = new ArrayList<>();
         for (int i = 0; i < modeloSeleccionadas.size(); i++) {
-            categoriasEvento.add(new Categoria(modeloSeleccionadas.get(i)));
+            categoriasEvento.add(modeloSeleccionadas.get(i));  // 👈 ya es un Categoria
         }
-
 
         // Llamada al controlador
         controlEvento.altaEvento(nombre, descripcion, sigla, null, categoriasEvento);
@@ -153,4 +211,9 @@ public class AltaEvento extends JInternalFrame {
         // Cerrar ventana
         setVisible(false); 
     }
-}
+
+
+private GridBagConstraints cloneGbc(GridBagConstraints gbc) {
+    GridBagConstraints copy = (GridBagConstraints) gbc.clone();
+    return copy;
+}}
