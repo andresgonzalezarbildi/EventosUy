@@ -1,13 +1,15 @@
 package logica.controladores;
 import java.util.List;
-import java.util.HashMap;
 import java.util.Map;
 
-import excepciones.UsuarioNoExisteException;
+import excepciones.EventoNoExisteException;
 import logica.clases.Evento;
+import logica.clases.TipoRegistro;
 import logica.clases.Categoria;
+import logica.clases.EdicionEvento;
+import logica.datatypes.DataEdicion;
 import logica.datatypes.DataEvento;
-import logica.datatypes.DataUsuario;
+import logica.datatypes.DataTipoRegistro;
 import logica.interfaces.IControladorEvento;
 import logica.manejadores.ManejadorEvento;
 
@@ -18,6 +20,7 @@ public class ControladorEvento implements IControladorEvento {
     public  ControladorEvento() {
      manejador = ManejadorEvento.getInstance();
     }
+    
     public void altaEvento(String nombre,String descripcion,String sigla,LocalDate date,List<Categoria> categorias)  {
     		Evento nuevo = new Evento(nombre,descripcion,sigla);
         for (Categoria c : categorias) {
@@ -34,4 +37,64 @@ public class ControladorEvento implements IControladorEvento {
     public DataEvento[] getEventosDTO() {
         return manejador.getEventosDTO();  // llama al método del manejador
     }
+    
+    public DataEvento[] listarEventoExistentes() throws EventoNoExisteException {
+    	 Map<String,Evento> eventos = manejador.getEventos();
+    	 if (eventos != null) {
+    		 DataEvento[] de = new DataEvento[eventos.size()];
+    		 int i = 0;
+    		 for (Evento eve : eventos.values()) {
+    			 de[i++] = new DataEvento(eve.getNombre(), eve.getDescripcionEvento(), eve.getSigla(), eve.getFecha(), eve.getCategoriasLista());
+    		 }
+    		 return de;
+    	 }else {
+    		 throw new EventoNoExisteException("No existen eventos registrados");
+    	 }
+    }
+      
+    
+    public DataEdicion[] listarEdiciones(String nombreEvento) throws EventoNoExisteException {
+    	Evento eve = manejador.obtenerEvento(nombreEvento);
+    	Map<String,EdicionEvento> ediciones = eve.getEdiciones();
+    	if (ediciones != null) {
+    		DataEdicion[] dEdi = new DataEdicion[ediciones.size()];
+    		int i=0;
+    		for (EdicionEvento edi: ediciones.values()) {
+    			dEdi[i++] = new DataEdicion(edi.getNombre(), edi.getFechaIni(), edi.getFechaFin(), edi.getCiudad(), edi.getPais(), edi.getSigla(), edi.getFechaAltaEnPlataforma());
+    		}
+    		return dEdi;
+    	}else {
+    		throw new EventoNoExisteException("No existen ediciones registradas del Evento");
+    	}
+   }
+    
+    
+    public DataTipoRegistro[] listarTiposDeRegistro(String nombreEvento , String nombreEdicion) throws EventoNoExisteException {
+    	Evento eve = manejador.obtenerEvento(nombreEvento);
+    	Map<String,EdicionEvento> ediciones = eve.getEdiciones();
+    	EdicionEvento edicion = null;
+    	for (EdicionEvento edi: ediciones.values()) {
+    		if (edi.getNombre() == nombreEdicion) {
+    			edicion = edi;
+    		} 
+    	}
+    	Map<String, TipoRegistro> tipoRegistro = edicion.getTipoRegistro() ;
+    	if (tipoRegistro != null) {
+    		DataTipoRegistro[] dTipo = new DataTipoRegistro[tipoRegistro.size()];
+    		int i=0;
+    		for (TipoRegistro tip: tipoRegistro.values()) {
+    			dTipo[i++] = new DataTipoRegistro(tip.getNombre(), tip.getDescripcion(), tip.getCosto(), tip.getCupo()); 
+    		}
+    		return dTipo;
+    	}else {
+    		throw new EventoNoExisteException("No existen ediciones registradas del Evento");
+    	}
+    }
+    
+   
+    
+    
+    
+    
+    
 }	
