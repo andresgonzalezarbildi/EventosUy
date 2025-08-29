@@ -1,4 +1,5 @@
 package logica.controladores;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -9,10 +10,12 @@ import excepciones.EventoNoExisteException;
 import logica.clases.Categoria;
 import logica.clases.EdicionEvento;
 import logica.clases.Evento;
+import logica.clases.Organizador;
 import logica.datatypes.DataEdicion;
 import logica.datatypes.DataEvento;
 import logica.interfaces.IControladorEvento;
 import logica.manejadores.ManejadorEvento;
+import logica.manejadores.ManejadorUsuario;
 
 public class ControladorEvento implements IControladorEvento {
 	private ManejadorEvento manejadorEvento;
@@ -103,4 +106,46 @@ public class ControladorEvento implements IControladorEvento {
     		throw new EventoNoExisteException("No existen ediciones registradas del Evento");
     	}
    }
+    
+    
+    
+    
+    public void altaEdicionEvento(
+            String nombreEvento, String nombreEdicion, String sigla, String ciudad, String pais, LocalDate fechaInicio, LocalDate fechaFin, LocalDate fechaAltaEnPlataforma, String organizadorNick) {
+        if (nombreEvento == null || nombreEvento.isBlank())   
+        	throw new IllegalArgumentException("El evento es obligatorio.");
+        if (nombreEdicion == null || nombreEdicion.isBlank())  
+        	throw new IllegalArgumentException("El nombre de la edición es obligatorio.");
+        if (sigla == null || sigla.isBlank())          
+        	throw new IllegalArgumentException("La sigla es obligatoria.");
+        if (ciudad == null || ciudad.isBlank())         
+        	throw new IllegalArgumentException("La ciudad es obligatoria.");
+        if (pais == null || pais.isBlank())           
+        	throw new IllegalArgumentException("El país es obligatorio.");
+        if (fechaInicio == null || fechaFin == null)
+        	throw new IllegalArgumentException("Las fechas de inicio y fin son obligatorias.");
+        if (fechaFin.isBefore(fechaInicio))
+        	throw new IllegalArgumentException("La fecha de fin no puede ser anterior a la de inicio.");
+        Evento evento = manejadorEvento.obtenerEvento(nombreEvento);
+        if (evento == null) {
+            throw new IllegalArgumentException("No existe el evento: " + nombreEvento);
+        }
+        if (manejadorEvento.existeEdicion(nombreEdicion)) {
+            throw new IllegalArgumentException("Ya existe una edición con nombre: " + nombreEdicion);
+        }
+        ManejadorUsuario manejadorUsuario = ManejadorUsuario.getInstance();
+        Organizador org = manejadorUsuario.obtenerOrganizadorPorNickname(organizadorNick);
+        if (org == null) {
+            throw new IllegalArgumentException("Organizador inexistente: " + organizadorNick);
+        }
+        EdicionEvento ed = new EdicionEvento( nombreEdicion, fechaInicio, fechaFin, ciudad, pais, sigla, (fechaAltaEnPlataforma != null ? fechaAltaEnPlataforma : LocalDate.now())
+        );
+        evento.agregarEdicion(ed);
+    }
+
+    
+    
+    
+    
+    
 }	

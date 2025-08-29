@@ -28,6 +28,8 @@ public class ManejadorEvento {
         this.categorias = new HashMap<>();
     }
 
+
+
     public void agregarEvento(Evento e) {
         eventos.put(e.getNombre(), e);
     }
@@ -62,6 +64,9 @@ public class ManejadorEvento {
         return eventos.containsKey(nombre);
     }
 
+ 
+
+    
     public void agregarCategoria(Categoria c) {
         categorias.put(c.getNombre(), c);
     }
@@ -84,5 +89,15 @@ public class ManejadorEvento {
     
     public boolean existeCategoria(String nombre) {
         return categorias.containsKey(nombre);
+    }
+
+
+
+    public boolean existeEdicion(String nombreEdicion) {
+        if (nombreEdicion == null) return false;
+        for (Evento e : eventos.values()) {
+            if (e.getEdiciones().containsKey(nombreEdicion)) return true;
+        }
+        return false;
     }
 }

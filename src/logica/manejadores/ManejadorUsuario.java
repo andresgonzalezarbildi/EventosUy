@@ -44,6 +44,11 @@ public class ManejadorUsuario {
         if (u != null) return u;
         return asistentes.get(nickname);
     }
+    
+    public Organizador obtenerOrganizadorPorNickname(String nickname) {
+        return organizadores.get(nickname);
+
+    }
 
     public Collection<Organizador> obtenerTodosOrganizadores() {
         return organizadores.values();
