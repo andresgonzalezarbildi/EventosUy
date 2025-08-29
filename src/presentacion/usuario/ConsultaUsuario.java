@@ -1,137 +1,224 @@
 package presentacion.usuario;
 
-import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 
+import javax.swing.BorderFactory;
+import javax.swing.DefaultListCellRenderer;
+import javax.swing.DefaultListModel;
+import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
+import javax.swing.UIManager;
+import javax.swing.border.TitledBorder;
+
+import excepciones.UsuarioNoExisteException;
 import logica.datatypes.DataUsuario;
 import logica.interfaces.IControladorUsuario;
-import excepciones.UsuarioNoExisteException;
-import java.awt.Color;
-import java.awt.event.FocusListener;
-import java.awt.event.FocusEvent;
+
 
 public class ConsultaUsuario extends JInternalFrame {
 
-    private IControladorUsuario ICU;
-    private JList<DataUsuario> listaUsuarios;
+
+    private static final long serialVersionUID = 1L;
+	private JList<DataUsuario> listaUsuarios;
     private DefaultListModel<DataUsuario> listaModel;
-    private JTextArea infoUsuario;
-    private JTextField buscador;
     private DataUsuario[] usuarios;
 
-    // Panel inferior dinámico
-    private JLabel lblExtra;
-    private JTextArea extraInfo;
+    private JLabel lblNick, lblNombre, lblApellido, lblCorreo, lblFecha, lblDesc, lblLink, lblTipo;
+
+
+    private JTextField txtNickname, txtNombre, txtApellido, txtCorreo, txtFechaNac, txtLink;
+    private JTextArea txtDescripcion;
+    private JScrollPane scrollDesc;
+    private JTextField txtTipo;
+
+    private final IControladorUsuario ICU;
 
     public ConsultaUsuario(IControladorUsuario ICU) {
-        super("Consulta de Usuario", true, true, true, true);
+        super("Consulta de Usuario", false, true, true, true);
         this.ICU = ICU;
-        setSize(600, 400);
-        getContentPane().setLayout(new BorderLayout());
 
-        // Panel izquierdo (buscador + lista)
+        setSize(640, 420);
+        setResizable(false);
+        setIconifiable(true);
+        setMaximizable(true);
+        setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        setClosable(true);
+
+        getContentPane().setLayout(new BorderLayout(10, 10));
+        JPanel root = new JPanel(new BorderLayout(10, 10));
+        root.setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
+        getContentPane().add(root, BorderLayout.CENTER);
+
+
         JPanel panelIzq = new JPanel(new BorderLayout());
-        panelIzq.setPreferredSize(new Dimension(200, 0));
-        panelIzq.setMinimumSize(new Dimension(200, 0));
-
-        JLabel lblLista = new JLabel("Usuarios", SwingConstants.CENTER);
-        panelIzq.add(lblLista, BorderLayout.NORTH);
+        panelIzq.setPreferredSize(new Dimension(210, 0));
+        panelIzq.setBorder(BorderFactory.createTitledBorder(
+                BorderFactory.createLineBorder(new Color(180, 180, 180)),
+                "Usuarios", TitledBorder.LEFT, TitledBorder.TOP));
 
         listaModel = new DefaultListModel<>();
         listaUsuarios = new JList<>(listaModel);
+        listaUsuarios.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        listaUsuarios.setFixedCellHeight(22);
+        listaUsuarios.setCellRenderer(new UsuarioRenderer());
+
         JScrollPane scrollLista = new JScrollPane(listaUsuarios);
         panelIzq.add(scrollLista, BorderLayout.CENTER);
+        root.add(panelIzq, BorderLayout.WEST);
 
-        buscador = new JTextField("Buscar por nickname...");
-        buscador.setForeground(Color.GRAY);
-        buscador.setToolTipText("Buscar por nickname...");
+        JPanel panelDer = new JPanel();
+        panelDer.setBorder(BorderFactory.createTitledBorder(
+                BorderFactory.createLineBorder(new Color(180, 180, 180)),
+                "Detalle", TitledBorder.LEFT, TitledBorder.TOP));
+        root.add(panelDer, BorderLayout.CENTER);
 
-        buscador.addFocusListener(new FocusListener() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                if (buscador.getText().equals("Buscar por nickname...")) {
-                    buscador.setText("");
-                    buscador.setForeground(Color.BLACK);
-                }
-            }
+        GridBagLayout gbl = new GridBagLayout();
+        gbl.columnWidths  = new int[]{0, 0, 0};
+        gbl.rowHeights    = new int[]{0, 0, 0, 0, 0, 0, 0, 0};
+        gbl.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
+        gbl.rowWeights    = new double[]{0.0, 0.0, 0.0, 0.0, 0.9, 0.0, 0.0, Double.MIN_VALUE};
+        panelDer.setLayout(gbl);
 
-            @Override
-            public void focusLost(FocusEvent e) {
-                if (buscador.getText().isEmpty()) {
-                    buscador.setText("Buscar por nickname...");
-                    buscador.setForeground(Color.GRAY);
-                }
-            }
-        });
+        Insets IN = new Insets(6, 10, 6, 10);
 
-        panelIzq.add(buscador, BorderLayout.SOUTH);
-        getContentPane().add(panelIzq, BorderLayout.WEST);
+        lblNick = label("Nickname:");
+        add(panelDer, lblNick, gbc(0,0,IN, GridBagConstraints.WEST));
+        txtNickname = readonlyField();
+        add(panelDer, txtNickname, gbcFill(1,0,IN));
 
-        // -------- PANEL DERECHO CON SPLIT --------
-        infoUsuario = new JTextArea();
-        infoUsuario.setEditable(false);
-        JScrollPane scrollInfo = new JScrollPane(infoUsuario);
+        lblTipo = label("Tipo:");
+        add(panelDer, lblTipo, gbc(0,1,IN, GridBagConstraints.WEST));
+        txtTipo = readonlyField();
+        add(panelDer, txtTipo, gbcFill(1,1,IN));
 
-        JPanel panelInferior = new JPanel(new BorderLayout());
-        lblExtra = new JLabel("Información adicional", SwingConstants.CENTER);
-        panelInferior.add(lblExtra, BorderLayout.NORTH);
+        lblNombre = label("Nombre:");
+        add(panelDer, lblNombre, gbc(0,2,IN, GridBagConstraints.WEST));
+        txtNombre = readonlyField();
+        add(panelDer, txtNombre, gbcFill(1,2,IN));
 
-        extraInfo = new JTextArea("Aquí va información de ediciones o registros...");
-        extraInfo.setEditable(false);
-        panelInferior.add(new JScrollPane(extraInfo), BorderLayout.CENTER);
+        lblApellido = label("Apellido:");
+        add(panelDer, lblApellido, gbc(0,3,IN, GridBagConstraints.WEST));
+        txtApellido = readonlyField();
+        add(panelDer, txtApellido, gbcFill(1,3,IN));
 
-        JSplitPane splitDer = new JSplitPane(JSplitPane.VERTICAL_SPLIT, scrollInfo, panelInferior);
-        splitDer.setDividerLocation(200);
-        splitDer.setResizeWeight(0.5);
+        lblCorreo = label("Correo:");
+        add(panelDer, lblCorreo, gbc(0,4,IN, GridBagConstraints.WEST));
+        txtCorreo = readonlyField();
+        add(panelDer, txtCorreo, gbcFill(1,4,IN));
 
-        getContentPane().add(splitDer, BorderLayout.CENTER);
 
-        // Acción al seleccionar un usuario
+        lblFecha = label("Fecha nac.:");
+        add(panelDer, lblFecha, gbc(0,5,IN, GridBagConstraints.WEST));
+        txtFechaNac = readonlyField();
+        add(panelDer, txtFechaNac, gbcFill(1,5,IN));
+
+        lblDesc = label("Descripción:");
+        add(panelDer, lblDesc, gbc(0,6,IN, GridBagConstraints.NORTHWEST));
+        txtDescripcion = new JTextArea(5, 20);
+        txtDescripcion.setLineWrap(true);
+        txtDescripcion.setWrapStyleWord(true);
+        txtDescripcion.setEditable(false);
+        txtDescripcion.setFont(new Font(UIManager.getFont("TextField.font").getName(), Font.PLAIN, 12));
+        txtDescripcion.setBackground(UIManager.getColor("TextField.inactiveBackground"));
+        scrollDesc = new JScrollPane(txtDescripcion);
+        add(panelDer, scrollDesc, gbcFillBoth(1,6,IN));
+
+        lblLink = label("Link:");
+        add(panelDer, lblLink, gbc(0,7,IN, GridBagConstraints.WEST));
+        txtLink = readonlyField();
+        add(panelDer, txtLink, gbcFill(1,7,IN));
+
+
         listaUsuarios.addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {
                 mostrarInfoUsuario(listaUsuarios.getSelectedValue());
             }
         });
-
-        // Filtrado dinámico
-        buscador.getDocument().addDocumentListener(new DocumentListener() {
-            private void filtrar() {
-                String filtro = buscador.getText().trim();
-                if (filtro.equals("Buscar por nickname...")) {
-                    filtro = "";
-                }
-
-                listaModel.clear();
-                try {
-                    for (DataUsuario u : ICU.getUsuarios()) {
-                        if (u.getNickname().toLowerCase().contains(filtro.toLowerCase())) {
-                            listaModel.addElement(u);
-                        }
-                    }
-                } catch (UsuarioNoExisteException e) {
-                    // si no hay usuarios, no hacemos nada
-                }
-            }
-
-            public void insertUpdate(DocumentEvent e) { filtrar(); }
-            public void removeUpdate(DocumentEvent e) { filtrar(); }
-            public void changedUpdate(DocumentEvent e) { filtrar(); }
-        });
     }
+
+    private static JLabel label(String text) {
+        JLabel l = new JLabel(text, SwingConstants.LEFT);
+        l.setFont(l.getFont().deriveFont(Font.PLAIN));
+        return l;
+    }
+
+    private static JTextField readonlyField() {
+        JTextField f = new JTextField();
+        f.setEditable(false);
+        f.setBackground(UIManager.getColor("TextField.inactiveBackground"));
+        return f;
+    }
+
+    private static void add(JPanel p, Component c, GridBagConstraints gbc) {
+        p.add(c, gbc);
+    }
+
+    private static GridBagConstraints gbc(int x, int y, Insets insets, int anchor) {
+        GridBagConstraints g = new GridBagConstraints();
+        g.gridx = x; g.gridy = y;
+        g.insets = insets;
+        g.anchor = anchor;
+        return g;
+    }
+    private static GridBagConstraints gbcFill(int x, int y, Insets insets) {
+        GridBagConstraints g = gbc(x,y,insets, GridBagConstraints.CENTER);
+        g.fill = GridBagConstraints.HORIZONTAL;
+        g.weightx = 1.0;
+        return g;
+    }
+    private static GridBagConstraints gbcFillBoth(int x, int y, Insets insets) {
+        GridBagConstraints g = gbc(x,y,insets, GridBagConstraints.CENTER);
+        g.fill = GridBagConstraints.BOTH;
+        g.weightx = 1.0; g.weighty = 1.0;
+        return g;
+    }
+
+    private static class UsuarioRenderer extends DefaultListCellRenderer {
+
+        private static final long serialVersionUID = 1L;
+
+		public Component getListCellRendererComponent(JList<?> list, Object value, int index,
+                                                      boolean isSelected, boolean cellHasFocus) {
+            JLabel c = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+            if (value instanceof DataUsuario du) {
+                String nick = safe(du.getNickname());
+                String nom  = safe(du.getNombre());
+                String ape  = safe(du.getApellido());
+                c.setText(!nick.isEmpty() ? nick : (nom + (ape.isEmpty() ? "" : " " + ape)));
+            }
+            c.setBorder(BorderFactory.createEmptyBorder(2, 8, 2, 8));
+            return c;
+        }
+    }
+
+    private static String safe(String s) { return s == null ? "" : s; }
 
     public boolean cargarUsuarios() {
         listaModel.clear();
         try {
             usuarios = ICU.getUsuarios();
-            if (usuarios.length == 0) {
+            if (usuarios == null || usuarios.length == 0) {
                 JOptionPane.showMessageDialog(this, "No hay usuarios registrados.");
                 return false;
             }
-            for (DataUsuario u : usuarios) {
-                listaModel.addElement(u);
-            }
+            for (DataUsuario u : usuarios) listaModel.addElement(u);
+            listaUsuarios.setSelectedIndex(0);
             return true;
         } catch (UsuarioNoExisteException e) {
             JOptionPane.showMessageDialog(this, "No hay usuarios registrados.");
@@ -139,33 +226,62 @@ public class ConsultaUsuario extends JInternalFrame {
         }
     }
 
-    private void mostrarInfoUsuario(DataUsuario usuario) {
-        if (usuario == null) return;
+    private void mostrarInfoUsuario(DataUsuario u) {
+        if (u == null) return;
 
-        StringBuilder sb = new StringBuilder();
-        sb.append("Nickname: ").append(usuario.getNickname()).append("\n");
-        sb.append("Nombre: ").append(usuario.getNombre()).append("\n");
-        sb.append("Correo: ").append(usuario.getCorreo()).append("\n");
-        sb.append("Tipo: ").append(usuario.getTipo()).append("\n");
+        txtNickname.setText(safe(u.getNickname()));
+        txtNombre.setText(safe(u.getNombre()));
+        txtApellido.setText(safe(u.getApellido()));
+        txtCorreo.setText(safe(u.getCorreo()));
 
-        if (usuario.getTipo().equals("Organizador")) {
-            sb.append("Descripción: ").append(usuario.getDescripcion()).append("\n");
-            sb.append("Link: ").append(usuario.getLink()).append("\n");
+        String fecha = "";
+        try { if (u.getFechaNacimiento() != null) fecha = u.getFechaNacimiento().toString(); } catch (Exception ignored) {}
+        txtFechaNac.setText(fecha);
 
-            lblExtra.setText("Ediciones asociadas");
-            extraInfo.setText("Aquí se mostrarán las ediciones asociadas...");
-        } else if (usuario.getTipo().equals("Asistente")) {
-            sb.append("Apellido: ").append(usuario.getApellido()).append("\n");
-            sb.append("Fecha Nac.: ").append(usuario.getFechaNacimiento()).append("\n");
+        String desc = "";
+        try { desc = safe(u.getDescripcion()); } catch (Exception ignored) {}
+        txtDescripcion.setText(desc);
 
-            lblExtra.setText("Registros a ediciones");
-            extraInfo.setText("Aquí se mostrarán los registros a ediciones...");
-        } else {
-            lblExtra.setText("Información adicional");
-            extraInfo.setText("");
+        String link = "";
+        try { link = safe(u.getLink()); } catch (Exception ignored) {}
+        txtLink.setText(link);
+
+        String tipo = "";
+        try { tipo = safe(u.getTipo()); } catch (Exception ignored) {}
+        txtTipo.setText(tipo);
+
+        actualizarVisibilidadPorTipo(tipo);
+
+        actualizarVisibilidadPorTipo(tipo);
+    }
+
+
+    private void actualizarVisibilidadPorTipo(String tipoRaw) {
+        String tipo = (tipoRaw == null) ? "" : tipoRaw.trim().toLowerCase();
+
+        boolean esAsistente   = tipo.equals("asistente");
+        boolean esOrganizador = tipo.equals("organizador");
+
+        setVis(lblLink, txtLink, true);
+        setVis(lblDesc, scrollDesc, true);
+        setVis(lblApellido, txtApellido, true);
+        setVis(lblFecha, txtFechaNac, true);
+
+        if (esAsistente) {
+            setVis(lblLink, txtLink, false);
+            setVis(lblDesc, scrollDesc, false);
+        } else if (esOrganizador) {
+            setVis(lblApellido, txtApellido, false);
+            setVis(lblFecha, txtFechaNac, false);
         }
 
-        infoUsuario.setText(sb.toString());
+        revalidate();
+        repaint();
+    }
+
+    private static void setVis(Component l, Component c, boolean vis) {
+        l.setVisible(vis);
+        c.setVisible(vis);
     }
 
     public DataUsuario getUsuarioSeleccionado() {
