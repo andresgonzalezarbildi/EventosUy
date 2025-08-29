@@ -3,7 +3,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import excepciones.CategoriaRepetidaException;
 import excepciones.EventoNoExisteException;
@@ -25,7 +24,7 @@ public class ControladorEvento implements IControladorEvento {
     	manejadorEvento = ManejadorEvento.getInstance();
     }
     
-	public void altaEvento(String nombre, String descripcion, String sigla, Set<String> nombresCategorias) {
+	public void altaEvento(String nombre, String descripcion, String sigla, List<String> nombresCategorias) {
 		if (nombre == null || nombre.isBlank()) 
 			throw new IllegalArgumentException("El nombre no puede ser vacío.");
 		if (sigla == null || sigla.isBlank())

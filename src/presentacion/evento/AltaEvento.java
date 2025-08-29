@@ -17,10 +17,10 @@ public class AltaEvento extends JInternalFrame {
     private JTextField tfNombre;
     private JTextArea tfDescripcion;
     private JTextField tfSigla;
-    private DefaultListModel<Categoria> modeloDisponibles;
-    private DefaultListModel<Categoria> modeloSeleccionadas;
-    private JList<Categoria> listaCategoriasDisponibles;
-    private JList<Categoria> listaCategoriasSeleccionadas;
+    private DefaultListModel<String> modeloDisponibles;
+    private DefaultListModel<String> modeloSeleccionadas;
+    private JList<String> listaCategoriasDisponibles;
+    private JList<String> listaCategoriasSeleccionadas;
 
     public AltaEvento(IControladorEvento controlEvento) {
        
@@ -109,12 +109,13 @@ public class AltaEvento extends JInternalFrame {
 
         // --- Listas ---
         // Modelo y lista de disponibles
-        DefaultListModel<Categoria> modeloDisponibles = new DefaultListModel<>();
+        DefaultListModel<String> modeloDisponibles = new DefaultListModel<>();
         ManejadorEvento manejador = ManejadorEvento.getInstance();
         for (Categoria c : manejador.getCategorias()) {
-            modeloDisponibles.addElement(c);
+        		String cname  = c.getNombre();
+            modeloDisponibles.addElement(cname);
         }
-        listaCategoriasDisponibles = new JList<Categoria>(modeloDisponibles);
+        listaCategoriasDisponibles = new JList<String>(modeloDisponibles);
         listaCategoriasDisponibles.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         JScrollPane scrollDisponibles = new JScrollPane(listaCategoriasDisponibles);
 
@@ -124,7 +125,7 @@ public class AltaEvento extends JInternalFrame {
 
         // Modelo y lista de seleccionadas
         modeloSeleccionadas = new DefaultListModel<>();   // 👈 ahora se asigna al atributo
-        listaCategoriasSeleccionadas = new JList<>(modeloSeleccionadas);
+        listaCategoriasSeleccionadas = new JList<String>(modeloSeleccionadas);
         listaCategoriasSeleccionadas.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         JScrollPane scrollSeleccionadas = new JScrollPane(listaCategoriasSeleccionadas);
 
@@ -134,7 +135,7 @@ public class AltaEvento extends JInternalFrame {
         // --- Botón para pasar categorías ---
         JButton btnAgregar = new JButton(">>");
         btnAgregar.addActionListener(e -> {
-            for (Categoria cat : listaCategoriasDisponibles.getSelectedValuesList()) {
+            for (String cat : listaCategoriasDisponibles.getSelectedValuesList()) {
                 if (!modeloSeleccionadas.contains(cat)) {
                     modeloSeleccionadas.addElement(cat);
                 }
@@ -156,7 +157,7 @@ public class AltaEvento extends JInternalFrame {
      // --- Botón para quitar categorías ---
         JButton btnQuitar = new JButton("<<");
         btnQuitar.addActionListener(e -> {
-            for (Categoria cat : listaCategoriasSeleccionadas.getSelectedValuesList()) {
+            for (String cat : listaCategoriasSeleccionadas.getSelectedValuesList()) {
                 if (!modeloDisponibles.contains(cat)) {
                     modeloDisponibles.addElement(cat);
                 }
@@ -197,13 +198,13 @@ public class AltaEvento extends JInternalFrame {
         String sigla = tfSigla.getText();
 
         // Convertir las categorías seleccionadas en lista (pero sin crear objetos nuevos)
-        List<Categoria> categoriasEvento = new ArrayList<>();
+        List<String> categoriasEvento = new ArrayList<>();
         for (int i = 0; i < modeloSeleccionadas.size(); i++) {
             categoriasEvento.add(modeloSeleccionadas.get(i));  // 👈 ya es un Categoria
         }
 
         // Llamada al controlador
-        controlEvento.altaEvento(nombre, descripcion, sigla, null, categoriasEvento);
+        controlEvento.altaEvento(nombre, descripcion, sigla,categoriasEvento);
 
         // Mensaje de éxito
         JOptionPane.showMessageDialog(this, "Evento guardado correctamente");
