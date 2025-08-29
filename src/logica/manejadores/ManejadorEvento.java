@@ -81,4 +81,8 @@ public class ManejadorEvento {
     public Categoria[] getCategoriasArray() {
         return categorias.values().toArray(new Categoria[0]);
     }
+    
+    public boolean existeCategoria(String nombre) {
+        return categorias.containsKey(nombre);
+    }
 }

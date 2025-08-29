@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import excepciones.CategoriaRepetidaException;
 import excepciones.EventoNoExisteException;
 import logica.clases.Categoria;
 import logica.clases.EdicionEvento;
@@ -56,10 +57,16 @@ public class ControladorEvento implements IControladorEvento {
    	}
     
     //el altaCategoria es sin GUI
-    public void altaCategoria(String nombre) {
-    		Categoria nueva = new Categoria(nombre);
-    		manejadorEvento.agregarCategoria(nueva);
-    }
+   public void altaCategoria(String nombre) throws CategoriaRepetidaException {
+       if (nombre == null || nombre.isBlank()) {
+           throw new IllegalArgumentException("El nombre de la categoría no puede ser vacío.");
+       }
+       if (manejadorEvento.existeCategoria(nombre)) {
+           throw new CategoriaRepetidaException("Ya existe una categoría con el nombre: " + nombre);
+       }
+       Categoria nueva = new Categoria(nombre);
+       manejadorEvento.agregarCategoria(nueva);
+   }
     
     public DataEvento[] getEventosDTO() {
         return manejadorEvento.getEventosDTO(); 
