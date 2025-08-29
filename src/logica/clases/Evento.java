@@ -53,6 +53,10 @@ public class Evento {
     	return edicionesDeEvento;
     }
     
+    public EdicionEvento getEdicion(String nombreEdicion) {
+    	return edicionesDeEvento.get(nombreEdicion);
+    }
+    
     public void agregarEdicion(EdicionEvento e) {
     	edicionesDeEvento.put(e.getNombre(), e);
     }

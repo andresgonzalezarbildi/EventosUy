@@ -63,7 +63,11 @@ public class EdicionEvento {
 	        listaTipoRegistro.put(clave, tipoRegistro);
 	    }
 	}
-
+	
+	public boolean existeTipoRegistro(String nombreTipoRegistro) {
+		if (listaTipoRegistro.containsKey(nombreTipoRegistro)) return true;
+		return false;
+	}
 	
 	
 

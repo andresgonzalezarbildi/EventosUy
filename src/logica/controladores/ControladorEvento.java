@@ -11,6 +11,7 @@ import logica.clases.Categoria;
 import logica.clases.EdicionEvento;
 import logica.clases.Evento;
 import logica.clases.Organizador;
+import logica.clases.TipoRegistro;
 import logica.datatypes.DataEdicion;
 import logica.datatypes.DataEvento;
 import logica.interfaces.IControladorEvento;
@@ -145,6 +146,33 @@ public class ControladorEvento implements IControladorEvento {
 
     
     
+    public void altaTipoRegistro(String nombreEvento, String nombreEdicion, String nombreTipoRegistro, String descripcion, Integer costo,  Integer cupos) {
+    	if (nombreEvento == null || nombreEvento.isBlank())   
+        	throw new IllegalArgumentException("El evento es obligatorio.");
+        if (nombreEdicion == null || nombreEdicion.isBlank())  
+        	throw new IllegalArgumentException("El nombre de la edición es obligatorio.");
+        if (nombreTipoRegistro == null || nombreTipoRegistro.isBlank())          
+        	throw new IllegalArgumentException("El nombre del Tipo Registro es obligatoria.");
+        if (descripcion == null || descripcion.isBlank())         
+        	throw new IllegalArgumentException("La ciudad es obligatoria.");
+        if (cupos == null || cupos <= 0)
+            throw new IllegalArgumentException("El cupo debe ser un número positivo mayor que cero.");
+        if (costo == null || costo < 0)
+            throw new IllegalArgumentException("El costo debe ser un número positivo mayor que cero.");
+        Evento evento = manejadorEvento.obtenerEvento(nombreEvento);
+        if (evento == null) {
+            throw new IllegalArgumentException("No existe el evento: " + nombreEvento);
+        }
+        EdicionEvento edicion = evento.getEdicion(nombreEdicion);
+        if (edicion == null) {
+            throw new IllegalArgumentException("No existe la edicion del evento: " + nombreEvento);
+        }
+        if (edicion.existeTipoRegistro(nombreTipoRegistro)) {
+            throw new IllegalArgumentException("Ya existe un tipo registro con nombre: " + nombreEdicion);
+        }
+        TipoRegistro tipoRegistronuevo = new TipoRegistro(nombreTipoRegistro, descripcion, costo, cupos);
+        edicion.agregarTipoRegistro(nombreTipoRegistro, tipoRegistronuevo);
+    }
     
     
     

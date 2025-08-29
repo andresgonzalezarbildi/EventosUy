@@ -90,6 +90,7 @@ public class ManejadorEvento {
     public boolean existeCategoria(String nombre) {
         return categorias.containsKey(nombre);
     }
+    
 
 
 
@@ -100,4 +101,5 @@ public class ManejadorEvento {
         }
         return false;
     }
+    
 }
