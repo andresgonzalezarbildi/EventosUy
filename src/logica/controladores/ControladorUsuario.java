@@ -59,20 +59,6 @@ public class ControladorUsuario implements IControladorUsuario {
         return aDataUsuario(u);
     }
 
-    public DataUsuario[] getUsuarios() throws UsuarioNoExisteException {
-        Collection<Organizador> orgs = manejador.obtenerTodosOrganizadores();
-        Collection<Asistente>  asis  = manejador.obtenerTodosAsistentes();
-
-        if (orgs.isEmpty() && asis.isEmpty())
-            throw new UsuarioNoExisteException("No hay usuarios registrados.");
-
-        List<DataUsuario> lista = new ArrayList<>(orgs.size() + asis.size());
-        for (Organizador o : orgs) lista.add(aDataUsuario(o));
-        for (Asistente  a : asis)  lista.add(aDataUsuario(a));
-
-        return lista.toArray(new DataUsuario[0]);
-    }
-
     public void modificarUsuario(String nickname, String nombre, String descripcion,
                                  String link, String apellido, LocalDate fechaNac)
                                  throws UsuarioNoExisteException {
@@ -93,6 +79,20 @@ public class ControladorUsuario implements IControladorUsuario {
             if (apellido != null)   a.setApellido(apellido);
             if (fechaNac != null)   a.setFechaNacimiento(fechaNac);
         }
+    }
+    
+    public DataUsuario[] getUsuarios() throws UsuarioNoExisteException {
+        Collection<Organizador> orgs = manejador.obtenerTodosOrganizadores();
+        Collection<Asistente>  asis  = manejador.obtenerTodosAsistentes();
+
+        if (orgs.isEmpty() && asis.isEmpty())
+            throw new UsuarioNoExisteException("No hay usuarios registrados.");
+
+        List<DataUsuario> lista = new ArrayList<>(orgs.size() + asis.size());
+        for (Organizador o : orgs) lista.add(aDataUsuario(o));
+        for (Asistente  a : asis)  lista.add(aDataUsuario(a));
+
+        return lista.toArray(new DataUsuario[0]);
     }
 
     private DataUsuario aDataUsuario(Usuario u) {

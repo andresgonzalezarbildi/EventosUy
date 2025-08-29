@@ -55,11 +55,6 @@ public class ControladorEvento implements IControladorEvento {
 		manejadorEvento.agregarEvento(e);
 	}
     
-   public void consultaEvento(){
-	   
-    
-   	}
-    
     //el altaCategoria es sin GUI
    public void altaCategoria(String nombre) throws CategoriaRepetidaException {
        if (nombre == null || nombre.isBlank()) {
@@ -91,7 +86,6 @@ public class ControladorEvento implements IControladorEvento {
     	 }
     }
       
-    
     public DataEdicion[] listarEdiciones(String nombreEvento) throws EventoNoExisteException {
     	Evento eve = manejadorEvento.obtenerEvento(nombreEvento);
 
@@ -107,9 +101,6 @@ public class ControladorEvento implements IControladorEvento {
     		throw new EventoNoExisteException("No existen ediciones registradas del Evento");
     	}
    }
-    
-    
-    
     
     public void altaEdicionEvento(
             String nombreEvento, String nombreEdicion, String sigla, String ciudad, String pais, LocalDate fechaInicio, LocalDate fechaFin, LocalDate fechaAltaEnPlataforma, String organizadorNick) {
@@ -144,8 +135,6 @@ public class ControladorEvento implements IControladorEvento {
         evento.agregarEdicion(ed);
     }
 
-    
-    
     public void altaTipoRegistro(String nombreEvento, String nombreEdicion, String nombreTipoRegistro, String descripcion, Integer costo,  Integer cupos) {
     	if (nombreEvento == null || nombreEvento.isBlank())   
         	throw new IllegalArgumentException("El evento es obligatorio.");
@@ -173,7 +162,5 @@ public class ControladorEvento implements IControladorEvento {
         TipoRegistro tipoRegistronuevo = new TipoRegistro(nombreTipoRegistro, descripcion, costo, cupos);
         edicion.agregarTipoRegistro(nombreTipoRegistro, tipoRegistronuevo);
     }
-    
-    
     
 }	
