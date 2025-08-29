@@ -15,6 +15,16 @@ import logica.interfaces.IControladorUsuario;
 import logica.manejadores.ManejadorUsuario;
 
 public class ControladorUsuario implements IControladorUsuario {
+	
+	private static ControladorUsuario instancia;
+
+	
+    public static ControladorUsuario getInstance() {
+        if (instancia == null) {
+            instancia = new ControladorUsuario();
+        }
+        return instancia;
+    }
 
     private final ManejadorUsuario manejador;
 

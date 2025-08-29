@@ -1,17 +1,22 @@
 package presentacion;
 
-import java.awt.EventQueue;
 import java.awt.BorderLayout;
+import java.awt.EventQueue;
 import java.beans.PropertyVetoException;
-import javax.swing.*;
+
+import javax.swing.JDesktopPane;
+import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 
 import logica.Fabrica;
-import logica.datatypes.DataUsuario;
-import logica.manejadores.ManejadorEvento;
-import logica.datatypes.DataEvento;
-import logica.interfaces.IControladorEvento;
 import logica.clases.Categoria;
+import logica.controladores.ControladorUsuario;
+import logica.interfaces.IControladorEvento;
 import logica.interfaces.IControladorUsuario;
+import logica.manejadores.ManejadorEvento;
 import presentacion.evento.AltaEvento;
 import presentacion.evento.ConsultaEvento;
 import presentacion.registros.RegistroAEdicionEvento;
@@ -71,33 +76,35 @@ public class Principal {
         altaUsuarioInternalFrame.setClosable(true);
         desktop.add(altaUsuarioInternalFrame);
         altaUsuarioInternalFrame.setVisible(false);
+        altaUsuarioInternalFrame.setDefaultCloseOperation(JInternalFrame.HIDE_ON_CLOSE);
         
         consultaUsuarioInternalFrame = new ConsultaUsuario(ICU);
         consultaUsuarioInternalFrame.setLocation(10, 23);
         consultaUsuarioInternalFrame.setClosable(true);
         desktop.add(consultaUsuarioInternalFrame);
         consultaUsuarioInternalFrame.setVisible(false);
+        consultaUsuarioInternalFrame.setDefaultCloseOperation(JInternalFrame.HIDE_ON_CLOSE);
         
         modificarUsuarioInternalFrame = new ModificarUsuario(ICU);
         modificarUsuarioInternalFrame.setLocation(10, 23);
         modificarUsuarioInternalFrame.setClosable(true);
         desktop.add(modificarUsuarioInternalFrame);
         modificarUsuarioInternalFrame.setVisible(false);
+        modificarUsuarioInternalFrame.setDefaultCloseOperation(JInternalFrame.HIDE_ON_CLOSE);
         
         altaEventoInternalFrame = new AltaEvento(IEV);
         altaEventoInternalFrame.setLocation(10, 23);
         altaEventoInternalFrame.setClosable(true);
         desktop.add(altaEventoInternalFrame);
         altaEventoInternalFrame.setVisible(false);
+        altaEventoInternalFrame.setDefaultCloseOperation(JInternalFrame.HIDE_ON_CLOSE);
         
         consultaEventoInternalFrame = new ConsultaEvento(IEV);
         consultaEventoInternalFrame.setLocation(10, 23);
         consultaEventoInternalFrame.setClosable(true);
         desktop.add(consultaEventoInternalFrame);
         consultaEventoInternalFrame.setVisible(false);
-        
- 
-        
+        consultaEventoInternalFrame.setDefaultCloseOperation(JInternalFrame.HIDE_ON_CLOSE);
         
     }
 
@@ -132,6 +139,10 @@ public class Principal {
             ensureSize(altaUsuarioInternalFrame, 600, 400);
             showInternal(altaUsuarioInternalFrame);
         });
+
+        
+        
+        
         JMenuItem miConsultaUsuario = new JMenuItem("Consulta de Usuario");
         miConsultaUsuario.addActionListener(e -> {
             if (consultaUsuarioInternalFrame == null || consultaUsuarioInternalFrame.isClosed()) {
