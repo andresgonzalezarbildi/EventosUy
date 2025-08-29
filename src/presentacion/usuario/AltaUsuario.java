@@ -16,6 +16,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.DefaultListCellRenderer;
 
+import com.toedter.calendar.JDateChooser;
+import java.time.ZoneId;
+import java.util.Date;
+import java.time.LocalDate;   // <-- AGREGAR
+
+
+
 import excepciones.UsuarioRepetidoException;
 import logica.interfaces.IControladorUsuario;
 
@@ -36,7 +43,7 @@ public class AltaUsuario extends JInternalFrame {
     private JLabel lblApellido;
     private JTextField textFieldApellido;
     private JLabel lblFechaNacimiento;
-    private JTextField textFieldFechaNacimiento;
+    private JDateChooser dateChooserFechaNac;
 
     public AltaUsuario(IControladorUsuario icu) {
         controlUsr = icu;
@@ -96,7 +103,7 @@ public class AltaUsuario extends JInternalFrame {
                 lblApellido.setVisible(isAsistente);
                 textFieldApellido.setVisible(isAsistente);
                 lblFechaNacimiento.setVisible(isAsistente);
-                textFieldFechaNacimiento.setVisible(isAsistente);
+             dateChooserFechaNac.setVisible(isAsistente);
 
                 getContentPane().revalidate();
                 getContentPane().repaint();
@@ -226,7 +233,6 @@ public class AltaUsuario extends JInternalFrame {
 
         lblFechaNacimiento = new JLabel("Fecha Nac.:");
         lblFechaNacimiento.setHorizontalAlignment(SwingConstants.RIGHT);
-        textFieldFechaNacimiento = new JTextField();
         GridBagConstraints gbc_lblFechaNacimiento = new GridBagConstraints();
         gbc_lblFechaNacimiento.fill = GridBagConstraints.BOTH;
         gbc_lblFechaNacimiento.insets = new Insets(0, 0, 5, 5);
@@ -235,14 +241,17 @@ public class AltaUsuario extends JInternalFrame {
         getContentPane().add(lblFechaNacimiento, gbc_lblFechaNacimiento);
         lblFechaNacimiento.setVisible(false);
 
-        GridBagConstraints gbc_textFieldFechaNacimiento = new GridBagConstraints();
-        gbc_textFieldFechaNacimiento.gridwidth = 2;
-        gbc_textFieldFechaNacimiento.fill = GridBagConstraints.BOTH;
-        gbc_textFieldFechaNacimiento.insets = new Insets(0, 0, 5, 0);
-        gbc_textFieldFechaNacimiento.gridx = 1;
-        gbc_textFieldFechaNacimiento.gridy = 5;
-        getContentPane().add(textFieldFechaNacimiento, gbc_textFieldFechaNacimiento);
-        textFieldFechaNacimiento.setVisible(false);
+        // JDateChooser en vez de JTextField
+        dateChooserFechaNac = new JDateChooser();
+        dateChooserFechaNac.setDateFormatString("yyyy-MM-dd"); // solo para la vista
+        GridBagConstraints gbc_dateChooserFechaNac = new GridBagConstraints();
+        gbc_dateChooserFechaNac.gridwidth = 2;
+        gbc_dateChooserFechaNac.fill = GridBagConstraints.BOTH;
+        gbc_dateChooserFechaNac.insets = new Insets(0, 0, 5, 0);
+        gbc_dateChooserFechaNac.gridx = 1;
+        gbc_dateChooserFechaNac.gridy = 5;
+        getContentPane().add(dateChooserFechaNac, gbc_dateChooserFechaNac);
+        dateChooserFechaNac.setVisible(false);
 
         // Botones
         btnAceptar = new JButton("Aceptar");
@@ -273,90 +282,110 @@ public class AltaUsuario extends JInternalFrame {
     }
 
     protected void cmdRegistroUsuarioActionPerformed(ActionEvent arg0) {
-        String nicknameU = textFieldNickname.getText();
-        String nombreU = textFieldNombre.getText();
-        String correoU = textFieldCorreo.getText();
-        String tipoU = (String) comboTipoUsuario.getSelectedItem();
+    String nicknameU = textFieldNickname.getText().trim();
+    String nombreU = textFieldNombre.getText().trim();
+    String correoU = textFieldCorreo.getText().trim();
+    String tipoU = (String) comboTipoUsuario.getSelectedItem();
 
-        String descripcionU = textFieldDescripcion.getText();
-        String linkU = textFieldLink.getText();
-        String apellidoU = textFieldApellido.getText();
-        String fechaNacU = textFieldFechaNacimiento.getText();
+    String descripcionU = textFieldDescripcion.getText().trim();
+    String linkU = textFieldLink.getText().trim();
+    String apellidoU = textFieldApellido.getText().trim();
 
-        if (checkFormulario()) {
-        	try {
-        	    if (tipoU.equals("Organizador")) {
-        	        controlUsr.altaUsuario(nicknameU, nombreU, correoU, "Organizador", descripcionU, linkU, null, null);
-        	    } else if (tipoU.equals("Asistente")) {
-        	        controlUsr.altaUsuario(nicknameU, nombreU, correoU, "Asistente", null, null, apellidoU, fechaNacU);
-        	    }
-
-        	    JOptionPane.showMessageDialog(this, "El Usuario se ha creado con éxito", "Registrar Usuario",
-        	            JOptionPane.INFORMATION_MESSAGE);
-
-        	} catch (UsuarioRepetidoException e) {
-        	    JOptionPane.showMessageDialog(this, e.getMessage(), "Registrar Usuario", JOptionPane.ERROR_MESSAGE);
-        	}
-            limpiarFormulario();
-            setVisible(false);
-        }
+    // obtener LocalDate (si aplica)
+    LocalDate fechaNacLD = null;
+    if ("Asistente".equals(tipoU) && dateChooserFechaNac.getDate() != null) {
+        fechaNacLD = dateChooserFechaNac.getDate().toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate();
     }
 
-    private boolean checkFormulario() {
-        String tipo = (String) comboTipoUsuario.getSelectedItem();
-        String nicknameU = textFieldNickname.getText();
-        String nombreU = textFieldNombre.getText();
-        String correoU = textFieldCorreo.getText();
-        String linkU = textFieldLink.getText();
-        String descripcionU = textFieldDescripcion.getText();
-        String apellidoU = textFieldApellido.getText();
-        String fechaNacU = textFieldFechaNacimiento.getText();
+    if (checkFormulario()) {
+        try {
+            if ("Organizador".equals(tipoU)) {
+                controlUsr.altaUsuario(nicknameU, nombreU, correoU, "Organizador", descripcionU, linkU, null, null);
+            } else if ("Asistente".equals(tipoU)) {
+                controlUsr.altaUsuario(nicknameU, nombreU, correoU, "Asistente", null, null, apellidoU, fechaNacLD);
+            }
 
-        if (nicknameU.isEmpty() || nombreU.isEmpty() || correoU.isEmpty() || tipo == null || tipo.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Los campos comunes no pueden estar vacíos", 
+            JOptionPane.showMessageDialog(this, "El Usuario se ha creado con éxito",
+                    "Registrar Usuario", JOptionPane.INFORMATION_MESSAGE);
+
+        } catch (UsuarioRepetidoException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(),
                     "Registrar Usuario", JOptionPane.ERROR_MESSAGE);
-            return false;
         }
-
-        if ("Organizador".equals(tipo) && descripcionU.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "La descripción es obligatoria para un Organizador", 
-                    "Registrar Usuario", JOptionPane.ERROR_MESSAGE);
-            return false;
-        }
-
-        if ("Asistente".equals(tipo) && (apellidoU.isEmpty() || fechaNacU.isEmpty())) {
-            JOptionPane.showMessageDialog(this, "Apellido y fecha de nacimiento son obligatorios para un Asistente", 
-                    "Registrar Usuario", JOptionPane.ERROR_MESSAGE);
-            return false;
-        }
-
-        return true;
+        limpiarFormulario();
+        setVisible(false);
     }
+}
+
+	private boolean checkFormulario() {
+	    String tipo = (String) comboTipoUsuario.getSelectedItem();
+	    String nicknameU = textFieldNickname.getText().trim();
+	    String nombreU = textFieldNombre.getText().trim();
+	    String correoU = textFieldCorreo.getText().trim();
+	    String descripcionU = textFieldDescripcion.getText().trim();
+	    String apellidoU = textFieldApellido.getText().trim();
+	    Date utilDate = dateChooserFechaNac.getDate(); // <-- ahora viene del JDateChooser
+	
+	    if (nicknameU.isEmpty() || nombreU.isEmpty() || correoU.isEmpty() || tipo == null || tipo.isEmpty()) {
+	        JOptionPane.showMessageDialog(this, "Los campos comunes no pueden estar vacíos",
+	                "Registrar Usuario", JOptionPane.ERROR_MESSAGE);
+	        return false;
+	    }
+	
+	    if ("Organizador".equals(tipo) && descripcionU.isEmpty()) {
+	        JOptionPane.showMessageDialog(this, "La descripción es obligatoria para un Organizador",
+	                "Registrar Usuario", JOptionPane.ERROR_MESSAGE);
+	        return false;
+	    }
+	
+	    if ("Asistente".equals(tipo)) {
+	        if (apellidoU.isEmpty() || utilDate == null) {
+	            JOptionPane.showMessageDialog(this, "Apellido y fecha de nacimiento son obligatorios para un Asistente",
+	                    "Registrar Usuario", JOptionPane.ERROR_MESSAGE);
+	            return false;
+	        }
+	        // (opcional) validar que no sea fecha futura
+	        LocalDate fnac = utilDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+	        if (fnac.isAfter(LocalDate.now())) {
+	            JOptionPane.showMessageDialog(this, "La fecha de nacimiento no puede ser futura",
+	                    "Registrar Usuario", JOptionPane.ERROR_MESSAGE);
+	            return false;
+	        }
+	    }
+	
+	    return true;
+	}
+
 
     private void limpiarFormulario() {
-        textFieldNickname.setText("");
-        textFieldNombre.setText("");
-        textFieldCorreo.setText("");
+    textFieldNickname.setText("");
+    textFieldNombre.setText("");
+    textFieldCorreo.setText("");
 
-        comboTipoUsuario.setSelectedIndex(0);
+    comboTipoUsuario.setSelectedIndex(0);
 
-        lblDescripcion.setVisible(false);
-        textFieldDescripcion.setVisible(false);
-        textFieldDescripcion.setText("");
+    lblDescripcion.setVisible(false);
+    textFieldDescripcion.setVisible(false);
+    textFieldDescripcion.setText("");
 
-        lblLink.setVisible(false);
-        textFieldLink.setVisible(false);
-        textFieldLink.setText("");
+    lblLink.setVisible(false);
+    textFieldLink.setVisible(false);
+    textFieldLink.setText("");
 
-        lblApellido.setVisible(false);
-        textFieldApellido.setVisible(false);
-        textFieldApellido.setText("");
+    lblApellido.setVisible(false);
+    textFieldApellido.setVisible(false);
+    textFieldApellido.setText("");
 
-        lblFechaNacimiento.setVisible(false);
-        textFieldFechaNacimiento.setVisible(false);
-        textFieldFechaNacimiento.setText("");
+    lblFechaNacimiento.setVisible(false);
+    // textFieldFechaNacimiento.setVisible(false);
+    // textFieldFechaNacimiento.setText("");
+    dateChooserFechaNac.setVisible(false);
+    dateChooserFechaNac.setDate(null);
 
-        getContentPane().revalidate();
-        getContentPane().repaint();
-    }
+    getContentPane().revalidate();
+    getContentPane().repaint();
+}
+
 }
