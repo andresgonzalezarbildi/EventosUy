@@ -317,7 +317,7 @@ public class AltaEdicionEvento extends JInternalFrame {
 	    cbOrganizadores.removeAllItems();
 	    for (DataUsuario org : IUS.getOrganizadores()) {
 	        if (org != null) {
-	            cbOrganizadores.addItem(org.getNombre());
+	            cbOrganizadores.addItem(org.getNickname());
 	        }
 	    }
 	}
