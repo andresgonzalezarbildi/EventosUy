@@ -52,7 +52,7 @@ public class ControladorEvento implements IControladorEvento {
         }
 
 		manejadorEvento.agregarEvento(e);
-		
+
 	}
     
     //el altaCategoria es sin GUI

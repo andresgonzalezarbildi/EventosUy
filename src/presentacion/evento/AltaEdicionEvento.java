@@ -317,7 +317,9 @@ public class AltaEdicionEvento extends JInternalFrame {
 	@Override
 	public void setVisible(boolean aFlag) {
 	    if (aFlag) {
+
 	        cargarEventos(); 
+
 	        cargarOrganizadores();
 	    }
 	    super.setVisible(aFlag);
