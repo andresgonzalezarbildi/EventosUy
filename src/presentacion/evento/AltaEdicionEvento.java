@@ -1,11 +1,9 @@
 	package presentacion.evento;
 
 import java.awt.BorderLayout;
-import com.toedter.calendar.JDateChooser;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
 import java.time.LocalDate;
 import java.time.ZoneId;
 
@@ -16,6 +14,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import com.toedter.calendar.JDateChooser;
 
 import logica.datatypes.DataEvento;
 import logica.datatypes.DataUsuario;
@@ -334,5 +334,6 @@ public class AltaEdicionEvento extends JInternalFrame {
 	        cargarOrganizadores();
 	    }
 	    super.setVisible(aFlag);
+	    
 	}
 }

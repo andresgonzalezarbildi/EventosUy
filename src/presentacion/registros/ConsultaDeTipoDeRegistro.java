@@ -1,27 +1,23 @@
 package presentacion.registros;
 
-import javax.swing.JDialog;
+import java.awt.BorderLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+
+import javax.swing.JComboBox;
 import javax.swing.JInternalFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 
-import logica.interfaces.IControladorEvento;
-
-import java.awt.BorderLayout;
-
-import javax.swing.BorderFactory;
-import javax.swing.DefaultComboBoxModel;
-import java.awt.GridBagLayout;
-import javax.swing.JLabel;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import javax.swing.JComboBox;
-import javax.swing.SwingConstants;
-import javax.swing.JTextArea;
-import logica.datatypes.DataEvento;
 import logica.datatypes.DataEdicion;
+import logica.datatypes.DataEvento;
 import logica.datatypes.DataTipoRegistro;
+import logica.interfaces.IControladorEvento;
+import javax.swing.SwingConstants;
 
 public class ConsultaDeTipoDeRegistro extends JInternalFrame {
 	private static final long serialVersionUID = 1L;
@@ -31,9 +27,11 @@ public class ConsultaDeTipoDeRegistro extends JInternalFrame {
 	private JTextArea infoTipoRegistro;
 
 	private IControladorEvento IEV;
+	private JLabel lblInformacion;
 
 	
 	public ConsultaDeTipoDeRegistro(IControladorEvento IEV) {
+			super("Consulta De Tipo De Registro", false, true, true, true);
 			this.IEV=IEV;
 
 		    setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
@@ -42,50 +40,71 @@ public class ConsultaDeTipoDeRegistro extends JInternalFrame {
 		    setBounds(100, 100, 600, 400);
 		    getContentPane().setLayout(new BorderLayout(0, 0));
 
-		    // Panel izquierdo
+
 		    JPanel panelIzq = new JPanel(new GridBagLayout());
 		    panelIzq.setBorder(new EmptyBorder(12, 12, 12, 12));
 		    getContentPane().add(panelIzq, BorderLayout.WEST);
 
-		    GridBagConstraints gbc = new GridBagConstraints();
-		    gbc.insets = new Insets(6, 6, 6, 6);
-		    gbc.fill = GridBagConstraints.HORIZONTAL;
-		    gbc.gridx = 0;
+		    GridBagConstraints gbcEventoLabel = new GridBagConstraints();
+		    gbcEventoLabel.insets = new Insets(6, 6, 6, 6);
+		    gbcEventoLabel.fill = GridBagConstraints.HORIZONTAL;
+		    gbcEventoLabel.gridx = 0;
+		    gbcEventoLabel.gridy = 0;
+		    panelIzq.add(new JLabel("Evento:"), gbcEventoLabel);
 
-		    // Evento
-		    gbc.gridy = 0;
-		    panelIzq.add(new JLabel("Evento:"), gbc);
+		    GridBagConstraints gbcEventoCombo = new GridBagConstraints();
+		    gbcEventoCombo.insets = new Insets(6, 6, 6, 6);
+		    gbcEventoCombo.fill = GridBagConstraints.HORIZONTAL;
+		    gbcEventoCombo.gridx = 0;
+		    gbcEventoCombo.gridy = 1;
 		    cbListaEvento = new JComboBox<>();
-		    gbc.gridy = 1;
-		    panelIzq.add(cbListaEvento, gbc);
+		    panelIzq.add(cbListaEvento, gbcEventoCombo);
 
-		    // Edición
-		    gbc.gridy = 2;
-		    panelIzq.add(new JLabel("Edición:"), gbc);
+		    GridBagConstraints gbcEdicionLabel = new GridBagConstraints();
+		    gbcEdicionLabel.insets = new Insets(6, 6, 6, 6);
+		    gbcEdicionLabel.fill = GridBagConstraints.HORIZONTAL;
+		    gbcEdicionLabel.gridx = 0;
+		    gbcEdicionLabel.gridy = 2;
+		    panelIzq.add(new JLabel("Edición:"), gbcEdicionLabel);
+
+		    GridBagConstraints gbcEdicionCombo = new GridBagConstraints();
+		    gbcEdicionCombo.insets = new Insets(6, 6, 6, 6);
+		    gbcEdicionCombo.fill = GridBagConstraints.HORIZONTAL;
+		    gbcEdicionCombo.gridx = 0;
+		    gbcEdicionCombo.gridy = 3;
 		    cbListaEdicion = new JComboBox<>();
-		    gbc.gridy = 3;
-		    panelIzq.add(cbListaEdicion, gbc);
+		    panelIzq.add(cbListaEdicion, gbcEdicionCombo);
 
-		    // Tipo de registro
-		    gbc.gridy = 4;
-		    panelIzq.add(new JLabel("Tipo de Registro:"), gbc);
+		    GridBagConstraints gbcTipoLabel = new GridBagConstraints();
+		    gbcTipoLabel.insets = new Insets(6, 6, 6, 6);
+		    gbcTipoLabel.fill = GridBagConstraints.HORIZONTAL;
+		    gbcTipoLabel.gridx = 0;
+		    gbcTipoLabel.gridy = 4;
+		    panelIzq.add(new JLabel("Tipo de Registro:"), gbcTipoLabel);
+
+		    GridBagConstraints gbcTipoCombo = new GridBagConstraints();
+		    gbcTipoCombo.insets = new Insets(6, 6, 6, 6);
+		    gbcTipoCombo.fill = GridBagConstraints.HORIZONTAL;
+		    gbcTipoCombo.gridx = 0;
+		    gbcTipoCombo.gridy = 5;
 		    cbListaTipoRegistro = new JComboBox<>();
-		    gbc.gridy = 5;
-		    panelIzq.add(cbListaTipoRegistro, gbc);
+		    panelIzq.add(cbListaTipoRegistro, gbcTipoCombo);
 
-		    // Panel derecho: información
 		    infoTipoRegistro = new JTextArea();
 		    infoTipoRegistro.setEditable(false);
 		    infoTipoRegistro.setLineWrap(true);
 		    infoTipoRegistro.setWrapStyleWord(true);
-		    getContentPane().add(new JScrollPane(infoTipoRegistro), BorderLayout.CENTER);
+		    JScrollPane scrollPane = new JScrollPane(infoTipoRegistro);
+		    getContentPane().add(scrollPane, BorderLayout.CENTER);
+		    
+		    lblInformacion = new JLabel("Inofrmacion del tipo de refistro:");
+		    lblInformacion.setHorizontalAlignment(SwingConstants.CENTER);
+		    scrollPane.setColumnHeaderView(lblInformacion);
 
-		    // Listeners en cascada
 		    cbListaEvento.addActionListener(e -> cargarEdiciones());
 		    cbListaEdicion.addActionListener(e -> cargarTiposRegistro());
 		    cbListaTipoRegistro.addActionListener(e -> mostrarInfoTipoRegistro());
 
-		    // Al abrir, cargar eventos
 		    cargarEventos();
 		}
 	

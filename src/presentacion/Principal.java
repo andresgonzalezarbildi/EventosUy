@@ -113,7 +113,8 @@ public class Principal {
         consultaEventoInternalFrame.setLocation(10, 23);
         consultaEventoInternalFrame.setClosable(true);
         desktop.add(consultaEventoInternalFrame);
-        consultaEventoInternalFrame.setVisible(false);
+        consultaEventoInternalFrame.setVisible(false); 
+        consultaEventoInternalFrame.setDefaultCloseOperation(JInternalFrame.HIDE_ON_CLOSE);
 
         
         altaEdicionInternalFrame = new AltaEdicionEvento(IEV,ICU);
@@ -121,12 +122,14 @@ public class Principal {
         altaEdicionInternalFrame.setClosable(true);
         desktop.add(altaEdicionInternalFrame);
         altaEdicionInternalFrame.setVisible(false);
+        altaEdicionInternalFrame.setDefaultCloseOperation(JInternalFrame.HIDE_ON_CLOSE);
         
         consultaEdicionInternalFrame = new ConsultaEdicionEvento(IEV);
         consultaEdicionInternalFrame.setLocation(10, 23);
         consultaEdicionInternalFrame.setClosable(true);
         desktop.add(consultaEdicionInternalFrame);
         consultaEdicionInternalFrame.setVisible(false);
+        consultaEdicionInternalFrame.setDefaultCloseOperation(JInternalFrame.HIDE_ON_CLOSE);
         
         
         altaTipoDeRegistroInternalFrame = new AltaDeTipoDeRegistro(IEV);
@@ -134,17 +137,14 @@ public class Principal {
         altaTipoDeRegistroInternalFrame.setClosable(true);
         desktop.add(altaTipoDeRegistroInternalFrame);
         altaTipoDeRegistroInternalFrame.setVisible(false);
+        altaTipoDeRegistroInternalFrame.setDefaultCloseOperation(JInternalFrame.HIDE_ON_CLOSE);
         
         consultaDeTipoDeRegistroInternalFrame = new ConsultaDeTipoDeRegistro(IEV);
         consultaDeTipoDeRegistroInternalFrame.setLocation(10, 23);
         consultaDeTipoDeRegistroInternalFrame.setClosable(true);
         desktop.add(consultaDeTipoDeRegistroInternalFrame);
         consultaDeTipoDeRegistroInternalFrame.setVisible(false);
- 
-        
-
-        consultaEventoInternalFrame.setDefaultCloseOperation(JInternalFrame.HIDE_ON_CLOSE);
-
+        consultaDeTipoDeRegistroInternalFrame.setDefaultCloseOperation(JInternalFrame.HIDE_ON_CLOSE);
         
     }
 

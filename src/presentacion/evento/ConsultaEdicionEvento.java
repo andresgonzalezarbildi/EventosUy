@@ -23,7 +23,7 @@ public class ConsultaEdicionEvento extends JInternalFrame {
 	
 	public ConsultaEdicionEvento(IControladorEvento controlEvento) {
 		
-		super("Alta Edicion Evento", false, true, true, true);
+		super("Consulta Edicion Evento", false, true, true, true);
 		this.controlEvento = controlEvento;;
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setResizable(false);
