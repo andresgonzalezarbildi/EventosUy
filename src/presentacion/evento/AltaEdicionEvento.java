@@ -1,16 +1,19 @@
 	package presentacion.evento;
 
 import java.awt.BorderLayout;
+import com.toedter.calendar.JDateChooser;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.time.LocalDate;
+import java.time.ZoneId;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -27,11 +30,12 @@ public class AltaEdicionEvento extends JInternalFrame {
 	private IControladorUsuario IUS;
     private JTextField textFieldNombre;
     private JTextField textFieldSigla;
-    private JTextField Ciudad;
     private JTextField textFieldPais;
-    private JTextField textFieldFechaI;
-    private JTextField textFieldFechaF;
-    private JTextField textFieldFecha;
+
+    private JTextField Ciudad;
+    private JDateChooser dateChooserFechaI;
+    private JDateChooser dateChooserFechaF;
+    private JDateChooser dateChooserFechaAlta;
 
 	
 	public AltaEdicionEvento(IControladorEvento controlEvento,IControladorUsuario IUS) {
@@ -159,14 +163,14 @@ public class AltaEdicionEvento extends JInternalFrame {
 		gbc_lblFechaInicio.gridy = 6;
 		getContentPane().add(lblFechaInicio, gbc_lblFechaInicio);
 		
-		textFieldFechaI = new JTextField();
-		GridBagConstraints gbc_textFieldFechaI = new GridBagConstraints();
-		gbc_textFieldFechaI.insets = new Insets(0, 0, 5, 0);
-		gbc_textFieldFechaI.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textFieldFechaI.gridx = 2;
-		gbc_textFieldFechaI.gridy = 6;
-		getContentPane().add(textFieldFechaI, gbc_textFieldFechaI);
-		textFieldFechaI.setColumns(10);
+		dateChooserFechaI = new JDateChooser();
+		dateChooserFechaI.setDateFormatString("dd/MM/yyyy");
+		GridBagConstraints gbc_dateChooserFechaI = new GridBagConstraints();
+		gbc_dateChooserFechaI.insets = new Insets(0, 0, 5, 0);
+		gbc_dateChooserFechaI.fill = GridBagConstraints.HORIZONTAL;
+		gbc_dateChooserFechaI.gridx = 2;
+		gbc_dateChooserFechaI.gridy = 6;
+		getContentPane().add(dateChooserFechaI, gbc_dateChooserFechaI);
 		
 		JLabel lblFechaFin = new JLabel("Fecha fin:");
 		GridBagConstraints gbc_lblFechaFin = new GridBagConstraints();
@@ -176,14 +180,14 @@ public class AltaEdicionEvento extends JInternalFrame {
 		gbc_lblFechaFin.gridy = 7;
 		getContentPane().add(lblFechaFin, gbc_lblFechaFin);
 		
-		textFieldFechaF = new JTextField();
-		GridBagConstraints gbc_textFieldFechaF = new GridBagConstraints();
-		gbc_textFieldFechaF.insets = new Insets(0, 0, 5, 0);
-		gbc_textFieldFechaF.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textFieldFechaF.gridx = 2;
-		gbc_textFieldFechaF.gridy = 7;
-		getContentPane().add(textFieldFechaF, gbc_textFieldFechaF);
-		textFieldFechaF.setColumns(10);
+		dateChooserFechaF = new JDateChooser();
+		dateChooserFechaF.setDateFormatString("dd/MM/yyyy");
+		GridBagConstraints gbc_dateChooserFechaF = new GridBagConstraints();
+		gbc_dateChooserFechaF.insets = new Insets(0, 0, 5, 0);
+		gbc_dateChooserFechaF.fill = GridBagConstraints.HORIZONTAL;
+		gbc_dateChooserFechaF.gridx = 2;
+		gbc_dateChooserFechaF.gridy = 7;
+		getContentPane().add(dateChooserFechaF, gbc_dateChooserFechaF);
 		
 		JLabel lblFechaAlta = new JLabel("Fecha:");
 		GridBagConstraints gbc_lblFechaAlta = new GridBagConstraints();
@@ -193,14 +197,14 @@ public class AltaEdicionEvento extends JInternalFrame {
 		gbc_lblFechaAlta.gridy = 8;
 		getContentPane().add(lblFechaAlta, gbc_lblFechaAlta);
 		
-		textFieldFecha = new JTextField();
-		GridBagConstraints gbc_textFieldFecha = new GridBagConstraints();
-		gbc_textFieldFecha.insets = new Insets(0, 0, 5, 0);
-		gbc_textFieldFecha.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textFieldFecha.gridx = 2;
-		gbc_textFieldFecha.gridy = 8;
-		getContentPane().add(textFieldFecha, gbc_textFieldFecha);
-		textFieldFecha.setColumns(10);
+		dateChooserFechaAlta = new JDateChooser();
+		dateChooserFechaAlta.setDateFormatString("dd/MM/yyyy");
+		GridBagConstraints gbc_dateChooserFechaAlta = new GridBagConstraints();
+		gbc_dateChooserFechaAlta.insets = new Insets(0, 0, 5, 0);
+		gbc_dateChooserFechaAlta.fill = GridBagConstraints.HORIZONTAL;
+		gbc_dateChooserFechaAlta.gridx = 2;
+		gbc_dateChooserFechaAlta.gridy = 8;
+		getContentPane().add(dateChooserFechaAlta, gbc_dateChooserFechaAlta);
 		
 		JPanel panel = new JPanel();
 		GridBagConstraints gbc_panel = new GridBagConstraints();
@@ -254,40 +258,47 @@ public class AltaEdicionEvento extends JInternalFrame {
 	    String sigla = textFieldSigla.getText().trim();
 	    String ciudad = Ciudad.getText().trim();
 	    String pais = textFieldPais.getText().trim();
-//	    String fechaInicio = textFieldFechaI.getText().trim();
-//	    String fechaFin = textFieldFechaF.getText().trim();
-//	    String fechaAlta = textFieldFecha.getText().trim();
 	    String eventoSel = (String) cbListaEventos.getSelectedItem();
-	    String organizadorSel = (String) cbOrganizadores.getSelectedItem(); 
-	    LocalDate hoy = LocalDate.now();
-	        try {
-	            // acá llamás al método del controlador de eventos
-	            controlEvento.altaEdicionEvento(
-	            		eventoSel,
-	                nombre,
-	                sigla,
-	                ciudad,
-	                pais,
-	                hoy,
-	                hoy,
-	                hoy,
-	                organizadorSel
-	            );
+	    String organizadorSel = (String) cbOrganizadores.getSelectedItem();
+	    LocalDate fechaInicio = null;
+	    LocalDate fechaFin = null;
+	    LocalDate fechaAlta = null;
+	    if (dateChooserFechaI.getDate() != null) {
+	        fechaInicio = dateChooserFechaI.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+	    }
+	    if (dateChooserFechaF.getDate() != null) {
+	        fechaFin = dateChooserFechaF.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+	    }
+	    if (dateChooserFechaAlta.getDate() != null) {
+	        fechaAlta = dateChooserFechaAlta.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+	    }
+	    
+	    try {
+	        controlEvento.altaEdicionEvento(
+	            eventoSel,
+	            nombre,
+	            sigla,
+	            ciudad,
+	            pais,
+	            fechaInicio,
+	            fechaFin,
+	            fechaAlta,
+	            organizadorSel
+	        );
 
-	            javax.swing.JOptionPane.showMessageDialog(this,
+	        JOptionPane.showMessageDialog(this,
 	                "La edición del evento se ha creado con éxito",
-	                "Alta Edición de Evento", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+	                "Alta Edición de Evento", JOptionPane.INFORMATION_MESSAGE);
 
-	            //TODO: limpiarFormulario();
 	            setVisible(false);
 
 	        } catch (Exception e) {
-	            javax.swing.JOptionPane.showMessageDialog(this,
+	            JOptionPane.showMessageDialog(this,
 	                e.getMessage(),
-	                "Alta Edición de Evento", javax.swing.JOptionPane.ERROR_MESSAGE);
+	                "Alta Edición de Evento", JOptionPane.ERROR_MESSAGE);
 	        }
-	    
-	}
+	    }
+	
 
 	
 	private void cargarEventos() {
