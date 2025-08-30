@@ -163,6 +163,7 @@ public class ControladorEvento implements IControladorEvento {
         
         EdicionEvento ed = new EdicionEvento( nombreEdicion, fechaInicio, fechaFin, ciudad, pais, sigla, (fechaAltaEnPlataforma != null ? fechaAltaEnPlataforma : LocalDate.now())
         );
+        ed.setOrganizador(org);
         org.agregarEdicion(ed);
         evento.agregarEdicion(ed);
     }
