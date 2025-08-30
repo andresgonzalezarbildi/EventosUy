@@ -21,6 +21,9 @@ import java.time.ZoneId;
 import java.util.Date;
 import java.time.LocalDate;   // <-- AGREGAR
 
+//Descripcion sera un JTextArea
+import javax.swing.JTextArea;
+import javax.swing.JScrollPane;
 
 
 import excepciones.UsuarioRepetidoException;
@@ -37,7 +40,8 @@ public class AltaUsuario extends JInternalFrame {
     private JButton btnAceptar, btnCancelar;
 
     private JLabel lblDescripcion;
-    private JTextField textFieldDescripcion;
+    private JTextArea textAreaDescripcion;
+    private JScrollPane scrollDescripcion;
     private JLabel lblLink;
     private JTextField textFieldLink;
     private JLabel lblApellido;
@@ -96,7 +100,8 @@ public class AltaUsuario extends JInternalFrame {
                 boolean isAsistente = "Asistente".equals(seleccionado);
 
                 lblDescripcion.setVisible(isOrganizador);
-                textFieldDescripcion.setVisible(isOrganizador);
+                lblDescripcion.setVisible(isOrganizador);
+                scrollDescripcion.setVisible(isOrganizador);
                 lblLink.setVisible(isOrganizador);
                 textFieldLink.setVisible(isOrganizador);
 
@@ -173,7 +178,6 @@ public class AltaUsuario extends JInternalFrame {
         // Campos adicionales
         lblDescripcion = new JLabel("Descripción:");
         lblDescripcion.setHorizontalAlignment(SwingConstants.RIGHT);
-        textFieldDescripcion = new JTextField();
         GridBagConstraints gbc_lblDescripcion = new GridBagConstraints();
         gbc_lblDescripcion.fill = GridBagConstraints.BOTH;
         gbc_lblDescripcion.insets = new Insets(0, 0, 5, 5);
@@ -182,14 +186,21 @@ public class AltaUsuario extends JInternalFrame {
         getContentPane().add(lblDescripcion, gbc_lblDescripcion);
         lblDescripcion.setVisible(false);
 
-        GridBagConstraints gbc_textFieldDescripcion = new GridBagConstraints();
-        gbc_textFieldDescripcion.gridwidth = 2;
-        gbc_textFieldDescripcion.fill = GridBagConstraints.BOTH;
-        gbc_textFieldDescripcion.insets = new Insets(0, 0, 5, 0);
-        gbc_textFieldDescripcion.gridx = 1;
-        gbc_textFieldDescripcion.gridy = 4;
-        getContentPane().add(textFieldDescripcion, gbc_textFieldDescripcion);
-        textFieldDescripcion.setVisible(false);
+        // JTextArea + Scroll
+        textAreaDescripcion = new JTextArea();
+        textAreaDescripcion.setLineWrap(true);
+        textAreaDescripcion.setWrapStyleWord(true);
+        textAreaDescripcion.setRows(4); // alto inicial (podés ajustar)
+
+        scrollDescripcion = new JScrollPane(textAreaDescripcion);
+        GridBagConstraints gbc_scrollDescripcion = new GridBagConstraints();
+        gbc_scrollDescripcion.gridwidth = 2;
+        gbc_scrollDescripcion.fill = GridBagConstraints.BOTH;
+        gbc_scrollDescripcion.insets = new Insets(0, 0, 5, 0);
+        gbc_scrollDescripcion.gridx = 1;
+        gbc_scrollDescripcion.gridy = 4;
+        getContentPane().add(scrollDescripcion, gbc_scrollDescripcion);
+        scrollDescripcion.setVisible(false);
 
         lblLink = new JLabel("Link:");
         lblLink.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -287,7 +298,7 @@ public class AltaUsuario extends JInternalFrame {
     String correoU = textFieldCorreo.getText().trim();
     String tipoU = (String) comboTipoUsuario.getSelectedItem();
 
-    String descripcionU = textFieldDescripcion.getText().trim();
+    String descripcionU = textAreaDescripcion.getText().trim();
     String linkU = textFieldLink.getText().trim();
     String apellidoU = textFieldApellido.getText().trim();
 
@@ -326,7 +337,7 @@ public class AltaUsuario extends JInternalFrame {
 	    String nicknameU = textFieldNickname.getText().trim();
 	    String nombreU = textFieldNombre.getText().trim();
 	    String correoU = textFieldCorreo.getText().trim();
-	    String descripcionU = textFieldDescripcion.getText().trim();
+	    String descripcionU = textAreaDescripcion.getText().trim();
 	    String apellidoU = textFieldApellido.getText().trim();
 	    Date utilDate = dateChooserFechaNac.getDate(); // <-- ahora viene del JDateChooser
 	
@@ -369,8 +380,8 @@ public class AltaUsuario extends JInternalFrame {
     comboTipoUsuario.setSelectedIndex(0);
 
     lblDescripcion.setVisible(false);
-    textFieldDescripcion.setVisible(false);
-    textFieldDescripcion.setText("");
+    scrollDescripcion.setVisible(false);
+    textAreaDescripcion.setText("");
 
     lblLink.setVisible(false);
     textFieldLink.setVisible(false);
