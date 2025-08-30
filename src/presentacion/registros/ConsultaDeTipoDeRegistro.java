@@ -20,6 +20,7 @@ import logica.interfaces.IControladorEvento;
 import javax.swing.SwingConstants;
 
 public class ConsultaDeTipoDeRegistro extends JInternalFrame {
+	
 	private static final long serialVersionUID = 1L;
 	private JComboBox<String> cbListaEvento;
 	private JComboBox<String> cbListaEdicion;
