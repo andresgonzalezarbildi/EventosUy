@@ -46,6 +46,9 @@ public class ControladorUsuario implements IControladorUsuario {
         if (manejador.existeNickname(nickname)) {
             throw new UsuarioRepetidoException("El usuario " + nickname + " ya existe");
         }
+        if (manejador.existeCorreo(correo)) {
+            throw new UsuarioRepetidoException("El correo: " + correo + " ya pertenece a un usuario");
+        }
 
         if ("Organizador".equalsIgnoreCase(tipo)) {
             Organizador org = new Organizador(nickname, nombre, correo,

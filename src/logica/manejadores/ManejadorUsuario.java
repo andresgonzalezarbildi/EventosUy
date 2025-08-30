@@ -30,6 +30,25 @@ public class ManejadorUsuario {
     public boolean existeNickname(String nickname) {
         return organizadores.containsKey(nickname) || asistentes.containsKey(nickname);
     }
+    
+    //chequeo los correos
+    public boolean existeCorreo(String correo) {
+        // Recorrer organizadores
+        for (Organizador org : organizadores.values()) {
+            if (org.getCorreo().equalsIgnoreCase(correo)) {
+                return true;
+            }
+        }
+
+        // Recorrer asistentes
+        for (Asistente asis : asistentes.values()) {
+            if (asis.getCorreo().equalsIgnoreCase(correo)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 
     public void agregarOrganizador(Organizador org) {
         organizadores.put(org.getNickname(), org);
