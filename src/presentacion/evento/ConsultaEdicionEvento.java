@@ -4,156 +4,185 @@ import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JInternalFrame;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-
+import javax.swing.*;
 import logica.interfaces.IControladorEvento;
+import logica.datatypes.DataEvento;
+import logica.datatypes.DataEdicion;
+import logica.datatypes.DataTipoRegistro;
+import excepciones.EventoNoExisteException;
 
 public class ConsultaEdicionEvento extends JInternalFrame {
-	
-	private JTextField textField;
-	private IControladorEvento controlEvento;
-	
-	public ConsultaEdicionEvento(IControladorEvento controlEvento) {
-		
-		super("Alta Edicion Evento", false, true, true, true);
-		this.controlEvento = controlEvento;;
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setResizable(false);
-		setTitle("Consulta Edicion Evento");
-		setBounds(100, 100, 450, 300);
-		
-		
-		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{30, 39, 360, 0};
-		gridBagLayout.rowHeights = new int[]{22, 22, 216, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
-		getContentPane().setLayout(gridBagLayout);
-		
-		JLabel lblEvento = new JLabel("Evento:");
-		GridBagConstraints gbc_lblEvento = new GridBagConstraints();
-		gbc_lblEvento.anchor = GridBagConstraints.EAST;
-		gbc_lblEvento.insets = new Insets(0, 0, 5, 5);
-		gbc_lblEvento.gridx = 1;
-		gbc_lblEvento.gridy = 0;
-		getContentPane().add(lblEvento, gbc_lblEvento);
-		
-		JComboBox comboBoxEvento = new JComboBox();
-		GridBagConstraints gbc_comboBoxEvento = new GridBagConstraints();
-		gbc_comboBoxEvento.fill = GridBagConstraints.HORIZONTAL;
-		gbc_comboBoxEvento.insets = new Insets(0, 0, 5, 0);
-		gbc_comboBoxEvento.gridx = 2;
-		gbc_comboBoxEvento.gridy = 0;
-		getContentPane().add(comboBoxEvento, gbc_comboBoxEvento);
-		
-		JLabel lblEdicion = new JLabel("Edicion:");
-		GridBagConstraints gbc_lblEdicion = new GridBagConstraints();
-		gbc_lblEdicion.anchor = GridBagConstraints.EAST;
-		gbc_lblEdicion.insets = new Insets(0, 0, 5, 5);
-		gbc_lblEdicion.gridx = 1;
-		gbc_lblEdicion.gridy = 1;
-		getContentPane().add(lblEdicion, gbc_lblEdicion);
-		
-		JComboBox comboBox = new JComboBox();
-		GridBagConstraints gbc_comboBox = new GridBagConstraints();
-		gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
-		gbc_comboBox.insets = new Insets(0, 0, 5, 0);
-		gbc_comboBox.gridx = 2;
-		gbc_comboBox.gridy = 1;
-		getContentPane().add(comboBox, gbc_comboBox);
-		
-		JPanel panel = new JPanel();
-		GridBagConstraints gbc_panel = new GridBagConstraints();
-		gbc_panel.fill = GridBagConstraints.BOTH;
-		gbc_panel.gridx = 2;
-		gbc_panel.gridy = 2;
-		getContentPane().add(panel, gbc_panel);
-		panel.setLayout(new BorderLayout(0, 0));
-		
-		JLabel lblInfoEdicion = new JLabel("Informacion de la edicion del evento:");
-		lblInfoEdicion.setHorizontalAlignment(SwingConstants.CENTER);
-		panel.add(lblInfoEdicion, BorderLayout.NORTH);
-		
-		JPanel panel_1 = new JPanel();
-		panel.add(panel_1, BorderLayout.CENTER);
-		GridBagLayout gbl_panel_1 = new GridBagLayout();
-		gbl_panel_1.columnWidths = new int[]{0, 0, 0};
-		gbl_panel_1.rowHeights = new int[]{0, 0, 0, 0, 0, 0};
-		gbl_panel_1.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
-		gbl_panel_1.rowWeights = new double[]{0.0, 0.0, 1.0, 1.0, 1.0, Double.MIN_VALUE};
-		panel_1.setLayout(gbl_panel_1);
-		
-		JLabel lblOrganizador = new JLabel("Organizador:");
-		GridBagConstraints gbc_lblOrganizador = new GridBagConstraints();
-		gbc_lblOrganizador.insets = new Insets(0, 0, 5, 5);
-		gbc_lblOrganizador.anchor = GridBagConstraints.WEST;
-		gbc_lblOrganizador.gridx = 0;
-		gbc_lblOrganizador.gridy = 1;
-		panel_1.add(lblOrganizador, gbc_lblOrganizador);
-		
-		textField = new JTextField();
-		GridBagConstraints gbc_textField = new GridBagConstraints();
-		gbc_textField.insets = new Insets(0, 0, 5, 0);
-		gbc_textField.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField.gridx = 1;
-		gbc_textField.gridy = 1;
-		panel_1.add(textField, gbc_textField);
-		textField.setColumns(10);
-		
-		JLabel lblRegistros = new JLabel("Registros:");
-		lblRegistros.setHorizontalAlignment(SwingConstants.LEFT);
-		GridBagConstraints gbc_lblRegistros = new GridBagConstraints();
-		gbc_lblRegistros.anchor = GridBagConstraints.WEST;
-		gbc_lblRegistros.insets = new Insets(0, 0, 5, 5);
-		gbc_lblRegistros.gridx = 0;
-		gbc_lblRegistros.gridy = 2;
-		panel_1.add(lblRegistros, gbc_lblRegistros);
-		
-		JList list = new JList();
-		GridBagConstraints gbc_list = new GridBagConstraints();
-		gbc_list.insets = new Insets(0, 0, 5, 0);
-		gbc_list.fill = GridBagConstraints.BOTH;
-		gbc_list.gridx = 1;
-		gbc_list.gridy = 2;
-		panel_1.add(list, gbc_list);
-		
-		JLabel lblNewLabel_1 = new JLabel("Consultar tipo de registro:");
-		GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
-		gbc_lblNewLabel_1.anchor = GridBagConstraints.EAST;
-		gbc_lblNewLabel_1.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel_1.gridx = 0;
-		gbc_lblNewLabel_1.gridy = 3;
-		panel_1.add(lblNewLabel_1, gbc_lblNewLabel_1);
-		
-		JComboBox comboBox_1 = new JComboBox();
-		GridBagConstraints gbc_comboBox_1 = new GridBagConstraints();
-		gbc_comboBox_1.insets = new Insets(0, 0, 5, 0);
-		gbc_comboBox_1.fill = GridBagConstraints.HORIZONTAL;
-		gbc_comboBox_1.gridx = 1;
-		gbc_comboBox_1.gridy = 3;
-		panel_1.add(comboBox_1, gbc_comboBox_1);
-		
-		JLabel lblPatrocinio = new JLabel("Consultar Patrocinio");
-		GridBagConstraints gbc_lblPatrocinio = new GridBagConstraints();
-		gbc_lblPatrocinio.anchor = GridBagConstraints.WEST;
-		gbc_lblPatrocinio.insets = new Insets(0, 0, 0, 5);
-		gbc_lblPatrocinio.gridx = 0;
-		gbc_lblPatrocinio.gridy = 4;
-		panel_1.add(lblPatrocinio, gbc_lblPatrocinio);
-		
-		JComboBox comboBox_2 = new JComboBox();
-		GridBagConstraints gbc_comboBox_2 = new GridBagConstraints();
-		gbc_comboBox_2.fill = GridBagConstraints.HORIZONTAL;
-		gbc_comboBox_2.gridx = 1;
-		gbc_comboBox_2.gridy = 4;
-		panel_1.add(comboBox_2, gbc_comboBox_2);
-	}
+
+    private JTextField textOrganizador, textNombre, textFechaIni, textFechaFin, textCiudad, textPais, textSigla, textAlta;
+    private IControladorEvento controlEvento;
+
+    private JComboBox<DataEvento> comboBoxEvento;
+    private JComboBox<DataEdicion> comboBoxEdiciones;
+
+    private DefaultListModel<DataTipoRegistro> modeloTipos;
+    private JList<DataTipoRegistro> listaTipos;
+
+    public ConsultaEdicionEvento(IControladorEvento controlEvento) {
+
+        super("Consulta Edicion Evento", false, true, true, true);
+        this.controlEvento = controlEvento;
+        setBounds(100, 100, 700, 500);
+        setDefaultCloseOperation(HIDE_ON_CLOSE);
+
+        GridBagLayout gridBagLayout = new GridBagLayout();
+        gridBagLayout.columnWidths = new int[]{30, 39, 360, 0};
+        gridBagLayout.rowHeights = new int[]{22, 22, 216, 0};
+        gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
+        gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
+        getContentPane().setLayout(gridBagLayout);
+
+        JLabel lblEvento = new JLabel("Evento:");
+        GridBagConstraints gbc_lblEvento = new GridBagConstraints();
+        gbc_lblEvento.anchor = GridBagConstraints.EAST;
+        gbc_lblEvento.insets = new Insets(0, 0, 5, 5);
+        gbc_lblEvento.gridx = 1;
+        gbc_lblEvento.gridy = 0;
+        getContentPane().add(lblEvento, gbc_lblEvento);
+
+        comboBoxEvento = new JComboBox<>();
+        GridBagConstraints gbc_comboBoxEvento = new GridBagConstraints();
+        gbc_comboBoxEvento.fill = GridBagConstraints.HORIZONTAL;
+        gbc_comboBoxEvento.insets = new Insets(0, 0, 5, 0);
+        gbc_comboBoxEvento.gridx = 2;
+        gbc_comboBoxEvento.gridy = 0;
+        getContentPane().add(comboBoxEvento, gbc_comboBoxEvento);
+
+        JLabel lblEdicion = new JLabel("Edicion:");
+        GridBagConstraints gbc_lblEdicion = new GridBagConstraints();
+        gbc_lblEdicion.anchor = GridBagConstraints.EAST;
+        gbc_lblEdicion.insets = new Insets(0, 0, 5, 5);
+        gbc_lblEdicion.gridx = 1;
+        gbc_lblEdicion.gridy = 1;
+        getContentPane().add(lblEdicion, gbc_lblEdicion);
+
+        comboBoxEdiciones = new JComboBox<>();
+        GridBagConstraints gbc_comboBoxEdiciones = new GridBagConstraints();
+        gbc_comboBoxEdiciones.fill = GridBagConstraints.HORIZONTAL;
+        gbc_comboBoxEdiciones.insets = new Insets(0, 0, 5, 0);
+        gbc_comboBoxEdiciones.gridx = 2;
+        gbc_comboBoxEdiciones.gridy = 1;
+        getContentPane().add(comboBoxEdiciones, gbc_comboBoxEdiciones);
+
+        JPanel panelDetalle = new JPanel();
+        GridBagConstraints gbc_panelDetalle = new GridBagConstraints();
+        gbc_panelDetalle.fill = GridBagConstraints.BOTH;
+        gbc_panelDetalle.gridx = 2;
+        gbc_panelDetalle.gridy = 2;
+        getContentPane().add(panelDetalle, gbc_panelDetalle);
+        panelDetalle.setLayout(new BorderLayout(0, 0));
+
+        JLabel lblInfoEdicion = new JLabel("Información de la edición del evento:");
+        lblInfoEdicion.setHorizontalAlignment(SwingConstants.CENTER);
+        panelDetalle.add(lblInfoEdicion, BorderLayout.NORTH);
+
+        JPanel panelCampos = new JPanel();
+        panelDetalle.add(panelCampos, BorderLayout.CENTER);
+        GridBagLayout gbl_panelCampos = new GridBagLayout();
+        gbl_panelCampos.columnWidths = new int[]{0, 0};
+        gbl_panelCampos.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0};
+        gbl_panelCampos.columnWeights = new double[]{0.0, 1.0};
+        gbl_panelCampos.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+        panelCampos.setLayout(gbl_panelCampos);
+
+        textNombre = addTextField(panelCampos, "Nombre:", 0);
+        textFechaIni = addTextField(panelCampos, "Fecha inicio:", 1);
+        textFechaFin = addTextField(panelCampos, "Fecha fin:", 2);
+        textCiudad = addTextField(panelCampos, "Ciudad:", 3);
+        textPais = addTextField(panelCampos, "País:", 4);
+        textSigla = addTextField(panelCampos, "Sigla:", 5);
+        textAlta = addTextField(panelCampos, "Fecha alta:", 6);
+        textOrganizador = addTextField(panelCampos, "Organizador:", 7);
+
+        modeloTipos = new DefaultListModel<>();
+        listaTipos = new JList<>(modeloTipos);
+        panelDetalle.add(listaTipos, BorderLayout.SOUTH);
+
+        comboBoxEvento.addActionListener(e -> {
+            DataEvento seleccionado = (DataEvento) comboBoxEvento.getSelectedItem();
+            if (seleccionado != null) cargarEdiciones(seleccionado.getNombre());
+        });
+
+        comboBoxEdiciones.addActionListener(e -> {
+            DataEdicion de = (DataEdicion) comboBoxEdiciones.getSelectedItem();
+            if (de != null) mostrarInfoEdicion(de);
+        });
+
+        cargarEventos();
+    }
+
+    private JTextField addTextField(JPanel panel, String label, int row) {
+        GridBagConstraints gbcLabel = new GridBagConstraints();
+        gbcLabel.anchor = GridBagConstraints.WEST;
+        gbcLabel.insets = new Insets(2, 2, 2, 2);
+        gbcLabel.gridx = 0;
+        gbcLabel.gridy = row;
+        panel.add(new JLabel(label), gbcLabel);
+
+        JTextField tf = new JTextField();
+        tf.setEditable(false);
+        GridBagConstraints gbcTf = new GridBagConstraints();
+        gbcTf.fill = GridBagConstraints.HORIZONTAL;
+        gbcTf.gridx = 1;
+        gbcTf.gridy = row;
+        gbcTf.insets = new Insets(2, 2, 2, 2);
+        panel.add(tf, gbcTf);
+        return tf;
+    }
+
+    @Override
+    public void setVisible(boolean aFlag) {
+        if (aFlag) {
+            cargarEventos();  // recarga los eventos desde el controlador
+        }
+        super.setVisible(aFlag);
+    }
+
+    private void cargarEventos() {
+        comboBoxEvento.removeAllItems();
+        DataEvento[] eventos = controlEvento.getEventosDTO();
+        if (eventos != null) {
+            for (DataEvento ev : eventos) {
+                if (ev != null) {
+                    comboBoxEvento.addItem(ev);
+                }
+            }
+        }
+    }
+
+    private void cargarEdiciones(String nombreEvento) {
+        comboBoxEdiciones.removeAllItems();
+        try {
+            DataEdicion[] ediciones = controlEvento.listarEdiciones(nombreEvento);
+            if (ediciones != null) {
+                for (DataEdicion de : ediciones) {
+                    comboBoxEdiciones.addItem(de);
+                }
+            }
+        } catch (EventoNoExisteException ex) {
+            JOptionPane.showMessageDialog(this, "No hay ediciones para el evento: " + nombreEvento, "Info", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+
+    private void mostrarInfoEdicion(DataEdicion de) {
+        textNombre.setText(de.getNombre());
+        textFechaIni.setText(de.getFechaIni().toString());
+        textFechaFin.setText(de.getFechaFin().toString());
+        textCiudad.setText(de.getCiudad());
+        textPais.setText(de.getPais());
+        textSigla.setText(de.getSigla());
+        textAlta.setText(de.getFechaAltaEnPlataforma().toString());
+        textOrganizador.setText(de.getOrganizador());
+
+        modeloTipos.clear();
+        if (de.getTiposRegistro() != null) {
+            for (DataTipoRegistro tr : de.getTiposRegistro()) {
+                modeloTipos.addElement(tr);
+            }
+        }
+    }
 }

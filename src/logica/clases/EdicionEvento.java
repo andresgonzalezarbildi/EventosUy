@@ -1,83 +1,93 @@
 package logica.clases;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import logica.datatypes.DataTipoRegistro;
+import logica.datatypes.DataPatrocinio;
+
 
 public class EdicionEvento {
-	private String nombre;
-	private LocalDate fechaIni;
-	private LocalDate fechaFin;
-	private String ciudad;
-	private String pais;
-	private String sigla;
-	private LocalDate fechaAltaEnPlataforma;
-	private Map<String, TipoRegistro> listaTipoRegistro;
-	
-	public EdicionEvento(String nombre, LocalDate fechaIni, LocalDate fechaFin, String ciudad, String pais, String sigla, LocalDate fechaAltaEnPlataforma) {
-		this.nombre = nombre;
-		this.fechaIni = fechaIni;
-		this.fechaFin = fechaFin;
-	    this.ciudad = ciudad;
-	    this.pais = pais;
-	    this.sigla = sigla;
-	    this.fechaAltaEnPlataforma = fechaAltaEnPlataforma;
-	    this.listaTipoRegistro = new HashMap<>();
-	    
-	}
-	
-	public String getNombre() {
-	    return nombre;
-	}
 
-	public LocalDate getFechaIni() {
-	    return fechaIni;
-	}
+    private String nombre;
+    private LocalDate fechaIni;
+    private LocalDate fechaFin;
+    private String ciudad;
+    private String pais;
+    private String sigla;
+    private LocalDate fechaAltaEnPlataforma;
+    private Map<String, TipoRegistro> listaTipoDeRegistro;
+    private Organizador organizador;
+    private List<Patrocinio> patrocinios;
 
-	public LocalDate getFechaFin() {
-	    return fechaFin;
-	}
+    public EdicionEvento(String nombre, LocalDate fechaIni, LocalDate fechaFin, String ciudad, String pais, String sigla, LocalDate fechaAltaEnPlataforma) {
+        this.nombre = nombre;
+        this.fechaIni = fechaIni;
+        this.fechaFin = fechaFin;
+        this.ciudad = ciudad;
+        this.pais = pais;
+        this.sigla = sigla;
+        this.fechaAltaEnPlataforma = fechaAltaEnPlataforma;
+        this.listaTipoDeRegistro = new HashMap<>();
+        this.patrocinios = new ArrayList<>();
+    }
 
-	public String getCiudad() {
-	    return ciudad;
-	}
+    public String getNombre() { return nombre; }
+    public LocalDate getFechaIni() { return fechaIni; }
+    public LocalDate getFechaFin() { return fechaFin; }
+    public String getCiudad() { return ciudad; }
+    public String getPais() { return pais; }
+    public String getSigla() { return sigla; }
+    public Organizador getOrganizador() { return organizador; }
+    public List<Patrocinio> getPatrocinios() { return patrocinios; }
+    public LocalDate getFechaAltaEnPlataforma() { return fechaAltaEnPlataforma; }
+    public Map<String, TipoRegistro> getCategorias() { return listaTipoDeRegistro; }
 
-	public String getPais() {
-	    return pais;
-	}
+    public void agregarTipoDeRegistro(String clave, TipoRegistro TipoDeRegistro) {
+        if (!listaTipoDeRegistro.containsKey(clave)) {
+            listaTipoDeRegistro.put(clave, TipoDeRegistro);
+        }
+    }
 
-	public String getSigla() {
-	    return sigla;
-	}
+    public boolean existeTipoDeRegistro(String nombreTipoDeRegistro) {
+        return listaTipoDeRegistro.containsKey(nombreTipoDeRegistro);
+    }
 
-	public LocalDate getFechaAltaEnPlataforma() {
-	    return fechaAltaEnPlataforma;
-	}
-	
-	public Map<String, TipoRegistro> getCategorias() { 
-		return listaTipoRegistro ;
-	}
-	
-	public void agregarTipoRegistro(String clave, TipoRegistro tipoRegistro) {
-	    if (!listaTipoRegistro.containsKey(clave)) {
-	        listaTipoRegistro.put(clave, tipoRegistro);
-	    }
-	}
-	
-	public boolean existeTipoRegistro(String nombreTipoRegistro) {
-		if (listaTipoRegistro.containsKey(nombreTipoRegistro)) return true;
-		return false;
-	}
-	public TipoRegistro getTipoRegistro(String nombre) {
-	    return listaTipoRegistro.get(nombre);
-	}
-	
-	public Map<String, TipoRegistro> getTipoRegistro() {
-	    return listaTipoRegistro;
-	}
-	
-	
+    public TipoRegistro getTipoDeRegistro(String nombre) {
+        return listaTipoDeRegistro.get(nombre);
+    }
 
-	
-	
+    public Map<String, TipoRegistro> getTipoDeRegistro() {
+        return listaTipoDeRegistro;
+    }
+    public String getOrganizadorDTO() {
+        return organizador != null ? organizador.getNickname() : "";
+    }
+    public List<DataTipoRegistro> getTiposRegistroDTO() {
+        List<DataTipoRegistro> dtos = new ArrayList<>();
+        for (TipoRegistro tr : listaTipoDeRegistro.values()) {
+        	dtos.add(new DataTipoRegistro(tr.getNombre(), tr.getDescripcion(), tr.getCosto(), tr.getCupo()));
+        }
+        return dtos;
+    }
+    public List<DataPatrocinio> getPatrociniosDTO() {
+        List<DataPatrocinio> dtos = new ArrayList<>();
+        for (Patrocinio p : patrocinios) {
+            dtos.add(new DataPatrocinio(
+                p.getFechaDeRealizacion(),
+                p.getMontoAportado(),
+                p.getCantRegistrosGratis(),
+                p.getCodigoDePatrocinio(),
+                p.getNivelDePatrocinio()  
+            ));
+        }
+        return dtos;
+    }
+
+    
+    public void setOrganizador(Organizador o) { this.organizador = o; }
+    public void agregarPatrocinio(Patrocinio p) { this.patrocinios.add(p); }
+
 }
