@@ -24,6 +24,7 @@ import logica.interfaces.IControladorUsuario;
 import logica.manejadores.ManejadorEvento;
 import presentacion.evento.AltaEvento;
 import presentacion.evento.ConsultaEvento;
+import presentacion.registros.AltaDeTipoDeRegistro;
 import presentacion.registros.RegistroAEdicionEvento;
 import presentacion.usuario.AltaUsuario;
 import presentacion.usuario.ConsultaUsuario;
@@ -44,8 +45,8 @@ public class Principal {
     private ModificarUsuario modificarUsuarioInternalFrame;
     private AltaEdicionEvento altaEdicionInternalFrame;
     private ConsultaEdicionEvento consultaEdicionInternalFrame;
-    
     private RegistroAEdicionEvento registrarEdicionEvento;
+    private AltaDeTipoDeRegistro altaTipoDeRegistroInternalFrame;
 
 
     public static void main(String[] args) {
@@ -125,6 +126,12 @@ public class Principal {
         desktop.add(consultaEdicionInternalFrame);
         consultaEdicionInternalFrame.setVisible(false);
         
+        
+        altaTipoDeRegistroInternalFrame = new AltaDeTipoDeRegistro(IEV);
+        altaTipoDeRegistroInternalFrame.setLocation(10, 23);
+        altaTipoDeRegistroInternalFrame.setClosable(true);
+        desktop.add(altaTipoDeRegistroInternalFrame);
+        altaTipoDeRegistroInternalFrame.setVisible(false);
         
  
         
@@ -297,7 +304,18 @@ public class Principal {
         mnRegistros.add(mnTipoDeRegistros);
 
         JMenuItem mntmAltaTipoDe = new JMenuItem("Alta de Tipo de Registro");
-        // mntmAltaTipoDe.addActionListener(e -> showAltaTipoRegistro());
+        mntmAltaTipoDe.addActionListener(e -> {
+        	if (altaTipoDeRegistroInternalFrame == null || altaTipoDeRegistroInternalFrame.isClosed()) {
+        		altaTipoDeRegistroInternalFrame = new AltaDeTipoDeRegistro(IEV);
+        	    desktop.add(altaTipoDeRegistroInternalFrame);
+      	} //else {
+//        	    altaEdicionInternalFrame.limpiarFormulario(); //  limpiar para mostrar de nuevo
+//        	}
+        	altaTipoDeRegistroInternalFrame.setVisible(true);
+        	altaTipoDeRegistroInternalFrame.toFront(); // Traerla al frente
+            ensureSize(altaTipoDeRegistroInternalFrame, 600, 400);
+            showInternal(altaTipoDeRegistroInternalFrame);
+        });
         mnTipoDeRegistros.add(mntmAltaTipoDe);
 
         JMenuItem mntmConsultaTipoDe = new JMenuItem("Consulta de Tipo de Registro");
