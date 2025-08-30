@@ -113,7 +113,7 @@ public class Principal {
         consultaEventoInternalFrame.setVisible(false);
 
         
-        altaEdicionInternalFrame = new AltaEdicionEvento(IEV);
+        altaEdicionInternalFrame = new AltaEdicionEvento(IEV,ICU);
         altaEdicionInternalFrame.setLocation(10, 23);
         altaEdicionInternalFrame.setClosable(true);
         desktop.add(altaEdicionInternalFrame);
@@ -247,7 +247,7 @@ public class Principal {
         JMenuItem miAltaEdicion = new JMenuItem("Alta de Edición de Evento");
         miAltaEdicion.addActionListener(e -> {
         	if (altaEdicionInternalFrame == null || altaEdicionInternalFrame.isClosed()) {
-        		altaEdicionInternalFrame = new AltaEdicionEvento(IEV);
+        		altaEdicionInternalFrame = new AltaEdicionEvento(IEV,ICU);
         	    desktop.add(altaEdicionInternalFrame);
       	} //else {
 //        	    altaEdicionInternalFrame.limpiarFormulario(); //  limpiar para mostrar de nuevo

@@ -4,25 +4,42 @@ import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.time.LocalDate;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import logica.datatypes.DataEvento;
+import logica.datatypes.DataUsuario;
 import logica.interfaces.IControladorEvento;
+import logica.interfaces.IControladorUsuario;
+
 
 public class AltaEdicionEvento extends JInternalFrame {
+	private JComboBox<String> cbListaEventos;
+	private JComboBox<String> cbOrganizadores;
+	private IControladorEvento controlEvento;
+	private IControladorUsuario IUS;
+    private JTextField textFieldNombre;
+    private JTextField textFieldSigla;
+    private JTextField Ciudad;
+    private JTextField textFieldPais;
+    private JTextField textFieldFechaI;
+    private JTextField textFieldFechaF;
+    private JTextField textFieldFecha;
+
 	
-	public AltaEdicionEvento(IControladorEvento controlEvento) {
+	public AltaEdicionEvento(IControladorEvento controlEvento,IControladorUsuario IUS) {
 		
 		super("Alta Edicion Evento", false, true, true, true); 
-		
+		this.IUS = IUS;
 		this.controlEvento = controlEvento;
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
         setBounds(100, 100, 650, 400);
         getContentPane().setLayout(new BorderLayout());
 		
@@ -42,7 +59,7 @@ public class AltaEdicionEvento extends JInternalFrame {
 		gbc_lblListaEventos.gridy = 0;
 		getContentPane().add(lblListaEventos, gbc_lblListaEventos);
 		
-		JComboBox cbListaEventos = new JComboBox();
+		cbListaEventos = new JComboBox<>();
 		GridBagConstraints gbc_cbListaEventos = new GridBagConstraints();
 		gbc_cbListaEventos.insets = new Insets(0, 0, 5, 0);
 		gbc_cbListaEventos.fill = GridBagConstraints.HORIZONTAL;
@@ -58,13 +75,13 @@ public class AltaEdicionEvento extends JInternalFrame {
 		gbc_lblOganizadores.gridy = 1;
 		getContentPane().add(lblOganizadores, gbc_lblOganizadores);
 		
-		JComboBox comboBox = new JComboBox();
+		cbOrganizadores = new JComboBox<>();
 		GridBagConstraints gbc_comboBox = new GridBagConstraints();
 		gbc_comboBox.insets = new Insets(0, 0, 5, 0);
 		gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
 		gbc_comboBox.gridx = 2;
 		gbc_comboBox.gridy = 1;
-		getContentPane().add(comboBox, gbc_comboBox);
+		getContentPane().add(cbOrganizadores, gbc_comboBox);
 		
 		JLabel lblNombre = new JLabel("Nombre:");
 		GridBagConstraints gbc_lblNombre = new GridBagConstraints();
@@ -191,6 +208,7 @@ public class AltaEdicionEvento extends JInternalFrame {
 		gbc_panel.gridx = 2;
 		gbc_panel.gridy = 9;
 		getContentPane().add(panel, gbc_panel);
+		
 		GridBagLayout gbl_panel = new GridBagLayout();
 		gbl_panel.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0};
 		gbl_panel.rowHeights = new int[]{0, 0, 0};
@@ -211,16 +229,97 @@ public class AltaEdicionEvento extends JInternalFrame {
 		gbc_btnCancelar.gridx = 6;
 		gbc_btnCancelar.gridy = 0;
 		panel.add(btnCancelar, gbc_btnCancelar);
-	}
 	
 	
-	    private IControladorEvento controlEvento;
-	    private JTextField textFieldNombre;
-	    private JTextField textFieldSigla;
-	    private JTextField Ciudad;
-	    private JTextField textFieldPais;
-	    private JTextField textFieldFechaI;
-	    private JTextField textFieldFechaF;
-	    private JTextField textFieldFecha;
+		// estos for cargan los combobox de evento y organizador, con los eventos y organizadores existentes hasta el momento.
+		for (DataEvento ev : controlEvento.getEventosDTO()) {
+		    cbListaEventos.addItem(ev.getNombre());
+		}
+		for (DataUsuario org : IUS.getOrganizadores()) {
+	        cbOrganizadores.addItem(org.getNickname());
+	    }
 
+	    // ---- Listeners de botones ----
+	    
+	    
+	    btnAceptar.addActionListener(e -> cmdRegistroEdicionEventoActionPerformed());
+
+	    btnCancelar.addActionListener(e -> dispose());
+	    cargarEventos();
+
+	}
+	    
+	protected void cmdRegistroEdicionEventoActionPerformed() {
+	    String nombre = textFieldNombre.getText().trim();
+	    String sigla = textFieldSigla.getText().trim();
+	    String ciudad = Ciudad.getText().trim();
+	    String pais = textFieldPais.getText().trim();
+//	    String fechaInicio = textFieldFechaI.getText().trim();
+//	    String fechaFin = textFieldFechaF.getText().trim();
+//	    String fechaAlta = textFieldFecha.getText().trim();
+	    String eventoSel = (String) cbListaEventos.getSelectedItem();
+	    String organizadorSel = (String) cbOrganizadores.getSelectedItem(); 
+	    LocalDate hoy = LocalDate.now();
+	        try {
+	            // acá llamás al método del controlador de eventos
+	            controlEvento.altaEdicionEvento(
+	            		eventoSel,
+	                nombre,
+	                sigla,
+	                ciudad,
+	                pais,
+	                hoy,
+	                hoy,
+	                hoy,
+	                organizadorSel
+	            );
+
+	            javax.swing.JOptionPane.showMessageDialog(this,
+	                "La edición del evento se ha creado con éxito",
+	                "Alta Edición de Evento", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+
+	            //TODO: limpiarFormulario();
+	            setVisible(false);
+
+	        } catch (Exception e) {
+	            javax.swing.JOptionPane.showMessageDialog(this,
+	                e.getMessage(),
+	                "Alta Edición de Evento", javax.swing.JOptionPane.ERROR_MESSAGE);
+	        }
+	    
+	}
+
+	
+	private void cargarEventos() {
+	    cbListaEventos.removeAllItems();
+	    DataEvento[] eventos = controlEvento.getEventosDTO();
+	    if (eventos != null) {
+	        for (DataEvento ev : eventos) {
+	            if (ev != null) {
+	                cbListaEventos.addItem(ev.getNombre());
+	            }
+	        }
+	    }
+	}
+
+	private void cargarOrganizadores() {
+	    cbOrganizadores.removeAllItems();
+	    for (DataUsuario org : IUS.getOrganizadores()) {
+	        if (org != null) {
+	            cbOrganizadores.addItem(org.getNombre());
+	        }
+	    }
+	}
+
+
+	
+	
+	@Override
+	public void setVisible(boolean aFlag) {
+	    if (aFlag) {
+	        cargarEventos(); // recargar siempre que se muestra
+	        cargarOrganizadores();
+	    }
+	    super.setVisible(aFlag);
+	}
 }

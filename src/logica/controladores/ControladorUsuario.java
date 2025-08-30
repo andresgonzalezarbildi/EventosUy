@@ -104,6 +104,15 @@ public class ControladorUsuario implements IControladorUsuario {
 
         return lista.toArray(new DataUsuario[0]);
     }
+    
+    public DataUsuario[] getOrganizadores(){
+        Collection<Organizador> orgs = manejador.obtenerTodosOrganizadores();
+
+        
+        List<DataUsuario> lista = new ArrayList<>(orgs.size());
+        for (Organizador o : orgs) lista.add(aDataUsuario(o));
+        return lista.toArray(new DataUsuario[0]);
+    }
 
     private DataUsuario aDataUsuario(Usuario u) {
         DataUsuario du = new DataUsuario(u.getNickname(), u.getNombre(), u.getCorreo(),
