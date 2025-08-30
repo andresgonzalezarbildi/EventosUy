@@ -277,7 +277,7 @@ public class Principal {
         miConsultaEdicionEvento.addActionListener(e -> {
     	if (consultaEdicionInternalFrame == null || consultaEdicionInternalFrame.isClosed()) {
     		consultaEdicionInternalFrame = new ConsultaEdicionEvento(IEV);
-    	    desktop.add(altaEdicionInternalFrame);
+    	    desktop.add(consultaEdicionInternalFrame);
   	} //else {
 //    	    altaEdicionInternalFrame.limpiarFormulario(); //  limpiar para mostrar de nuevo
 //    	}

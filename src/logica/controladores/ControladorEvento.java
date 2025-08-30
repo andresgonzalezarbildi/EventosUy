@@ -109,10 +109,23 @@ public class ControladorEvento implements IControladorEvento {
     	Map<String,EdicionEvento> ediciones = eve.getEdiciones();
     	if (ediciones != null) {
     		DataEdicion[] dEdi = new DataEdicion[ediciones.size()];
-    		int i=0;
-    		for (EdicionEvento edi: ediciones.values()) {
-    			dEdi[i++] = new DataEdicion(edi.getNombre(), edi.getFechaIni(), edi.getFechaFin(), edi.getCiudad(), edi.getPais(), edi.getSigla(), edi.getFechaAltaEnPlataforma());
+    		int i = 0;
+    		for (EdicionEvento edi : ediciones.values()) {
+    			dEdi[i++] = new DataEdicion(
+    				    edi.getNombre(),
+    				    edi.getFechaIni(),
+    				    edi.getFechaFin(),
+    				    edi.getCiudad(),
+    				    edi.getPais(),
+    				    edi.getSigla(),
+    				    edi.getFechaAltaEnPlataforma(),
+    				    edi.getOrganizadorDTO(),   
+    				    edi.getTiposRegistroDTO(),  
+    				    edi.getPatrociniosDTO()       
+    				);
+
     		}
+    		
     		return dEdi;
     	}else {
     		throw new EventoNoExisteException("No existen ediciones registradas del Evento");
@@ -150,6 +163,7 @@ public class ControladorEvento implements IControladorEvento {
         
         EdicionEvento ed = new EdicionEvento( nombreEdicion, fechaInicio, fechaFin, ciudad, pais, sigla, (fechaAltaEnPlataforma != null ? fechaAltaEnPlataforma : LocalDate.now())
         );
+        ed.setOrganizador(org);
         org.agregarEdicion(ed);
         evento.agregarEdicion(ed);
     }
@@ -175,11 +189,11 @@ public class ControladorEvento implements IControladorEvento {
         if (edicion == null) {
             throw new IllegalArgumentException("No existe la edicion del evento: " + nombreEvento);
         }
-        if (edicion.existeTipoRegistro(nombreTipoRegistro)) {
+        if (edicion.existeTipoDeRegistro(nombreTipoRegistro)) {
             throw new IllegalArgumentException("Ya existe un tipo registro con nombre: " + nombreEdicion);
         }
         TipoRegistro tipoRegistronuevo = new TipoRegistro(nombreTipoRegistro, descripcion, costo, cupos);
-        edicion.agregarTipoRegistro(nombreTipoRegistro, tipoRegistronuevo);
+        edicion.agregarTipoDeRegistro(nombreTipoRegistro, tipoRegistronuevo);
     }
     
 
@@ -192,15 +206,8 @@ public class ControladorEvento implements IControladorEvento {
     EdicionEvento edi = ev.getEdicion(nombreEdicion);
     if (edi == null) throw new IllegalArgumentException("No existe la edición: " + nombreEdicion);
 
-    return edi.getTipoRegistro()
-              .values()
-              .stream()
-              .map(tr -> new DataTipoRegistro(
-                      tr.getNombre(),
-                      tr.getDescripcion(),
-                      tr.getCosto(),
-                      tr.getCupo()))
-              .toArray(DataTipoRegistro[]::new);
+    return edi.getTiposRegistroDTO().toArray(new DataTipoRegistro[0]);
+
 }
 
 	@Override
@@ -211,7 +218,7 @@ public class ControladorEvento implements IControladorEvento {
     EdicionEvento edi = ev.getEdicion(nombreEdicion);
     if (edi == null) throw new IllegalArgumentException("No existe la edición: " + nombreEdicion);
 
-    TipoRegistro tr = edi.getTipoRegistro(nombreTipo);
+    TipoRegistro tr = edi.getTipoDeRegistro(nombreTipo);
     if (tr == null) throw new IllegalArgumentException("No existe el tipo de registro: " + nombreTipo);
 
     return new DataTipoRegistro(
