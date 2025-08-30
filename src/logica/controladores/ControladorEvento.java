@@ -13,6 +13,7 @@ import logica.clases.Organizador;
 import logica.clases.TipoRegistro;
 import logica.datatypes.DataEdicion;
 import logica.datatypes.DataEvento;
+import logica.datatypes.DataTipoRegistro;
 import logica.interfaces.IControladorEvento;
 import logica.manejadores.ManejadorEvento;
 import logica.manejadores.ManejadorUsuario;
@@ -181,4 +182,42 @@ public class ControladorEvento implements IControladorEvento {
         edicion.agregarTipoRegistro(nombreTipoRegistro, tipoRegistronuevo);
     }
     
-}	
+
+
+    @Override
+	public DataTipoRegistro[] listarTiposRegistro(String nombreEvento, String nombreEdicion) {
+    Evento ev = manejadorEvento.obtenerEvento(nombreEvento);
+    if (ev == null) throw new IllegalArgumentException("No existe el evento: " + nombreEvento);
+
+    EdicionEvento edi = ev.getEdicion(nombreEdicion);
+    if (edi == null) throw new IllegalArgumentException("No existe la edición: " + nombreEdicion);
+
+    return edi.getTipoRegistro()
+              .values()
+              .stream()
+              .map(tr -> new DataTipoRegistro(
+                      tr.getNombre(),
+                      tr.getDescripcion(),
+                      tr.getCosto(),
+                      tr.getCupo()))
+              .toArray(DataTipoRegistro[]::new);
+}
+
+	@Override
+	public DataTipoRegistro getTipoRegistro(String nombreEvento, String nombreEdicion, String nombreTipo) {
+    Evento ev = manejadorEvento.obtenerEvento(nombreEvento);
+    if (ev == null) throw new IllegalArgumentException("No existe el evento: " + nombreEvento);
+
+    EdicionEvento edi = ev.getEdicion(nombreEdicion);
+    if (edi == null) throw new IllegalArgumentException("No existe la edición: " + nombreEdicion);
+
+    TipoRegistro tr = edi.getTipoRegistro(nombreTipo);
+    if (tr == null) throw new IllegalArgumentException("No existe el tipo de registro: " + nombreTipo);
+
+    return new DataTipoRegistro(
+            tr.getNombre(),
+            tr.getDescripcion(),
+            tr.getCosto(),
+            tr.getCupo()
+    );
+	}}

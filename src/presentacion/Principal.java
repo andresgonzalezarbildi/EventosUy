@@ -26,6 +26,7 @@ import presentacion.evento.AltaEvento;
 import presentacion.evento.ConsultaEvento;
 import presentacion.registros.AltaDeTipoDeRegistro;
 import presentacion.registros.RegistroAEdicionEvento;
+import presentacion.registros.ConsultaDeTipoDeRegistro;
 import presentacion.usuario.AltaUsuario;
 import presentacion.usuario.ConsultaUsuario;
 import presentacion.usuario.ModificarUsuario;
@@ -47,6 +48,7 @@ public class Principal {
     private ConsultaEdicionEvento consultaEdicionInternalFrame;
     private RegistroAEdicionEvento registrarEdicionEvento;
     private AltaDeTipoDeRegistro altaTipoDeRegistroInternalFrame;
+    private ConsultaDeTipoDeRegistro consultaDeTipoDeRegistroInternalFrame;
 
 
     public static void main(String[] args) {
@@ -133,6 +135,11 @@ public class Principal {
         desktop.add(altaTipoDeRegistroInternalFrame);
         altaTipoDeRegistroInternalFrame.setVisible(false);
         
+        consultaDeTipoDeRegistroInternalFrame = new ConsultaDeTipoDeRegistro(IEV);
+        consultaDeTipoDeRegistroInternalFrame.setLocation(10, 23);
+        consultaDeTipoDeRegistroInternalFrame.setClosable(true);
+        desktop.add(consultaDeTipoDeRegistroInternalFrame);
+        consultaDeTipoDeRegistroInternalFrame.setVisible(false);
  
         
 
@@ -303,24 +310,31 @@ public class Principal {
         JMenu mnTipoDeRegistros = new JMenu("Tipos de Registro");
         mnRegistros.add(mnTipoDeRegistros);
 
-        JMenuItem mntmAltaTipoDe = new JMenuItem("Alta de Tipo de Registro");
-        mntmAltaTipoDe.addActionListener(e -> {
+        JMenuItem mntmAltaTipoDeRegistro = new JMenuItem("Alta de Tipo de Registro");
+        mntmAltaTipoDeRegistro.addActionListener(e -> {
         	if (altaTipoDeRegistroInternalFrame == null || altaTipoDeRegistroInternalFrame.isClosed()) {
         		altaTipoDeRegistroInternalFrame = new AltaDeTipoDeRegistro(IEV);
         	    desktop.add(altaTipoDeRegistroInternalFrame);
-      	} //else {
-//        	    altaEdicionInternalFrame.limpiarFormulario(); //  limpiar para mostrar de nuevo
-//        	}
+      	} 
         	altaTipoDeRegistroInternalFrame.setVisible(true);
-        	altaTipoDeRegistroInternalFrame.toFront(); // Traerla al frente
+        	altaTipoDeRegistroInternalFrame.toFront(); 
             ensureSize(altaTipoDeRegistroInternalFrame, 600, 400);
             showInternal(altaTipoDeRegistroInternalFrame);
         });
-        mnTipoDeRegistros.add(mntmAltaTipoDe);
+        mnTipoDeRegistros.add(mntmAltaTipoDeRegistro);
 
-        JMenuItem mntmConsultaTipoDe = new JMenuItem("Consulta de Tipo de Registro");
-        // mntmConsultaTipoDe.addActionListener(e -> showConsultaTipoRegistro());
-        mnTipoDeRegistros.add(mntmConsultaTipoDe);
+        JMenuItem mntmConsultaTipoDeRegistro = new JMenuItem("Consulta de Tipo de Registro");
+        mntmConsultaTipoDeRegistro.addActionListener(e -> {
+        	if (consultaDeTipoDeRegistroInternalFrame == null || consultaDeTipoDeRegistroInternalFrame.isClosed()) {
+        		consultaDeTipoDeRegistroInternalFrame = new ConsultaDeTipoDeRegistro(IEV);
+        	    desktop.add(consultaDeTipoDeRegistroInternalFrame);
+      	} 
+        	consultaDeTipoDeRegistroInternalFrame.setVisible(true);
+        	consultaDeTipoDeRegistroInternalFrame.toFront(); 
+            ensureSize(consultaDeTipoDeRegistroInternalFrame, 600, 400);
+            showInternal(consultaDeTipoDeRegistroInternalFrame);
+        });
+        mnTipoDeRegistros.add(mntmConsultaTipoDeRegistro);
 
     }
 

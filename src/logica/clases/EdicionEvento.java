@@ -68,6 +68,13 @@ public class EdicionEvento {
 		if (listaTipoRegistro.containsKey(nombreTipoRegistro)) return true;
 		return false;
 	}
+	public TipoRegistro getTipoRegistro(String nombre) {
+	    return listaTipoRegistro.get(nombre);
+	}
+	
+	public Map<String, TipoRegistro> getTipoRegistro() {
+	    return listaTipoRegistro;
+	}
 	
 	
 

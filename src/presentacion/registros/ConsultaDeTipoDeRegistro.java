@@ -6,6 +6,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
+import logica.interfaces.IControladorEvento;
+
 import java.awt.BorderLayout;
 
 import javax.swing.BorderFactory;
@@ -17,132 +19,147 @@ import java.awt.Insets;
 import javax.swing.JComboBox;
 import javax.swing.SwingConstants;
 import javax.swing.JTextArea;
+import logica.datatypes.DataEvento;
+import logica.datatypes.DataEdicion;
+import logica.datatypes.DataTipoRegistro;
 
 public class ConsultaDeTipoDeRegistro extends JInternalFrame {
 	private static final long serialVersionUID = 1L;
+	private JComboBox<String> cbListaEvento;
+	private JComboBox<String> cbListaEdicion;
+	private JComboBox<String> cbListaTipoRegistro;
+	private JTextArea infoTipoRegistro;
+
+	private IControladorEvento IEV;
+
 	
-	public static void main(String[] args) {
-			try {
-				ConsultaDeTipoDeRegistro dialog = new ConsultaDeTipoDeRegistro();
-				dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-				dialog.setVisible(true);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+	public ConsultaDeTipoDeRegistro(IControladorEvento IEV) {
+			this.IEV=IEV;
+
+		    setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
+		    setResizable(true);
+		    setTitle("Consulta de Tipo de Registro");
+		    setBounds(100, 100, 600, 400);
+		    getContentPane().setLayout(new BorderLayout(0, 0));
+
+		    // Panel izquierdo
+		    JPanel panelIzq = new JPanel(new GridBagLayout());
+		    panelIzq.setBorder(new EmptyBorder(12, 12, 12, 12));
+		    getContentPane().add(panelIzq, BorderLayout.WEST);
+
+		    GridBagConstraints gbc = new GridBagConstraints();
+		    gbc.insets = new Insets(6, 6, 6, 6);
+		    gbc.fill = GridBagConstraints.HORIZONTAL;
+		    gbc.gridx = 0;
+
+		    // Evento
+		    gbc.gridy = 0;
+		    panelIzq.add(new JLabel("Evento:"), gbc);
+		    cbListaEvento = new JComboBox<>();
+		    gbc.gridy = 1;
+		    panelIzq.add(cbListaEvento, gbc);
+
+		    // Edición
+		    gbc.gridy = 2;
+		    panelIzq.add(new JLabel("Edición:"), gbc);
+		    cbListaEdicion = new JComboBox<>();
+		    gbc.gridy = 3;
+		    panelIzq.add(cbListaEdicion, gbc);
+
+		    // Tipo de registro
+		    gbc.gridy = 4;
+		    panelIzq.add(new JLabel("Tipo de Registro:"), gbc);
+		    cbListaTipoRegistro = new JComboBox<>();
+		    gbc.gridy = 5;
+		    panelIzq.add(cbListaTipoRegistro, gbc);
+
+		    // Panel derecho: información
+		    infoTipoRegistro = new JTextArea();
+		    infoTipoRegistro.setEditable(false);
+		    infoTipoRegistro.setLineWrap(true);
+		    infoTipoRegistro.setWrapStyleWord(true);
+		    getContentPane().add(new JScrollPane(infoTipoRegistro), BorderLayout.CENTER);
+
+		    // Listeners en cascada
+		    cbListaEvento.addActionListener(e -> cargarEdiciones());
+		    cbListaEdicion.addActionListener(e -> cargarTiposRegistro());
+		    cbListaTipoRegistro.addActionListener(e -> mostrarInfoTipoRegistro());
+
+		    // Al abrir, cargar eventos
+		    cargarEventos();
+		}
 	
+	
+
+	private void cargarEventos() {
+	    cbListaEvento.removeAllItems();
+	    DataEvento[] eventos = IEV.getEventosDTO();
+	    if (eventos != null && eventos.length > 0) {
+	        for (DataEvento ev : eventos) {
+	            if (ev != null) cbListaEvento.addItem(ev.getNombre());
+	        }
+	    } else {
+	        cbListaEvento.addItem("No hay eventos");
+	    }
 	}
 
-	public ConsultaDeTipoDeRegistro() {
-		
-	
-		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		setResizable(false);
-		setTitle("Consulta De Tipo De Registro");
-		setBounds(100, 100, 450, 300);
-		getContentPane().setLayout(new BorderLayout(0, 0));
-		{
-		
-		JPanel panel_izquierda = new JPanel();
-		panel_izquierda.setBorder(new EmptyBorder(12, 12, 12, 12));
-		getContentPane().add(panel_izquierda, BorderLayout.WEST);
-		GridBagLayout gbl_panel_izquierda = new GridBagLayout();
-		gbl_panel_izquierda.columnWidths = new int[] {0, 0, 0};
-		gbl_panel_izquierda.rowHeights = new int[] {0, 0, 0, 0 ,0, 0 ,0};
-		gbl_panel_izquierda.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
-		gbl_panel_izquierda.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		panel_izquierda.setLayout(gbl_panel_izquierda);
-		
-		
-		//EVENTO : TAG y COMBOBOX
-		JLabel lblEventos = new JLabel("Evento: ");
-		lblEventos.setVerticalAlignment(SwingConstants.TOP);
-		GridBagConstraints gbc_lblEventos = new GridBagConstraints();
-		gbc_lblEventos.insets = new Insets(6, 12, 6, 6);
-		gbc_lblEventos.anchor = GridBagConstraints.WEST;
-		gbc_lblEventos.gridx = 0;
-		gbc_lblEventos.gridy = 0;
-		panel_izquierda.add(lblEventos, gbc_lblEventos);
-		
-		JComboBox<String> cbListaEvento = new JComboBox<String>();
-		GridBagConstraints gbc_cbListaEvento = new GridBagConstraints();
-		gbc_cbListaEvento.weightx = 1.0;
-		gbc_cbListaEvento.insets = new Insets(6, 6, 6, 12);
-		gbc_cbListaEvento.fill = GridBagConstraints.HORIZONTAL;
-		gbc_cbListaEvento.gridx = 0;
-		gbc_cbListaEvento.gridy = 1;
-		cbListaEvento.setModel(new DefaultComboBoxModel<>(new String[]{ //pre-carga para mostrar algo en el combobox
-			    "Seleccione...", "Evento A", "Evento B", "Evento C"
-			}));
-		cbListaEvento.setSelectedIndex(0); // seleccionas el que queres mostrar por defecto
-		panel_izquierda.add(cbListaEvento, gbc_cbListaEvento);
-				
-				
-				
-		//EDICION: TAG y COMBOBOX
-		JLabel lblEdiciones = new JLabel("Edición: ");
-		GridBagConstraints gbc_lblEdiciones = new GridBagConstraints();
-		gbc_lblEdiciones.insets = new Insets(6, 12, 6, 6);
-		gbc_lblEdiciones.anchor = GridBagConstraints.SOUTHWEST;
-		gbc_lblEdiciones.gridx = 0;
-		gbc_lblEdiciones.gridy = 2;
-		panel_izquierda.add(lblEdiciones, gbc_lblEdiciones);
-						
-		JComboBox<String> cbListaEdicion = new JComboBox<String>();
-		GridBagConstraints gbc_cbListaEdicion = new GridBagConstraints();
-		gbc_cbListaEdicion.weightx = 1.0;
-		gbc_cbListaEdicion.insets = new Insets(6, 6, 6, 12);
-		gbc_cbListaEdicion.fill = GridBagConstraints.HORIZONTAL;
-		gbc_cbListaEdicion.gridx = 0;
-		gbc_cbListaEdicion.gridy = 3;
-		cbListaEdicion.setModel(new DefaultComboBoxModel<>(new String[]{ //pre-carga para mostrar algo en el combobox
-		    "Seleccione...", "Edicion A", "Edicion B", "Edicion C"
-		}));
-		panel_izquierda.add(cbListaEdicion, gbc_cbListaEdicion);
-				
-				
-				
-		//TipoRegistro: TAG y COMBOBOX
-		JLabel lblTipoRegistro = new JLabel("Tipo de Registro: ");
-		GridBagConstraints gbc_lblTipoRegistro = new GridBagConstraints();
-		gbc_lblTipoRegistro.insets = new Insets(6, 12, 6, 6);
-		gbc_lblTipoRegistro.anchor = GridBagConstraints.WEST;
-		gbc_lblTipoRegistro.gridx = 0;
-		gbc_lblTipoRegistro.gridy = 4;
-		panel_izquierda.add(lblTipoRegistro, gbc_lblTipoRegistro);
-						
-		JComboBox<String> cbListaTipoRegistro = new JComboBox<String>();
-		GridBagConstraints gbc_cbListaTipoRegistro= new GridBagConstraints();
-		gbc_cbListaTipoRegistro.weightx = 1.0;
-		gbc_cbListaTipoRegistro.insets = new Insets(6, 6, 6, 12);
-		gbc_cbListaTipoRegistro.fill = GridBagConstraints.HORIZONTAL;
-		gbc_cbListaTipoRegistro.gridx = 0;
-		gbc_cbListaTipoRegistro.gridy = 5;
-		cbListaTipoRegistro.setModel(new DefaultComboBoxModel<>(new String[]{ //pre-carga para mostrar algo en el combobox
-		    "Seleccione...", "TipoRegistro A", "TipoRegistro B", "TipoRegistro C"
-		}));
-		panel_izquierda.add(cbListaTipoRegistro, gbc_cbListaTipoRegistro);
-						
-						
-						
-		//Panel Información				
-		JTextArea infoTipoRegistro = new JTextArea();
-		infoTipoRegistro.setText("Nombre: " + "\n"
-				+ "Descripción:  " + "\n"
-				+ "Costo: " + "\n"
-				+ "Cupo: " );
-		infoTipoRegistro.setEditable(false);
-		infoTipoRegistro.setLineWrap(true);
-		infoTipoRegistro.setWrapStyleWord(true);
-		infoTipoRegistro.setRows(5);
-		infoTipoRegistro.setColumns(25);
-		infoTipoRegistro.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-
-		JScrollPane scroll = new JScrollPane(infoTipoRegistro);
-		getContentPane().add(scroll, BorderLayout.CENTER);
-
-	}
+	private void cargarEdiciones() {
+	    cbListaEdicion.removeAllItems();
+	    String eventoSel = (String) cbListaEvento.getSelectedItem();
+	    if (eventoSel != null && !eventoSel.equals("No hay eventos")) {
+	        try {
+	            DataEdicion[] ediciones = IEV.listarEdiciones(eventoSel);
+	            if (ediciones.length == 0) {
+	                cbListaEdicion.addItem("No tiene ediciones");
+	            } else {
+	                for (DataEdicion ed : ediciones) {
+	                    cbListaEdicion.addItem(ed.getNombre());
+	                }
+	            }
+	        } catch (Exception e) {
+	            cbListaEdicion.addItem("Error al cargar ediciones");
+	        }
+	    }
 	}
 
-	
+	private void cargarTiposRegistro() {
+	    cbListaTipoRegistro.removeAllItems();
+	    String eventoSel = (String) cbListaEvento.getSelectedItem();
+	    String edicionSel = (String) cbListaEdicion.getSelectedItem();
+	    if (eventoSel != null && edicionSel != null &&
+	        !edicionSel.equals("No tiene ediciones")) {
+	        try {
+	            DataTipoRegistro[] tipos = IEV.listarTiposRegistro(eventoSel, edicionSel);
+	            if (tipos.length == 0) {
+	                cbListaTipoRegistro.addItem("No tiene tipos de registro");
+	            } else {
+	                for (DataTipoRegistro tr : tipos) {
+	                    cbListaTipoRegistro.addItem(tr.getNombre());
+	                }
+	            }
+	        } catch (Exception e) {
+	            cbListaTipoRegistro.addItem("Error al cargar tipos");
+	        }
+	    }
+	}
+private void mostrarInfoTipoRegistro() {
+    String eventoSel = (String) cbListaEvento.getSelectedItem();
+    String edicionSel = (String) cbListaEdicion.getSelectedItem();
+    String tipoSel = (String) cbListaTipoRegistro.getSelectedItem();
+    if (eventoSel != null && edicionSel != null && tipoSel != null) {
+        try {
+            DataTipoRegistro tr = IEV.getTipoRegistro(eventoSel, edicionSel, tipoSel);
+            infoTipoRegistro.setText(
+                "Nombre: " + tr.getNombre() + "\n" +
+                "Descripción: " + tr.getDescripcion() + "\n" +
+                "Costo: " + tr.getCosto() + "\n" +
+                "Cupo: " + tr.getCupo()
+            );
+        } catch (Exception ex) {
+            infoTipoRegistro.setText("Error al obtener el tipo de registro");
+        }
+    }
+}}
 
-}
+
+
