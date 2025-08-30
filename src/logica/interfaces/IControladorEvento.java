@@ -1,5 +1,4 @@
 package logica.interfaces;
-import java.util.Set;
 import java.time.LocalDate;
 import java.util.List;
 
