@@ -193,30 +193,66 @@ public class AltaEvento extends JInternalFrame {
 
     
     private void guardarEvento() {
-        String nombre = tfNombre.getText();
-        String descripcion = tfDescripcion.getText();
-        String sigla = tfSigla.getText();
+    	// 1) Validaciones de UI
+        if (!checkFormulario()) return;
 
-        // Convertir las categorías seleccionadas en lista (pero sin crear objetos nuevos)
+        // 2) Recolección de datos
+        String nombre = tfNombre.getText().trim();
+        String descripcion = tfDescripcion.getText().trim();
+        String sigla = tfSigla.getText().trim();
+
         List<String> categoriasEvento = new ArrayList<>();
         for (int i = 0; i < modeloSeleccionadas.size(); i++) {
-            categoriasEvento.add(modeloSeleccionadas.get(i));  // 👈 ya es un Categoria
+            categoriasEvento.add(modeloSeleccionadas.get(i));
         }
 
-        // Llamada al controlador
-        controlEvento.altaEvento(nombre, descripcion, sigla,categoriasEvento);
+        // 3) Llamada al controlador con manejo de errores
+        try {
+            controlEvento.altaEvento(nombre, descripcion, sigla, categoriasEvento);
 
-        // Mensaje de éxito
-        JOptionPane.showMessageDialog(this, "Evento guardado correctamente");
+            JOptionPane.showMessageDialog(this, "Evento guardado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            limpiarFormulario();
+            setVisible(false);
 
-        // Cerrar ventana
-        setVisible(false); 
-        
-
+        } catch (IllegalArgumentException ex) {
+            // Errores de validación del lado del controlador (nombre duplicado, categoría inexistente, etc.)
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Datos inválidos", JOptionPane.ERROR_MESSAGE);
+        }
     }
     
+	 // Valida que no falte ningún dato y que haya al menos una categoría seleccionada.
+	 // Muestra mensajes y hace focus donde corresponde.
+	 private boolean checkFormulario() {
+	     String nombre = tfNombre.getText() != null ? tfNombre.getText().trim() : "";
+	     String sigla  = tfSigla.getText()  != null ? tfSigla.getText().trim()  : "";
+	     String desc   = tfDescripcion.getText() != null ? tfDescripcion.getText().trim() : "";
+	
+	     if (nombre.isEmpty()) {
+	         JOptionPane.showMessageDialog(this, "El nombre es obligatorio.", "Faltan datos", JOptionPane.WARNING_MESSAGE);
+	         tfNombre.requestFocusInWindow();
+	         return false;
+	     }
+	     if (sigla.isEmpty()) {
+	         JOptionPane.showMessageDialog(this, "La sigla es obligatoria.", "Faltan datos", JOptionPane.WARNING_MESSAGE);
+	         tfSigla.requestFocusInWindow();
+	         return false;
+	     }
+	     if (desc.isEmpty()) {
+	         JOptionPane.showMessageDialog(this, "La descripción es obligatoria.", "Faltan datos", JOptionPane.WARNING_MESSAGE);
+	         tfDescripcion.requestFocusInWindow();
+	         return false;
+	     }
+	     if (modeloSeleccionadas == null || modeloSeleccionadas.isEmpty()) {
+	         JOptionPane.showMessageDialog(this, "Debe seleccionar al menos una categoría.", "Faltan datos", JOptionPane.WARNING_MESSAGE);
+	         listaCategoriasDisponibles.requestFocusInWindow();
+	         return false;
+	     }
+	     return true;
+	 }
 
-private GridBagConstraints cloneGbc(GridBagConstraints gbc) {
-    GridBagConstraints copy = (GridBagConstraints) gbc.clone();
-    return copy;
-}}
+
+	private GridBagConstraints cloneGbc(GridBagConstraints gbc) {
+	    GridBagConstraints copy = (GridBagConstraints) gbc.clone();
+	    return copy;
+	}
+}
