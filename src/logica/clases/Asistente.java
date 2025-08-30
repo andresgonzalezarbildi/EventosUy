@@ -1,16 +1,20 @@
 
 package logica.clases;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Asistente extends Usuario {
     private String apellido;
     private LocalDate fechaNacimiento;
+    private Set<Registro> registros;
 
     public Asistente(String nickname, String nombre, String correo,
                      String apellido, LocalDate fechaNacimiento) {
         super(nickname, nombre, correo);
         this.apellido = apellido;
         this.fechaNacimiento = fechaNacimiento;
+        this.registros = new HashSet<>();
     }
 
     public String getApellido() {
@@ -27,5 +31,8 @@ public class Asistente extends Usuario {
 
     public void setFechaNacimiento(LocalDate fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
+    }
+    public void agregarRegistro(Registro r) {
+        registros.add(r);
     }
 }

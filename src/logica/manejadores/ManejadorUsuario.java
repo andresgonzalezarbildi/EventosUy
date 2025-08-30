@@ -64,6 +64,11 @@ public class ManejadorUsuario {
         return asistentes.get(nickname);
     }
     
+    public Asistente getAsistente(String nickname) {
+        return asistentes.get(nickname);
+        
+    }
+    
     public Organizador obtenerOrganizadorPorNickname(String nickname) {
         return organizadores.get(nickname);
 
@@ -76,4 +81,5 @@ public class ManejadorUsuario {
     public Collection<Asistente> obtenerTodosAsistentes() {
         return asistentes.values();
     }
+    
 }

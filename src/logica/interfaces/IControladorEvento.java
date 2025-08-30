@@ -13,7 +13,7 @@ public interface IControladorEvento {
 	public void altaEdicionEvento(String nombreEvento, String nombreEdicion, String sigla, String ciudad, String pais, LocalDate fechaInicio, LocalDate fechaFin, LocalDate fechaAltaEnPlataforma, String organizadorNick);
 
 	public void altaTipoRegistro(String nombreEvento, String nombreEdicion, String nombreTipoRegistro, String descripcion, Integer costo,  Integer cupos);
-
+	void altaRegistro(String nombreEvento, String nombreEdicion, String nombreTipoRegistro, String nombreAsistente, LocalDate fecha);
     public void altaCategoria(String nombre) throws CategoriaRepetidaException;
     public DataEvento[] getEventosDTO() ;
     public DataEvento[] listarEventoExistentes() throws EventoNoExisteException;

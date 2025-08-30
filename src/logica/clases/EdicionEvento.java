@@ -5,8 +5,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import logica.datatypes.DataTipoRegistro;
+
 import logica.datatypes.DataPatrocinio;
+import logica.datatypes.DataTipoRegistro;
 
 
 public class EdicionEvento {
@@ -21,6 +22,8 @@ public class EdicionEvento {
     private Map<String, TipoRegistro> listaTipoDeRegistro;
     private Organizador organizador;
     private List<Patrocinio> patrocinios;
+    private Map<String, Registro> listaRegistros;
+
 
     public EdicionEvento(String nombre, LocalDate fechaIni, LocalDate fechaFin, String ciudad, String pais, String sigla, LocalDate fechaAltaEnPlataforma) {
         this.nombre = nombre;
@@ -32,6 +35,7 @@ public class EdicionEvento {
         this.fechaAltaEnPlataforma = fechaAltaEnPlataforma;
         this.listaTipoDeRegistro = new HashMap<>();
         this.patrocinios = new ArrayList<>();
+        this.listaRegistros = new HashMap<>();
     }
 
     public String getNombre() { return nombre; }
@@ -62,6 +66,7 @@ public class EdicionEvento {
     public Map<String, TipoRegistro> getTipoDeRegistro() {
         return listaTipoDeRegistro;
     }
+    
     public String getOrganizadorDTO() {
         return organizador != null ? organizador.getNickname() : "";
     }
@@ -85,9 +90,25 @@ public class EdicionEvento {
         }
         return dtos;
     }
-
-    
     public void setOrganizador(Organizador o) { this.organizador = o; }
     public void agregarPatrocinio(Patrocinio p) { this.patrocinios.add(p); }
+    
+    public TipoRegistro getTipoRegistro(String nombre) {
+        return listaTipoDeRegistro.get(nombre);
+    }
+    
+    public boolean hayCupo(TipoRegistro tipo) {
+    	long usados = listaRegistros.values().stream()
+    	        .filter(r -> r.getTipoRegistro().equals(tipo))
+    	        .count();
+    	   return usados < tipo.getCupo();
+    }
+    public boolean estaRegistrado(Asistente a) {
+        return listaRegistros.containsKey(a.getNickname());
+    }
+    public void agregarRegistro(Registro r) {
+        listaRegistros.put(r.getAsistente().getNickname(), r);
+    }
+    
 
 }

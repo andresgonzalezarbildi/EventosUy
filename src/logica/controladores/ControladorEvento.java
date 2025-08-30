@@ -6,10 +6,12 @@ import java.util.Map;
 
 import excepciones.CategoriaRepetidaException;
 import excepciones.EventoNoExisteException;
+import logica.clases.Asistente;
 import logica.clases.Categoria;
 import logica.clases.EdicionEvento;
 import logica.clases.Evento;
 import logica.clases.Organizador;
+import logica.clases.Registro;
 import logica.clases.TipoRegistro;
 import logica.datatypes.DataEdicion;
 import logica.datatypes.DataEvento;
@@ -198,6 +200,32 @@ public class ControladorEvento implements IControladorEvento {
         edicion.agregarTipoDeRegistro(nombreTipoRegistro, tipoRegistronuevo);
     }
     
+    public void altaRegistro(String nombreEvento, String nombreEdicion, String nombreTipoRegistro, String nombreAsistente, LocalDate fecha) {
+        Evento ev = ManejadorEvento.getInstance().obtenerEvento(nombreEvento);
+        if (ev == null) throw new IllegalArgumentException("No existe el evento: " + nombreEvento);
+
+        EdicionEvento ed = ev.getEdicion(nombreEdicion);
+        if (ed == null) throw new IllegalArgumentException("No existe la edición: " + nombreEdicion);
+
+        TipoRegistro tipo = ed.getTipoDeRegistro(nombreTipoRegistro);
+        if (tipo == null) throw new IllegalArgumentException("No existe el tipo de registro: " + nombreTipoRegistro);
+
+        Asistente asis = ManejadorUsuario.getInstance().getAsistente(nombreAsistente);
+        if (asis == null) throw new IllegalArgumentException("No existe el asistente: " + nombreAsistente);
+
+        if (!ed.hayCupo(tipo)) {
+            throw new IllegalStateException("No hay cupo disponible para el tipo de registro: " + nombreTipoRegistro);
+        }
+        if (ed.estaRegistrado(asis)) {
+            throw new IllegalStateException("El asistente ya está registrado en esta edición.");
+        }
+
+        int costo = tipo.getCosto();
+        Registro reg = new Registro(fecha , String.valueOf(costo), tipo, ed, asis);
+
+        ed.agregarRegistro(reg);
+        asis.agregarRegistro(reg);
+    }
 
 
     @Override
