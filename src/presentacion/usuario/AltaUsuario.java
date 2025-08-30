@@ -321,14 +321,14 @@ public class AltaUsuario extends JInternalFrame {
             }
 
             JOptionPane.showMessageDialog(this, "El Usuario se ha creado con éxito",
-                    "Registrar Usuario", JOptionPane.INFORMATION_MESSAGE);
+                    "Alta Usuario", JOptionPane.INFORMATION_MESSAGE);
+            limpiarFormulario();
+            setVisible(false);
 
         } catch (UsuarioRepetidoException e) {
             JOptionPane.showMessageDialog(this, e.getMessage(),
-                    "Registrar Usuario", JOptionPane.ERROR_MESSAGE);
+                    "Alta Usuario", JOptionPane.ERROR_MESSAGE);
         }
-        limpiarFormulario();
-        setVisible(false);
     }
 }
 
@@ -399,6 +399,14 @@ public class AltaUsuario extends JInternalFrame {
 
     getContentPane().revalidate();
     getContentPane().repaint();
-}
+    }
+    
+
+    public void setVisible(boolean aFlag) {
+        if (aFlag) {
+            limpiarFormulario();
+        }
+        super.setVisible(aFlag);
+    }
 
 }
