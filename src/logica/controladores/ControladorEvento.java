@@ -52,8 +52,7 @@ public class ControladorEvento implements IControladorEvento {
         }
 
 		manejadorEvento.agregarEvento(e);
-		System.out.println("Evento guardado: " + e.getNombre());
-	    System.out.println("Total eventos ahora: " + manejadorEvento.getEventos().size());
+		
 	}
     
     //el altaCategoria es sin GUI

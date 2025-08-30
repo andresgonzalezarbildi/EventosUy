@@ -1,11 +1,20 @@
 package presentacion.usuario;
 
 import javax.swing.*;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
+
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+
+import com.toedter.calendar.JDateChooser;
+
 import java.awt.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+
+
 import javax.swing.border.TitledBorder;
 
 import logica.datatypes.DataUsuario;
@@ -20,12 +29,14 @@ public class ModificarUsuario extends JInternalFrame {
     private JComboBox<String> comboTipoUsuario;
     private JTextField textFieldNickname, textFieldNombre, textFieldCorreo;
     private JLabel lblDescripcion, lblLink, lblApellido, lblFechaNacimiento;
-    private JTextField textFieldDescripcion, textFieldLink, textFieldApellido, textFieldFechaNacimiento;
+    private JTextField textFieldDescripcion, textFieldLink, textFieldApellido;
+
+    private JDateChooser dateChooserFechaNacimiento;
     private JButton btnAceptar, btnCancelar;
 
     private JList<DataUsuario> listaUsuarios;
     private DefaultListModel<DataUsuario> listaModel;
-    private JTextField buscador;
+    
     private DataUsuario[] usuarios;
 
     public ModificarUsuario(IControladorUsuario icu) {
@@ -54,49 +65,7 @@ public class ModificarUsuario extends JInternalFrame {
         JScrollPane scrollLista = new JScrollPane(listaUsuarios);
         panelIzq.add(scrollLista, BorderLayout.CENTER);
 
-        // Buscador
-        buscador = new JTextField("Buscar por nickname...");
-        buscador.setForeground(Color.GRAY);
-        buscador.setToolTipText("Buscar por nickname...");
-        buscador.addFocusListener(new FocusListener() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                if (buscador.getText().equals("Buscar por nickname...")) {
-                    buscador.setText("");
-                    buscador.setForeground(Color.BLACK);
-                }
-            }
-            @Override
-            public void focusLost(FocusEvent e) {
-                if (buscador.getText().isEmpty()) {
-                    buscador.setText("Buscar por nickname...");
-                    buscador.setForeground(Color.GRAY);
-                }
-            }
-        });
-
-        buscador.getDocument().addDocumentListener(new DocumentListener() {
-            private void filtrar() {
-                String filtro = buscador.getText().trim();
-                if (filtro.equals("Buscar por nickname...")) filtro = "";
-
-                listaModel.clear();
-                try {
-                    for (DataUsuario u : controlUsr.getUsuarios()) {
-                        if (u.getNickname().toLowerCase().contains(filtro.toLowerCase())) {
-                            listaModel.addElement(u);
-                        }
-                    }
-                } catch (UsuarioNoExisteException e) {
-                    // no hay usuarios
-                }
-            }
-            @Override public void insertUpdate(DocumentEvent e) { filtrar(); }
-            @Override public void removeUpdate(DocumentEvent e) { filtrar(); }
-            @Override public void changedUpdate(DocumentEvent e) { filtrar(); }
-        });
-
-        panelIzq.add(buscador, BorderLayout.SOUTH);
+      
         getContentPane().add(panelIzq, BorderLayout.WEST);
 
      // Panel derecho: formulario
@@ -109,7 +78,7 @@ public class ModificarUsuario extends JInternalFrame {
                 "Datos de Usuario"
         ));
 
-        // Componentes
+        // Componentes	
         comboTipoUsuario = new JComboBox<>(new String[]{"", "Asistente", "Organizador"});
         comboTipoUsuario.setEnabled(false);
         textFieldNickname = new JTextField();
@@ -125,7 +94,8 @@ public class ModificarUsuario extends JInternalFrame {
         lblApellido = new JLabel("Apellido:");
         textFieldApellido = new JTextField();
         lblFechaNacimiento = new JLabel("Fecha Nac.:");
-        textFieldFechaNacimiento = new JTextField();
+        dateChooserFechaNacimiento = new JDateChooser();
+        dateChooserFechaNacimiento.setDateFormatString("dd/MM/yyyy"); // formato visual
 
         btnAceptar = new JButton("Aceptar");
         btnCancelar = new JButton("Cancelar");
@@ -179,7 +149,7 @@ public class ModificarUsuario extends JInternalFrame {
         y++; gbc.gridx = 0; gbc.gridy = y;
         panelCampos.add(lblFechaNacimiento, gbc);
         gbc.gridx = 1;
-        panelCampos.add(textFieldFechaNacimiento, gbc);
+        panelCampos.add(dateChooserFechaNacimiento, gbc);
 
         // Botones
         y++; gbc.gridx = 0; gbc.gridy = y;
@@ -191,7 +161,7 @@ public class ModificarUsuario extends JInternalFrame {
         lblDescripcion.setVisible(false); textFieldDescripcion.setVisible(false);
         lblLink.setVisible(false); textFieldLink.setVisible(false);
         lblApellido.setVisible(false); textFieldApellido.setVisible(false);
-        lblFechaNacimiento.setVisible(false); textFieldFechaNacimiento.setVisible(false);
+        lblFechaNacimiento.setVisible(false); dateChooserFechaNacimiento.setVisible(false);
 
         // Agregar solo el panel interno al panelDer
         panelDer.add(panelCampos, BorderLayout.CENTER);
@@ -260,9 +230,13 @@ public class ModificarUsuario extends JInternalFrame {
         textFieldApellido.setText(usuario.getApellido());
 
         lblFechaNacimiento.setVisible("Asistente".equals(usuario.getTipo()));
-        textFieldFechaNacimiento.setVisible("Asistente".equals(usuario.getTipo()));
-        textFieldFechaNacimiento.setText(usuario.getFechaNacimiento());
+        dateChooserFechaNacimiento.setVisible("Asistente".equals(usuario.getTipo()));
 
+        if ("Asistente".equals(usuario.getTipo()) && usuario.getFechaNacimiento() != null) {
+            LocalDate fecha = usuario.getFechaNacimiento();
+            Date utilDate = Date.from(fecha.atStartOfDay(ZoneId.systemDefault()).toInstant());
+            dateChooserFechaNacimiento.setDate(utilDate);
+        }
         getContentPane().revalidate();
         getContentPane().repaint();
     }
@@ -273,14 +247,20 @@ public class ModificarUsuario extends JInternalFrame {
         String descripcionU = textFieldDescripcion.getText();
         String linkU = textFieldLink.getText();
         String apellidoU = textFieldApellido.getText();
-        String fechaNacU = textFieldFechaNacimiento.getText();
+        LocalDate fechaNacU = null;
+        if (dateChooserFechaNacimiento.getDate() != null) {
+            fechaNacU = dateChooserFechaNacimiento.getDate()
+                           .toInstant()
+                           .atZone(ZoneId.systemDefault())
+                           .toLocalDate();
+        }
 
         if (!checkFormulario()) return;
 
         try {
             controlUsr.modificarUsuario(
-                    textFieldNickname.getText(), nombreU, tipoU,
-                    descripcionU, linkU, apellidoU, fechaNacU
+                    textFieldNickname.getText(), nombreU,
+                    descripcionU, linkU, apellidoU,fechaNacU
             );
             JOptionPane.showMessageDialog(this, "El usuario se ha modificado con éxito",
                     "Modificar Usuario", JOptionPane.INFORMATION_MESSAGE);
@@ -308,12 +288,13 @@ public class ModificarUsuario extends JInternalFrame {
         }
 
         if ("Asistente".equals(tipo) &&
-                (textFieldApellido.getText().isEmpty() || textFieldFechaNacimiento.getText().isEmpty())) {
-            JOptionPane.showMessageDialog(this, "Apellido y fecha de nacimiento son obligatorios para un Asistente",
-                    "Modificar Usuario", JOptionPane.ERROR_MESSAGE);
+                (textFieldApellido.getText().isEmpty() || dateChooserFechaNacimiento.getDate() == null)) {
+            JOptionPane.showMessageDialog(this,
+                    "Apellido y fecha de nacimiento son obligatorios para un Asistente",
+                    "Modificar Usuario",
+                    JOptionPane.ERROR_MESSAGE);
             return false;
         }
-
         return true;
     }
 }

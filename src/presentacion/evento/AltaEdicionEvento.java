@@ -1,4 +1,4 @@
-package presentacion.evento;
+	package presentacion.evento;
 
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
@@ -317,7 +317,7 @@ public class AltaEdicionEvento extends JInternalFrame {
 	@Override
 	public void setVisible(boolean aFlag) {
 	    if (aFlag) {
-	        cargarEventos(); // recargar siempre que se muestra
+	        cargarEventos(); 
 	        cargarOrganizadores();
 	    }
 	    super.setVisible(aFlag);

@@ -3,10 +3,17 @@ package presentacion.evento;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+
+import excepciones.EventoNoExisteException;
+
 import java.awt.*;
+
+import logica.datatypes.DataEdicion;
 import logica.datatypes.DataEvento;
 import logica.clases.Evento;
 import logica.interfaces.IControladorEvento;
+import logica.interfaces.IControladorUsuario;
+
 import java.util.List;
 
 public class ConsultaEvento extends JInternalFrame {
@@ -17,12 +24,15 @@ public class ConsultaEvento extends JInternalFrame {
     private JTextField textField;
     private JTextField textField_1;
     private JTextField textField_2;
-    private JList<String> listCategorias;  // 👈 atributo de clase
+    private JList<String> listCategorias; 
+    private JComboBox<String> cbEdiciones; 
+    private IControladorEvento IEV;
+
 
     private JTextArea textArea;
-    public ConsultaEvento(IControladorEvento IEV) {
+    public ConsultaEvento(IControladorEvento ctrlEv) {
     	
-    	
+    		IEV = ctrlEv;
         setSize(600, 400); //establece el tamaño incial de la ventana
         setResizable(false); //permite al user redimenzioanr la ventana manualment
         setIconifiable(true); // permite minimzar la ventana
@@ -154,12 +164,12 @@ public class ConsultaEvento extends JInternalFrame {
         gbc_lblEdicion.gridy = 5;
         panel.add(lblEdicion, gbc_lblEdicion);
         
-        JComboBox comboBox = new JComboBox();
+        cbEdiciones = new JComboBox();
         GridBagConstraints gbc_comboBox = new GridBagConstraints();
         gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
         gbc_comboBox.gridx = 2;
         gbc_comboBox.gridy = 5;
-        panel.add(comboBox, gbc_comboBox);
+        panel.add(cbEdiciones, gbc_comboBox);
         JScrollPane scrollInfo = new JScrollPane();
 
         JPanel panelInferior = new JPanel(new BorderLayout());
@@ -200,9 +210,25 @@ public class ConsultaEvento extends JInternalFrame {
             }
         }
         listCategorias.setModel(catModel);
+        cbEdiciones.removeAllItems();
+        try {
+            DataEdicion[] ediciones = IEV.listarEdiciones(evento.getNombre());
+            if (ediciones != null && ediciones.length > 0) {
+                cbEdiciones.addItem("Seleccione...");
+                for (DataEdicion ed : ediciones) {
+                    cbEdiciones.addItem(ed.getNombre());
+                }
+                cbEdiciones.setSelectedIndex(0);
+            } else {
+                cbEdiciones.addItem("No tiene ediciones");
+            }
+        } catch (Exception ex) {
+            cbEdiciones.addItem("Error al cargar ediciones");
+        }
+    }
 
         
-    }
+    
     
     
     
