@@ -52,6 +52,8 @@ public class ControladorEvento implements IControladorEvento {
         }
 
 		manejadorEvento.agregarEvento(e);
+		System.out.println("Evento guardado: " + e.getNombre());
+	    System.out.println("Total eventos ahora: " + manejadorEvento.getEventos().size());
 	}
     
     //el altaCategoria es sin GUI
@@ -66,10 +68,26 @@ public class ControladorEvento implements IControladorEvento {
        manejadorEvento.agregarCategoria(nueva);
    }
     
-    public DataEvento[] getEventosDTO() {
-        return manejadorEvento.getEventosDTO(); 
-    }
-    
+   public DataEvento[] getEventosDTO() {
+	    DataEvento[] eventos = manejadorEvento.getEventosDTO();
+	    if (eventos == null) {
+	        System.out.println("getEventosDTO devolvió null");
+	    } else {
+	        System.out.println("getEventosDTO devolvió " + eventos.length + " eventos");
+	        for (DataEvento ev : eventos) {
+	            if (ev != null) {
+	                System.out.println("  -> " + ev.getNombre());
+	            } else {
+	                System.out.println("  ⚠️ Evento nulo en array");
+	            }
+	        }
+	    }
+	    return eventos;
+	}
+
+   
+   
+   
     public DataEvento[] listarEventoExistentes() throws EventoNoExisteException {
     	 Map<String,Evento> eventos = manejadorEvento.getEventos();
 
@@ -121,16 +139,18 @@ public class ControladorEvento implements IControladorEvento {
         if (evento == null) {
             throw new IllegalArgumentException("No existe el evento: " + nombreEvento);
         }
-        if (manejadorEvento.existeEdicion(nombreEdicion)) {
-            throw new IllegalArgumentException("Ya existe una edición con nombre: " + nombreEdicion);
+        if (evento.getEdicion(nombreEdicion) != null) {
+            throw new IllegalArgumentException("Ya existe una edición con ese nombre en este evento: " + nombreEvento);
         }
         ManejadorUsuario manejadorUsuario = ManejadorUsuario.getInstance();
         Organizador org = manejadorUsuario.obtenerOrganizadorPorNickname(organizadorNick);
         if (org == null) {
             throw new IllegalArgumentException("Organizador inexistente: " + organizadorNick);
         }
+        
         EdicionEvento ed = new EdicionEvento( nombreEdicion, fechaInicio, fechaFin, ciudad, pais, sigla, (fechaAltaEnPlataforma != null ? fechaAltaEnPlataforma : LocalDate.now())
         );
+        org.agregarEdicion(ed);
         evento.agregarEdicion(ed);
     }
 

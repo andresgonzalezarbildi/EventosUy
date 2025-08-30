@@ -211,8 +211,10 @@ public class AltaEvento extends JInternalFrame {
 
         // Cerrar ventana
         setVisible(false); 
-    }
+        
 
+    }
+    
 
 private GridBagConstraints cloneGbc(GridBagConstraints gbc) {
     GridBagConstraints copy = (GridBagConstraints) gbc.clone();

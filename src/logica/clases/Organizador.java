@@ -1,9 +1,13 @@
 package logica.clases;
 
+import java.util.Collection;
+import java.util.HashMap;
+
 public class Organizador extends Usuario {
     
     private String descripcionGeneral;
     private String linkSitioWeb; 
+    private HashMap<String, EdicionEvento> edicionesOrganizadas;
 
     // Constructor
     public Organizador(String nickname, String nombre, String correoElectronico,
@@ -11,6 +15,7 @@ public class Organizador extends Usuario {
         super(nickname, nombre, correoElectronico);
         this.descripcionGeneral = descripcionGeneral;
         this.linkSitioWeb = linkSitioWeb;
+        this.edicionesOrganizadas = new HashMap<>();  // 👈 importante
     }
 
     // Getters y Setters
@@ -28,5 +33,13 @@ public class Organizador extends Usuario {
 
     public void setLinkSitioWeb(String linkSitioWeb) {
         this.linkSitioWeb = linkSitioWeb;
+    }
+    
+    public void agregarEdicion(EdicionEvento edicion) {
+        edicionesOrganizadas.put(edicion.getNombre(), edicion);
+    }
+    
+    public HashMap<String, EdicionEvento> getEdicionesOrganizadas() {
+        return edicionesOrganizadas;
     }
 }

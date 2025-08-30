@@ -10,5 +10,6 @@ public interface IControladorUsuario {
 	public void altaUsuario(String nickname, String nombre, String correo, String tipo, String descripcion, String link, String apellido, LocalDate fechaNac) throws UsuarioRepetidoException ;
 	DataUsuario verInfoUsuario(String ni) throws UsuarioNoExisteException;
     DataUsuario[] getUsuarios() throws UsuarioNoExisteException;
+    DataUsuario[] getOrganizadores();
     public void modificarUsuario(String nickname, String nombre, String descripcion, String link, String apellido, LocalDate fechaNac) throws UsuarioNoExisteException ;
 }
