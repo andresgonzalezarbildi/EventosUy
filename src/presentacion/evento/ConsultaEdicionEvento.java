@@ -13,7 +13,6 @@ import logica.datatypes.DataPatrocinio;
 import excepciones.EventoNoExisteException;
 
 public class ConsultaEdicionEvento extends JInternalFrame {
-
     private JTextField textOrganizador, textNombre, textFechaIni, textFechaFin, textCiudad, textPais, textSigla, textAlta;
     private IControladorEvento controlEvento;
 

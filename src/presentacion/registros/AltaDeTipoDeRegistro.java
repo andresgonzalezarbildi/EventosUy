@@ -71,7 +71,7 @@ public class AltaDeTipoDeRegistro extends JInternalFrame {
             } else {
                 cbListaEdiciones.removeAllItems();
                 cbListaEdiciones.addItem("Seleccione...");
-                cbListaEdiciones.setSelectedIndex(0);
+                cbListaEdiciones.setSelectedIndex(-1);
             }
         });// ahora sí existe índice 0
 
@@ -187,7 +187,9 @@ public class AltaDeTipoDeRegistro extends JInternalFrame {
         panelBotones.add(btnAceptar);
 
         JButton btnCancelar = new JButton("Cancelar");
-        btnCancelar.addActionListener(e -> dispose());
+        btnCancelar.addActionListener(e ->{
+        	limpiarFormulario();
+        	dispose();});
         panelBotones.add(btnCancelar);
     }
 
@@ -245,6 +247,7 @@ public class AltaDeTipoDeRegistro extends JInternalFrame {
                     "El tipo de registro \"" + nombre + "\" fue agregado correctamente.",
                     "Alta Tipo de Registro",
                     javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                limpiarFormulario();
 
                 dispose();
 
@@ -281,8 +284,6 @@ public class AltaDeTipoDeRegistro extends JInternalFrame {
 
     private void cargarEventos() {
         cbListaEvento.removeAllItems();
-        cbListaEvento.addItem("Seleccione..."); // 👈 lo volvés a poner
-
         DataEvento[] eventos = IEV.getEventosDTO();
         if (eventos != null) {
             for (DataEvento ev : eventos) {
@@ -291,14 +292,13 @@ public class AltaDeTipoDeRegistro extends JInternalFrame {
                 }
             }
         }
-        cbListaEvento.setSelectedIndex(0); // siempre apunta al placeholder
+        cbListaEvento.setSelectedIndex(-1); 
     }
 
     
     private void cargarEdiciones(String nombreEvento) {
-        cbListaEdiciones.removeAllItems();
-        cbListaEdiciones.addItem("Seleccione...");
-
+        cbListaEdiciones.removeAllItems();           
+        cbListaEdiciones.setSelectedIndex(-1);
         try {
             DataEdicion[] ediciones = IEV.listarEdiciones(nombreEvento);
 
@@ -317,8 +317,6 @@ public class AltaDeTipoDeRegistro extends JInternalFrame {
                 }
             }
 
-            cbListaEdiciones.setSelectedIndex(0);
-
         } catch (Exception ex) {
             javax.swing.JOptionPane.showMessageDialog(
                 this,
@@ -333,10 +331,26 @@ public class AltaDeTipoDeRegistro extends JInternalFrame {
     @Override
     public void setVisible(boolean aFlag) {
         if (aFlag) {
+        	limpiarFormulario();
             cargarEventos();
+            
         }
         super.setVisible(aFlag);
     }
     
-    
-    }
+
+		private void limpiarFormulario() {
+			
+			txtDescripcion.setText("");
+			txtNombre.setText("");
+			txtCosto.setText("");
+			txtCupo.setText("");
+			
+			cbListaEdiciones.setSelectedIndex(-1);
+			cbListaEdiciones.setSelectedIndex(-1);
+			
+			getContentPane().revalidate();
+			getContentPane().repaint();
+		}
+
+}

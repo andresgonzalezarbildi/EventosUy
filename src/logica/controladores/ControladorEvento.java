@@ -136,6 +136,8 @@ public class ControladorEvento implements IControladorEvento {
             String nombreEvento, String nombreEdicion, String sigla, String ciudad, String pais, LocalDate fechaInicio, LocalDate fechaFin, LocalDate fechaAltaEnPlataforma, String organizadorNick) {
         if (nombreEvento == null || nombreEvento.isBlank())   
         	throw new IllegalArgumentException("El evento es obligatorio.");
+        if (organizadorNick == null || organizadorNick.isBlank())   
+        	throw new IllegalArgumentException("El organizador es obligatorio.");
         if (nombreEdicion == null || nombreEdicion.isBlank())  
         	throw new IllegalArgumentException("El nombre de la edición es obligatorio.");
         if (sigla == null || sigla.isBlank())          

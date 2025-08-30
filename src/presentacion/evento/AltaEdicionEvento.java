@@ -1,11 +1,10 @@
-	package presentacion.evento;
+package presentacion.evento;
 
 import java.awt.BorderLayout;
-import com.toedter.calendar.JDateChooser;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
 import java.time.LocalDate;
 import java.time.ZoneId;
 
@@ -16,6 +15,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import com.toedter.calendar.JDateChooser;
 
 import logica.datatypes.DataEvento;
 import logica.datatypes.DataUsuario;
@@ -155,6 +156,7 @@ public class AltaEdicionEvento extends JInternalFrame {
 		getContentPane().add(textFieldPais, gbc_textFieldPais);
 		textFieldPais.setColumns(10);
 		
+		// --- Fecha inicio ---
 		JLabel lblFechaInicio = new JLabel("Fecha inicio:");
 		GridBagConstraints gbc_lblFechaInicio = new GridBagConstraints();
 		gbc_lblFechaInicio.anchor = GridBagConstraints.EAST;
@@ -162,16 +164,21 @@ public class AltaEdicionEvento extends JInternalFrame {
 		gbc_lblFechaInicio.gridx = 1;
 		gbc_lblFechaInicio.gridy = 6;
 		getContentPane().add(lblFechaInicio, gbc_lblFechaInicio);
-		
+
 		dateChooserFechaI = new JDateChooser();
 		dateChooserFechaI.setDateFormatString("dd/MM/yyyy");
+		dateChooserFechaI.setDate(null);
+		((JTextField) dateChooserFechaI.getDateEditor().getUiComponent()).setEditable(false);
+		dateChooserFechaI.getCalendarButton().setPreferredSize(new Dimension(30, 22));
+
 		GridBagConstraints gbc_dateChooserFechaI = new GridBagConstraints();
 		gbc_dateChooserFechaI.insets = new Insets(0, 0, 5, 0);
 		gbc_dateChooserFechaI.fill = GridBagConstraints.HORIZONTAL;
 		gbc_dateChooserFechaI.gridx = 2;
 		gbc_dateChooserFechaI.gridy = 6;
 		getContentPane().add(dateChooserFechaI, gbc_dateChooserFechaI);
-		
+
+		// --- Fecha fin ---
 		JLabel lblFechaFin = new JLabel("Fecha fin:");
 		GridBagConstraints gbc_lblFechaFin = new GridBagConstraints();
 		gbc_lblFechaFin.anchor = GridBagConstraints.EAST;
@@ -179,16 +186,21 @@ public class AltaEdicionEvento extends JInternalFrame {
 		gbc_lblFechaFin.gridx = 1;
 		gbc_lblFechaFin.gridy = 7;
 		getContentPane().add(lblFechaFin, gbc_lblFechaFin);
-		
+
 		dateChooserFechaF = new JDateChooser();
 		dateChooserFechaF.setDateFormatString("dd/MM/yyyy");
+		dateChooserFechaF.setDate(null);
+		((JTextField) dateChooserFechaF.getDateEditor().getUiComponent()).setEditable(false);
+		dateChooserFechaF.getCalendarButton().setPreferredSize(new Dimension(30, 22));
+
 		GridBagConstraints gbc_dateChooserFechaF = new GridBagConstraints();
 		gbc_dateChooserFechaF.insets = new Insets(0, 0, 5, 0);
 		gbc_dateChooserFechaF.fill = GridBagConstraints.HORIZONTAL;
 		gbc_dateChooserFechaF.gridx = 2;
 		gbc_dateChooserFechaF.gridy = 7;
 		getContentPane().add(dateChooserFechaF, gbc_dateChooserFechaF);
-		
+
+		// --- Fecha alta ---
 		JLabel lblFechaAlta = new JLabel("Fecha:");
 		GridBagConstraints gbc_lblFechaAlta = new GridBagConstraints();
 		gbc_lblFechaAlta.anchor = GridBagConstraints.EAST;
@@ -196,9 +208,13 @@ public class AltaEdicionEvento extends JInternalFrame {
 		gbc_lblFechaAlta.gridx = 1;
 		gbc_lblFechaAlta.gridy = 8;
 		getContentPane().add(lblFechaAlta, gbc_lblFechaAlta);
-		
+
 		dateChooserFechaAlta = new JDateChooser();
 		dateChooserFechaAlta.setDateFormatString("dd/MM/yyyy");
+		dateChooserFechaAlta.setDate(null);
+		((JTextField) dateChooserFechaAlta.getDateEditor().getUiComponent()).setEditable(false);
+		dateChooserFechaAlta.getCalendarButton().setPreferredSize(new Dimension(30, 22));
+
 		GridBagConstraints gbc_dateChooserFechaAlta = new GridBagConstraints();
 		gbc_dateChooserFechaAlta.insets = new Insets(0, 0, 5, 0);
 		gbc_dateChooserFechaAlta.fill = GridBagConstraints.HORIZONTAL;
@@ -236,19 +252,19 @@ public class AltaEdicionEvento extends JInternalFrame {
 	
 	
 		// estos for cargan los combobox de evento y organizador, con los eventos y organizadores existentes hasta el momento.
-		for (DataEvento ev : controlEvento.getEventosDTO()) {
-		    cbListaEventos.addItem(ev.getNombre());
-		}
-		for (DataUsuario org : IUS.getOrganizadores()) {
-	        cbOrganizadores.addItem(org.getNickname());
-	    }
+		//for (DataEvento ev : controlEvento.getEventosDTO()) {
+		//    cbListaEventos.addItem(ev.getNombre());
+		//}
+		//for (DataUsuario org : IUS.getOrganizadores()) {
+	    //    cbOrganizadores.addItem(org.getNickname());
+	    //}
 
 	    // ---- Listeners de botones ----
 	    
 	    
 	    btnAceptar.addActionListener(e -> cmdRegistroEdicionEventoActionPerformed());
 
-	    btnCancelar.addActionListener(e -> dispose());
+	    btnCancelar.addActionListener(e -> {limpiarFormulario(); dispose();});
 	    cargarEventos();
 
 	}
@@ -290,7 +306,8 @@ public class AltaEdicionEvento extends JInternalFrame {
 	                "La edición del evento se ha creado con éxito",
 	                "Alta Edición de Evento", JOptionPane.INFORMATION_MESSAGE);
 
-	            setVisible(false);
+	        limpiarFormulario();    
+	        setVisible(false);       
 
 	        } catch (Exception e) {
 	            JOptionPane.showMessageDialog(this,
@@ -311,6 +328,7 @@ public class AltaEdicionEvento extends JInternalFrame {
 	            }
 	        }
 	    }
+	    cbListaEventos.setSelectedIndex(-1);
 	}
 
 	private void cargarOrganizadores() {
@@ -320,19 +338,35 @@ public class AltaEdicionEvento extends JInternalFrame {
 	            cbOrganizadores.addItem(org.getNickname());
 	        }
 	    }
+	    cbOrganizadores.setSelectedIndex(-1);
 	}
 
+	
+	private void limpiarFormulario() {
+	    // textos
+	    textFieldNombre.setText("");
+	    textFieldSigla.setText("");
+	    Ciudad.setText("");
+	    textFieldPais.setText("");
+
+	    // fechas
+	    dateChooserFechaI.setDate(null);
+	    dateChooserFechaF.setDate(null);
+	    dateChooserFechaAlta.setDate(null);
+
+	    // combos sin selección
+	    cbListaEventos.setSelectedIndex(-1);
+	    cbOrganizadores.setSelectedIndex(-1);
+	}
 
 	
-	
-	@Override
 	public void setVisible(boolean aFlag) {
 	    if (aFlag) {
-
-	        cargarEventos(); 
-
+	    	limpiarFormulario();     
+	        cargarEventos();         
 	        cargarOrganizadores();
 	    }
 	    super.setVisible(aFlag);
+	    
 	}
 }
