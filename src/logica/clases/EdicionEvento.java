@@ -116,9 +116,15 @@ public class EdicionEvento {
     public void agregarRegistro(Registro r) {
         listaRegistros.put(r.getAsistente().getNickname(), r);
     }
+
     @Override
     public String toString() {
         return nombre + " (" + fechaIni + ")";
+        }
+        
+    public java.util.Collection<Registro> getRegistros() {
+        return listaRegistros.values();
+
     }
 
 }

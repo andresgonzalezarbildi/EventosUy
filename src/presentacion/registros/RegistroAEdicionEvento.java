@@ -42,8 +42,8 @@ public class RegistroAEdicionEvento extends JDialog {
     private JComboBox<String> cbListaEdiciones;
     private JComboBox<String> cbTipoRegistro;
     private JComboBox<String> cbAsistentes;
-    private JDateChooser dcFecha; // <-- ahora es campo para leer en Aceptar
-
+    private JDateChooser dcFecha; 
+    
     public static void main(String[] args) {
         try {
             RegistroAEdicionEvento dialog = new RegistroAEdicionEvento();
@@ -54,7 +54,7 @@ public class RegistroAEdicionEvento extends JDialog {
         }
     }
 
-    // Constructor sin args (usa Fabrica)
+    
     public RegistroAEdicionEvento() {
         this(Fabrica.getInstance().getControladorEvento(),
              Fabrica.getInstance().getControladorUsuario());
@@ -222,7 +222,7 @@ public class RegistroAEdicionEvento extends JDialog {
         }
         LocalDate fecha = utilDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
-        // Intentamos obtener el nickname si el display es "Nombre (nick)"
+        
         String nombreAsistente = extractNicknameOrAll(asistenteDisplay);
 
         try {
@@ -239,7 +239,7 @@ public class RegistroAEdicionEvento extends JDialog {
         }
     }
 
-    // Si el combo muestra "Nombre (nick)", devuelve "nick"; si no, devuelve el string completo
+    
     private String extractNicknameOrAll(String display) {
         if (display == null) return null;
         int open = display.lastIndexOf('(');
@@ -321,23 +321,21 @@ public class RegistroAEdicionEvento extends JDialog {
         cbTipoRegistro.setSelectedIndex(-1);
     }
 
-    // Asistentes (usa tu getAsistentes() del controlador de usuarios)
+
     private void cargarAsistentesEnCombo() {
         try {
             DataUsuario[] asistentes = ctrlUsuario.getAsistentes();
             DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
             if (asistentes != null) {
                 for (DataUsuario du : asistentes) {
-                    String display = (du.getNombre() != null && !du.getNombre().isBlank())
-                            ? du.getNombre() : du.getNickname();
-                    if (du.getNickname() != null && !du.getNickname().isBlank()) {
-                        display += " (" + du.getNickname() + ")";
+                    String nick = du.getNickname() != null ? du.getNickname().trim() : "";
+                    if (!nick.isBlank()) {
+                        model.addElement(nick);
                     }
-                    model.addElement(display);
                 }
             }
             cbAsistentes.setModel(model);
-            cbAsistentes.setSelectedIndex(-1);
+            cbAsistentes.setSelectedIndex(-1); // vacío inicial
         } catch (Exception ex) {
             cbAsistentes.setModel(new DefaultComboBoxModel<>());
             cbAsistentes.setSelectedIndex(-1);

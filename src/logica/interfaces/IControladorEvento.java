@@ -8,6 +8,7 @@ import excepciones.UsuarioNoExisteException;
 import excepciones.EdicionNoExisteException;
 import logica.datatypes.DataEdicion;
 import logica.datatypes.DataEvento;
+import logica.datatypes.DataRegistro;
 import logica.datatypes.DataTipoRegistro;
 
 public interface IControladorEvento {
@@ -23,4 +24,6 @@ public interface IControladorEvento {
     public DataTipoRegistro[] listarTiposRegistro(String nombreEvento, String nombreEdicion);
     public DataTipoRegistro getTipoRegistro(String nombreEvento, String nombreEdicion, String nombreTipo);
 	public DataEdicion getInfoEdicion(String idEdicion) throws EdicionNoExisteException ;
+    public DataRegistro[] listarRegistrosDeUsuario(String nickname) ;
+
 }

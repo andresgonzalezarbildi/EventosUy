@@ -7,11 +7,8 @@ import java.util.Map;
 import excepciones.CategoriaRepetidaException;
 import excepciones.EdicionNoExisteException;
 import excepciones.EventoNoExisteException;
-
-import logica.clases.Asistente;
-
 import excepciones.UsuarioNoExisteException;
-
+import logica.clases.Asistente;
 import logica.clases.Categoria;
 import logica.clases.EdicionEvento;
 import logica.clases.Evento;
@@ -20,11 +17,13 @@ import logica.clases.Registro;
 import logica.clases.TipoRegistro;
 import logica.datatypes.DataEdicion;
 import logica.datatypes.DataEvento;
-import logica.datatypes.DataPatrocinio;
+import logica.datatypes.DataRegistro;
 import logica.datatypes.DataTipoRegistro;
 import logica.interfaces.IControladorEvento;
 import logica.manejadores.ManejadorEvento;
 import logica.manejadores.ManejadorUsuario;
+
+
 
 public class ControladorEvento implements IControladorEvento {
 	private ManejadorEvento manejadorEvento;
@@ -249,14 +248,14 @@ public class ControladorEvento implements IControladorEvento {
         }
 
         int costo = tipo.getCosto();
-        Registro reg = new Registro(fecha , String.valueOf(costo), tipo, ed, asis);
+        Registro reg = new Registro(fecha , costo, tipo, ed, asis);
 
         ed.agregarRegistro(reg);
         asis.agregarRegistro(reg);
     }
 
 
-    @Override
+
 	public DataTipoRegistro[] listarTiposRegistro(String nombreEvento, String nombreEdicion) {
     Evento ev = manejadorEvento.obtenerEvento(nombreEvento);
     if (ev == null) throw new IllegalArgumentException("No existe el evento: " + nombreEvento);
@@ -268,7 +267,7 @@ public class ControladorEvento implements IControladorEvento {
 
 }
 
-	@Override
+
 	public DataTipoRegistro getTipoRegistro(String nombreEvento, String nombreEdicion, String nombreTipo) {
     Evento ev = manejadorEvento.obtenerEvento(nombreEvento);
     if (ev == null) throw new IllegalArgumentException("No existe el evento: " + nombreEvento);
@@ -285,4 +284,26 @@ public class ControladorEvento implements IControladorEvento {
             tr.getCosto(),
             tr.getCupo()
     );
-	}}
+	}
+
+	public DataRegistro[] listarRegistrosDeUsuario(String nickname) {
+	    List<DataRegistro> out = new ArrayList<>();
+	    for (Evento e : manejadorEvento.getEventos().values()) {
+	        for (EdicionEvento ed : e.getEdiciones().values()) {
+	            for (Registro r : ed.getRegistros()) {
+	                if (nickname.equals(r.getAsistente().getNickname())) {
+	                    out.add(new DataRegistro(
+	                        e.getNombre(),
+	                        ed.getNombre(),
+	                        r.getTipoRegistro().getNombre(),
+	                        r.getCostoRegistro(),
+	                        r.getFechaRegistro(),
+	                        r.getAsistente().getNombre()
+	                    ));
+	                }
+	            }
+	        }
+	    }
+	    return out.toArray(new DataRegistro[0]);
+	}
+}
