@@ -288,7 +288,7 @@ public class ConsultaEvento extends JInternalFrame {
             return;
         }
 
-        // ¡Listo! Llamamos al callback que abre ConsultaEdicionEvento con contexto.
+        // Llamamos al callback que abre ConsultaEdicionEvento con contexto.
         if (openEdicionCallback != null) {
             openEdicionCallback.accept(eventoSel, target);
         }
