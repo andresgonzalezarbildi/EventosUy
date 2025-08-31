@@ -325,16 +325,18 @@ public class Principal {
 
         JMenuItem mntmConsultaTipoDeRegistro = new JMenuItem("Consulta de Tipo de Registro");
         mntmConsultaTipoDeRegistro.addActionListener(e -> {
-        	if (consultaDeTipoDeRegistroInternalFrame == null || consultaDeTipoDeRegistroInternalFrame.isClosed()) {
-        		consultaDeTipoDeRegistroInternalFrame = new ConsultaDeTipoDeRegistro(IEV);
-        	    desktop.add(consultaDeTipoDeRegistroInternalFrame);
-      	} 
-        	consultaDeTipoDeRegistroInternalFrame.setVisible(true);
-        	consultaDeTipoDeRegistroInternalFrame.toFront(); 
+            if (consultaDeTipoDeRegistroInternalFrame == null || consultaDeTipoDeRegistroInternalFrame.isClosed()) {
+                consultaDeTipoDeRegistroInternalFrame = new ConsultaDeTipoDeRegistro(IEV);
+                
+                desktop.add(consultaDeTipoDeRegistroInternalFrame);
+            } 
+            consultaDeTipoDeRegistroInternalFrame.setVisible(true);
+            consultaDeTipoDeRegistroInternalFrame.toFront(); 
             ensureSize(consultaDeTipoDeRegistroInternalFrame, 600, 400);
             showInternal(consultaDeTipoDeRegistroInternalFrame);
         });
         mnTipoDeRegistros.add(mntmConsultaTipoDeRegistro);
+
 
     }
 

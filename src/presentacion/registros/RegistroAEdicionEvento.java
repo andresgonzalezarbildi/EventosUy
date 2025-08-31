@@ -15,6 +15,8 @@ import java.awt.Insets;
 import javax.swing.JSpinner;
 import javax.swing.DefaultComboBoxModel;
 
+//ESTO SIGUE SIENDO DIALOGO, ES EL UNICO DIALOGO DE TODO EL PROGRAMA...
+
 public class RegistroAEdicionEvento extends JDialog {
 
 	private static final long serialVersionUID = 1L;

@@ -1,11 +1,13 @@
 package presentacion.evento;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import javax.swing.*;
 import logica.interfaces.IControladorEvento;
+import presentacion.registros.ConsultaDeTipoDeRegistro;
 import logica.datatypes.DataEvento;
 import logica.datatypes.DataEdicion;
 import logica.datatypes.DataTipoRegistro;
@@ -24,6 +26,9 @@ public class ConsultaEdicionEvento extends JInternalFrame {
 
     private DefaultListModel<DataPatrocinio> modeloPatrocinios;
     private JList<DataPatrocinio> listaPatrocinios;
+    
+    private ConsultaDeTipoDeRegistro ventanaConsulta = null;
+
 
     public ConsultaEdicionEvento(IControladorEvento controlEvento) {
 
@@ -111,6 +116,17 @@ public class ConsultaEdicionEvento extends JInternalFrame {
 
         modeloTipos = new DefaultListModel<>();
         listaTipos = new JList<>(modeloTipos);
+        listaTipos.setCellRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(JList<?> list, Object value, int index,
+                                                          boolean isSelected, boolean cellHasFocus) {
+                super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                if (value instanceof DataTipoRegistro tr) {
+                    setText(tr.getNombre());
+                }
+                return this;
+            }
+        });
         JScrollPane scrollTipos = new JScrollPane(listaTipos);
         scrollTipos.setBorder(BorderFactory.createTitledBorder("Tipos de Registro"));
 
@@ -146,23 +162,53 @@ public class ConsultaEdicionEvento extends JInternalFrame {
             if (de != null) mostrarInfoEdicion(de);
         });
 
-        listaTipos.addListSelectionListener(e -> {
-            if (!e.getValueIsAdjusting()) {
-                DataTipoRegistro tr = listaTipos.getSelectedValue();
-                if (tr != null) {
-                    JOptionPane.showMessageDialog(this, tr.toString(), "Consulta de Tipo de Registro", JOptionPane.INFORMATION_MESSAGE);
+        listaTipos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                if (evt.getClickCount() == 2) {
+                    DataTipoRegistro tr = listaTipos.getSelectedValue();
+                    DataEdicion de = (DataEdicion) comboBoxEdiciones.getSelectedItem();
+                    DataEvento ev = (DataEvento) comboBoxEvento.getSelectedItem();
+
+                    if (tr != null && de != null && ev != null) {
+                        if (ventanaConsulta != null && ventanaConsulta.isVisible()) {
+                            ventanaConsulta.dispose();
+                        }
+
+                        ventanaConsulta = new ConsultaDeTipoDeRegistro(controlEvento);
+                        ventanaConsulta.setVisible(true); 
+                        ventanaConsulta.seleccionarEventoYEdicionYTipo(ev, de, tr); 
+
+                        JDesktopPane desktop = ConsultaEdicionEvento.this.getDesktopPane();
+                        if (desktop != null) {
+                            desktop.add(ventanaConsulta);
+                            try { ventanaConsulta.setSelected(true); } catch (java.beans.PropertyVetoException ex) {}
+                        }
+                    }
                 }
             }
         });
 
-        listaPatrocinios.addListSelectionListener(e -> {
+
+
+/*
+        listaTipos.addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {
-                DataPatrocinio p = listaPatrocinios.getSelectedValue();
-                if (p != null) {
-                    JOptionPane.showMessageDialog(this, p.toString(), "Consulta de Patrocinio", JOptionPane.INFORMATION_MESSAGE);
+                DataTipoRegistro tr = listaTipos.getSelectedValue();
+                if (tr != null) {
+                    DataEvento ev = (DataEvento) comboBoxEvento.getSelectedItem();
+                    DataEdicion de = (DataEdicion) comboBoxEdiciones.getSelectedItem();
+                    if (ev != null && de != null) {
+                        ConsultaDeTipoDeRegistro consulta = new ConsultaDeTipoDeRegistro(controlEvento);
+                        consulta.setVisible(true);
+                        consulta.seleccionarEventoYEdicionYTipo(ev, de, tr);
+
+                        this.getParent().add(consulta);
+                        try { consulta.setSelected(true); } catch (java.beans.PropertyVetoException ex) {}
+                    }
                 }
             }
         });
+*/
 
         cargarEventos();
     }
