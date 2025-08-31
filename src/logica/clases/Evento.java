@@ -12,11 +12,11 @@ public class Evento {
     private Map<String, Categoria> categoriasDeEvento;
     private Map<String, EdicionEvento> edicionesDeEvento;
     
-    public Evento(String nom, String desc, String sigla) {
+    public Evento(String nom, String desc, String sigla,LocalDate fecha) {
         this.DescripcionEvento = desc;
         this.nombre = nom;
         this.sigla = sigla;
-        this.FechaAltaEnPlataforma = LocalDate.now();
+        this.FechaAltaEnPlataforma = fecha;
         this.categoriasDeEvento = new HashMap<>();
         this.edicionesDeEvento = new HashMap<>();
     }

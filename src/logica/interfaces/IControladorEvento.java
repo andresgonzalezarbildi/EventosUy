@@ -12,7 +12,7 @@ import logica.datatypes.DataRegistro;
 import logica.datatypes.DataTipoRegistro;
 
 public interface IControladorEvento {
-	public void altaEvento(String nombre, String descripcion, String sigla, List<String> nombresCategorias) ;
+	public void altaEvento(String nombre, String descripcion, String sigla, List<String> nombresCategorias, LocalDate FechaAltaEnPlataforma) ;
 	public void altaEdicionEvento(String nombreEvento, String nombreEdicion, String sigla, String ciudad, String pais, LocalDate fechaInicio, LocalDate fechaFin, LocalDate fechaAltaEnPlataforma, String organizadorNick) throws UsuarioNoExisteException;
 
 	public void altaTipoRegistro(String nombreEvento, String nombreEdicion, String nombreTipoRegistro, String descripcion, Integer costo,  Integer cupos);

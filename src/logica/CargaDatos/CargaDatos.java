@@ -185,36 +185,36 @@ public class CargaDatos implements ICargaDatos {
         //altaEvento(String nombre, String descripcion, String sigla, List<String> nombresCategorias) 
         try {
         	//	10/01/2025 
-            ce.altaEvento("Conferencia de Tecnología", "Evento sobre innovación tecnolígica", "CONFTEC", List.of("Tecnología","Innovación"));
+            ce.altaEvento("Conferencia de Tecnología", "Evento sobre innovación tecnolígica", "CONFTEC", List.of("Tecnología","Innovación"),LocalDate.of(2025,1,10));
         } catch (IllegalArgumentException ignored) {}
         
         try {
         	//	01/02/2025
-            ce.altaEvento("Feria del Libro", "Encuentro anual de literatura", "FERLIB", List.of("Literatura","Cultura"));
+            ce.altaEvento("Feria del Libro", "Encuentro anual de literatura", "FERLIB", List.of("Literatura","Cultura"),LocalDate.of(2025,2,1));
         } catch (IllegalArgumentException ignored) {}
         
         try {
         	// 15/03/2023 
-            ce.altaEvento("Montevideo Rock", "Festival de rock con artistas nacionales e internacionales", "MONROCK", List.of("Cultura","Música"));
+            ce.altaEvento("Montevideo Rock", "Festival de rock con artistas nacionales e internacionales", "MONROCK", List.of("Cultura","Música"),LocalDate.of(2023,3,15));
         } catch (IllegalArgumentException ignored) {}
         
         try {
         	//	01/01/2022 
-            ce.altaEvento("Maratón de Montevideo", "Competencia deportiva anual en la capital", "MARATON", List.of("Deporte","Salud"));
+            ce.altaEvento("Maratón de Montevideo", "Competencia deportiva anual en la capital", "MARATON", List.of("Deporte","Salud"),LocalDate.of(2022,1,1));
         } catch (IllegalArgumentException ignored) {}
         
         try {
         	//	10/04/2024 
-            ce.altaEvento("Montevideo Comics", "Convención de historietas, cine y cultura geek", "COMICS", List.of("Cultura","Entretenimiento"));
+            ce.altaEvento("Montevideo Comics", "Convención de historietas, cine y cultura geek", "COMICS", List.of("Cultura","Entretenimiento"),LocalDate.of(2024,4,10));
         } catch (IllegalArgumentException ignored) {}
         
         try {
         	//	12/12/2024
-            ce.altaEvento("Expointer Uruguay", "Exposición internacional agropecuaria y ganadera", "EXPOAGRO", List.of("Agro","Negocios"));
+            ce.altaEvento("Expointer Uruguay", "Exposición internacional agropecuaria y ganadera", "EXPOAGRO", List.of("Agro","Negocios"), LocalDate.of(2024,12,12));
         } catch (IllegalArgumentException ignored) {}
         try {
         	//	20/07/2025 
-            ce.altaEvento("Montevideo Fashion Week", "Pasarela de moda uruguaya e internacional", "MFASHION", List.of("Cultura","Investigación"));
+            ce.altaEvento("Montevideo Fashion Week", "Pasarela de moda uruguaya e internacional", "MFASHION", List.of("Cultura","Investigación"),LocalDate.of(2025,7,20));
         } catch (IllegalArgumentException ignored) {}
         
         

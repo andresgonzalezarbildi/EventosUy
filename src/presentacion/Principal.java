@@ -13,12 +13,10 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
 import logica.Fabrica;
-import logica.clases.Categoria;
 import logica.datatypes.DataEdicion;
 import logica.datatypes.DataEvento;
 import logica.interfaces.IControladorEvento;
 import logica.interfaces.IControladorUsuario;
-import logica.manejadores.ManejadorEvento;
 import presentacion.evento.AltaEdicionEvento;
 import presentacion.evento.AltaEvento;
 import presentacion.evento.ConsultaEdicionEvento;

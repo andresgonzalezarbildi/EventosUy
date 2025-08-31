@@ -32,7 +32,7 @@ public class ControladorEvento implements IControladorEvento {
     	manejadorEvento = ManejadorEvento.getInstance();
     }
     
-	public void altaEvento(String nombre, String descripcion, String sigla, List<String> nombresCategorias) {
+	public void altaEvento(String nombre, String descripcion, String sigla, List<String> nombresCategorias, LocalDate FechaAltaEnPlataforma) {
 		if (nombre == null || nombre.isBlank()) 
 			throw new IllegalArgumentException("El nombre no puede ser vacío.");
 		if (sigla == null || sigla.isBlank())
@@ -54,7 +54,7 @@ public class ControladorEvento implements IControladorEvento {
 		if (cats.isEmpty()) {
 	        throw new IllegalArgumentException("El evento debe tener al menos una categoría asociada.");
 	    }
-		Evento e = new Evento(nombre, descripcion, sigla);
+		Evento e = new Evento(nombre, descripcion, sigla, FechaAltaEnPlataforma);
 		for (Categoria c : cats) {
             e.agregarCategoria(c);
         }

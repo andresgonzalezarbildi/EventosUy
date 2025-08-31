@@ -1,36 +1,58 @@
 package presentacion.evento;
 
-import java.awt.*;
-
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-import logica.manejadores.ManejadorEvento;
-import logica.clases.Categoria;
-import logica.clases.Evento;
-import logica.interfaces.IControladorEvento;
 
+import javax.swing.DefaultListModel;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+import javax.swing.border.EmptyBorder;
+
+import com.toedter.calendar.JDateChooser;
+
+import logica.clases.Categoria;
+import logica.interfaces.IControladorEvento;
+import logica.manejadores.ManejadorEvento;
+
+@SuppressWarnings("serial")
 public class AltaEvento extends JInternalFrame {
 
     private IControladorEvento controlEvento;
     private JTextField tfNombre;
     private JTextArea tfDescripcion;
     private JTextField tfSigla;
+    private JDateChooser dcFecha;
+
     private DefaultListModel<String> modeloDisponibles;
     private DefaultListModel<String> modeloSeleccionadas;
     private JList<String> listaCategoriasDisponibles;
     private JList<String> listaCategoriasSeleccionadas;
 
     public AltaEvento(IControladorEvento controlEvento) {
-       
-    	// super(title, resizable, closable, maximizable, iconifiable); SON LAS BANDERAS RESPECTIVAS
-    		super("Alta de Evento", false, true, true, true); 
-   
-
+        // super(title, resizable, closable, maximizable, iconifiable)
+        super("Alta de Evento", false, true, true, true);
         this.controlEvento = controlEvento;
+
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setBounds(100, 100, 650, 400);
+        setBounds(100, 100, 750, 500);
         getContentPane().setLayout(new BorderLayout());
 
         // Panel principal con GridBagLayout
@@ -42,119 +64,137 @@ public class AltaEvento extends JInternalFrame {
         gbc.insets = new Insets(6, 6, 6, 6);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-     // --- Nombre ---
+        // --- Nombre (fila 0) ---
         gbc.gridx = 0; gbc.gridy = 0;
         gbc.gridwidth = 1; gbc.weightx = 0;
         gbc.anchor = GridBagConstraints.EAST;
         gbc.fill = GridBagConstraints.NONE;
-        gbc.insets = new Insets(5, 5, 5, 5); // mismo margen en todos lados
         panel.add(new JLabel("Nombre:"), cloneGbc(gbc));
-        	
+
         tfNombre = new JTextField();
         gbc.gridx = 1; gbc.gridy = 0;
+        gbc.gridwidth = 2;
         gbc.weightx = 1.0;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         panel.add(tfNombre, cloneGbc(gbc));
 
-       
-        // --- Sigla ---
+        // --- Sigla (fila 1) ---
         gbc.gridx = 0; gbc.gridy = 1;
-        gbc.weightx = 0;
+        gbc.gridwidth = 1; gbc.weightx = 0;
         gbc.anchor = GridBagConstraints.EAST;
         gbc.fill = GridBagConstraints.NONE;
-        gbc.insets = new Insets(5, 5, 5, 5);
         panel.add(new JLabel("Sigla:"), cloneGbc(gbc));
 
         tfSigla = new JTextField();
         gbc.gridx = 1; gbc.gridy = 1;
+        gbc.gridwidth = 2;
         gbc.weightx = 1.0;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         panel.add(tfSigla, cloneGbc(gbc));
-        
-        
-     // Descripcion
+
+        // --- Descripción (fila 2) ---
         gbc.gridx = 0; gbc.gridy = 2;
         gbc.gridwidth = 1; gbc.weightx = 0;
-        gbc.anchor = GridBagConstraints.EAST;
+        gbc.anchor = GridBagConstraints.NORTHEAST;
         gbc.fill = GridBagConstraints.NONE;
-        gbc.insets = new Insets(5, 5, 5, 5);
         panel.add(new JLabel("Descripción:"), cloneGbc(gbc));
 
-        // Campo multilínea
         tfDescripcion = new JTextArea(4, 20);
         tfDescripcion.setLineWrap(true);
         tfDescripcion.setWrapStyleWord(true);
 
         JScrollPane scrollDescripcion = new JScrollPane(tfDescripcion);
-        scrollDescripcion.setPreferredSize(new Dimension(300, 80));
+        scrollDescripcion.setPreferredSize(new Dimension(300, 100));
 
         gbc.gridx = 1; gbc.gridy = 2;
-        gbc.gridwidth = 1;              // <--- acá el cambio
-        gbc.weightx = 1.0; gbc.weighty = 1.0;
+        gbc.gridwidth = 2;
+        gbc.weightx = 1.0; gbc.weighty = 0.3;
         gbc.fill = GridBagConstraints.BOTH;
         panel.add(scrollDescripcion, cloneGbc(gbc));
 
+        // --- Fecha (fila 3) ---
+        JLabel lblFecha = new JLabel("Fecha:");
+        GridBagConstraints gbc_lblFecha = new GridBagConstraints();
+        gbc_lblFecha.insets = new Insets(6, 6, 6, 6);
+        gbc_lblFecha.gridx = 0; gbc_lblFecha.gridy = 3;
+        gbc_lblFecha.anchor = GridBagConstraints.EAST;
+        panel.add(lblFecha, gbc_lblFecha);
 
-        
+        dcFecha = new JDateChooser();
+        dcFecha.setDateFormatString("dd/MM/yyyy");
+        ((JTextField) dcFecha.getDateEditor().getUiComponent()).setEditable(false);
 
+        GridBagConstraints gbc_dcFecha = new GridBagConstraints();
+        gbc_dcFecha.gridx = 1; gbc_dcFecha.gridy = 3;
+        gbc_dcFecha.gridwidth = 2;
+        gbc_dcFecha.weightx = 1.0;
+        gbc_dcFecha.insets = new Insets(6, 6, 6, 6);
+        gbc_dcFecha.fill = GridBagConstraints.HORIZONTAL;
+        panel.add(dcFecha, gbc_dcFecha);
 
+        // --- Encabezados Categorías (fila 4) ---
+        gbc.gridx = 0; gbc.gridy = 4; 
+        gbc.gridwidth = 1; 
+        gbc.weightx = 0; gbc.weighty = 0;
+        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.fill = GridBagConstraints.NONE;
+        panel.add(new JLabel("Categorías disponibles"), cloneGbc(gbc));
 
+        gbc.gridx = 2; gbc.gridy = 4;
+        panel.add(new JLabel("Categorías seleccionadas"), cloneGbc(gbc));
 
-        // --- Categorías labels ---
-        gbc.gridx = 0; gbc.gridy = 3; gbc.gridwidth = 1; gbc.anchor = GridBagConstraints.CENTER;
-        panel.add(new JLabel("Categorías Disponibles:"), cloneGbc(gbc));
+        // --- Listas y modelos (fila 5) ---
+        modeloDisponibles = new DefaultListModel<>();
+        modeloSeleccionadas = new DefaultListModel<>();
 
-        gbc.gridx = 2; gbc.gridy = 3;
-        panel.add(new JLabel("Categorías Seleccionadas:"), cloneGbc(gbc));
-
-        // --- Listas ---
-        // Modelo y lista de disponibles
-        DefaultListModel<String> modeloDisponibles = new DefaultListModel<>();
+        // Cargar categorías desde el Manejador
         ManejadorEvento manejador = ManejadorEvento.getInstance();
         for (Categoria c : manejador.getCategorias()) {
-        		String cname  = c.getNombre();
-            modeloDisponibles.addElement(cname);
+            if (c != null && c.getNombre() != null) {
+                modeloDisponibles.addElement(c.getNombre());
+            }
         }
-        listaCategoriasDisponibles = new JList<String>(modeloDisponibles);
+
+        listaCategoriasDisponibles = new JList<>(modeloDisponibles);
         listaCategoriasDisponibles.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         JScrollPane scrollDisponibles = new JScrollPane(listaCategoriasDisponibles);
 
-        gbc.gridx = 0; gbc.gridy = 4; gbc.weightx = 1; gbc.weighty = 1;
+        gbc.gridx = 0; gbc.gridy = 5; 
+        gbc.gridwidth = 1;
+        gbc.weightx = 0.5; gbc.weighty = 1.0;
         gbc.fill = GridBagConstraints.BOTH;
-        panel.add(scrollDisponibles, gbc);
+        panel.add(scrollDisponibles, cloneGbc(gbc));
 
-        // Modelo y lista de seleccionadas
-        modeloSeleccionadas = new DefaultListModel<>();   // 👈 ahora se asigna al atributo
-        listaCategoriasSeleccionadas = new JList<String>(modeloSeleccionadas);
+        listaCategoriasSeleccionadas = new JList<>(modeloSeleccionadas);
         listaCategoriasSeleccionadas.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         JScrollPane scrollSeleccionadas = new JScrollPane(listaCategoriasSeleccionadas);
 
-        gbc.gridx = 2; gbc.gridy = 4;
+        gbc.gridx = 2; gbc.gridy = 5; 
+        gbc.gridwidth = 1;
+        gbc.weightx = 0.5; gbc.weighty = 1.0;
+        gbc.fill = GridBagConstraints.BOTH;
         panel.add(scrollSeleccionadas, cloneGbc(gbc));
 
-        // --- Botón para pasar categorías ---
+        // Botón >> (mismo renglón 5, columna 1)
         JButton btnAgregar = new JButton(">>");
         btnAgregar.addActionListener(e -> {
             for (String cat : listaCategoriasDisponibles.getSelectedValuesList()) {
                 if (!modeloSeleccionadas.contains(cat)) {
                     modeloSeleccionadas.addElement(cat);
                 }
+                // opcional: sacarla de disponibles
+                modeloDisponibles.removeElement(cat);
             }
         });
-        gbc.gridx = 1; gbc.gridy = 4; gbc.weightx = 0; gbc.weighty = 0; 
-        gbc.fill = GridBagConstraints.NONE; gbc.anchor = GridBagConstraints.CENTER;
+        gbc.gridx = 1; gbc.gridy = 5; 
+        gbc.gridwidth = 1;
+        gbc.weightx = 0; gbc.weighty = 0;
+        gbc.fill = GridBagConstraints.NONE; 
+        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.insets = new Insets(5, 5, 5, 5);
         panel.add(btnAgregar, cloneGbc(gbc));
 
-        // --- Panel inferior de botones ---
-        JPanel botones = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        JButton btnAceptar = new JButton("Aceptar");
-        btnAceptar.addActionListener(e -> guardarEvento());
-        JButton btnCancelar = new JButton("Cancelar");
-        btnCancelar.addActionListener(e -> setVisible(false));
-        botones.add(btnAceptar);
-        botones.add(btnCancelar);
-        
-     // --- Botón para quitar categorías ---
+        // Botón << (fila 6, columna 1)
         JButton btnQuitar = new JButton("<<");
         btnQuitar.addActionListener(e -> {
             for (String cat : listaCategoriasSeleccionadas.getSelectedValuesList()) {
@@ -164,13 +204,22 @@ public class AltaEvento extends JInternalFrame {
                 modeloSeleccionadas.removeElement(cat);
             }
         });
-        gbc.insets = new Insets(-80, 0, 0, 0); // mueve el botón hacia arriba
-        
+        gbc.gridx = 1; gbc.gridy = 6; 
+        gbc.gridwidth = 1;
         gbc.weightx = 0; gbc.weighty = 0;
         gbc.fill = GridBagConstraints.NONE; 
         gbc.anchor = GridBagConstraints.CENTER;
+        gbc.insets = new Insets(5, 5, 5, 5);
         panel.add(btnQuitar, cloneGbc(gbc));
 
+        // Panel inferior de botones
+        JPanel botones = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        JButton btnAceptar = new JButton("Aceptar");
+        btnAceptar.addActionListener(e -> guardarEvento());
+        JButton btnCancelar = new JButton("Cancelar");
+        btnCancelar.addActionListener(e -> setVisible(false));
+        botones.add(btnAceptar);
+        botones.add(btnCancelar);
         getContentPane().add(botones, BorderLayout.SOUTH);
     }
 
@@ -178,22 +227,18 @@ public class AltaEvento extends JInternalFrame {
         tfNombre.setText("");
         tfDescripcion.setText("");
         tfSigla.setText("");
+        dcFecha.setDate(null);
 
-        // Limpiar listas
         modeloSeleccionadas.clear();
-
-        // También podés deseleccionar elementos seleccionados por si quedaron seleccionados
         listaCategoriasDisponibles.clearSelection();
         listaCategoriasSeleccionadas.clearSelection();
 
-        // Si querés dejar la ventana en su estado inicial visualmente
         getContentPane().revalidate();
         getContentPane().repaint();
     }
 
-    
     private void guardarEvento() {
-    	// 1) Validaciones de UI
+        // 1) Validaciones de UI
         if (!checkFormulario()) return;
 
         // 2) Recolección de datos
@@ -201,58 +246,59 @@ public class AltaEvento extends JInternalFrame {
         String descripcion = tfDescripcion.getText().trim();
         String sigla = tfSigla.getText().trim();
 
+        Date utilDate = dcFecha.getDate();
+        if (utilDate == null) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar la fecha del registro.",
+                    "Datos incompletos", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        LocalDate fecha = utilDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
         List<String> categoriasEvento = new ArrayList<>();
         for (int i = 0; i < modeloSeleccionadas.size(); i++) {
             categoriasEvento.add(modeloSeleccionadas.get(i));
         }
 
-        // 3) Llamada al controlador con manejo de errores
+        // 3) Llamada al controlador
         try {
-            controlEvento.altaEvento(nombre, descripcion, sigla, categoriasEvento);
-
+            controlEvento.altaEvento(nombre, descripcion, sigla, categoriasEvento, fecha);
             JOptionPane.showMessageDialog(this, "Evento guardado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
             limpiarFormulario();
             setVisible(false);
-
         } catch (IllegalArgumentException ex) {
-            // Errores de validación del lado del controlador (nombre duplicado, categoría inexistente, etc.)
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Datos inválidos", JOptionPane.ERROR_MESSAGE);
         }
     }
-    
-	 // Valida que no falte ningún dato y que haya al menos una categoría seleccionada.
-	 // Muestra mensajes y hace focus donde corresponde.
-	 private boolean checkFormulario() {
-	     String nombre = tfNombre.getText() != null ? tfNombre.getText().trim() : "";
-	     String sigla  = tfSigla.getText()  != null ? tfSigla.getText().trim()  : "";
-	     String desc   = tfDescripcion.getText() != null ? tfDescripcion.getText().trim() : "";
-	
-	     if (nombre.isEmpty()) {
-	         JOptionPane.showMessageDialog(this, "El nombre es obligatorio.", "Faltan datos", JOptionPane.WARNING_MESSAGE);
-	         tfNombre.requestFocusInWindow();
-	         return false;
-	     }
-	     if (sigla.isEmpty()) {
-	         JOptionPane.showMessageDialog(this, "La sigla es obligatoria.", "Faltan datos", JOptionPane.WARNING_MESSAGE);
-	         tfSigla.requestFocusInWindow();
-	         return false;
-	     }
-	     if (desc.isEmpty()) {
-	         JOptionPane.showMessageDialog(this, "La descripción es obligatoria.", "Faltan datos", JOptionPane.WARNING_MESSAGE);
-	         tfDescripcion.requestFocusInWindow();
-	         return false;
-	     }
-	     if (modeloSeleccionadas == null || modeloSeleccionadas.isEmpty()) {
-	         JOptionPane.showMessageDialog(this, "Debe seleccionar al menos una categoría.", "Faltan datos", JOptionPane.WARNING_MESSAGE);
-	         listaCategoriasDisponibles.requestFocusInWindow();
-	         return false;
-	     }
-	     return true;
-	 }
 
+    private boolean checkFormulario() {
+        String nombre = tfNombre.getText() != null ? tfNombre.getText().trim() : "";
+        String sigla  = tfSigla.getText()  != null ? tfSigla.getText().trim()  : "";
+        String desc   = tfDescripcion.getText() != null ? tfDescripcion.getText().trim() : "";
 
-	private GridBagConstraints cloneGbc(GridBagConstraints gbc) {
-	    GridBagConstraints copy = (GridBagConstraints) gbc.clone();
-	    return copy;
-	}
+        if (nombre.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "El nombre es obligatorio.", "Faltan datos", JOptionPane.WARNING_MESSAGE);
+            tfNombre.requestFocusInWindow();
+            return false;
+        }
+        if (sigla.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "La sigla es obligatoria.", "Faltan datos", JOptionPane.WARNING_MESSAGE);
+            tfSigla.requestFocusInWindow();
+            return false;
+        }
+        if (desc.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "La descripción es obligatoria.", "Faltan datos", JOptionPane.WARNING_MESSAGE);
+            tfDescripcion.requestFocusInWindow();
+            return false;
+        }
+        if (modeloSeleccionadas == null || modeloSeleccionadas.getSize() == 0) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar al menos una categoría.", "Faltan datos", JOptionPane.WARNING_MESSAGE);
+            listaCategoriasDisponibles.requestFocusInWindow();
+            return false;
+        }
+        return true;
+    }
+
+    private GridBagConstraints cloneGbc(GridBagConstraints gbc) {
+        return (GridBagConstraints) gbc.clone();
+    }
 }
