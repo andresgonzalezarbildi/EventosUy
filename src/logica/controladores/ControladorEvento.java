@@ -102,7 +102,7 @@ public class ControladorEvento implements IControladorEvento {
 	    if (eventos == null) {
 	        System.out.println("getEventosDTO devolvió null");
 	    } else {
-	        System.out.println("getEventosDTO devolvió " + eventos.length + " eventos");
+	        
 	        for (DataEvento ev : eventos) {
 	            if (ev != null) {
 	                System.out.println("  -> " + ev.getNombre());
