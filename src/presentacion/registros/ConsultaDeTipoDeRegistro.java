@@ -99,14 +99,22 @@ public class ConsultaDeTipoDeRegistro extends JInternalFrame {
         gbc.gridx = 0; gbc.gridy = 3;
         panelDer.add(new JLabel("Descripción:"), gbc);
         gbc.gridx = 1;
-        taDescripcion = new JTextArea();
-        taDescripcion.setEditable(false);
+        taDescripcion = new JTextArea(4, 20);
         taDescripcion.setLineWrap(true);
         taDescripcion.setWrapStyleWord(true);
-        taDescripcion.setRows(4);
+        taDescripcion.setEditable(false);
+        taDescripcion.setFont(new Font(UIManager.getFont("TextField.font").getName(), Font.PLAIN, 12));
+        taDescripcion.setBackground(UIManager.getColor("TextField.inactiveBackground"));
+
         scrollDescripcion = new JScrollPane(taDescripcion);
-        scrollDescripcion.setPreferredSize(new Dimension(200, 80));
-        panelDer.add(scrollDescripcion, gbc);
+        GridBagConstraints gbcScroll = new GridBagConstraints();
+        gbcScroll.gridx = 1;
+        gbcScroll.gridy = 3;
+        gbcScroll.insets = new Insets(6, 6, 6, 6);
+        gbcScroll.fill = GridBagConstraints.BOTH;
+        gbcScroll.weightx = 1.0;
+        gbcScroll.weighty = 1.0;
+        panelDer.add(scrollDescripcion, gbcScroll);
 
         gbc.gridx = 0; gbc.gridy = 4;
         panelDer.add(new JLabel("Costo:"), gbc);
