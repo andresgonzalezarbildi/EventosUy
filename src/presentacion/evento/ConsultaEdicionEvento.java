@@ -95,12 +95,12 @@ public class ConsultaEdicionEvento extends JInternalFrame {
         panelDetalle.add(lblInfoEdicion, BorderLayout.NORTH);
 
         JPanel panelCampos = new JPanel();
-        panelDetalle.add(panelCampos, BorderLayout.CENTER);
+        panelDetalle.add(panelCampos, BorderLayout.NORTH);
         GridBagLayout gbl_panelCampos = new GridBagLayout();
         gbl_panelCampos.columnWidths = new int[]{0, 0};
-        gbl_panelCampos.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0};
+        gbl_panelCampos.rowHeights = new int[]{0, 0, 0, 0, 0};
         gbl_panelCampos.columnWeights = new double[]{0.0, 1.0};
-        gbl_panelCampos.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+        gbl_panelCampos.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0};
         panelCampos.setLayout(gbl_panelCampos);
 
         textNombre = addTextField(panelCampos, "Nombre:", 0);
@@ -111,15 +111,6 @@ public class ConsultaEdicionEvento extends JInternalFrame {
         textSigla = addTextField(panelCampos, "Sigla:", 5);
         textAlta = addTextField(panelCampos, "Fecha alta:", 6);
         textOrganizador = addTextField(panelCampos, "Organizador:", 7);
-
-        // Panel inferior con listas
-        JPanel panelListas = new JPanel(new GridBagLayout());
-        GridBagConstraints gbc_panelListas = new GridBagConstraints();
-        gbc_panelListas.fill = GridBagConstraints.BOTH;
-        gbc_panelListas.gridx = 0;
-        gbc_panelListas.gridy = 1;
-        gbc_panelListas.gridwidth = 2;
-        panelDetalle.add(panelListas, BorderLayout.SOUTH);
 
         modeloTipos = new DefaultListModel<>();
         listaTipos = new JList<>(modeloTipos);
@@ -142,21 +133,24 @@ public class ConsultaEdicionEvento extends JInternalFrame {
         JScrollPane scrollPatrocinios = new JScrollPane(listaPatrocinios);
         scrollPatrocinios.setBorder(BorderFactory.createTitledBorder("Patrocinios"));
 
+        // Agregar scrollTipos debajo de Organizador
         GridBagConstraints gbc_scrollTipos = new GridBagConstraints();
         gbc_scrollTipos.gridx = 0;
-        gbc_scrollTipos.gridy = 0;
+        gbc_scrollTipos.gridy = 8;
         gbc_scrollTipos.weightx = 0.5;
         gbc_scrollTipos.weighty = 1.0;
         gbc_scrollTipos.fill = GridBagConstraints.BOTH;
-        panelListas.add(scrollTipos, gbc_scrollTipos);
+        panelCampos.add(scrollTipos, gbc_scrollTipos);
 
+        // Agregar scrollPatrocinios al lado de scrollTipos
         GridBagConstraints gbc_scrollPatrocinios = new GridBagConstraints();
         gbc_scrollPatrocinios.gridx = 1;
-        gbc_scrollPatrocinios.gridy = 0;
+        gbc_scrollPatrocinios.gridy = 8;
         gbc_scrollPatrocinios.weightx = 0.5;
         gbc_scrollPatrocinios.weighty = 1.0;
         gbc_scrollPatrocinios.fill = GridBagConstraints.BOTH;
-        panelListas.add(scrollPatrocinios, gbc_scrollPatrocinios);
+        panelCampos.add(scrollPatrocinios, gbc_scrollPatrocinios);
+
 
         // Listeners
         comboBoxEvento.addActionListener(e -> {

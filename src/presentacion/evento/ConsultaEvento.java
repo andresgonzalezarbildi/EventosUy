@@ -162,7 +162,7 @@ public class ConsultaEvento extends JInternalFrame {
         gbc_list.gridy = 4;
         panel.add(new JScrollPane(listCategorias), gbc_list);
         
-        JLabel lblEdicion = new JLabel("Consultar edicion: ");
+        JLabel lblEdicion = new JLabel("Ediciones: ");
         GridBagConstraints gbc_lblEdicion = new GridBagConstraints();
         gbc_lblEdicion.anchor = GridBagConstraints.WEST;
         gbc_lblEdicion.insets = new Insets(0, 0, 0, 5);
