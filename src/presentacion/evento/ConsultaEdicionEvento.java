@@ -1,18 +1,24 @@
 package presentacion.evento;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import javax.swing.*;
+import javax.swing.text.JTextComponent;
+
 import logica.interfaces.IControladorEvento;
+import presentacion.registros.ConsultaDeTipoDeRegistro;
 import logica.datatypes.DataEvento;
 import logica.datatypes.DataEdicion;
 import logica.datatypes.DataTipoRegistro;
+import logica.datatypes.DataPatrocinio;
 import excepciones.EventoNoExisteException;
 
 public class ConsultaEdicionEvento extends JInternalFrame {
-    private JTextField textOrganizador, textNombre, textFechaIni, textFechaFin, textCiudad, textPais, textSigla, textAlta;
+    private JTextField textOrganizador, textNombre, textFechaIni, textFechaFin, textCiudad, textPais, textSigla, textAlta,
+    textPatrocinios,textTiposRegistro;
     private IControladorEvento controlEvento;
 
     private JComboBox<DataEvento> comboBoxEvento;
@@ -20,19 +26,29 @@ public class ConsultaEdicionEvento extends JInternalFrame {
 
     private DefaultListModel<DataTipoRegistro> modeloTipos;
     private JList<DataTipoRegistro> listaTipos;
+    
+    
+    
+    
+
+    private DefaultListModel<DataPatrocinio> modeloPatrocinios;
+    private JList<DataPatrocinio> listaPatrocinios;
+    
+    private ConsultaDeTipoDeRegistro ventanaConsulta = null;
+
 
     public ConsultaEdicionEvento(IControladorEvento controlEvento) {
 
         super("Consulta Edicion Evento", false, true, true, true);
         this.controlEvento = controlEvento;
-        setBounds(100, 100, 700, 500);
+        setBounds(100, 100, 800, 600);
         setDefaultCloseOperation(HIDE_ON_CLOSE);
 
         GridBagLayout gridBagLayout = new GridBagLayout();
         gridBagLayout.columnWidths = new int[]{30, 39, 360, 0};
-        gridBagLayout.rowHeights = new int[]{22, 22, 216, 0};
-        gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
-        gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
+        gridBagLayout.rowHeights = new int[]{22, 22, 400, 0};
+        gridBagLayout.columnWeights = new double[]{0.0, 0.0, 1.0, Double.MIN_VALUE};
+        gridBagLayout.rowWeights = new double[]{0.0, 0.0, 1.0, Double.MIN_VALUE};
         getContentPane().setLayout(gridBagLayout);
 
         JLabel lblEvento = new JLabel("Evento:");
@@ -67,13 +83,12 @@ public class ConsultaEdicionEvento extends JInternalFrame {
         gbc_comboBoxEdiciones.gridy = 1;
         getContentPane().add(comboBoxEdiciones, gbc_comboBoxEdiciones);
 
-        JPanel panelDetalle = new JPanel();
+        JPanel panelDetalle = new JPanel(new BorderLayout(5, 5));
         GridBagConstraints gbc_panelDetalle = new GridBagConstraints();
         gbc_panelDetalle.fill = GridBagConstraints.BOTH;
         gbc_panelDetalle.gridx = 2;
         gbc_panelDetalle.gridy = 2;
         getContentPane().add(panelDetalle, gbc_panelDetalle);
-        panelDetalle.setLayout(new BorderLayout(0, 0));
 
         JLabel lblInfoEdicion = new JLabel("Información de la edición del evento:");
         lblInfoEdicion.setHorizontalAlignment(SwingConstants.CENTER);
@@ -97,10 +112,53 @@ public class ConsultaEdicionEvento extends JInternalFrame {
         textAlta = addTextField(panelCampos, "Fecha alta:", 6);
         textOrganizador = addTextField(panelCampos, "Organizador:", 7);
 
+        // Panel inferior con listas
+        JPanel panelListas = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc_panelListas = new GridBagConstraints();
+        gbc_panelListas.fill = GridBagConstraints.BOTH;
+        gbc_panelListas.gridx = 0;
+        gbc_panelListas.gridy = 1;
+        gbc_panelListas.gridwidth = 2;
+        panelDetalle.add(panelListas, BorderLayout.SOUTH);
+
         modeloTipos = new DefaultListModel<>();
         listaTipos = new JList<>(modeloTipos);
-        panelDetalle.add(listaTipos, BorderLayout.SOUTH);
+        listaTipos.setCellRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(JList<?> list, Object value, int index,
+                                                          boolean isSelected, boolean cellHasFocus) {
+                super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                if (value instanceof DataTipoRegistro tr) {
+                    setText(tr.getNombre());
+                }
+                return this;
+            }
+        });
+        JScrollPane scrollTipos = new JScrollPane(listaTipos);
+        scrollTipos.setBorder(BorderFactory.createTitledBorder("Tipos de Registro"));
 
+        modeloPatrocinios = new DefaultListModel<>();
+        listaPatrocinios = new JList<>(modeloPatrocinios);
+        JScrollPane scrollPatrocinios = new JScrollPane(listaPatrocinios);
+        scrollPatrocinios.setBorder(BorderFactory.createTitledBorder("Patrocinios"));
+
+        GridBagConstraints gbc_scrollTipos = new GridBagConstraints();
+        gbc_scrollTipos.gridx = 0;
+        gbc_scrollTipos.gridy = 0;
+        gbc_scrollTipos.weightx = 0.5;
+        gbc_scrollTipos.weighty = 1.0;
+        gbc_scrollTipos.fill = GridBagConstraints.BOTH;
+        panelListas.add(scrollTipos, gbc_scrollTipos);
+
+        GridBagConstraints gbc_scrollPatrocinios = new GridBagConstraints();
+        gbc_scrollPatrocinios.gridx = 1;
+        gbc_scrollPatrocinios.gridy = 0;
+        gbc_scrollPatrocinios.weightx = 0.5;
+        gbc_scrollPatrocinios.weighty = 1.0;
+        gbc_scrollPatrocinios.fill = GridBagConstraints.BOTH;
+        panelListas.add(scrollPatrocinios, gbc_scrollPatrocinios);
+
+        // Listeners
         comboBoxEvento.addActionListener(e -> {
             DataEvento seleccionado = (DataEvento) comboBoxEvento.getSelectedItem();
             if (seleccionado != null) cargarEdiciones(seleccionado.getNombre());
@@ -110,6 +168,54 @@ public class ConsultaEdicionEvento extends JInternalFrame {
             DataEdicion de = (DataEdicion) comboBoxEdiciones.getSelectedItem();
             if (de != null) mostrarInfoEdicion(de);
         });
+
+        listaTipos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                if (evt.getClickCount() == 2) {
+                    DataTipoRegistro tr = listaTipos.getSelectedValue();
+                    DataEdicion de = (DataEdicion) comboBoxEdiciones.getSelectedItem();
+                    DataEvento ev = (DataEvento) comboBoxEvento.getSelectedItem();
+
+                    if (tr != null && de != null && ev != null) {
+                        if (ventanaConsulta != null && ventanaConsulta.isVisible()) {
+                            ventanaConsulta.dispose();
+                        }
+
+                        ventanaConsulta = new ConsultaDeTipoDeRegistro(controlEvento);
+                        ventanaConsulta.setVisible(true); 
+                        ventanaConsulta.seleccionarEventoYEdicionYTipo(ev, de, tr); 
+
+                        JDesktopPane desktop = ConsultaEdicionEvento.this.getDesktopPane();
+                        if (desktop != null) {
+                            desktop.add(ventanaConsulta);
+                            try { ventanaConsulta.setSelected(true); } catch (java.beans.PropertyVetoException ex) {}
+                        }
+                    }
+                }
+            }
+        });
+
+
+
+/*
+        listaTipos.addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) {
+                DataTipoRegistro tr = listaTipos.getSelectedValue();
+                if (tr != null) {
+                    DataEvento ev = (DataEvento) comboBoxEvento.getSelectedItem();
+                    DataEdicion de = (DataEdicion) comboBoxEdiciones.getSelectedItem();
+                    if (ev != null && de != null) {
+                        ConsultaDeTipoDeRegistro consulta = new ConsultaDeTipoDeRegistro(controlEvento);
+                        consulta.setVisible(true);
+                        consulta.seleccionarEventoYEdicionYTipo(ev, de, tr);
+
+                        this.getParent().add(consulta);
+                        try { consulta.setSelected(true); } catch (java.beans.PropertyVetoException ex) {}
+                    }
+                }
+            }
+        });
+*/
 
         cargarEventos();
     }
@@ -136,7 +242,7 @@ public class ConsultaEdicionEvento extends JInternalFrame {
     @Override
     public void setVisible(boolean aFlag) {
         if (aFlag) {
-            cargarEventos();  // recarga los eventos desde el controlador
+            cargarEventos();
         }
         super.setVisible(aFlag);
     }
@@ -146,9 +252,7 @@ public class ConsultaEdicionEvento extends JInternalFrame {
         DataEvento[] eventos = controlEvento.getEventosDTO();
         if (eventos != null) {
             for (DataEvento ev : eventos) {
-                if (ev != null) {
-                    comboBoxEvento.addItem(ev);
-                }
+                if (ev != null) comboBoxEvento.addItem(ev);
             }
         }
     }
@@ -182,6 +286,46 @@ public class ConsultaEdicionEvento extends JInternalFrame {
             for (DataTipoRegistro tr : de.getTiposRegistro()) {
                 modeloTipos.addElement(tr);
             }
+        }
+
+        modeloPatrocinios.clear();
+        if (de.getPatrocinios() != null) {
+            for (DataPatrocinio p : de.getPatrocinios()) {
+                modeloPatrocinios.addElement(p);
+            }
+        }
+    }
+
+
+    public void cargarEdicion(String idEdicion) {
+        try {
+            DataEdicion ed = controlEvento.getInfoEdicion(idEdicion);
+            if (ed == null) {
+                JOptionPane.showMessageDialog(this, "La edición no existe.");
+                return;
+            }
+
+            textNombre.setText(ed.getNombre());
+            textFechaIni.setText(ed.getFechaIni().toString());
+            textFechaFin.setText(ed.getFechaFin().toString());
+            textCiudad.setText(ed.getCiudad());
+            textPais.setText(ed.getPais());
+            textSigla.setText(ed.getSigla());
+            textAlta.setText(ed.getFechaAltaEnPlataforma().toString());
+            textOrganizador.setText(ed.getOrganizador());
+
+       
+            modeloTipos.clear();
+            if (ed.getTiposRegistro() != null && !ed.getTiposRegistro().isEmpty()) {
+                for (DataTipoRegistro tr : ed.getTiposRegistro()) {
+                    modeloTipos.addElement(tr);
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "La edición no tiene tipos de registro.");
+            }
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "No se pudo cargar la edición: " + ex.getMessage());
         }
     }
     
@@ -226,3 +370,4 @@ public class ConsultaEdicionEvento extends JInternalFrame {
     }
 
 }
+

@@ -36,6 +36,13 @@ public class EdicionEvento {
         this.listaTipoDeRegistro = new HashMap<>();
         this.patrocinios = new ArrayList<>();
         this.listaRegistros = new HashMap<>();
+
+        
+        
+        // Hardcodeado hasta que este el alta
+        this.agregarPatrocinio(new Patrocinio(LocalDate.now(), 5000, 10, "PAT001", Nivel.ORO));
+        this.agregarPatrocinio(new Patrocinio(LocalDate.now(), 2000, 5, "PAT002", Nivel.PLATA));
+        
     }
 
     public String getNombre() { return nombre; }
@@ -109,6 +116,15 @@ public class EdicionEvento {
     public void agregarRegistro(Registro r) {
         listaRegistros.put(r.getAsistente().getNickname(), r);
     }
-    
+
+    @Override
+    public String toString() {
+        return nombre + " (" + fechaIni + ")";
+        }
+        
+    public java.util.Collection<Registro> getRegistros() {
+        return listaRegistros.values();
+
+    }
 
 }

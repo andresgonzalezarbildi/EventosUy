@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import logica.clases.Categoria;
+import logica.clases.EdicionEvento;
 import logica.clases.Evento;
 import logica.datatypes.DataEvento;
 
@@ -89,6 +90,16 @@ public class ManejadorEvento {
     
     public boolean existeCategoria(String nombre) {
         return categorias.containsKey(nombre);
+    }
+    
+    public EdicionEvento getEdicion(String idEdicion) {
+        for (Evento ev : eventos.values()) {
+            EdicionEvento ed = ev.getEdicion(idEdicion);
+            if (ed != null) {
+                return ed;
+            }
+        }
+        return null; // si no se encuentra
     }
     
 

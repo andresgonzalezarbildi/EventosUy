@@ -1,10 +1,6 @@
 package presentacion;
 
 
-import java.awt.EventQueue;
-import presentacion.evento.AltaEdicionEvento;
-import presentacion.evento.ConsultaEdicionEvento;
-
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.beans.PropertyVetoException;
@@ -18,20 +14,25 @@ import javax.swing.JMenuItem;
 
 import logica.Fabrica;
 import logica.clases.Categoria;
+
 import logica.controladores.ControladorUsuario;
 import logica.datatypes.DataEdicion;
 import logica.datatypes.DataEvento;
+
 import logica.interfaces.IControladorEvento;
 import logica.interfaces.IControladorUsuario;
 import logica.manejadores.ManejadorEvento;
+import presentacion.evento.AltaEdicionEvento;
 import presentacion.evento.AltaEvento;
+import presentacion.evento.ConsultaEdicionEvento;
 import presentacion.evento.ConsultaEvento;
 import presentacion.registros.AltaDeTipoDeRegistro;
-import presentacion.registros.RegistroAEdicionEvento;
 import presentacion.registros.ConsultaDeTipoDeRegistro;
+import presentacion.registros.RegistroAEdicionEvento;
 import presentacion.usuario.AltaUsuario;
 import presentacion.usuario.ConsultaUsuario;
 import presentacion.usuario.ModificarUsuario;
+import presentacion.registros.ConsultaDeRegistro;
 
 
 public class Principal {
@@ -51,6 +52,7 @@ public class Principal {
     private RegistroAEdicionEvento registrarEdicionEvento;
     private AltaDeTipoDeRegistro altaTipoDeRegistroInternalFrame;
     private ConsultaDeTipoDeRegistro consultaDeTipoDeRegistroInternalFrame;
+    private ConsultaDeRegistro consultaRegistroInternalFrame;
 
 
     public static void main(String[] args) {
@@ -90,7 +92,7 @@ public class Principal {
         altaUsuarioInternalFrame.setVisible(false);
         altaUsuarioInternalFrame.setDefaultCloseOperation(JInternalFrame.HIDE_ON_CLOSE);
         
-        consultaUsuarioInternalFrame = new ConsultaUsuario(ICU);
+        consultaUsuarioInternalFrame = new ConsultaUsuario(ICU,IEV);
         consultaUsuarioInternalFrame.setLocation(10, 23);
         consultaUsuarioInternalFrame.setClosable(true);
         desktop.add(consultaUsuarioInternalFrame);
@@ -150,6 +152,13 @@ public class Principal {
         consultaDeTipoDeRegistroInternalFrame.setVisible(false);
         consultaDeTipoDeRegistroInternalFrame.setDefaultCloseOperation(JInternalFrame.HIDE_ON_CLOSE);
         
+        consultaRegistroInternalFrame = new ConsultaDeRegistro(IEV,ICU);
+        consultaRegistroInternalFrame.setLocation(10, 23);
+        consultaRegistroInternalFrame.setClosable(true);
+        desktop.add(consultaRegistroInternalFrame);
+        consultaRegistroInternalFrame.setVisible(false);
+        consultaRegistroInternalFrame.setDefaultCloseOperation(JInternalFrame.HIDE_ON_CLOSE);
+        
     }
 
     private void initialize() {
@@ -190,7 +199,7 @@ public class Principal {
         JMenuItem miConsultaUsuario = new JMenuItem("Consulta de Usuario");
         miConsultaUsuario.addActionListener(e -> {
             if (consultaUsuarioInternalFrame == null || consultaUsuarioInternalFrame.isClosed()) {
-                consultaUsuarioInternalFrame = new ConsultaUsuario(ICU);
+                consultaUsuarioInternalFrame = new ConsultaUsuario(ICU,IEV);
                 desktop.add(consultaUsuarioInternalFrame);
             }
             ensureSize(consultaUsuarioInternalFrame, 600, 400);
@@ -298,18 +307,30 @@ public class Principal {
         JMenu mnRegistros = new JMenu("Registros");
         menuBar.add(mnRegistros);
 
-        JMenuItem mntmConsultaDeRegistro = new JMenuItem("Consulta de Registro");
-        // mntmConsultaDeRegistro.addActionListener(e -> {
-        	
 
         JMenuItem mntmRegistroAEdicion = new JMenuItem("Registro a Edición de Evento");
         mntmRegistroAEdicion.addActionListener(e -> {
-        RegistroAEdicionEvento ventana = new RegistroAEdicionEvento();
-        ventana.setLocationRelativeTo(null); // null = centrado en pantalla
-        ventana.setVisible(true);
+        registrarEdicionEvento = new RegistroAEdicionEvento();
+        registrarEdicionEvento.setLocationRelativeTo(null); // null = centrado en pantalla
+        registrarEdicionEvento.setVisible(true);
         });
         mnRegistros.add(mntmRegistroAEdicion);
         
+        JMenuItem mntmConsultaDeRegistro = new JMenuItem("Consulta de Registro");
+        mntmConsultaDeRegistro.addActionListener(e -> {
+            if (consultaRegistroInternalFrame == null || consultaRegistroInternalFrame.isClosed()) {
+                consultaRegistroInternalFrame = new ConsultaDeRegistro(IEV, ICU);
+                consultaRegistroInternalFrame.setLocation(10, 23);
+                consultaRegistroInternalFrame.setClosable(true);
+                consultaRegistroInternalFrame.setDefaultCloseOperation(JInternalFrame.HIDE_ON_CLOSE);
+                desktop.add(consultaRegistroInternalFrame);
+            } else {
+            	consultaRegistroInternalFrame.recargarDatos();
+            }
+            ensureSize(consultaRegistroInternalFrame, 600, 400);
+            showInternal(consultaRegistroInternalFrame);
+        });
+        mnRegistros.add(mntmConsultaDeRegistro);
 
         JMenu mnTipoDeRegistros = new JMenu("Tipos de Registro");
         mnRegistros.add(mnTipoDeRegistros);
@@ -329,16 +350,18 @@ public class Principal {
 
         JMenuItem mntmConsultaTipoDeRegistro = new JMenuItem("Consulta de Tipo de Registro");
         mntmConsultaTipoDeRegistro.addActionListener(e -> {
-        	if (consultaDeTipoDeRegistroInternalFrame == null || consultaDeTipoDeRegistroInternalFrame.isClosed()) {
-        		consultaDeTipoDeRegistroInternalFrame = new ConsultaDeTipoDeRegistro(IEV);
-        	    desktop.add(consultaDeTipoDeRegistroInternalFrame);
-      	} 
-        	consultaDeTipoDeRegistroInternalFrame.setVisible(true);
-        	consultaDeTipoDeRegistroInternalFrame.toFront(); 
+            if (consultaDeTipoDeRegistroInternalFrame == null || consultaDeTipoDeRegistroInternalFrame.isClosed()) {
+                consultaDeTipoDeRegistroInternalFrame = new ConsultaDeTipoDeRegistro(IEV);
+                
+                desktop.add(consultaDeTipoDeRegistroInternalFrame);
+            } 
+            consultaDeTipoDeRegistroInternalFrame.setVisible(true);
+            consultaDeTipoDeRegistroInternalFrame.toFront(); 
             ensureSize(consultaDeTipoDeRegistroInternalFrame, 600, 400);
             showInternal(consultaDeTipoDeRegistroInternalFrame);
         });
         mnTipoDeRegistros.add(mntmConsultaTipoDeRegistro);
+
 
     }
 

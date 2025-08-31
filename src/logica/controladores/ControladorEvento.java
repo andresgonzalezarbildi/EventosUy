@@ -5,7 +5,9 @@ import java.util.List;
 import java.util.Map;
 
 import excepciones.CategoriaRepetidaException;
+import excepciones.EdicionNoExisteException;
 import excepciones.EventoNoExisteException;
+import excepciones.UsuarioNoExisteException;
 import logica.clases.Asistente;
 import logica.clases.Categoria;
 import logica.clases.EdicionEvento;
@@ -15,10 +17,13 @@ import logica.clases.Registro;
 import logica.clases.TipoRegistro;
 import logica.datatypes.DataEdicion;
 import logica.datatypes.DataEvento;
+import logica.datatypes.DataRegistro;
 import logica.datatypes.DataTipoRegistro;
 import logica.interfaces.IControladorEvento;
 import logica.manejadores.ManejadorEvento;
 import logica.manejadores.ManejadorUsuario;
+
+
 
 public class ControladorEvento implements IControladorEvento {
 	private ManejadorEvento manejadorEvento;
@@ -57,6 +62,28 @@ public class ControladorEvento implements IControladorEvento {
 		manejadorEvento.agregarEvento(e);
 
 	}
+	
+	@Override
+	public DataEdicion getInfoEdicion(String idEdicion) throws EdicionNoExisteException {
+	    EdicionEvento ed = manejadorEvento.getEdicion(idEdicion);
+	    if (ed == null) {
+	        throw new EdicionNoExisteException("No existe la edición: " + idEdicion);
+	    }
+
+	   
+	    return new DataEdicion(
+	        ed.getNombre(),
+	        ed.getFechaIni(),
+	        ed.getFechaFin(),
+	        ed.getCiudad(),
+	        ed.getPais(),
+	        ed.getSigla(),
+	        ed.getFechaAltaEnPlataforma(),
+	        ed.getOrganizadorDTO(),
+	        ed.getTiposRegistroDTO(),
+	        ed.getPatrociniosDTO());
+	}
+
     
     //el altaCategoria es sin GUI
    public void altaCategoria(String nombre) throws CategoriaRepetidaException {
@@ -135,7 +162,7 @@ public class ControladorEvento implements IControladorEvento {
    }
     
     public void altaEdicionEvento(
-            String nombreEvento, String nombreEdicion, String sigla, String ciudad, String pais, LocalDate fechaInicio, LocalDate fechaFin, LocalDate fechaAltaEnPlataforma, String organizadorNick) {
+            String nombreEvento, String nombreEdicion, String sigla, String ciudad, String pais, LocalDate fechaInicio, LocalDate fechaFin, LocalDate fechaAltaEnPlataforma, String organizadorNick) throws UsuarioNoExisteException {
         if (nombreEvento == null || nombreEvento.isBlank())   
         	throw new IllegalArgumentException("El evento es obligatorio.");
         if (organizadorNick == null || organizadorNick.isBlank())   
@@ -160,7 +187,7 @@ public class ControladorEvento implements IControladorEvento {
             throw new IllegalArgumentException("Ya existe una edición con ese nombre en este evento: " + nombreEvento);
         }
         ManejadorUsuario manejadorUsuario = ManejadorUsuario.getInstance();
-        Organizador org = manejadorUsuario.obtenerOrganizadorPorNickname(organizadorNick);
+        Organizador org = manejadorUsuario.getOrganizador(organizadorNick);
         if (org == null) {
             throw new IllegalArgumentException("Organizador inexistente: " + organizadorNick);
         }
@@ -200,7 +227,7 @@ public class ControladorEvento implements IControladorEvento {
         edicion.agregarTipoDeRegistro(nombreTipoRegistro, tipoRegistronuevo);
     }
     
-    public void altaRegistro(String nombreEvento, String nombreEdicion, String nombreTipoRegistro, String nombreAsistente, LocalDate fecha) {
+    public void altaRegistro(String nombreEvento, String nombreEdicion, String nombreTipoRegistro, String nombreAsistente, LocalDate fecha) throws UsuarioNoExisteException {
         Evento ev = ManejadorEvento.getInstance().obtenerEvento(nombreEvento);
         if (ev == null) throw new IllegalArgumentException("No existe el evento: " + nombreEvento);
 
@@ -221,14 +248,14 @@ public class ControladorEvento implements IControladorEvento {
         }
 
         int costo = tipo.getCosto();
-        Registro reg = new Registro(fecha , String.valueOf(costo), tipo, ed, asis);
+        Registro reg = new Registro(fecha , costo, tipo, ed, asis);
 
         ed.agregarRegistro(reg);
         asis.agregarRegistro(reg);
     }
 
 
-    @Override
+
 	public DataTipoRegistro[] listarTiposRegistro(String nombreEvento, String nombreEdicion) {
     Evento ev = manejadorEvento.obtenerEvento(nombreEvento);
     if (ev == null) throw new IllegalArgumentException("No existe el evento: " + nombreEvento);
@@ -240,7 +267,7 @@ public class ControladorEvento implements IControladorEvento {
 
 }
 
-	@Override
+
 	public DataTipoRegistro getTipoRegistro(String nombreEvento, String nombreEdicion, String nombreTipo) {
     Evento ev = manejadorEvento.obtenerEvento(nombreEvento);
     if (ev == null) throw new IllegalArgumentException("No existe el evento: " + nombreEvento);
@@ -257,4 +284,26 @@ public class ControladorEvento implements IControladorEvento {
             tr.getCosto(),
             tr.getCupo()
     );
-	}}
+	}
+
+	public DataRegistro[] listarRegistrosDeUsuario(String nickname) {
+	    List<DataRegistro> out = new ArrayList<>();
+	    for (Evento e : manejadorEvento.getEventos().values()) {
+	        for (EdicionEvento ed : e.getEdiciones().values()) {
+	            for (Registro r : ed.getRegistros()) {
+	                if (nickname.equals(r.getAsistente().getNickname())) {
+	                    out.add(new DataRegistro(
+	                        e.getNombre(),
+	                        ed.getNombre(),
+	                        r.getTipoRegistro().getNombre(),
+	                        r.getCostoRegistro(),
+	                        r.getFechaRegistro(),
+	                        r.getAsistente().getNombre()
+	                    ));
+	                }
+	            }
+	        }
+	    }
+	    return out.toArray(new DataRegistro[0]);
+	}
+}

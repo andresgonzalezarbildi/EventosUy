@@ -13,11 +13,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
-import javax.swing.DefaultComboBoxModel;
-import logica.interfaces.IControladorEvento;
-import logica.clases.Evento;
-import logica.datatypes.DataEvento;
+
 import logica.datatypes.DataEdicion;
+import logica.datatypes.DataEvento;
+import logica.interfaces.IControladorEvento;
 
 @SuppressWarnings("serial")
 public class AltaDeTipoDeRegistro extends JInternalFrame {
