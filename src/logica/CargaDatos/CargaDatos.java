@@ -129,7 +129,7 @@ public class CargaDatos implements ICargaDatos {
         } catch (UsuarioRepetidoException ignored) {
             // Si ya existe, lo ignoramos
         }
-
+    
         
         // Carga Categorías
         //a ltaCategoria(String nombre)
@@ -178,42 +178,43 @@ public class CargaDatos implements ICargaDatos {
         try {
             ce.altaCategoria("Investigación");
         } catch (CategoriaRepetidaException ignored) {}
+
         
 
         //Carga Eventos:
         //altaEvento(String nombre, String descripcion, String sigla, List<String> nombresCategorias) 
         try {
         	//	10/01/2025 
-            ce.altaEvento("Conferencia de Tecnología", "Evento sobre innovación tecnolígica", "CONFTEC", List.of("CA01","CA02"));
+            ce.altaEvento("Conferencia de Tecnología", "Evento sobre innovación tecnolígica", "CONFTEC", List.of("Tecnología","Innovación"));
         } catch (IllegalArgumentException ignored) {}
         
         try {
         	//	01/02/2025
-            ce.altaEvento("Feria del Libro", "Encuentro anual de literatura", "FERLIB", List.of("CA03","CA04"));
+            ce.altaEvento("Feria del Libro", "Encuentro anual de literatura", "FERLIB", List.of("Literatura","Cultura"));
         } catch (IllegalArgumentException ignored) {}
         
         try {
         	// 15/03/2023 
-            ce.altaEvento("Montevideo Rock", "Festival de rock con artistas nacionales e internacionales", "MONROCK", List.of("CA04","CA05"));
+            ce.altaEvento("Montevideo Rock", "Festival de rock con artistas nacionales e internacionales", "MONROCK", List.of("Cultura","Música"));
         } catch (IllegalArgumentException ignored) {}
         
         try {
         	//	01/01/2022 
-            ce.altaEvento("Maratón de Montevideo", "Competencia deportiva anual en la capital", "MARATON", List.of("CA06","CA07"));
+            ce.altaEvento("Maratón de Montevideo", "Competencia deportiva anual en la capital", "MARATON", List.of("Deporte","Salud"));
         } catch (IllegalArgumentException ignored) {}
         
         try {
         	//	10/04/2024 
-            ce.altaEvento("Montevideo Comics", "Convención de historietas, cine y cultura geek", "COMICS", List.of("CA04","CA08"));
+            ce.altaEvento("Montevideo Comics", "Convención de historietas, cine y cultura geek", "COMICS", List.of("Cultura","Entretenimiento"));
         } catch (IllegalArgumentException ignored) {}
         
         try {
         	//	12/12/2024
-            ce.altaEvento("Expointer Uruguay", "Exposición internacional agropecuaria y ganadera", "EXPOAGRO", List.of("CA09","CA10"));
+            ce.altaEvento("Expointer Uruguay", "Exposición internacional agropecuaria y ganadera", "EXPOAGRO", List.of("Agro","Negocios"));
         } catch (IllegalArgumentException ignored) {}
         try {
         	//	20/07/2025 
-            ce.altaEvento("Montevideo Fashion Week", "Pasarela de moda uruguaya e internacional", "MFASHION", List.of("CA04","CA11"));
+            ce.altaEvento("Montevideo Fashion Week", "Pasarela de moda uruguaya e internacional", "MFASHION", List.of("Cultura","Investigación"));
         } catch (IllegalArgumentException ignored) {}
         
         
@@ -364,6 +365,6 @@ public class CargaDatos implements ICargaDatos {
             ce.altaTipoRegistro("Conferencia de Tecnología", "Web Summit 2026", "Estudiante", "Acceso para estudiantes", 300, 1);
         } catch (IllegalArgumentException ignored) {}
 
+
     }
 }
-

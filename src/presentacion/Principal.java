@@ -52,18 +52,6 @@ public class Principal {
 
 
     public static void main(String[] args) {
-    	// 1. Obtengo la instancia del manejador
-        ManejadorEvento manejador = ManejadorEvento.getInstance();
-
-        // 2. Agrego categorías de ejemplo
-        manejador.agregarCategoria(new Categoria("CA01"));
-        manejador.agregarCategoria(new Categoria("CA02"));
-        manejador.agregarCategoria(new Categoria("CA03"));
-        manejador.agregarCategoria(new Categoria("CA04"));
-        manejador.agregarCategoria(new Categoria("CA05"));
-        
-        Fabrica fabrica = Fabrica.getInstance();
-        fabrica.getCargaDatos().CargarDatosIniciales();
 
         
         EventQueue.invokeLater(() -> {
@@ -163,6 +151,9 @@ public class Principal {
     }
 
     private void initialize() {
+
+    	Fabrica fabrica = Fabrica.getInstance();
+//      fabrica.getCargaDatos().CargarDatosIniciales();
         frmGestion = new JFrame();
         frmGestion.setTitle("Gestión del Sistema");
         frmGestion.setBounds(100, 100, 900, 600);
@@ -177,6 +168,10 @@ public class Principal {
 
         // Menú Sistema
         JMenu menuSistema = new JMenu("Sistema");
+        JMenuItem menuCarga = new JMenuItem("Carga de Datos");
+        menuCarga.addActionListener(e -> {
+        	fabrica.getCargaDatos().CargarDatosIniciales();
+        });
         JMenuItem menuSalir = new JMenuItem("Salir");
         menuSalir.addActionListener(e -> {
             frmGestion.setVisible(false);
@@ -184,6 +179,7 @@ public class Principal {
         });
         menuSistema.add(menuSalir);
         menuBar.add(menuSistema);
+        menuSistema.add(menuCarga);
 
 ////////////////////////////////////////////////////////////////////////////////USUARIO
 
