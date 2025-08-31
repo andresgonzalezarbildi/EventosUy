@@ -20,7 +20,7 @@ import logica.interfaces.IControladorEvento;
 
 @SuppressWarnings("serial")
 public class AltaDeTipoDeRegistro extends JInternalFrame {
-	private IControladorEvento IEV;
+    private IControladorEvento IEV;
     // Campos de texto separados
     private JTextField txtNombre;
     private JTextField txtDescripcion;
@@ -31,9 +31,11 @@ public class AltaDeTipoDeRegistro extends JInternalFrame {
     private JComboBox<String> cbListaEvento;
     private JComboBox<String> cbListaEdiciones;
 
+    private boolean cargandoEventos = false;
+
     public AltaDeTipoDeRegistro(IControladorEvento IEV) {
         super("Alta De Tipo De Registro", false, true, true, true);
-        this.IEV=IEV;
+        this.IEV = IEV;
         setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
         setResizable(false);
         setBounds(100, 100, 500, 350);
@@ -61,18 +63,19 @@ public class AltaDeTipoDeRegistro extends JInternalFrame {
         panel.add(lblEventos, gbc_lblEventos);
 
         cbListaEvento = new JComboBox<>();
-        cbListaEvento.addItem("Seleccione...");  // 👈 siempre agregá un placeholder
+        cbListaEvento.addItem("");  
         cbListaEvento.setSelectedIndex(0);     
         cbListaEvento.addActionListener(e -> {
+            if (cargandoEventos) return; // 
             String eventoSel = (String) cbListaEvento.getSelectedItem();
-            if (eventoSel != null && !eventoSel.equals("Seleccione...")) {
-                cargarEdiciones(eventoSel);
+            if (eventoSel != null && !eventoSel.equals("")) {
+                cargarEdiciones(eventoSel, true);
             } else {
                 cbListaEdiciones.removeAllItems();
-                cbListaEdiciones.addItem("Seleccione...");
-                cbListaEdiciones.setSelectedIndex(-1);
+                cbListaEdiciones.addItem("");
+                cbListaEdiciones.setSelectedIndex(0);
             }
-        });// ahora sí existe índice 0
+        });
 
         GridBagConstraints gbc_ListaEvento = new GridBagConstraints();
         gbc_ListaEvento.weightx = 1.0;
@@ -92,10 +95,9 @@ public class AltaDeTipoDeRegistro extends JInternalFrame {
         panel.add(lblEdiciones, gbc_lblEdiciones);
 
         cbListaEdiciones = new JComboBox<>();
-        cbListaEdiciones.addItem("Seleccione...");
-        if (cbListaEdiciones.getItemCount() > 0) {
-            cbListaEdiciones.setSelectedIndex(0);
-        }
+        cbListaEdiciones.addItem("");
+        cbListaEdiciones.setSelectedIndex(0);
+
         GridBagConstraints gbc_comboBox = new GridBagConstraints();
         gbc_comboBox.weightx = 1.0;
         gbc_comboBox.insets = new Insets(6, 6, 6, 12);
@@ -186,14 +188,13 @@ public class AltaDeTipoDeRegistro extends JInternalFrame {
         panelBotones.add(btnAceptar);
 
         JButton btnCancelar = new JButton("Cancelar");
-        btnCancelar.addActionListener(e ->{
-        	limpiarFormulario();
-        	dispose();});
+        btnCancelar.addActionListener(e -> {
+            limpiarFormulario();
+            dispose();
+        });
         panelBotones.add(btnCancelar);
     }
 
-    
-    
     private void cmdAltaTipoRegistroActionPerformed() {
         try {
             String eventoSel = (String) cbListaEvento.getSelectedItem();
@@ -204,10 +205,10 @@ public class AltaDeTipoDeRegistro extends JInternalFrame {
             String costoStr = txtCosto.getText().trim();
             String cupoStr = txtCupo.getText().trim();
 
-            if (eventoSel == null || eventoSel.equals("Seleccione...")) {
+            if (eventoSel == null || eventoSel.equals("")) {
                 throw new IllegalArgumentException("Debe seleccionar un evento.");
             }
-            if (edicionSel == null || edicionSel.equals("Seleccione...")) {
+            if (edicionSel == null || edicionSel.equals("")) {
                 throw new IllegalArgumentException("Debe seleccionar una edición.");
             }
             if (nombre.isEmpty()) {
@@ -238,7 +239,6 @@ public class AltaDeTipoDeRegistro extends JInternalFrame {
                 return;
             }
 
-            // 👇 Intentar dar de alta
             try {
                 IEV.altaTipoRegistro(eventoSel, edicionSel, nombre, descripcion, costo, cupo);
 
@@ -247,12 +247,10 @@ public class AltaDeTipoDeRegistro extends JInternalFrame {
                     "Alta Tipo de Registro",
                     javax.swing.JOptionPane.INFORMATION_MESSAGE);
                 limpiarFormulario();
-
                 dispose();
 
             } catch (IllegalArgumentException ex) {
                 if (ex.getMessage().contains("Ya existe un tipo registro")) {
-                    // 👇 preguntar qué hacer
                     int opcion = javax.swing.JOptionPane.showConfirmDialog(
                             this,
                             "Ya existe un tipo de registro con ese nombre.\n¿Desea cambiar el nombre?",
@@ -262,12 +260,12 @@ public class AltaDeTipoDeRegistro extends JInternalFrame {
                     );
 
                     if (opcion == javax.swing.JOptionPane.YES_OPTION) {
-                        txtNombre.requestFocus(); // volver al campo para que lo cambie
+                        txtNombre.requestFocus();
                     } else {
-                        dispose(); // cancelar el alta
+                        dispose();
                     }
                 } else {
-                    throw ex; // relanzar otras IllegalArgumentException que no sean de duplicado
+                    throw ex;
                 }
             }
 
@@ -279,10 +277,10 @@ public class AltaDeTipoDeRegistro extends JInternalFrame {
         }
     }
 
-
-
     private void cargarEventos() {
+        cargandoEventos = true;
         cbListaEvento.removeAllItems();
+        cbListaEvento.addItem("");
         DataEvento[] eventos = IEV.getEventosDTO();
         if (eventos != null) {
             for (DataEvento ev : eventos) {
@@ -291,17 +289,19 @@ public class AltaDeTipoDeRegistro extends JInternalFrame {
                 }
             }
         }
-        cbListaEvento.setSelectedIndex(-1); 
+        cbListaEvento.setSelectedIndex(0);
+        cargandoEventos = false;
     }
 
-    
-    private void cargarEdiciones(String nombreEvento) {
-        cbListaEdiciones.removeAllItems();           
-        cbListaEdiciones.setSelectedIndex(-1);
+    private void cargarEdiciones(String nombreEvento, boolean mostrarMensaje) {
+        cbListaEdiciones.removeAllItems();
+        cbListaEdiciones.addItem("");
+        cbListaEdiciones.setSelectedIndex(0);
+
         try {
             DataEdicion[] ediciones = IEV.listarEdiciones(nombreEvento);
 
-            if (ediciones == null || ediciones.length == 0) {
+            if ((ediciones == null || ediciones.length == 0) && mostrarMensaje) {
                 javax.swing.JOptionPane.showMessageDialog(
                     this,
                     "El evento \"" + nombreEvento + "\" no tiene ediciones asociadas.",
@@ -315,7 +315,6 @@ public class AltaDeTipoDeRegistro extends JInternalFrame {
                     }
                 }
             }
-
         } catch (Exception ex) {
             javax.swing.JOptionPane.showMessageDialog(
                 this,
@@ -326,30 +325,28 @@ public class AltaDeTipoDeRegistro extends JInternalFrame {
         }
     }
 
-    
     @Override
     public void setVisible(boolean aFlag) {
         if (aFlag) {
-        	limpiarFormulario();
+            limpiarFormulario();
             cargarEventos();
-            
         }
         super.setVisible(aFlag);
     }
-    
 
-		private void limpiarFormulario() {
-			
-			txtDescripcion.setText("");
-			txtNombre.setText("");
-			txtCosto.setText("");
-			txtCupo.setText("");
-			
-			cbListaEdiciones.setSelectedIndex(-1);
-			cbListaEdiciones.setSelectedIndex(-1);
-			
-			getContentPane().revalidate();
-			getContentPane().repaint();
-		}
+    private void limpiarFormulario() {
+        txtDescripcion.setText("");
+        txtNombre.setText("");
+        txtCosto.setText("");
+        txtCupo.setText("");
 
+        cbListaEdiciones.removeAllItems();
+        cbListaEdiciones.addItem("");
+        cbListaEdiciones.setSelectedIndex(0);
+
+        cbListaEvento.setSelectedIndex(0);
+
+        getContentPane().revalidate();
+        getContentPane().repaint();
+    }
 }

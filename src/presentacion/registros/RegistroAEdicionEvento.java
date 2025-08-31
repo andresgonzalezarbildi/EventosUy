@@ -193,7 +193,7 @@ public class RegistroAEdicionEvento extends JInternalFrame {
         String asistenteDisplay = (String) cbAsistentes.getSelectedItem();
 
         if (evento == null || edicion == null || tipo == null || asistenteDisplay == null) {
-            JOptionPane.showMessageDialog(this, "Debe seleccionar evento, edición, tipo y asistente.",
+            JOptionPane.showMessageDialog(this, "Debe seleccionar evento, edición, tipo, asistente y fecha.",
                     "Datos incompletos", JOptionPane.ERROR_MESSAGE);
             return;
         }
