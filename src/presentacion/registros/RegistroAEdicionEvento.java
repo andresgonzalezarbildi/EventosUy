@@ -12,7 +12,7 @@ import java.util.Date;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JDialog;
+import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -29,9 +29,7 @@ import logica.interfaces.IControladorEvento;
 import logica.interfaces.IControladorUsuario;
 import excepciones.EventoNoExisteException;
 
-//ESTO SIGUE SIENDO DIALOGO, ES EL UNICO DIALOGO DE TODO EL PROGRAMA...
-
-public class RegistroAEdicionEvento extends JDialog {
+public class RegistroAEdicionEvento extends JInternalFrame {
 
     private static final long serialVersionUID = 1L;
 
@@ -43,18 +41,7 @@ public class RegistroAEdicionEvento extends JDialog {
     private JComboBox<String> cbTipoRegistro;
     private JComboBox<String> cbAsistentes;
     private JDateChooser dcFecha; 
-    
-    public static void main(String[] args) {
-        try {
-            RegistroAEdicionEvento dialog = new RegistroAEdicionEvento();
-            dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-            dialog.setVisible(true);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
-    
     public RegistroAEdicionEvento() {
         this(Fabrica.getInstance().getControladorEvento(),
              Fabrica.getInstance().getControladorUsuario());
@@ -62,14 +49,13 @@ public class RegistroAEdicionEvento extends JDialog {
 
     public RegistroAEdicionEvento(IControladorEvento ctrlEvento,
                                   IControladorUsuario ctrlUsuario) {
+        super("Registro a Edición de Evento", false, true, true, true); // título, resizable, closable, maximizable, iconifiable
         this.ctrlEvento = ctrlEvento;
         this.ctrlUsuario = ctrlUsuario;
 
-        setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
         setResizable(false);
-        setModal(true);
-        setTitle("Registro A Edicion Evento");
-        setBounds(100, 100, 450, 300);
+        setBounds(100, 100, 500, 350);
         getContentPane().setLayout(new BorderLayout(0, 0));
 
         JPanel panel = new JPanel();
@@ -162,7 +148,7 @@ public class RegistroAEdicionEvento extends JDialog {
         dcFecha = new JDateChooser();
         dcFecha.setDateFormatString("dd/MM/yyyy");
         dcFecha.setToolTipText("Seleccioná la fecha del registro");
-        ((javax.swing.JTextField) dcFecha.getDateEditor().getUiComponent()).setEditable(false); // solo calendario
+        ((javax.swing.JTextField) dcFecha.getDateEditor().getUiComponent()).setEditable(false);
         GridBagConstraints gbc_dcFecha = new GridBagConstraints();
         gbc_dcFecha.weightx = 1.0;
         gbc_dcFecha.insets = new Insets(6, 6, 6, 12);
@@ -194,8 +180,6 @@ public class RegistroAEdicionEvento extends JDialog {
             cargarTiposRegistro(evento, edicion);
         });
 
-        // === Botones ===
-
         btnAceptar.addActionListener(e -> onAceptar());
         btnCancelar.addActionListener(e -> dispose());
     }
@@ -222,7 +206,6 @@ public class RegistroAEdicionEvento extends JDialog {
         }
         LocalDate fecha = utilDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
-        
         String nombreAsistente = extractNicknameOrAll(asistenteDisplay);
 
         try {
@@ -239,7 +222,6 @@ public class RegistroAEdicionEvento extends JDialog {
         }
     }
 
-    
     private String extractNicknameOrAll(String display) {
         if (display == null) return null;
         int open = display.lastIndexOf('(');
@@ -252,7 +234,6 @@ public class RegistroAEdicionEvento extends JDialog {
 
     // ================== Carga de combos ==================
 
-    // Eventos
     private void cargarEventosEnCombo() {
         try {
             DataEvento[] eventos = ctrlEvento.getEventosDTO();
@@ -268,7 +249,6 @@ public class RegistroAEdicionEvento extends JDialog {
         limpiarTiposRegistro();
     }
 
-    // Ediciones
     private void cargarEdicionesParaEvento(String nombreEvento) {
         if (nombreEvento == null || nombreEvento.isBlank()) {
             limpiarEdiciones();
@@ -295,7 +275,6 @@ public class RegistroAEdicionEvento extends JDialog {
         cbListaEdiciones.setSelectedIndex(-1);
     }
 
-    // Tipos de registro
     private void cargarTiposRegistro(String nombreEvento, String nombreEdicion) {
         if (nombreEvento == null || nombreEvento.isBlank()
                 || nombreEdicion == null || nombreEdicion.isBlank()) {
@@ -321,7 +300,6 @@ public class RegistroAEdicionEvento extends JDialog {
         cbTipoRegistro.setSelectedIndex(-1);
     }
 
-
     private void cargarAsistentesEnCombo() {
         try {
             DataUsuario[] asistentes = ctrlUsuario.getAsistentes();
@@ -335,12 +313,19 @@ public class RegistroAEdicionEvento extends JDialog {
                 }
             }
             cbAsistentes.setModel(model);
-            cbAsistentes.setSelectedIndex(-1); // vacío inicial
+            cbAsistentes.setSelectedIndex(-1);
         } catch (Exception ex) {
             cbAsistentes.setModel(new DefaultComboBoxModel<>());
             cbAsistentes.setSelectedIndex(-1);
         }
     }
+
+    @Override
+    public void setVisible(boolean aFlag) {
+        if (aFlag) {
+            cargarAsistentesEnCombo();
+            cargarEventosEnCombo();
+        }
+        super.setVisible(aFlag);
+    }
 }
-
-

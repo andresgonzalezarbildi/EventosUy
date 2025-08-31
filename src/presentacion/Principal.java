@@ -306,12 +306,18 @@ public class Principal {
 
         JMenuItem mntmRegistroAEdicion = new JMenuItem("Registro a Edición de Evento");
         mntmRegistroAEdicion.addActionListener(e -> {
-        registrarEdicionEvento = new RegistroAEdicionEvento();
-        registrarEdicionEvento.setLocationRelativeTo(null); // null = centrado en pantalla
-        registrarEdicionEvento.setVisible(true);
+            if (registrarEdicionEvento == null || registrarEdicionEvento.isClosed()) {
+                registrarEdicionEvento = new RegistroAEdicionEvento();
+                desktop.add(registrarEdicionEvento);
+            }
+            registrarEdicionEvento.setVisible(true);
+            registrarEdicionEvento.toFront();
+            ensureSize(registrarEdicionEvento, 600, 400);
+            showInternal(registrarEdicionEvento);
         });
         mnRegistros.add(mntmRegistroAEdicion);
-        
+
+
         JMenuItem mntmConsultaDeRegistro = new JMenuItem("Consulta de Registro");
         mntmConsultaDeRegistro.addActionListener(e -> {
             if (consultaRegistroInternalFrame == null || consultaRegistroInternalFrame.isClosed()) {
