@@ -23,7 +23,8 @@ public class ConsultaDeTipoDeRegistro extends JInternalFrame {
     private JComboBox<DataTipoRegistro> cbListaTipoRegistro;
 
     private JTextField tfNombre;
-    private JTextField tfDescripcion;
+    private JTextArea taDescripcion;
+    private JScrollPane scrollDescripcion;
     private JTextField tfCosto;
     private JTextField tfCupo;
 
@@ -98,9 +99,14 @@ public class ConsultaDeTipoDeRegistro extends JInternalFrame {
         gbc.gridx = 0; gbc.gridy = 3;
         panelDer.add(new JLabel("Descripción:"), gbc);
         gbc.gridx = 1;
-        tfDescripcion = new JTextField();
-        tfDescripcion.setEditable(false);
-        panelDer.add(tfDescripcion, gbc);
+        taDescripcion = new JTextArea();
+        taDescripcion.setEditable(false);
+        taDescripcion.setLineWrap(true);
+        taDescripcion.setWrapStyleWord(true);
+        taDescripcion.setRows(4);
+        scrollDescripcion = new JScrollPane(taDescripcion);
+        scrollDescripcion.setPreferredSize(new Dimension(200, 80));
+        panelDer.add(scrollDescripcion, gbc);
 
         gbc.gridx = 0; gbc.gridy = 4;
         panelDer.add(new JLabel("Costo:"), gbc);
@@ -198,14 +204,14 @@ public class ConsultaDeTipoDeRegistro extends JInternalFrame {
 
     private void mostrarInfoTipoRegistro(DataTipoRegistro tr) {
         tfNombre.setText(tr.getNombre());
-        tfDescripcion.setText(tr.getDescripcion());
+        taDescripcion.setText(tr.getDescripcion());
         tfCosto.setText(String.valueOf(tr.getCosto()));
         tfCupo.setText(String.valueOf(tr.getCupo()));
     }
 
     private void limpiarCamposTipoRegistro() {
         tfNombre.setText("");
-        tfDescripcion.setText("");
+        taDescripcion.setText("");
         tfCosto.setText("");
         tfCupo.setText("");
     }

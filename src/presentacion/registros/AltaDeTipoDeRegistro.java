@@ -11,6 +11,8 @@ import javax.swing.JComboBox;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
@@ -23,7 +25,8 @@ public class AltaDeTipoDeRegistro extends JInternalFrame {
     private IControladorEvento IEV;
     // Campos de texto separados
     private JTextField txtNombre;
-    private JTextField txtDescripcion;
+    private JTextArea txtDescripcion;
+    private JScrollPane scrollDescripcion;
     private JTextField txtCosto;
     private JTextField txtCupo;
 
@@ -66,7 +69,7 @@ public class AltaDeTipoDeRegistro extends JInternalFrame {
         cbListaEvento.addItem("");  
         cbListaEvento.setSelectedIndex(0);     
         cbListaEvento.addActionListener(e -> {
-            if (cargandoEventos) return; // 
+            if (cargandoEventos) return; 
             String eventoSel = (String) cbListaEvento.getSelectedItem();
             if (eventoSel != null && !eventoSel.equals("")) {
                 cargarEdiciones(eventoSel, true);
@@ -133,14 +136,19 @@ public class AltaDeTipoDeRegistro extends JInternalFrame {
         gbc_lblDescripcion.gridy = 3;
         panel.add(lblDescripcion, gbc_lblDescripcion);
 
-        txtDescripcion = new JTextField();
-        txtDescripcion.setToolTipText("Ingrese una descripción");
-        GridBagConstraints gbc_txtDescripcion = new GridBagConstraints();
-        gbc_txtDescripcion.insets = new Insets(6, 6, 6, 12);
-        gbc_txtDescripcion.fill = GridBagConstraints.HORIZONTAL;
-        gbc_txtDescripcion.gridx = 1;
-        gbc_txtDescripcion.gridy = 3;
-        panel.add(txtDescripcion, gbc_txtDescripcion);
+        txtDescripcion = new JTextArea();
+        txtDescripcion.setLineWrap(true);
+        txtDescripcion.setWrapStyleWord(true);
+        txtDescripcion.setRows(4);
+        scrollDescripcion = new JScrollPane(txtDescripcion);
+
+        GridBagConstraints gbc_scrollDescripcion = new GridBagConstraints();
+        gbc_scrollDescripcion.insets = new Insets(6, 6, 6, 12);
+        gbc_scrollDescripcion.fill = GridBagConstraints.BOTH;
+        gbc_scrollDescripcion.gridx = 1;
+        gbc_scrollDescripcion.gridy = 3; 
+        panel.add(scrollDescripcion, gbc_scrollDescripcion);
+
 
         // Costo
         JLabel lblCosto = new JLabel("Costo:");
