@@ -184,4 +184,45 @@ public class ConsultaEdicionEvento extends JInternalFrame {
             }
         }
     }
+    
+ // en ConsultaEdicionEvento
+    public void setContext(DataEvento evento, DataEdicion edicion) {
+        if (evento == null) return;
+
+        // Asegurá tener los eventos cargados
+        cargarEventos();
+
+        // Seleccionar el evento por instancia o por nombre
+        boolean selected = false;
+        for (int i = 0; i < comboBoxEvento.getItemCount(); i++) {
+            DataEvento ev = comboBoxEvento.getItemAt(i);
+            if (ev == evento || (ev != null && ev.getNombre().equals(evento.getNombre()))) {
+                comboBoxEvento.setSelectedIndex(i);
+                selected = true;
+                break;
+            }
+        }
+        if (!selected) {
+            // Por si no estaba (raro), lo agregamos y seleccionamos
+            comboBoxEvento.addItem(evento);
+            comboBoxEvento.setSelectedItem(evento);
+        }
+
+        // Cargar ediciones del evento y seleccionar la recibida
+        cargarEdiciones(evento.getNombre());
+        if (edicion != null) {
+            for (int i = 0; i < comboBoxEdiciones.getItemCount(); i++) {
+                DataEdicion de = comboBoxEdiciones.getItemAt(i);
+                if (de == edicion || (de != null && de.getNombre().equals(edicion.getNombre()))) {
+                    comboBoxEdiciones.setSelectedIndex(i);
+                    mostrarInfoEdicion(de); // rellenar campos
+                    break;
+                }
+            }
+            setTitle("Consulta Edición – " + evento.getNombre() + " / " + edicion.getNombre());
+        } else {
+            setTitle("Consulta Edición – " + evento.getNombre());
+        }
+    }
+
 }

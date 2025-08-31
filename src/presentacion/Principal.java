@@ -19,6 +19,8 @@ import javax.swing.JMenuItem;
 import logica.Fabrica;
 import logica.clases.Categoria;
 import logica.controladores.ControladorUsuario;
+import logica.datatypes.DataEdicion;
+import logica.datatypes.DataEvento;
 import logica.interfaces.IControladorEvento;
 import logica.interfaces.IControladorUsuario;
 import logica.manejadores.ManejadorEvento;
@@ -109,7 +111,9 @@ public class Principal {
         altaEventoInternalFrame.setVisible(false);
         altaEventoInternalFrame.setDefaultCloseOperation(JInternalFrame.HIDE_ON_CLOSE);
         
-        consultaEventoInternalFrame = new ConsultaEvento(IEV);
+        consultaEventoInternalFrame = new ConsultaEvento(IEV, (ev, ed) -> {
+            abrirConsultaEdicionCon(ev, ed);
+        });
         consultaEventoInternalFrame.setLocation(10, 23);
         consultaEventoInternalFrame.setClosable(true);
         desktop.add(consultaEventoInternalFrame);
@@ -364,7 +368,9 @@ public class Principal {
 
 private void abrirConsultaEvento() {
     IControladorEvento ctrlEvento = Fabrica.getInstance().getControladorEvento();
-    ConsultaEvento consulta = new ConsultaEvento(ctrlEvento);
+    ConsultaEvento consulta = new ConsultaEvento(ctrlEvento, (ev, ed) -> {
+        abrirConsultaEdicionCon(ev, ed);
+    });
     consulta.cargarEventos(ctrlEvento.getEventosDTO()); // cargamos los datos
     desktop.add(consulta);   // agregamos al JDesktopPane
     consulta.setVisible(true);   // hacemos visible la ventana
@@ -373,4 +379,15 @@ private void abrirConsultaEvento() {
     } catch (java.beans.PropertyVetoException e) {
         e.printStackTrace();
     }
-}}
+}
+
+private void abrirConsultaEdicionCon(DataEvento evento, DataEdicion edicion) {
+    if (consultaEdicionInternalFrame == null || consultaEdicionInternalFrame.isClosed()) {
+        consultaEdicionInternalFrame = new ConsultaEdicionEvento(IEV);
+        desktop.add(consultaEdicionInternalFrame);
+    }	
+    ensureSize(consultaEdicionInternalFrame, 700, 500);
+    showInternal(consultaEdicionInternalFrame);
+    consultaEdicionInternalFrame.setContext(evento, edicion);
+}
+}

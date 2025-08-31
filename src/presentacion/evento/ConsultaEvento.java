@@ -16,6 +16,10 @@ import logica.interfaces.IControladorUsuario;
 
 import java.util.List;
 
+// es para usar callbacks, lo uso para traer consulta edicion
+import java.util.function.BiConsumer;
+
+
 public class ConsultaEvento extends JInternalFrame {
 	private static final long serialVersionUID = 1L;
 	private JList<DataEvento> listaEventos;
@@ -27,12 +31,14 @@ public class ConsultaEvento extends JInternalFrame {
     private JList<String> listCategorias; 
     private JComboBox<String> cbEdiciones; 
     private IControladorEvento IEV;
+    private BiConsumer<DataEvento, DataEdicion> openEdicionCallback;
 
 
     private JTextArea textArea;
-    public ConsultaEvento(IControladorEvento ctrlEv) {
+    public ConsultaEvento(IControladorEvento ctrlEv, BiConsumer<DataEvento, DataEdicion> openEdicionCallback) {
     	
-    		IEV = ctrlEv;
+		IEV = ctrlEv;
+		this.openEdicionCallback = openEdicionCallback;
         setSize(600, 400); //establece el tamaño incial de la ventana
         setResizable(false); //permite al user redimenzioanr la ventana manualment
         setIconifiable(true); // permite minimzar la ventana
@@ -64,9 +70,9 @@ public class ConsultaEvento extends JInternalFrame {
         getContentPane().add(panel);
         GridBagLayout gbl_panel = new GridBagLayout();
         gbl_panel.columnWidths = new int[]{0, 0, 0, 0};
-        gbl_panel.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0};
+        gbl_panel.rowHeights = new int[]{0,0,0,0,0,0,0,0};
         gbl_panel.columnWeights = new double[]{0.0, 0.0, 1.0, Double.MIN_VALUE};
-        gbl_panel.rowWeights = new double[]{0.0, 1.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
+        gbl_panel.rowWeights = new double[]{0.0,1.0,0.0,0.0,1.0,0.0,0.0,Double.MIN_VALUE};
         panel.setLayout(gbl_panel);
         
         JLabel lblNombre = new JLabel("Nombre del evento:");
@@ -171,6 +177,16 @@ public class ConsultaEvento extends JInternalFrame {
         gbc_comboBox.gridy = 5;
         panel.add(cbEdiciones, gbc_comboBox);
         JScrollPane scrollInfo = new JScrollPane();
+        
+        JButton btnVerEdicion = new JButton("Ver edición");
+        GridBagConstraints gbc_btn = new GridBagConstraints();
+        gbc_btn.gridx = 2;
+        gbc_btn.gridy = 6;
+        gbc_btn.insets = new Insets(6, 0, 0, 0);
+        gbc_btn.anchor = GridBagConstraints.LINE_START;
+        panel.add(btnVerEdicion, gbc_btn);
+
+        btnVerEdicion.addActionListener(e -> abrirConsultaEdicionSeleccionada());
 
         JPanel panelInferior = new JPanel(new BorderLayout());
 
@@ -234,5 +250,47 @@ public class ConsultaEvento extends JInternalFrame {
     
     public DataEvento getEventoSeleccionado() {
         return listaEventos.getSelectedValue();
+    }
+    
+    private void abrirConsultaEdicionSeleccionada() {
+        DataEvento eventoSel = getEventoSeleccionado();
+        if (eventoSel == null) {
+            JOptionPane.showMessageDialog(this, "Seleccioná un evento.", "Falta selección", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        Object sel = cbEdiciones.getSelectedItem();
+        if (sel == null || "Seleccione...".equals(sel) || String.valueOf(sel).startsWith("No tiene")) {
+            JOptionPane.showMessageDialog(this, "Seleccioná una edición válida.", "Falta selección", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        String nombreEdicion = String.valueOf(sel);
+
+        // Resolver el DataEdicion por nombre
+        DataEdicion target = null;
+        try {
+            DataEdicion[] eds = IEV.listarEdiciones(eventoSel.getNombre());
+            if (eds != null) {
+                for (DataEdicion de : eds) {
+                    if (de != null && nombreEdicion.equals(de.getNombre())) {
+                        target = de;
+                        break;
+                    }
+                }
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error obteniendo la edición: " + ex.getMessage(),
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if (target == null) {
+            JOptionPane.showMessageDialog(this, "No se encontró la edición seleccionada.", "Atención", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        // ¡Listo! Llamamos al callback que abre ConsultaEdicionEvento con contexto.
+        if (openEdicionCallback != null) {
+            openEdicionCallback.accept(eventoSel, target);
+        }
     }
 }
