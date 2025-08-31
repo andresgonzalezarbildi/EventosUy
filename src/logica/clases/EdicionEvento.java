@@ -36,6 +36,17 @@ public class EdicionEvento {
         this.listaTipoDeRegistro = new HashMap<>();
         this.patrocinios = new ArrayList<>();
         this.listaRegistros = new HashMap<>();
+
+        
+        // Hardcodeado hasta que este el alta
+        this.agregarTipoDeRegistro("Estándar", new TipoRegistro("Estándar", "Acceso general", 50, 100));
+        this.agregarTipoDeRegistro("VIP", new TipoRegistro("VIP", "Acceso a zonas exclusivas", 150, 20));
+        this.agregarTipoDeRegistro("Estudiante", new TipoRegistro("Estudiante", "Acceso con descuento", 30, 50));
+
+        // Hardcodeado hasta que este el alta
+        this.agregarPatrocinio(new Patrocinio(LocalDate.now(), 5000, 10, "PAT001", Nivel.ORO));
+        this.agregarPatrocinio(new Patrocinio(LocalDate.now(), 2000, 5, "PAT002", Nivel.PLATA));
+        
     }
 
     public String getNombre() { return nombre; }

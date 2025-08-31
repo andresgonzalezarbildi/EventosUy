@@ -29,6 +29,8 @@ import logica.interfaces.IControladorEvento;
 import logica.interfaces.IControladorUsuario;
 import excepciones.EventoNoExisteException;
 
+//ESTO SIGUE SIENDO DIALOGO, ES EL UNICO DIALOGO DE TODO EL PROGRAMA...
+
 public class RegistroAEdicionEvento extends JDialog {
 
     private static final long serialVersionUID = 1L;
