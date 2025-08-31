@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 import excepciones.UsuarioNoExisteException;
 import excepciones.UsuarioRepetidoException;
+import logica.clases.Organizador;
 import logica.datatypes.DataUsuario;
 
 public interface IControladorUsuario {
@@ -13,4 +14,5 @@ public interface IControladorUsuario {
     DataUsuario[] getOrganizadores();
     public DataUsuario[] getAsistentes();
     public void modificarUsuario(String nickname, String nombre, String descripcion, String link, String apellido, LocalDate fechaNac) throws UsuarioNoExisteException ;
+    public Organizador getOrganizador(String nickname) throws UsuarioNoExisteException;
 }

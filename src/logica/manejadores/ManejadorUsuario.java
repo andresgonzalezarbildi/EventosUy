@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import excepciones.UsuarioNoExisteException;
 import logica.clases.Asistente;
 import logica.clases.Organizador;
 import logica.clases.Usuario;
@@ -64,15 +65,26 @@ public class ManejadorUsuario {
         return asistentes.get(nickname);
     }
     
-    public Asistente getAsistente(String nickname) {
-        return asistentes.get(nickname);
-        
-    }
-    
-    public Organizador obtenerOrganizadorPorNickname(String nickname) {
-        return organizadores.get(nickname);
+
+    public Organizador getOrganizador(String nickname) throws UsuarioNoExisteException {
+        Organizador org = organizadores.get(nickname);
+        if (org == null) {
+            throw new UsuarioNoExisteException("No existe organizador con nickname: " + nickname);
+        }
+        return org;
 
     }
+
+    // 🔹 obtener asistente por nickname
+    public Asistente getAsistente(String nickname) throws UsuarioNoExisteException {
+        Asistente asis = asistentes.get(nickname);
+        if (asis == null) {
+            throw new UsuarioNoExisteException("No existe asistente con nickname: " + nickname);
+        }
+        return asis;
+    }
+    
+    
 
     public Collection<Organizador> obtenerTodosOrganizadores() {
         return organizadores.values();

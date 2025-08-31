@@ -88,7 +88,7 @@ public class Principal {
         altaUsuarioInternalFrame.setVisible(false);
         altaUsuarioInternalFrame.setDefaultCloseOperation(JInternalFrame.HIDE_ON_CLOSE);
         
-        consultaUsuarioInternalFrame = new ConsultaUsuario(ICU);
+        consultaUsuarioInternalFrame = new ConsultaUsuario(ICU,IEV);
         consultaUsuarioInternalFrame.setLocation(10, 23);
         consultaUsuarioInternalFrame.setClosable(true);
         desktop.add(consultaUsuarioInternalFrame);
@@ -186,7 +186,7 @@ public class Principal {
         JMenuItem miConsultaUsuario = new JMenuItem("Consulta de Usuario");
         miConsultaUsuario.addActionListener(e -> {
             if (consultaUsuarioInternalFrame == null || consultaUsuarioInternalFrame.isClosed()) {
-                consultaUsuarioInternalFrame = new ConsultaUsuario(ICU);
+                consultaUsuarioInternalFrame = new ConsultaUsuario(ICU,IEV);
                 desktop.add(consultaUsuarioInternalFrame);
             }
             ensureSize(consultaUsuarioInternalFrame, 600, 400);

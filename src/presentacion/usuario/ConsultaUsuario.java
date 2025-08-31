@@ -1,6 +1,8 @@
 package presentacion.usuario;
 
 import java.awt.BorderLayout;
+import presentacion.evento.ConsultaEdicionEvento;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -8,10 +10,13 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ItemEvent;
+import java.util.HashMap;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
@@ -27,31 +32,36 @@ import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 
 import excepciones.UsuarioNoExisteException;
+import logica.clases.EdicionEvento;
+import logica.clases.Organizador;
 import logica.datatypes.DataUsuario;
+import logica.interfaces.IControladorEvento;
 import logica.interfaces.IControladorUsuario;
-
 
 public class ConsultaUsuario extends JInternalFrame {
 
-
     private static final long serialVersionUID = 1L;
-	private JList<DataUsuario> listaUsuarios;
+    private JList<DataUsuario> listaUsuarios;
     private DefaultListModel<DataUsuario> listaModel;
     private DataUsuario[] usuarios;
 
     private JLabel lblNick, lblNombre, lblApellido, lblCorreo, lblFecha, lblDesc, lblLink, lblTipo;
-
-
     private JTextField txtNickname, txtNombre, txtApellido, txtCorreo, txtFechaNac, txtLink;
     private JTextArea txtDescripcion;
     private JScrollPane scrollDesc;
     private JTextField txtTipo;
 
-    private final IControladorUsuario ICU;
+    private JComboBox<EdicionEvento> comboEdiciones;
+    private JLabel lblEdiciones;
+    private boolean cargandoEdiciones = false;
 
-    public ConsultaUsuario(IControladorUsuario ICU) {
+    private final IControladorUsuario ICU;
+    private final IControladorEvento IEV;
+
+    public ConsultaUsuario(IControladorUsuario ICU, IControladorEvento IEV) {
         super("Consulta de Usuario", false, true, true, true);
         this.ICU = ICU;
+        this.IEV = IEV;
 
         setSize(640, 420);
         setResizable(false);
@@ -65,7 +75,7 @@ public class ConsultaUsuario extends JInternalFrame {
         root.setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
         getContentPane().add(root, BorderLayout.CENTER);
 
-
+        // Panel izquierdo: lista de usuarios
         JPanel panelIzq = new JPanel(new BorderLayout());
         panelIzq.setPreferredSize(new Dimension(210, 0));
         panelIzq.setBorder(BorderFactory.createTitledBorder(
@@ -82,6 +92,7 @@ public class ConsultaUsuario extends JInternalFrame {
         panelIzq.add(scrollLista, BorderLayout.CENTER);
         root.add(panelIzq, BorderLayout.WEST);
 
+        // Panel derecho: detalle del usuario
         JPanel panelDer = new JPanel();
         panelDer.setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createLineBorder(new Color(180, 180, 180)),
@@ -90,13 +101,47 @@ public class ConsultaUsuario extends JInternalFrame {
 
         GridBagLayout gbl = new GridBagLayout();
         gbl.columnWidths  = new int[]{0, 0, 0};
-        gbl.rowHeights    = new int[]{0, 0, 0, 0, 0, 0, 0, 0};
+        gbl.rowHeights    = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0};
         gbl.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
-        gbl.rowWeights    = new double[]{0.0, 0.0, 0.0, 0.0, 0.9, 0.0, 0.0, Double.MIN_VALUE};
+        gbl.rowWeights    = new double[]{0.0, 0.0, 0.0, 0.0, 0.9, 0.0, 0.0, 0.0, Double.MIN_VALUE};
         panelDer.setLayout(gbl);
 
         Insets IN = new Insets(6, 10, 6, 10);
 
+        lblEdiciones = label("Ediciones organizadas:");
+        add(panelDer, lblEdiciones, gbc(0,8,IN, GridBagConstraints.WEST));
+
+        comboEdiciones = new JComboBox<>();
+        comboEdiciones.setPreferredSize(new Dimension(200, 24));
+        add(panelDer, comboEdiciones, gbcFill(1,8,IN));
+
+        comboEdiciones.setRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(JList<?> list, Object value,
+                                                          int index, boolean isSelected, boolean cellHasFocus) {
+                JLabel label = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                if (value instanceof EdicionEvento ed) {
+                    label.setText(ed.getNombre() + " (" + ed.getFechaIni() + ")");
+                }
+                return label;
+            }
+        });
+
+        // listener para abrir el otro caso de uso
+        comboEdiciones.addItemListener(e -> {
+            if (!cargandoEdiciones && e.getStateChange() == ItemEvent.SELECTED) {
+                EdicionEvento seleccionada = (EdicionEvento) e.getItem();
+                if (seleccionada != null) {
+                    ConsultaEdicionEvento ce = new ConsultaEdicionEvento(IEV);
+                    getDesktopPane().add(ce);
+                    ce.setVisible(true);
+                    ce.cargarEdicion(seleccionada.getNombre());
+                    comboEdiciones.setSelectedIndex(-1);
+                }
+            }
+        });
+
+        // --- Campos básicos del usuario ---
         lblNick = label("Nickname:");
         add(panelDer, lblNick, gbc(0,0,IN, GridBagConstraints.WEST));
         txtNickname = readonlyField();
@@ -122,7 +167,6 @@ public class ConsultaUsuario extends JInternalFrame {
         txtCorreo = readonlyField();
         add(panelDer, txtCorreo, gbcFill(1,4,IN));
 
-
         lblFecha = label("Fecha nac.:");
         add(panelDer, lblFecha, gbc(0,5,IN, GridBagConstraints.WEST));
         txtFechaNac = readonlyField();
@@ -144,11 +188,11 @@ public class ConsultaUsuario extends JInternalFrame {
         txtLink = readonlyField();
         add(panelDer, txtLink, gbcFill(1,7,IN));
 
-
         listaUsuarios.addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {
                 mostrarInfoUsuario(listaUsuarios.getSelectedValue());
             }
+            comboEdiciones.setSelectedIndex(-1);
         });
     }
 
@@ -190,10 +234,8 @@ public class ConsultaUsuario extends JInternalFrame {
     }
 
     private static class UsuarioRenderer extends DefaultListCellRenderer {
-
         private static final long serialVersionUID = 1L;
-
-		public Component getListCellRendererComponent(JList<?> list, Object value, int index,
+        public Component getListCellRendererComponent(JList<?> list, Object value, int index,
                                                       boolean isSelected, boolean cellHasFocus) {
             JLabel c = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
             if (value instanceof DataUsuario du) {
@@ -235,26 +277,39 @@ public class ConsultaUsuario extends JInternalFrame {
         txtCorreo.setText(safe(u.getCorreo()));
 
         String fecha = "";
-        try { if (u.getFechaNacimiento() != null) fecha = u.getFechaNacimiento().toString(); } catch (Exception ignored) {}
+        try { 
+            if (u.getFechaNacimiento() != null) 
+                fecha = u.getFechaNacimiento().toString(); 
+        } catch (Exception ignored) {}
         txtFechaNac.setText(fecha);
 
-        String desc = "";
-        try { desc = safe(u.getDescripcion()); } catch (Exception ignored) {}
-        txtDescripcion.setText(desc);
+        txtDescripcion.setText(safe(u.getDescripcion()));
+        txtLink.setText(safe(u.getLink()));
+        txtTipo.setText(safe(u.getTipo()));
 
-        String link = "";
-        try { link = safe(u.getLink()); } catch (Exception ignored) {}
-        txtLink.setText(link);
-
-        String tipo = "";
-        try { tipo = safe(u.getTipo()); } catch (Exception ignored) {}
-        txtTipo.setText(tipo);
-
-        actualizarVisibilidadPorTipo(tipo);
-
+        String tipo = (u.getTipo() == null) ? "" : u.getTipo().trim().toLowerCase();
+        if ("organizador".equalsIgnoreCase(u.getTipo())) {
+            cargandoEdiciones = true;
+            comboEdiciones.removeAllItems();
+            try {
+                Organizador org = ICU.getOrganizador(u.getNickname());
+                HashMap<String, EdicionEvento> eds = org.getEdicionesOrganizadas();
+                for (EdicionEvento e : eds.values()) {
+                    comboEdiciones.addItem(e);
+                }
+                comboEdiciones.setSelectedIndex(-1);
+                setVis(lblEdiciones, comboEdiciones, true);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "No se pudieron cargar las ediciones del organizador.");
+                setVis(lblEdiciones, comboEdiciones, false);
+            }
+            cargandoEdiciones = false;
+        } else {
+            comboEdiciones.removeAllItems();
+            setVis(lblEdiciones, comboEdiciones, false);
+        }
         actualizarVisibilidadPorTipo(tipo);
     }
-
 
     private void actualizarVisibilidadPorTipo(String tipoRaw) {
         String tipo = (tipoRaw == null) ? "" : tipoRaw.trim().toLowerCase();
@@ -274,7 +329,6 @@ public class ConsultaUsuario extends JInternalFrame {
             setVis(lblApellido, txtApellido, false);
             setVis(lblFecha, txtFechaNac, false);
         }
-
         revalidate();
         repaint();
     }

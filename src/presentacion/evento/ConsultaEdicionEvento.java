@@ -6,6 +6,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import javax.swing.*;
+import javax.swing.text.JTextComponent;
+
 import logica.interfaces.IControladorEvento;
 import presentacion.registros.ConsultaDeTipoDeRegistro;
 import logica.datatypes.DataEvento;
@@ -15,7 +17,8 @@ import logica.datatypes.DataPatrocinio;
 import excepciones.EventoNoExisteException;
 
 public class ConsultaEdicionEvento extends JInternalFrame {
-    private JTextField textOrganizador, textNombre, textFechaIni, textFechaFin, textCiudad, textPais, textSigla, textAlta;
+    private JTextField textOrganizador, textNombre, textFechaIni, textFechaFin, textCiudad, textPais, textSigla, textAlta,
+    textPatrocinios,textTiposRegistro;
     private IControladorEvento controlEvento;
 
     private JComboBox<DataEvento> comboBoxEvento;
@@ -23,6 +26,10 @@ public class ConsultaEdicionEvento extends JInternalFrame {
 
     private DefaultListModel<DataTipoRegistro> modeloTipos;
     private JList<DataTipoRegistro> listaTipos;
+    
+    
+    
+    
 
     private DefaultListModel<DataPatrocinio> modeloPatrocinios;
     private JList<DataPatrocinio> listaPatrocinios;
@@ -288,4 +295,38 @@ public class ConsultaEdicionEvento extends JInternalFrame {
             }
         }
     }
+
+
+    public void cargarEdicion(String idEdicion) {
+        try {
+            DataEdicion ed = controlEvento.getInfoEdicion(idEdicion);
+            if (ed == null) {
+                JOptionPane.showMessageDialog(this, "La edición no existe.");
+                return;
+            }
+
+            textNombre.setText(ed.getNombre());
+            textFechaIni.setText(ed.getFechaIni().toString());
+            textFechaFin.setText(ed.getFechaFin().toString());
+            textCiudad.setText(ed.getCiudad());
+            textPais.setText(ed.getPais());
+            textSigla.setText(ed.getSigla());
+            textAlta.setText(ed.getFechaAltaEnPlataforma().toString());
+            textOrganizador.setText(ed.getOrganizador());
+
+       
+            modeloTipos.clear();
+            if (ed.getTiposRegistro() != null && !ed.getTiposRegistro().isEmpty()) {
+                for (DataTipoRegistro tr : ed.getTiposRegistro()) {
+                    modeloTipos.addElement(tr);
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "La edición no tiene tipos de registro.");
+            }
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "No se pudo cargar la edición: " + ex.getMessage());
+        }
+    }
 }
+
