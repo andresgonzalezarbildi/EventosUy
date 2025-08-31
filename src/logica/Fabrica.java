@@ -1,7 +1,9 @@
 package logica;
 
+import logica.CargaDatos.CargaDatos;
 import logica.controladores.ControladorEvento;
 import logica.controladores.ControladorUsuario;
+import logica.interfaces.ICargaDatos;
 import logica.interfaces.IControladorEvento;
 import logica.interfaces.IControladorUsuario;
 
@@ -10,6 +12,7 @@ public class Fabrica {
     private static Fabrica instancia = null;
     private IControladorUsuario controladorUsuario;
     private IControladorEvento controladorEvento;
+    private ICargaDatos ICD;
 
     private Fabrica() {
         
@@ -17,7 +20,7 @@ public class Fabrica {
 
     public static Fabrica getInstance() {
         if (instancia == null) {
-            instancia = new Fabrica();
+        	instancia = new Fabrica();
         }
         return instancia;
     }
@@ -35,6 +38,16 @@ public class Fabrica {
         }
         return controladorEvento;
     }
+    public ICargaDatos getCargaDatos() {
+        if (ICD == null) {
+            IControladorUsuario cu = getControladorUsuario();
+            IControladorEvento ce = getControladorEvento();
+            ICD = new CargaDatos(cu, ce);
+        }
+        return ICD;
+    }
 }
+
+
 
 

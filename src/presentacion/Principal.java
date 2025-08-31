@@ -14,11 +14,8 @@ import javax.swing.JMenuItem;
 
 import logica.Fabrica;
 import logica.clases.Categoria;
-
-import logica.controladores.ControladorUsuario;
 import logica.datatypes.DataEdicion;
 import logica.datatypes.DataEvento;
-
 import logica.interfaces.IControladorEvento;
 import logica.interfaces.IControladorUsuario;
 import logica.manejadores.ManejadorEvento;
@@ -27,13 +24,12 @@ import presentacion.evento.AltaEvento;
 import presentacion.evento.ConsultaEdicionEvento;
 import presentacion.evento.ConsultaEvento;
 import presentacion.registros.AltaDeTipoDeRegistro;
+import presentacion.registros.ConsultaDeRegistro;
 import presentacion.registros.ConsultaDeTipoDeRegistro;
 import presentacion.registros.RegistroAEdicionEvento;
 import presentacion.usuario.AltaUsuario;
 import presentacion.usuario.ConsultaUsuario;
 import presentacion.usuario.ModificarUsuario;
-import presentacion.registros.ConsultaDeRegistro;
-
 
 public class Principal {
 
@@ -56,15 +52,6 @@ public class Principal {
 
 
     public static void main(String[] args) {
-    	// 1. Obtengo la instancia del manejador
-        ManejadorEvento manejador = ManejadorEvento.getInstance();
-
-        // 2. Agrego categorías de ejemplo
-        manejador.agregarCategoria(new Categoria("CA01"));
-        manejador.agregarCategoria(new Categoria("CA02"));
-        manejador.agregarCategoria(new Categoria("CA03"));
-        manejador.agregarCategoria(new Categoria("CA04"));
-        manejador.agregarCategoria(new Categoria("CA05"));
 
         
         EventQueue.invokeLater(() -> {
@@ -84,6 +71,8 @@ public class Principal {
         Fabrica fabrica = Fabrica.getInstance();
         ICU = fabrica.getControladorUsuario();
         IEV = fabrica.getControladorEvento();
+
+        
 
         altaUsuarioInternalFrame = new AltaUsuario(ICU);
         altaUsuarioInternalFrame.setLocation(10, 23);
@@ -162,6 +151,9 @@ public class Principal {
     }
 
     private void initialize() {
+
+    	Fabrica fabrica = Fabrica.getInstance();
+//      fabrica.getCargaDatos().CargarDatosIniciales();
         frmGestion = new JFrame();
         frmGestion.setTitle("Gestión del Sistema");
         frmGestion.setBounds(100, 100, 900, 600);
@@ -176,6 +168,10 @@ public class Principal {
 
         // Menú Sistema
         JMenu menuSistema = new JMenu("Sistema");
+        JMenuItem menuCarga = new JMenuItem("Carga de Datos");
+        menuCarga.addActionListener(e -> {
+        	fabrica.getCargaDatos().CargarDatosIniciales();
+        });
         JMenuItem menuSalir = new JMenuItem("Salir");
         menuSalir.addActionListener(e -> {
             frmGestion.setVisible(false);
@@ -183,6 +179,7 @@ public class Principal {
         });
         menuSistema.add(menuSalir);
         menuBar.add(menuSistema);
+        menuSistema.add(menuCarga);
 
 ////////////////////////////////////////////////////////////////////////////////USUARIO
 
