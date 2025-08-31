@@ -14,11 +14,8 @@ import javax.swing.JMenuItem;
 
 import logica.Fabrica;
 import logica.clases.Categoria;
-
-import logica.controladores.ControladorUsuario;
 import logica.datatypes.DataEdicion;
 import logica.datatypes.DataEvento;
-
 import logica.interfaces.IControladorEvento;
 import logica.interfaces.IControladorUsuario;
 import logica.manejadores.ManejadorEvento;
@@ -27,13 +24,12 @@ import presentacion.evento.AltaEvento;
 import presentacion.evento.ConsultaEdicionEvento;
 import presentacion.evento.ConsultaEvento;
 import presentacion.registros.AltaDeTipoDeRegistro;
+import presentacion.registros.ConsultaDeRegistro;
 import presentacion.registros.ConsultaDeTipoDeRegistro;
 import presentacion.registros.RegistroAEdicionEvento;
 import presentacion.usuario.AltaUsuario;
 import presentacion.usuario.ConsultaUsuario;
 import presentacion.usuario.ModificarUsuario;
-import presentacion.registros.ConsultaDeRegistro;
-
 
 public class Principal {
 
@@ -65,6 +61,9 @@ public class Principal {
         manejador.agregarCategoria(new Categoria("CA03"));
         manejador.agregarCategoria(new Categoria("CA04"));
         manejador.agregarCategoria(new Categoria("CA05"));
+        
+        Fabrica fabrica = Fabrica.getInstance();
+        fabrica.getCargaDatos().CargarDatosIniciales();
 
         
         EventQueue.invokeLater(() -> {
@@ -84,6 +83,8 @@ public class Principal {
         Fabrica fabrica = Fabrica.getInstance();
         ICU = fabrica.getControladorUsuario();
         IEV = fabrica.getControladorEvento();
+
+        
 
         altaUsuarioInternalFrame = new AltaUsuario(ICU);
         altaUsuarioInternalFrame.setLocation(10, 23);
