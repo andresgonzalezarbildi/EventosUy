@@ -38,6 +38,8 @@ public class AltaUsuario extends JInternalFrame {
     private JTextField textFieldNickname, textFieldNombre, textFieldCorreo;
     private JLabel lblIngreseNickname, lblIngreseNombre, lblIngreseCorreo;
     private JButton btnAceptar, btnCancelar;
+    private JLabel lblInstitucion;
+    private JComboBox<String> comboInstitucion;
 
     private JLabel lblDescripcion;
     private JTextArea textAreaDescripcion;
@@ -254,7 +256,8 @@ public class AltaUsuario extends JInternalFrame {
 
         // JDateChooser en vez de JTextField
         dateChooserFechaNac = new JDateChooser();
-        dateChooserFechaNac.setDateFormatString("yyyy-MM-dd"); // solo para la vista
+        dateChooserFechaNac.setDateFormatString("yyyy-MM-dd");
+        ((JTextField) dateChooserFechaNac.getDateEditor().getUiComponent()).setEditable(false);
         GridBagConstraints gbc_dateChooserFechaNac = new GridBagConstraints();
         gbc_dateChooserFechaNac.gridwidth = 2;
         gbc_dateChooserFechaNac.fill = GridBagConstraints.BOTH;
@@ -263,6 +266,33 @@ public class AltaUsuario extends JInternalFrame {
         gbc_dateChooserFechaNac.gridy = 5;
         getContentPane().add(dateChooserFechaNac, gbc_dateChooserFechaNac);
         dateChooserFechaNac.setVisible(false);
+
+     // Institución 
+        lblInstitucion = new JLabel("Institución:");
+        lblInstitucion.setHorizontalAlignment(SwingConstants.RIGHT);
+        GridBagConstraints gbc_lblInstitucion = new GridBagConstraints();
+        gbc_lblInstitucion.fill = GridBagConstraints.BOTH;
+        gbc_lblInstitucion.insets = new Insets(0, 0, 5, 5);
+        gbc_lblInstitucion.gridx = 0;
+        gbc_lblInstitucion.gridy = 6;           // fila libre
+        getContentPane().add(lblInstitucion, gbc_lblInstitucion);
+
+        // Combo de Instituciones 
+        comboInstitucion = new JComboBox<>();
+        comboInstitucion.setEditable(false);     // solo selección
+        // Ítems de ejemplo para que se vea en el diseñador (borralos luego):
+        comboInstitucion.addItem("");
+        comboInstitucion.addItem("FING");
+        comboInstitucion.addItem("ORT");
+        comboInstitucion.addItem("UTEC");
+
+        GridBagConstraints gbc_comboInstitucion = new GridBagConstraints();
+        gbc_comboInstitucion.gridwidth = 2;
+        gbc_comboInstitucion.fill = GridBagConstraints.BOTH;
+        gbc_comboInstitucion.insets = new Insets(0, 0, 5, 0);
+        gbc_comboInstitucion.gridx = 1;
+        gbc_comboInstitucion.gridy = 6;          // misma fila, columna derecha
+        getContentPane().add(comboInstitucion, gbc_comboInstitucion);
 
         // Botones
         btnAceptar = new JButton("Aceptar");

@@ -13,6 +13,7 @@ import java.awt.Insets;
 import java.awt.event.ItemEvent;
 import java.util.HashMap;
 
+
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
@@ -31,12 +32,21 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 
+
 import excepciones.UsuarioNoExisteException;
 import logica.clases.EdicionEvento;
 import logica.clases.Organizador;
 import logica.datatypes.DataUsuario;
 import logica.interfaces.IControladorEvento;
 import logica.interfaces.IControladorUsuario;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.JDesktopPane;
+
+import presentacion.registros.ConsultaDeRegistro;
+import logica.datatypes.DataRegistro;
+
+
 
 public class ConsultaUsuario extends JInternalFrame {
 
@@ -45,6 +55,13 @@ public class ConsultaUsuario extends JInternalFrame {
     private DefaultListModel<DataUsuario> listaModel;
     private DataUsuario[] usuarios;
 
+    private JLabel lblInstitucion, lblRegistros;
+    private JTextField txtInstitucion;
+    private JList<DataRegistro> listaRegistros;
+    private DefaultListModel<DataRegistro> modeloRegistros;
+    private JScrollPane scrollRegistros;
+    private ConsultaDeRegistro ventanaConsultaRegistro;
+    
     private JLabel lblNick, lblNombre, lblApellido, lblCorreo, lblFecha, lblDesc, lblLink, lblTipo;
     private JTextField txtNickname, txtNombre, txtApellido, txtCorreo, txtFechaNac, txtLink;
     private JTextArea txtDescripcion;
@@ -101,9 +118,9 @@ public class ConsultaUsuario extends JInternalFrame {
 
         GridBagLayout gbl = new GridBagLayout();
         gbl.columnWidths  = new int[]{0, 0, 0};
-        gbl.rowHeights    = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0};
+        gbl.rowHeights    = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}; // +2 filas
         gbl.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
-        gbl.rowWeights    = new double[]{0.0, 0.0, 0.0, 0.0, 0.9, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+        gbl.rowWeights    = new double[]{0.0, 0.0, 0.0, 0.0, 0.9, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
         panelDer.setLayout(gbl);
 
         Insets IN = new Insets(6, 10, 6, 10);
@@ -187,6 +204,65 @@ public class ConsultaUsuario extends JInternalFrame {
         add(panelDer, lblLink, gbc(0,7,IN, GridBagConstraints.WEST));
         txtLink = readonlyField();
         add(panelDer, txtLink, gbcFill(1,7,IN));
+        
+     // --- Institución ---
+        lblInstitucion = label("Institución:");
+        add(panelDer, lblInstitucion, gbc(0,9,IN, GridBagConstraints.WEST));
+
+        txtInstitucion = readonlyField();          // o new JTextField() si querés editable
+        add(panelDer, txtInstitucion, gbcFill(1,9,IN));
+
+        // --- Registros ---
+        lblRegistros = label("Registros:");
+        add(panelDer, lblRegistros, gbc(0,10,IN, GridBagConstraints.NORTHWEST));
+
+        modeloRegistros = new DefaultListModel<>();
+        listaRegistros = new JList<>(modeloRegistros);
+        listaRegistros.setVisibleRowCount(6);     
+
+     listaRegistros.setCellRenderer(new DefaultListCellRenderer() {
+   
+         public Component getListCellRendererComponent(JList<?> list, Object value,
+                                                       int index, boolean isSelected, boolean cellHasFocus) {
+             JLabel lab = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+             if (value instanceof DataRegistro r) {
+                 String ev   = safe(r.getEvento());
+                 String ed   = safe(r.getEdicion());
+                 String f    = (r.getFecha() != null) ? r.getFecha().toString() : "";
+                 lab.setText(ev + " - " + ed + (f.isEmpty() ? "" : " (" + f + ")"));
+             }
+             return lab;
+         }
+     });
+
+        scrollRegistros = new JScrollPane(listaRegistros);
+        
+        add(panelDer, scrollRegistros, gbcFillBoth(1,10,IN));
+        
+        listaRegistros.addMouseListener(new java.awt.event.MouseAdapter() {
+           
+            public void mouseClicked(java.awt.event.MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    
+                    DataRegistro reg = listaRegistros.getSelectedValue();
+                    if (reg == null) return;
+
+                    if (ventanaConsultaRegistro != null && ventanaConsultaRegistro.isVisible()) {
+                        ventanaConsultaRegistro.dispose();
+                    }
+
+                    ventanaConsultaRegistro = new presentacion.registros.ConsultaDeRegistro(IEV, ICU);
+                    ventanaConsultaRegistro.setVisible(true);
+
+                    JDesktopPane desk = ConsultaUsuario.this.getDesktopPane();
+                    if (desk != null) {
+                        desk.add(ventanaConsultaRegistro);
+                        try { ventanaConsultaRegistro.setSelected(true); } catch (java.beans.PropertyVetoException ex) {}
+                    }
+                }
+            }
+        });
+
 
         listaUsuarios.addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {
@@ -194,6 +270,10 @@ public class ConsultaUsuario extends JInternalFrame {
             }
             comboEdiciones.setSelectedIndex(-1);
         });
+        setVis(lblInstitucion, txtInstitucion, false);
+        setVis(lblRegistros,   scrollRegistros, false);
+        setVis(lblEdiciones,   comboEdiciones,  false);
+
     }
 
     private static JLabel label(String text) {
@@ -277,9 +357,8 @@ public class ConsultaUsuario extends JInternalFrame {
         txtCorreo.setText(safe(u.getCorreo()));
 
         String fecha = "";
-        try { 
-            if (u.getFechaNacimiento() != null) 
-                fecha = u.getFechaNacimiento().toString(); 
+        try {
+            if (u.getFechaNacimiento() != null) fecha = u.getFechaNacimiento().toString();
         } catch (Exception ignored) {}
         txtFechaNac.setText(fecha);
 
@@ -288,27 +367,74 @@ public class ConsultaUsuario extends JInternalFrame {
         txtTipo.setText(safe(u.getTipo()));
 
         String tipo = (u.getTipo() == null) ? "" : u.getTipo().trim().toLowerCase();
-        if ("organizador".equalsIgnoreCase(u.getTipo())) {
+
+        if ("organizador".equals(tipo)) {
+            // Carga ediciones del organizador (como ya lo tenías)
             cargandoEdiciones = true;
             comboEdiciones.removeAllItems();
             try {
                 Organizador org = ICU.getOrganizador(u.getNickname());
                 HashMap<String, EdicionEvento> eds = org.getEdicionesOrganizadas();
-                for (EdicionEvento e : eds.values()) {
-                    comboEdiciones.addItem(e);
-                }
+                for (EdicionEvento e : eds.values()) comboEdiciones.addItem(e);
                 comboEdiciones.setSelectedIndex(-1);
                 setVis(lblEdiciones, comboEdiciones, true);
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, "No se pudieron cargar las ediciones del organizador.");
                 setVis(lblEdiciones, comboEdiciones, false);
+            } finally {
+                cargandoEdiciones = false;
             }
-            cargandoEdiciones = false;
-        } else {
+
+            // Limpio registros por si venías de un asistente
+            modeloRegistros.clear();
+
+        } else if ("asistente".equals(tipo)) {
+            cargarRegistrosDeAsistente(u.getNickname());
+
             comboEdiciones.removeAllItems();
             setVis(lblEdiciones, comboEdiciones, false);
+
+        } else {
+            // Cualquier otro tipo, limpio todo
+            comboEdiciones.removeAllItems();
+            setVis(lblEdiciones, comboEdiciones, false);
+            modeloRegistros.clear();
         }
         actualizarVisibilidadPorTipo(tipo);
+    }
+
+    private void cargarRegistrosDeAsistente(String nickname) {
+        // limpiar el modelo
+        modeloRegistros.clear();
+
+        if (nickname == null || nickname.isBlank()) {
+            // ocultar si no hay nick
+            setVis(lblRegistros, scrollRegistros, false);
+            return;
+        }
+
+        try {
+            // pedirle al controlador los registros del asistente
+            DataRegistro[] regs = IEV.listarRegistrosDeUsuario(nickname);
+
+            if (regs != null) {
+                for (DataRegistro r : regs) {
+                    if (r != null) modeloRegistros.addElement(r);
+                }
+            }
+
+            // mostrar el bloque y refrescar UI
+            setVis(lblRegistros, scrollRegistros, true);
+            scrollRegistros.revalidate();
+            scrollRegistros.repaint();
+
+            // (debug opcional) ver en consola cuántos llegaron
+            System.out.println("[ConsultaUsuario] Registros de " + nickname + ": " + (regs == null ? 0 : regs.length));
+
+        } catch (Exception ex) {
+            // si hay error, dejamos la lista vacía y la ocultamos
+            setVis(lblRegistros, scrollRegistros, false);
+            System.out.println("[ConsultaUsuario] Error cargando registros: " + ex.getMessage());
+        }
     }
 
     private void actualizarVisibilidadPorTipo(String tipoRaw) {
@@ -321,6 +447,9 @@ public class ConsultaUsuario extends JInternalFrame {
         setVis(lblDesc, scrollDesc, true);
         setVis(lblApellido, txtApellido, true);
         setVis(lblFecha, txtFechaNac, true);
+        setVis(lblInstitucion, txtInstitucion, esAsistente);
+        setVis(lblRegistros,   scrollRegistros, esAsistente);
+        setVis(lblEdiciones, comboEdiciones, esOrganizador);
 
         if (esAsistente) {
             setVis(lblLink, txtLink, false);
@@ -329,9 +458,11 @@ public class ConsultaUsuario extends JInternalFrame {
             setVis(lblApellido, txtApellido, false);
             setVis(lblFecha, txtFechaNac, false);
         }
+
         revalidate();
         repaint();
     }
+
 
     private static void setVis(Component l, Component c, boolean vis) {
         l.setVisible(vis);

@@ -276,9 +276,7 @@ public class Principal {
         	if (altaEdicionInternalFrame == null || altaEdicionInternalFrame.isClosed()) {
         		altaEdicionInternalFrame = new AltaEdicionEvento(IEV,ICU);
         	    desktop.add(altaEdicionInternalFrame);
-      	} //else {
-//        	    altaEdicionInternalFrame.limpiarFormulario(); //  limpiar para mostrar de nuevo
-//        	}
+      	} 
         	altaEdicionInternalFrame.setVisible(true);
         	altaEdicionInternalFrame.toFront(); // Traerla al frente
             ensureSize(altaEdicionInternalFrame, 600, 400);
@@ -291,9 +289,7 @@ public class Principal {
     	if (consultaEdicionInternalFrame == null || consultaEdicionInternalFrame.isClosed()) {
     		consultaEdicionInternalFrame = new ConsultaEdicionEvento(IEV);
     	    desktop.add(consultaEdicionInternalFrame);
-  	} //else {
-//    	    altaEdicionInternalFrame.limpiarFormulario(); //  limpiar para mostrar de nuevo
-//    	}
+  	} 
     	consultaEdicionInternalFrame.setVisible(true);
     	consultaEdicionInternalFrame.toFront(); // Traerla al frente
         ensureSize(consultaEdicionInternalFrame, 600, 400);
