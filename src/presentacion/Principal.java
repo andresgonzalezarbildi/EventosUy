@@ -178,7 +178,7 @@ public class Principal {
         menuSistema.add(menuSalir);
         menuBar.add(menuSistema);
         menuSistema.add(menuCarga);
-
+ 
 ////////////////////////////////////////////////////////////////////////////////USUARIO
 
         JMenu menuUsuario = new JMenu("Usuarios");
@@ -328,6 +328,8 @@ public class Principal {
             showInternal(consultaRegistroInternalFrame);
         });
         mnRegistros.add(mntmConsultaDeRegistro);
+
+
 
         JMenu mnTipoDeRegistros = new JMenu("Tipos de Registro");
         mnRegistros.add(mnTipoDeRegistros);

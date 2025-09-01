@@ -42,9 +42,8 @@ public class DataUsuario {
     public void setTipo(String tipo) { this.tipo = tipo;}
 
 
-    // ToString opcional para mostrar en JList
     @Override
     public String toString() {
-        return nickname;
+        return nickname; 
     }
 }

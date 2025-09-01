@@ -1,24 +1,17 @@
 package presentacion.evento;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
+import java.awt.*;
 import javax.swing.*;
-import javax.swing.text.JTextComponent;
-
 import logica.interfaces.IControladorEvento;
-import presentacion.registros.ConsultaDeTipoDeRegistro;
 import logica.datatypes.DataEvento;
 import logica.datatypes.DataEdicion;
 import logica.datatypes.DataTipoRegistro;
 import logica.datatypes.DataPatrocinio;
 import excepciones.EventoNoExisteException;
+import presentacion.registros.ConsultaDeTipoDeRegistro;
 
 public class ConsultaEdicionEvento extends JInternalFrame {
-    private JTextField textOrganizador, textNombre, textFechaIni, textFechaFin, textCiudad, textPais, textSigla, textAlta,
-    textPatrocinios,textTiposRegistro;
+    private JTextField textOrganizador, textNombre, textFechaIni, textFechaFin, textCiudad, textPais, textSigla, textAlta;
     private IControladorEvento controlEvento;
 
     private JComboBox<DataEvento> comboBoxEvento;
@@ -26,19 +19,13 @@ public class ConsultaEdicionEvento extends JInternalFrame {
 
     private DefaultListModel<DataTipoRegistro> modeloTipos;
     private JList<DataTipoRegistro> listaTipos;
-    
-    
-    
-    
 
     private DefaultListModel<DataPatrocinio> modeloPatrocinios;
     private JList<DataPatrocinio> listaPatrocinios;
-    
+
     private ConsultaDeTipoDeRegistro ventanaConsulta = null;
 
-
     public ConsultaEdicionEvento(IControladorEvento controlEvento) {
-
         super("Consulta Edicion Evento", false, true, true, true);
         this.controlEvento = controlEvento;
         setBounds(100, 100, 800, 600);
@@ -133,7 +120,6 @@ public class ConsultaEdicionEvento extends JInternalFrame {
         JScrollPane scrollPatrocinios = new JScrollPane(listaPatrocinios);
         scrollPatrocinios.setBorder(BorderFactory.createTitledBorder("Patrocinios"));
 
-        // Agregar scrollTipos debajo de Organizador
         GridBagConstraints gbc_scrollTipos = new GridBagConstraints();
         gbc_scrollTipos.gridx = 0;
         gbc_scrollTipos.gridy = 8;
@@ -142,7 +128,6 @@ public class ConsultaEdicionEvento extends JInternalFrame {
         gbc_scrollTipos.fill = GridBagConstraints.BOTH;
         panelCampos.add(scrollTipos, gbc_scrollTipos);
 
-        // Agregar scrollPatrocinios al lado de scrollTipos
         GridBagConstraints gbc_scrollPatrocinios = new GridBagConstraints();
         gbc_scrollPatrocinios.gridx = 1;
         gbc_scrollPatrocinios.gridy = 8;
@@ -151,8 +136,6 @@ public class ConsultaEdicionEvento extends JInternalFrame {
         gbc_scrollPatrocinios.fill = GridBagConstraints.BOTH;
         panelCampos.add(scrollPatrocinios, gbc_scrollPatrocinios);
 
-
-        // Listeners
         comboBoxEvento.addActionListener(e -> {
             DataEvento seleccionado = (DataEvento) comboBoxEvento.getSelectedItem();
             if (seleccionado != null) cargarEdiciones(seleccionado.getNombre());
@@ -169,16 +152,11 @@ public class ConsultaEdicionEvento extends JInternalFrame {
                     DataTipoRegistro tr = listaTipos.getSelectedValue();
                     DataEdicion de = (DataEdicion) comboBoxEdiciones.getSelectedItem();
                     DataEvento ev = (DataEvento) comboBoxEvento.getSelectedItem();
-
                     if (tr != null && de != null && ev != null) {
-                        if (ventanaConsulta != null && ventanaConsulta.isVisible()) {
-                            ventanaConsulta.dispose();
-                        }
-
+                        if (ventanaConsulta != null && ventanaConsulta.isVisible()) ventanaConsulta.dispose();
                         ventanaConsulta = new ConsultaDeTipoDeRegistro(controlEvento);
                         ventanaConsulta.setVisible(true); 
                         ventanaConsulta.seleccionarEventoYEdicionYTipo(ev, de, tr); 
-
                         JDesktopPane desktop = ConsultaEdicionEvento.this.getDesktopPane();
                         if (desktop != null) {
                             desktop.add(ventanaConsulta);
@@ -188,28 +166,6 @@ public class ConsultaEdicionEvento extends JInternalFrame {
                 }
             }
         });
-
-
-
-/*
-        listaTipos.addListSelectionListener(e -> {
-            if (!e.getValueIsAdjusting()) {
-                DataTipoRegistro tr = listaTipos.getSelectedValue();
-                if (tr != null) {
-                    DataEvento ev = (DataEvento) comboBoxEvento.getSelectedItem();
-                    DataEdicion de = (DataEdicion) comboBoxEdiciones.getSelectedItem();
-                    if (ev != null && de != null) {
-                        ConsultaDeTipoDeRegistro consulta = new ConsultaDeTipoDeRegistro(controlEvento);
-                        consulta.setVisible(true);
-                        consulta.seleccionarEventoYEdicionYTipo(ev, de, tr);
-
-                        this.getParent().add(consulta);
-                        try { consulta.setSelected(true); } catch (java.beans.PropertyVetoException ex) {}
-                    }
-                }
-            }
-        });
-*/
 
         cargarEventos();
     }
@@ -233,21 +189,11 @@ public class ConsultaEdicionEvento extends JInternalFrame {
         return tf;
     }
 
-    @Override
-    public void setVisible(boolean aFlag) {
-        if (aFlag) {
-            cargarEventos();
-        }
-        super.setVisible(aFlag);
-    }
-
     private void cargarEventos() {
         comboBoxEvento.removeAllItems();
         DataEvento[] eventos = controlEvento.getEventosDTO();
         if (eventos != null) {
-            for (DataEvento ev : eventos) {
-                if (ev != null) comboBoxEvento.addItem(ev);
-            }
+            for (DataEvento ev : eventos) if (ev != null) comboBoxEvento.addItem(ev);
         }
     }
 
@@ -256,9 +202,7 @@ public class ConsultaEdicionEvento extends JInternalFrame {
         try {
             DataEdicion[] ediciones = controlEvento.listarEdiciones(nombreEvento);
             if (ediciones != null) {
-                for (DataEdicion de : ediciones) {
-                    comboBoxEdiciones.addItem(de);
-                }
+                for (DataEdicion de : ediciones) comboBoxEdiciones.addItem(de);
             }
         } catch (EventoNoExisteException ex) {
             JOptionPane.showMessageDialog(this, "No hay ediciones para el evento: " + nombreEvento, "Info", JOptionPane.INFORMATION_MESSAGE);
@@ -276,92 +220,38 @@ public class ConsultaEdicionEvento extends JInternalFrame {
         textOrganizador.setText(de.getOrganizador());
 
         modeloTipos.clear();
-        if (de.getTiposRegistro() != null) {
-            for (DataTipoRegistro tr : de.getTiposRegistro()) {
-                modeloTipos.addElement(tr);
-            }
-        }
+        if (de.getTiposRegistro() != null) for (DataTipoRegistro tr : de.getTiposRegistro()) modeloTipos.addElement(tr);
 
         modeloPatrocinios.clear();
-        if (de.getPatrocinios() != null) {
-            for (DataPatrocinio p : de.getPatrocinios()) {
-                modeloPatrocinios.addElement(p);
-            }
-        }
+        if (de.getPatrocinios() != null) for (DataPatrocinio p : de.getPatrocinios()) modeloPatrocinios.addElement(p);
     }
 
-
-    public void cargarEdicion(String idEdicion) {
-        try {
-            DataEdicion ed = controlEvento.getInfoEdicion(idEdicion);
-            if (ed == null) {
-                JOptionPane.showMessageDialog(this, "La edición no existe.");
-                return;
-            }
-
-            textNombre.setText(ed.getNombre());
-            textFechaIni.setText(ed.getFechaIni().toString());
-            textFechaFin.setText(ed.getFechaFin().toString());
-            textCiudad.setText(ed.getCiudad());
-            textPais.setText(ed.getPais());
-            textSigla.setText(ed.getSigla());
-            textAlta.setText(ed.getFechaAltaEnPlataforma().toString());
-            textOrganizador.setText(ed.getOrganizador());
-
-       
-            modeloTipos.clear();
-            if (ed.getTiposRegistro() != null && !ed.getTiposRegistro().isEmpty()) {
-                for (DataTipoRegistro tr : ed.getTiposRegistro()) {
-                    modeloTipos.addElement(tr);
-                }
-            } else {
-                JOptionPane.showMessageDialog(this, "La edición no tiene tipos de registro.");
-            }
-
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "No se pudo cargar la edición: " + ex.getMessage());
-        }
-    }
-    
- // en ConsultaEdicionEvento
     public void setContext(DataEvento evento, DataEdicion edicion) {
         if (evento == null) return;
 
-        // Asegurá tener los eventos cargados
         cargarEventos();
 
-        // Seleccionar el evento por instancia o por nombre
-        boolean selected = false;
         for (int i = 0; i < comboBoxEvento.getItemCount(); i++) {
             DataEvento ev = comboBoxEvento.getItemAt(i);
-            if (ev == evento || (ev != null && ev.getNombre().equals(evento.getNombre()))) {
+            if (ev != null && ev.getNombre().equals(evento.getNombre())) {
                 comboBoxEvento.setSelectedIndex(i);
-                selected = true;
                 break;
             }
         }
-        if (!selected) {
-            // Por si no estaba (raro), lo agregamos y seleccionamos
-            comboBoxEvento.addItem(evento);
-            comboBoxEvento.setSelectedItem(evento);
-        }
 
-        // Cargar ediciones del evento y seleccionar la recibida
         cargarEdiciones(evento.getNombre());
+
         if (edicion != null) {
             for (int i = 0; i < comboBoxEdiciones.getItemCount(); i++) {
                 DataEdicion de = comboBoxEdiciones.getItemAt(i);
-                if (de == edicion || (de != null && de.getNombre().equals(edicion.getNombre()))) {
+                if (de != null && de.getNombre().equals(edicion.getNombre())) {
                     comboBoxEdiciones.setSelectedIndex(i);
-                    mostrarInfoEdicion(de); // rellenar campos
+                    mostrarInfoEdicion(de);
                     break;
                 }
-            }
-            setTitle("Consulta Edición – " + evento.getNombre() + " / " + edicion.getNombre());
-        } else {
-            setTitle("Consulta Edición – " + evento.getNombre());
+            } 
         }
+
+        setTitle("Consulta Edición – " + evento.getNombre() + (edicion != null ? " / " + edicion.getNombre() : ""));
     }
-
 }
-

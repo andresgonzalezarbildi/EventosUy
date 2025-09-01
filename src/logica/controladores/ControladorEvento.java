@@ -28,8 +28,8 @@ import logica.manejadores.ManejadorUsuario;
 public class ControladorEvento implements IControladorEvento {
 	private ManejadorEvento manejadorEvento;
 	
-    public  ControladorEvento() {
-    	manejadorEvento = ManejadorEvento.getInstance();
+    public  ControladorEvento() { 
+    	manejadorEvento = ManejadorEvento.getInstance(); 
     }
     
 	public void altaEvento(String nombre, String descripcion, String sigla, List<String> nombresCategorias, LocalDate FechaAltaEnPlataforma) {
@@ -183,6 +183,7 @@ public class ControladorEvento implements IControladorEvento {
         EdicionEvento ed = new EdicionEvento( nombreEdicion, fechaInicio, fechaFin, ciudad, pais, sigla, (fechaAltaEnPlataforma != null ? fechaAltaEnPlataforma : LocalDate.now())
         );
         ed.setOrganizador(org);
+        ed.setEventoPadre(evento);
         org.agregarEdicion(ed);
         evento.agregarEdicion(ed);
     }
@@ -286,7 +287,7 @@ public class ControladorEvento implements IControladorEvento {
 	                        r.getTipoRegistro().getNombre(),
 	                        r.getCostoRegistro(),
 	                        r.getFechaRegistro(),
-	                        r.getAsistente().getNombre()
+	                        r.getAsistente().getNickname()
 	                    ));
 	                }
 	            }

@@ -1,22 +1,10 @@
 package presentacion.registros;
 
-import java.awt.BorderLayout;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-
-import javax.swing.BorderFactory;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JComboBox;
-import javax.swing.JInternalFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
+import java.awt.*;
+import java.awt.event.ActionListener;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
-
 import logica.Fabrica;
 import logica.datatypes.DataRegistro;
 import logica.datatypes.DataUsuario;
@@ -26,24 +14,19 @@ import logica.interfaces.IControladorUsuario;
 @SuppressWarnings("serial")
 public class ConsultaDeRegistro extends JInternalFrame {
 
-    // Controladores
     private final IControladorEvento ctrlEvento;
     private final IControladorUsuario ctrlUsuario;
 
-    // Combos
-    private JComboBox<String> cbListaAsistente;
-    private JComboBox<String> cbListaRegistro;
+    private JComboBox<DataUsuario> cbListaAsistente;
+    private JComboBox<DataRegistro> cbListaRegistro;
 
-    // Campos info (no editables)
     private JTextField tfFechaReg;
     private JTextField tfEvento;
     private JTextField tfEdicion;
     private JTextField tfCosto;
 
-    // Registros cargados para el asistente seleccionado
     private DataRegistro[] registrosActuales;
 
-    // ==== Constructores ====
     public ConsultaDeRegistro() {
         this(Fabrica.getInstance().getControladorEvento(),
              Fabrica.getInstance().getControladorUsuario());
@@ -53,7 +36,7 @@ public class ConsultaDeRegistro extends JInternalFrame {
         this.ctrlEvento = IVE;
         this.ctrlUsuario = ICU;
 
-        setDefaultCloseOperation(JInternalFrame.HIDE_ON_CLOSE);
+        setDefaultCloseOperation(HIDE_ON_CLOSE);
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
@@ -62,10 +45,9 @@ public class ConsultaDeRegistro extends JInternalFrame {
         setBounds(100, 100, 600, 400);
         getContentPane().setLayout(new BorderLayout(0, 0));
 
-        // -------- Panel Izquierdo (combos) ----------
         JPanel panelIzq = new JPanel();
         panelIzq.setBorder(new EmptyBorder(12, 12, 12, 12));
-        panelIzq.setPreferredSize(new java.awt.Dimension(240, 0));
+        panelIzq.setPreferredSize(new Dimension(240, 0));
         getContentPane().add(panelIzq, BorderLayout.WEST);
 
         GridBagLayout gbl = new GridBagLayout();
@@ -75,7 +57,6 @@ public class ConsultaDeRegistro extends JInternalFrame {
         gbl.rowWeights    = new double[] {0.0, 0.0, 0.0, 0.0, 1.0};
         panelIzq.setLayout(gbl);
 
-        // Asistente
         JLabel lblAsistente = new JLabel("Asistente: ");
         lblAsistente.setVerticalAlignment(SwingConstants.TOP);
         GridBagConstraints c = new GridBagConstraints();
@@ -85,13 +66,13 @@ public class ConsultaDeRegistro extends JInternalFrame {
 
         cbListaAsistente = new JComboBox<>();
         cbListaAsistente.setModel(new DefaultComboBoxModel<>());
-        cbListaAsistente.setSelectedIndex(-1); // campo vacío
+        
+        cbListaAsistente.setSelectedIndex(-1);
         c = new GridBagConstraints();
         c.insets = new Insets(6, 6, 6, 12); c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 0; c.gridy = 1; c.weightx = 1.0;
         panelIzq.add(cbListaAsistente, c);
 
-        // Registro
         JLabel lblRegistro = new JLabel("Registro: ");
         c = new GridBagConstraints();
         c.insets = new Insets(6, 12, 6, 6); c.anchor = GridBagConstraints.SOUTHWEST;
@@ -100,13 +81,12 @@ public class ConsultaDeRegistro extends JInternalFrame {
 
         cbListaRegistro = new JComboBox<>();
         cbListaRegistro.setModel(new DefaultComboBoxModel<>());
-        cbListaRegistro.setSelectedIndex(-1); // campo vacío
+        cbListaRegistro.setSelectedIndex(-1);
         c = new GridBagConstraints();
         c.insets = new Insets(6, 6, 6, 12); c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 0; c.gridy = 3; c.weightx = 1.0;
         panelIzq.add(cbListaRegistro, c);
 
-        // -------- Panel Centro: Información del registro ----------
         JPanel panelInfo = new JPanel(new GridBagLayout());
         panelInfo.setBorder(new TitledBorder(
                 BorderFactory.createEtchedBorder(),
@@ -124,14 +104,13 @@ public class ConsultaDeRegistro extends JInternalFrame {
         tfEdicion  = addRow(panelInfo, gi, row++, "Edición:");
         tfCosto    = addRow(panelInfo, gi, row++, "Costo:");
 
-        // ---- Carga inicial + listeners ----
-        cargarAsistentesEnCombo();
-
+        // Listeners
         cbListaAsistente.addActionListener(e -> {
-            String seleccionado = (String) cbListaAsistente.getSelectedItem();
-            String nickname = extractNicknameOrAll(seleccionado);
-            cargarRegistrosParaAsistente(nickname);
-            limpiarInfo(); // reset info al cambiar asistente
+            DataUsuario seleccionado = (DataUsuario) cbListaAsistente.getSelectedItem();
+            if (seleccionado != null) {
+                cargarRegistrosParaAsistente(seleccionado.getNickname());
+                limpiarInfo();
+            }
         });
 
         cbListaRegistro.addActionListener(e -> {
@@ -146,15 +125,10 @@ public class ConsultaDeRegistro extends JInternalFrame {
                 limpiarInfo();
             }
         });
+
+        cargarAsistentesEnCombo();
     }
 
-    /** Llamalo al abrir la ventana para refrescar combos y limpiar info. */
-    public void recargarDatos() {
-        cargarAsistentesEnCombo(); // ya limpia registros adentro
-        limpiarInfo();
-    }
-
-    /** Crea fila etiqueta + JTextField no editable; retorna el field. */
     private JTextField addRow(JPanel parent, GridBagConstraints base, int y, String label) {
         GridBagConstraints left = (GridBagConstraints) base.clone();
         left.gridx = 0; left.gridy = y;
@@ -173,12 +147,10 @@ public class ConsultaDeRegistro extends JInternalFrame {
         return tf;
     }
 
-    // ================== Setters para completar info ==================
     public void setFechaRegistro(String v) { tfFechaReg.setText(v != null ? v : ""); }
     public void setEvento(String v)        { tfEvento.setText(v != null ? v : ""); }
     public void setEdicion(String v)       { tfEdicion.setText(v != null ? v : ""); }
     public void setCosto(String v)         { tfCosto.setText(v != null ? v : ""); }
-
     public void limpiarInfo() {
         setFechaRegistro("");
         setEvento("");
@@ -186,24 +158,19 @@ public class ConsultaDeRegistro extends JInternalFrame {
         setCosto("");
     }
 
-    // ================== Carga de combos ==================
-    // Ahora muestra SOLO el nickname
     private void cargarAsistentesEnCombo() {
         try {
             DataUsuario[] asistentes = ctrlUsuario.getAsistentes();
-            DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
+            DefaultComboBoxModel<DataUsuario> model = new DefaultComboBoxModel<>();
             if (asistentes != null) {
                 for (DataUsuario du : asistentes) {
-                    String nick = du.getNickname() != null ? du.getNickname().trim() : "";
-                    if (!nick.isBlank()) {
-                        model.addElement(nick);
-                    } else {
-                        model.addElement("<sin_nickname>");
+                    if (du.getNickname() != null && !du.getNickname().isBlank()) {
+                        model.addElement(du);
                     }
                 }
             }
             cbListaAsistente.setModel(model);
-            cbListaAsistente.setSelectedIndex(-1); // vacío inicial
+            cbListaAsistente.setSelectedIndex(-1); 
         } catch (Exception ex) {
             cbListaAsistente.setModel(new DefaultComboBoxModel<>());
             cbListaAsistente.setSelectedIndex(-1);
@@ -211,16 +178,13 @@ public class ConsultaDeRegistro extends JInternalFrame {
         limpiarRegistros();
     }
 
-    // Ahora muestra SOLO el nombre de la edición
+
     private void cargarRegistrosParaAsistente(String nickname) {
         try {
             registrosActuales = ctrlEvento.listarRegistrosDeUsuario(nickname);
-            DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
+            DefaultComboBoxModel<DataRegistro> model = new DefaultComboBoxModel<>();
             if (registrosActuales != null) {
-                for (DataRegistro r : registrosActuales) {
-                    String edicion = r.getEdicion() != null ? r.getEdicion().trim() : "";
-                    model.addElement(!edicion.isBlank() ? edicion : "<sin edición>");
-                }
+                for (DataRegistro r : registrosActuales) model.addElement(r);
             }
             cbListaRegistro.setModel(model);
             cbListaRegistro.setSelectedIndex(-1);
@@ -230,21 +194,45 @@ public class ConsultaDeRegistro extends JInternalFrame {
         }
     }
 
+    public void setContext(DataUsuario usuario, DataRegistro registro) {
+        if (usuario == null) return;
+
+        cargarAsistentesEnCombo();
+
+        for (int i = 0; i < cbListaAsistente.getItemCount(); i++) {
+            DataUsuario u = cbListaAsistente.getItemAt(i);
+            if (u != null && u.getNickname().equals(usuario.getNickname())) {
+                cbListaAsistente.setSelectedIndex(i);
+
+                cargarRegistrosParaAsistente(u.getNickname());
+                break;
+            }
+        }
+
+        if (registro != null && registrosActuales != null) {
+            for (int i = 0; i < cbListaRegistro.getItemCount(); i++) {
+                DataRegistro r = cbListaRegistro.getItemAt(i);
+                if (r != null && r.getEdicion().equals(registro.getEdicion())) {
+                    cbListaRegistro.setSelectedIndex(i);
+                    setFechaRegistro(r.getFecha() != null ? r.getFecha().toString() : "");
+                    setEvento(r.getEvento());
+                    setEdicion(r.getEdicion());
+                    setCosto(r.getCosto() != null ? r.getCosto().toString() : "");
+                    break;
+                }
+            }
+        }
+    }
+    public void recargarDatos() {
+        cargarAsistentesEnCombo(); 
+        limpiarInfo();
+    }
     private void limpiarRegistros() {
         registrosActuales = null;
         cbListaRegistro.setModel(new DefaultComboBoxModel<>());
         cbListaRegistro.setSelectedIndex(-1);
     }
 
-    // Si el display es "Nombre (nick)", devuelve "nick"; si no, devuelve el string completo
-    private String extractNicknameOrAll(String display) {
-        if (display == null) return null;
-        int open = display.lastIndexOf('(');
-        int close = display.lastIndexOf(')');
-        if (open != -1 && close != -1 && close > open + 1) {
-            return display.substring(open + 1, close).trim(); // "Nombre (nick)" -> nick
-        }
-        return display.trim(); // si ya es solo "nick", retorna tal cual
-    }
-}
 
+
+}

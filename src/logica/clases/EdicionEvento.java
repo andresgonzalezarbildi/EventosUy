@@ -23,6 +23,7 @@ public class EdicionEvento {
     private Organizador organizador;
     private List<Patrocinio> patrocinios;
     private Map<String, Registro> listaRegistros;
+    private Evento eventoPadre;
 
 
     public EdicionEvento(String nombre, LocalDate fechaIni, LocalDate fechaFin, String ciudad, String pais, String sigla, LocalDate fechaAltaEnPlataforma) {
@@ -47,14 +48,13 @@ public class EdicionEvento {
 
     public String getNombre() { return nombre; }
     public LocalDate getFechaIni() { return fechaIni; }
-    public LocalDate getFechaFin() { return fechaFin; }
+    public LocalDate getFechaFin() { return fechaFin; } 
     public String getCiudad() { return ciudad; }
     public String getPais() { return pais; }
     public String getSigla() { return sigla; }
-    public Organizador getOrganizador() { return organizador; }
+    public Organizador getOrganizador() { return organizador; } 
     public List<Patrocinio> getPatrocinios() { return patrocinios; }
     public LocalDate getFechaAltaEnPlataforma() { return fechaAltaEnPlataforma; }
-    public Map<String, TipoRegistro> getCategorias() { return listaTipoDeRegistro; }
 
     public void agregarTipoDeRegistro(String clave, TipoRegistro TipoDeRegistro) {
         if (!listaTipoDeRegistro.containsKey(clave)) {
@@ -126,5 +126,14 @@ public class EdicionEvento {
         return listaRegistros.values();
 
     }
+    
+
+public void setEventoPadre(Evento e) {
+    this.eventoPadre = e;
+}
+
+public Evento getEvento() {
+    return eventoPadre;
+}
 
 }

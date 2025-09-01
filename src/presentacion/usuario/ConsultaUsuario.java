@@ -32,11 +32,13 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 
-
+import excepciones.EdicionNoExisteException;
 import excepciones.UsuarioNoExisteException;
 import logica.clases.EdicionEvento;
 import logica.clases.Organizador;
 import logica.datatypes.DataUsuario;
+import logica.datatypes.DataEdicion;
+import logica.datatypes.DataEvento;
 import logica.interfaces.IControladorEvento;
 import logica.interfaces.IControladorUsuario;
 import java.awt.event.MouseAdapter;
@@ -144,7 +146,6 @@ public class ConsultaUsuario extends JInternalFrame {
             }
         });
 
-        // listener para abrir el otro caso de uso
         comboEdiciones.addItemListener(e -> {
             if (!cargandoEdiciones && e.getStateChange() == ItemEvent.SELECTED) {
                 EdicionEvento seleccionada = (EdicionEvento) e.getItem();
@@ -152,14 +153,30 @@ public class ConsultaUsuario extends JInternalFrame {
                     ConsultaEdicionEvento ce = new ConsultaEdicionEvento(IEV);
                     getDesktopPane().add(ce);
                     ce.setVisible(true);
-                    ce.cargarEdicion(seleccionada.getNombre());
+
+                    DataEvento eventoDTO = null;
+                    for (DataEvento ev : IEV.getEventosDTO()) {
+                        if (ev.getNombre().equals(seleccionada.getEvento().getNombre())) {
+                            eventoDTO = ev;
+                            break;
+                        }
+                    }
+
+                    try {
+                        DataEdicion edicionDTO = IEV.getInfoEdicion(seleccionada.getNombre());
+                        ce.setContext(eventoDTO, edicionDTO);
+                    } catch (EdicionNoExisteException ex) {
+                        JOptionPane.showMessageDialog(this, "No se pudo cargar la edición: " + ex.getMessage());
+                    }
+
                     comboEdiciones.setSelectedIndex(-1);
                 }
             }
         });
 
-        // --- Campos básicos del usuario ---
-        lblNick = label("Nickname:");
+
+        // --- Campos básicos del usuario --- 
+        lblNick = label("Nickname:"); 
         add(panelDer, lblNick, gbc(0,0,IN, GridBagConstraints.WEST));
         txtNickname = readonlyField();
         add(panelDer, txtNickname, gbcFill(1,0,IN));
@@ -239,29 +256,44 @@ public class ConsultaUsuario extends JInternalFrame {
         
         add(panelDer, scrollRegistros, gbcFillBoth(1,10,IN));
         
-        listaRegistros.addMouseListener(new java.awt.event.MouseAdapter() {
-           
-            public void mouseClicked(java.awt.event.MouseEvent e) {
-                if (e.getClickCount() == 2) {
-                    
-                    DataRegistro reg = listaRegistros.getSelectedValue();
-                    if (reg == null) return;
+        listaRegistros.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent evt) {
+                if (evt.getClickCount() == 2) {
+                    DataRegistro registro = listaRegistros.getSelectedValue(); 
+                    if (registro != null) {
+                        if (ventanaConsultaRegistro != null && ventanaConsultaRegistro.isVisible()) {
+                            ventanaConsultaRegistro.dispose();
+                        } 
 
-                    if (ventanaConsultaRegistro != null && ventanaConsultaRegistro.isVisible()) {
-                        ventanaConsultaRegistro.dispose();
-                    }
+                        ventanaConsultaRegistro = new ConsultaDeRegistro(IEV, ICU);
+                        JDesktopPane desktop = ConsultaUsuario.this.getDesktopPane();
+                        if (desktop != null) {
+                            desktop.add(ventanaConsultaRegistro);
+                            ventanaConsultaRegistro.setVisible(true);
+                            try { ventanaConsultaRegistro.setSelected(true); } 
+                            catch (java.beans.PropertyVetoException ex) {}
+                        }
 
-                    ventanaConsultaRegistro = new presentacion.registros.ConsultaDeRegistro(IEV, ICU);
-                    ventanaConsultaRegistro.setVisible(true);
-
-                    JDesktopPane desk = ConsultaUsuario.this.getDesktopPane();
-                    if (desk != null) {
-                        desk.add(ventanaConsultaRegistro);
-                        try { ventanaConsultaRegistro.setSelected(true); } catch (java.beans.PropertyVetoException ex) {}
-                    }
+                        try {
+                            DataUsuario usuario = ICU.verInfoUsuario(registro.getAsistente());
+                            ventanaConsultaRegistro.setContext(usuario, registro);
+                        } catch (UsuarioNoExisteException ex) {
+                            JOptionPane.showMessageDialog(ConsultaUsuario.this,
+                                "No se encontró el usuario: " + registro.getAsistente(),
+                                "Error", JOptionPane.ERROR_MESSAGE);
+                        }
+                    } 
                 }
             }
         });
+
+
+
+
+
+
+
+
 
 
         listaUsuarios.addListSelectionListener(e -> {
@@ -273,7 +305,7 @@ public class ConsultaUsuario extends JInternalFrame {
         setVis(lblInstitucion, txtInstitucion, false);
         setVis(lblRegistros,   scrollRegistros, false);
         setVis(lblEdiciones,   comboEdiciones,  false);
-
+ 
     }
 
     private static JLabel label(String text) {
