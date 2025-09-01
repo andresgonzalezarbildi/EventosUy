@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import logica.datatypes.DataUsuario;
 import logica.datatypes.DataEvento;
+import logica.datatypes.DataOrganizador;
 import logica.datatypes.DataEdicion;
 import logica.datatypes.DataTipoRegistro;
 import logica.datatypes.DataPatrocinio;
@@ -223,5 +224,56 @@ public class DataTypesTest {
         assertEquals("", dataUsuario.getNombre());
         assertEquals("", dataUsuario.getCorreo());
         assertEquals("", dataUsuario.getTipo());
+    }
+    
+    @Test
+    void testConstructorAndGetters() {
+        DataOrganizador org = new DataOrganizador(
+                "nickOrg", 
+                "Nombre Org", 
+                "org@example.com", 
+                "Descripción inicial", 
+                "http://test.com"
+        );
+
+        // Verificar valores heredados
+        assertEquals("nickOrg", org.getNickname());
+        assertEquals("Nombre Org", org.getNombre());
+        assertEquals("org@example.com", org.getCorreo());
+
+        // Verificar valores propios
+        assertEquals("Descripción inicial", org.getDescripcionGeneral());
+        assertEquals("http://test.com", org.getLinkSitioWeb());
+    }
+
+    @Test
+    void testSetters() {
+        DataOrganizador org = new DataOrganizador(
+                "nickOrg", 
+                "Nombre Org", 
+                "org@example.com", 
+                "Descripción inicial", 
+                "http://test.com"
+        );
+
+        org.setDescripcionGeneral("Nueva descripción");
+        org.setLinkSitioWeb("http://nuevo.com");
+
+        assertEquals("Nueva descripción", org.getDescripcionGeneral());
+        assertEquals("http://nuevo.com", org.getLinkSitioWeb());
+    }
+
+    @Test
+    void testNullValues() {
+        DataOrganizador org = new DataOrganizador("nick", "nombre", "correo", null, null);
+
+        assertNull(org.getDescripcionGeneral());
+        assertNull(org.getLinkSitioWeb());
+
+        org.setDescripcionGeneral(null);
+        org.setLinkSitioWeb(null);
+
+        assertNull(org.getDescripcionGeneral());
+        assertNull(org.getLinkSitioWeb());
     }
 } 
