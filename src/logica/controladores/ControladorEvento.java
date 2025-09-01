@@ -167,10 +167,16 @@ public class ControladorEvento implements IControladorEvento {
         	throw new IllegalArgumentException("Las fechas de inicio y fin son obligatorias.");
         if (fechaFin.isBefore(fechaInicio))
         	throw new IllegalArgumentException("La fecha de fin no puede ser anterior a la de inicio.");
+        if (fechaInicio.isBefore(fechaAltaEnPlataforma))
+        	throw new IllegalArgumentException("La fecha de Alta no puede ser posterior a la de inicio.");
+
         Evento evento = manejadorEvento.obtenerEvento(nombreEvento);
         if (evento == null) {
             throw new IllegalArgumentException("No existe el evento: " + nombreEvento);
         }
+        LocalDate FechaEvento = evento.getFecha();
+        if (fechaAltaEnPlataforma.isBefore(FechaEvento))
+        	throw new IllegalArgumentException("La fecha de Alta no puede ser anterior al evento.");
         if (evento.getEdicion(nombreEdicion) != null) {
             throw new IllegalArgumentException("Ya existe una edición con ese nombre en este evento: " + nombreEvento);
         }
@@ -235,6 +241,14 @@ public class ControladorEvento implements IControladorEvento {
         if (ed.estaRegistrado(asis)) {
             throw new IllegalStateException("El asistente ya está registrado en esta edición.");
         }
+        LocalDate FechaAltaEdi = ed.getFechaAltaEnPlataforma();
+        if (fecha.isBefore(FechaAltaEdi))
+        	throw new IllegalArgumentException("La fecha de Registro no puede ser anterior al de Alta de la edición.");
+        LocalDate FechaFinEdi = ed.getFechaFin();
+        if (FechaFinEdi.isBefore(fecha))
+        	throw new IllegalArgumentException("La fecha de Registro no puede ser poserior al fin de la edición.");
+
+        
 
         int costo = tipo.getCosto();
         Registro reg = new Registro(fecha , costo, tipo, ed, asis);

@@ -195,6 +195,7 @@ public class ConsultaEdicionEvento extends JInternalFrame {
         if (eventos != null) {
             for (DataEvento ev : eventos) if (ev != null) comboBoxEvento.addItem(ev);
         }
+        comboBoxEvento.setSelectedIndex(-1);
     }
 
     private void cargarEdiciones(String nombreEvento) {
@@ -207,6 +208,7 @@ public class ConsultaEdicionEvento extends JInternalFrame {
         } catch (EventoNoExisteException ex) {
             JOptionPane.showMessageDialog(this, "No hay ediciones para el evento: " + nombreEvento, "Info", JOptionPane.INFORMATION_MESSAGE);
         }
+        comboBoxEdiciones.setSelectedIndex(-1);
     }
 
     private void mostrarInfoEdicion(DataEdicion de) {
@@ -253,5 +255,28 @@ public class ConsultaEdicionEvento extends JInternalFrame {
         }
 
         setTitle("Consulta Edición – " + evento.getNombre() + (edicion != null ? " / " + edicion.getNombre() : ""));
+    }
+
+
+    // reseteo la ventana porque en el callback de consutla evento, me precarga datos y no se van
+    public void resetearVentana() {
+        
+        textNombre.setText("");
+        textFechaIni.setText("");
+        textFechaFin.setText("");
+        textCiudad.setText("");
+        textPais.setText("");
+        textSigla.setText("");
+        textAlta.setText("");
+        textOrganizador.setText("");
+        
+        modeloTipos.clear();
+        modeloPatrocinios.clear();
+        
+        cargarEventos();
+        
+        comboBoxEdiciones.removeAllItems();
+        
+        setTitle("Consulta Edicion Evento");
     }
 }

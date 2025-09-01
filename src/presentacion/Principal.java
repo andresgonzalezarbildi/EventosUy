@@ -151,7 +151,6 @@ public class Principal {
     private void initialize() {
 
     	Fabrica fabrica = Fabrica.getInstance();
-//      fabrica.getCargaDatos().CargarDatosIniciales();
         frmGestion = new JFrame();
         frmGestion.setTitle("Gestión del Sistema");
         frmGestion.setBounds(100, 100, 900, 600);
@@ -279,17 +278,20 @@ public class Principal {
         });
         menuEvento.add(miAltaEdicion);
       
-        JMenuItem miConsultaEdicionEvento = new JMenuItem("Consulta Edicion de Evento");
-        miConsultaEdicionEvento.addActionListener(e -> {
-    	if (consultaEdicionInternalFrame == null || consultaEdicionInternalFrame.isClosed()) {
-    		consultaEdicionInternalFrame = new ConsultaEdicionEvento(IEV);
-    	    desktop.add(consultaEdicionInternalFrame);
-  	} 
-    	consultaEdicionInternalFrame.setVisible(true);
-    	consultaEdicionInternalFrame.toFront(); // Traerla al frente
-        ensureSize(consultaEdicionInternalFrame, 600, 400);
-        showInternal(consultaEdicionInternalFrame);
-    });
+                 JMenuItem miConsultaEdicionEvento = new JMenuItem("Consulta Edicion de Evento");
+         miConsultaEdicionEvento.addActionListener(e -> {
+     	if (consultaEdicionInternalFrame == null || consultaEdicionInternalFrame.isClosed()) {
+     		consultaEdicionInternalFrame = new ConsultaEdicionEvento(IEV);
+     	    desktop.add(consultaEdicionInternalFrame);
+   	} else {
+            // Si la ventana ya existe reinicio los datos
+            consultaEdicionInternalFrame.resetearVentana();
+        }
+     	consultaEdicionInternalFrame.setVisible(true);
+     	consultaEdicionInternalFrame.toFront(); // Traerla al frente
+         ensureSize(consultaEdicionInternalFrame, 600, 400);
+         showInternal(consultaEdicionInternalFrame);
+     });
         menuEvento.add(miConsultaEdicionEvento);
         menuBar.add(menuEvento);
         

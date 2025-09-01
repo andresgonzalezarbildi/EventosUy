@@ -101,4 +101,21 @@ public class ManejadorUsuario {
         asistentes.clear();
     }
     
+    public boolean existeNombre(String nombre) {
+		// Recorrer organizadores
+	    for (Organizador org : organizadores.values()) {
+	    	if (org.getNombre().equalsIgnoreCase(nombre)) {
+	    		return true;
+	        }
+	    }
+	 // Recorrer asistentes
+        for (Asistente asis : asistentes.values()) {
+            if (asis.getNombre().equalsIgnoreCase(nombre)) {
+                return true;
+            }
+        }
+        return false;
+	 }
+
+    
 }
