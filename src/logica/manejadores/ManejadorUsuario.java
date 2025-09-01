@@ -96,4 +96,9 @@ public class ManejadorUsuario {
         return asistentes.values();
     }
     
+    public void limpiar() {
+        organizadores.clear();
+        asistentes.clear();
+    }
+    
 }
