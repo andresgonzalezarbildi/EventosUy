@@ -206,7 +206,7 @@ public class RegistroAEdicionEvento extends JInternalFrame {
         }
         LocalDate fecha = utilDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
-        String nombreAsistente = extractNicknameOrAll(asistenteDisplay);
+        String nombreAsistente = extractNicknameOrAll(asistenteDisplay); 
 
         try {
             ctrlEvento.altaRegistro(evento, edicion, tipo, nombreAsistente, fecha);
