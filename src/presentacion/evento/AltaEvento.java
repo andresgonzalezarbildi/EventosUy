@@ -154,6 +154,7 @@ public class AltaEvento extends JInternalFrame {
                 modeloDisponibles.addElement(c.getNombre());
             }
         }
+        
 
         listaCategoriasDisponibles = new JList<>(modeloDisponibles);
         listaCategoriasDisponibles.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
@@ -230,6 +231,15 @@ public class AltaEvento extends JInternalFrame {
         dcFecha.setDate(null);
 
         modeloSeleccionadas.clear();
+        modeloDisponibles.clear();
+
+        // Volver a cargar categorías
+        for (Categoria c : ManejadorEvento.getInstance().getCategorias()) {
+            if (c != null && c.getNombre() != null && !modeloSeleccionadas.contains(c.getNombre())) {
+                modeloDisponibles.addElement(c.getNombre());
+            }
+        }
+
         listaCategoriasDisponibles.clearSelection();
         listaCategoriasSeleccionadas.clearSelection();
 
