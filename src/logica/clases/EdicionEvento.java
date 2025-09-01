@@ -55,7 +55,6 @@ public class EdicionEvento {
     public Organizador getOrganizador() { return organizador; } 
     public List<Patrocinio> getPatrocinios() { return patrocinios; }
     public LocalDate getFechaAltaEnPlataforma() { return fechaAltaEnPlataforma; }
-   // public Map<String, TipoRegistro> getCategorias() { return listaTipoDeRegistro; } << ahi esta mal, no se que quisieron hacer
 
     public void agregarTipoDeRegistro(String clave, TipoRegistro TipoDeRegistro) {
         if (!listaTipoDeRegistro.containsKey(clave)) {

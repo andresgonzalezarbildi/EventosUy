@@ -28,8 +28,8 @@ import logica.manejadores.ManejadorUsuario;
 public class ControladorEvento implements IControladorEvento {
 	private ManejadorEvento manejadorEvento;
 	
-    public  ControladorEvento() {
-    	manejadorEvento = ManejadorEvento.getInstance();
+    public  ControladorEvento() { 
+    	manejadorEvento = ManejadorEvento.getInstance(); 
     }
     
 	public void altaEvento(String nombre, String descripcion, String sigla, List<String> nombresCategorias, LocalDate FechaAltaEnPlataforma) {
@@ -99,18 +99,6 @@ public class ControladorEvento implements IControladorEvento {
     
    public DataEvento[] getEventosDTO() {
 	    DataEvento[] eventos = manejadorEvento.getEventosDTO();
-	    if (eventos == null) {
-	        System.out.println("getEventosDTO devolvió null");
-	    } else {
-	        
-	        for (DataEvento ev : eventos) {
-	            if (ev != null) {
-	                System.out.println("  -> " + ev.getNombre());
-	            } else {
-	                System.out.println("  ⚠️ Evento nulo en array");
-	            }
-	        }
-	    }
 	    return eventos;
 	}
 
@@ -306,5 +294,9 @@ public class ControladorEvento implements IControladorEvento {
 	        }
 	    }
 	    return out.toArray(new DataRegistro[0]);
+	}
+	
+	public void limpiar() {
+		manejadorEvento.limpiar();
 	}
 }

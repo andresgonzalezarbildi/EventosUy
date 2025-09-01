@@ -19,7 +19,7 @@ import java.util.Map;
 public class EdicionEventoTest {
     
     private EdicionEvento edicion;
-    private LocalDate fechaIni;
+    private LocalDate fechaIni; 
     private LocalDate fechaFin;
     
     @BeforeEach
@@ -39,7 +39,6 @@ public class EdicionEventoTest {
         assertEquals("Test Country", edicion.getPais());
         assertEquals("TE", edicion.getSigla());
         assertNotNull(edicion.getFechaAltaEnPlataforma());
-        assertNotNull(edicion.getCategorias());
         assertNotNull(edicion.getPatrocinios());
         assertNotNull(edicion.getRegistros());
     }
@@ -78,13 +77,6 @@ public class EdicionEventoTest {
     void testGetFechaAltaEnPlataforma() {
         assertNotNull(edicion.getFechaAltaEnPlataforma());
         assertTrue(edicion.getFechaAltaEnPlataforma().isBefore(LocalDate.now().plusDays(1)));
-    }
-    
-    @Test
-    void testGetCategorias() {
-        Map<String, TipoRegistro> categorias = edicion.getCategorias();
-        assertNotNull(categorias);
-        assertTrue(categorias.isEmpty());
     }
     
     @Test

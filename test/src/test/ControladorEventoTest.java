@@ -22,6 +22,8 @@ public class ControladorEventoTest {
     @BeforeEach
     void setUp() {
         controlador = new ControladorEvento();
+        controlador.limpiar();
+       
     }
     
     @Test

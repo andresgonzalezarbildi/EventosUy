@@ -143,4 +143,8 @@ public class ControladorUsuario implements IControladorUsuario {
         }
         return du;
     }
+    
+    public void limpar() {
+    	manejador.limpiar();
+    }
 }

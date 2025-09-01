@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import logica.controladores.ControladorUsuario;
 import logica.datatypes.DataUsuario;
+import logica.manejadores.ManejadorUsuario;
 import excepciones.UsuarioNoExisteException;
 import excepciones.UsuarioRepetidoException;
 import java.time.LocalDate;
@@ -16,6 +17,8 @@ public class ControladorUsuarioTest {
     @BeforeEach
     void setUp() {
         controlador = ControladorUsuario.getInstance();
+        
+        controlador.limpar();
     }
     
     @Test
@@ -28,7 +31,7 @@ public class ControladorUsuarioTest {
     @Test
     void testAltaUsuarioOrganizador() throws UsuarioRepetidoException, UsuarioNoExisteException {
         controlador.altaUsuario("testOrg", "Test Organizador", "test@example.com", 
-                               "Organizador", "Test Description", "http://test.com", null, null);
+                               "Organizador", "Test Description", "http://test.com", null, LocalDate.now());
         
         DataUsuario usuario = controlador.verInfoUsuario("testOrg");
         assertNotNull(usuario);

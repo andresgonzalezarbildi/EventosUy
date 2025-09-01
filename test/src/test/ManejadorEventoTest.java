@@ -26,6 +26,7 @@ public class ManejadorEventoTest {
     @BeforeEach
     void setUp() {
         manejador = ManejadorEvento.getInstance();
+        manejador.getEventos().clear();
     }
     
     @Test
@@ -216,4 +217,5 @@ public class ManejadorEventoTest {
     void testExisteEdicionNull() {
         assertFalse(manejador.existeEdicion(null));
     }
+
 } 
