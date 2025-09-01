@@ -4,13 +4,18 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import logica.controladores.ControladorEvento;
+import logica.controladores.ControladorUsuario;
 import logica.datatypes.DataEvento;
 import logica.datatypes.DataEdicion;
 import logica.datatypes.DataTipoRegistro;
+import logica.manejadores.ManejadorEvento;
+import logica.manejadores.ManejadorUsuario;
 import excepciones.CategoriaRepetidaException;
 import excepciones.EdicionNoExisteException;
 import excepciones.EventoNoExisteException;
 import excepciones.UsuarioNoExisteException;
+import excepciones.UsuarioRepetidoException;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,16 +23,30 @@ import java.util.List;
 public class ControladorEventoTest {
     
     private ControladorEvento controlador;
+    private ControladorUsuario controladorUsuario;
     
     @BeforeEach
     void setUp() {
-        controlador = new ControladorEvento();
+    	controlador = new ControladorEvento();
+    	controladorUsuario = new ControladorUsuario();
         controlador.limpiar();
-       
+    	
+    	try {
+	        controladorUsuario.altaUsuario(
+	            "testOrg", "Org Nombre", "org@test.com",
+	            "Organizador", "desc", "http://link", null, LocalDate.now()
+	        );
+        } catch (UsuarioRepetidoException e) {
+            // No hacer anda
+        }
     }
     
     @Test
     void testAltaEvento() {
+    	try {  
+    	    controlador.altaCategoria("Test Category");
+    	} catch (CategoriaRepetidaException e) {
+    	}
         List<String> categorias = new ArrayList<>();
         categorias.add("Test Category");
         
@@ -41,6 +60,11 @@ public class ControladorEventoTest {
     
     @Test
     void testAltaEventoNombreVacio() {
+    	try {  
+    	    controlador.altaCategoria("Test Category");
+    	} catch (CategoriaRepetidaException e) {
+    	    // No hacer nada
+    	}
         List<String> categorias = new ArrayList<>();
         categorias.add("Test Category");
         
@@ -51,6 +75,11 @@ public class ControladorEventoTest {
     
     @Test
     void testAltaEventoSiglaVacia() {
+    	try {  
+    	    controlador.altaCategoria("Test Category");
+    	} catch (CategoriaRepetidaException e) {
+    	    // No hacer nada
+    	}
         List<String> categorias = new ArrayList<>();
         categorias.add("Test Category");
         
@@ -97,6 +126,11 @@ public class ControladorEventoTest {
     
     @Test
     void testGetEventosDTO() {
+    	try {  
+    	    controlador.altaCategoria("Test Category");
+    	} catch (CategoriaRepetidaException e) {
+    	    // No Hace nada
+    	}
         List<String> categorias = new ArrayList<>();
         categorias.add("Test Category");
         
@@ -110,6 +144,11 @@ public class ControladorEventoTest {
     
     @Test
     void testListarEventoExistentes() throws EventoNoExisteException {
+    	try {  
+    	    controlador.altaCategoria("Test Category");
+    	} catch (CategoriaRepetidaException e) {
+    	    // No Hace nada
+    	}
         List<String> categorias = new ArrayList<>();
         categorias.add("Test Category");
         
@@ -130,6 +169,11 @@ public class ControladorEventoTest {
     
     @Test
     void testListarEdiciones() throws EventoNoExisteException, UsuarioNoExisteException {
+    	try {  
+    	    controlador.altaCategoria("Test Category");
+    	} catch (CategoriaRepetidaException e) {
+    	    // No Hace nada
+    	}
         List<String> categorias = new ArrayList<>();
         categorias.add("Test Category");
         
@@ -152,6 +196,11 @@ public class ControladorEventoTest {
     
     @Test
     void testAltaEdicionEvento() throws UsuarioNoExisteException {
+    	try {  
+    	    controlador.altaCategoria("Test Category");
+    	} catch (CategoriaRepetidaException e) {
+    	    // No Hace nada
+    	}
         List<String> categorias = new ArrayList<>();
         categorias.add("Test Category");
         
@@ -174,6 +223,11 @@ public class ControladorEventoTest {
     
     @Test
     void testAltaEdicionEventoOrganizadorVacio() {
+    	try {  
+    	    controlador.altaCategoria("Test Category");
+    	} catch (CategoriaRepetidaException e) {
+    	    // No Hace nada
+    	}
         List<String> categorias = new ArrayList<>();
         categorias.add("Test Category");
         
@@ -187,6 +241,11 @@ public class ControladorEventoTest {
     
     @Test
     void testAltaEdicionEventoFechasInvalidas() {
+    	try {  
+    	    controlador.altaCategoria("Test Category");
+    	} catch (CategoriaRepetidaException e) {
+    	    // No Hace nada
+    	}
         List<String> categorias = new ArrayList<>();
         categorias.add("Test Category");
         
@@ -200,6 +259,11 @@ public class ControladorEventoTest {
     
     @Test
     void testAltaTipoRegistro() throws UsuarioNoExisteException {
+    	try {  
+    	    controlador.altaCategoria("Test Category");
+    	} catch (CategoriaRepetidaException e) {
+    	    // No Hace nada
+    	}
         List<String> categorias = new ArrayList<>();
         categorias.add("Test Category");
         
@@ -217,6 +281,11 @@ public class ControladorEventoTest {
     
     @Test
     void testAltaTipoRegistroCostoNegativo() throws UsuarioNoExisteException {
+    	try {  
+    	    controlador.altaCategoria("Test Category");
+    	} catch (CategoriaRepetidaException e) {
+    	    // No Hace nada
+    	}
         List<String> categorias = new ArrayList<>();
         categorias.add("Test Category");
         
@@ -231,6 +300,11 @@ public class ControladorEventoTest {
     
     @Test
     void testAltaTipoRegistroCupoInvalido() throws UsuarioNoExisteException {
+    	try {  
+    	    controlador.altaCategoria("Test Category");
+    	} catch (CategoriaRepetidaException e) {
+    	    // No Hace nada
+    	}
         List<String> categorias = new ArrayList<>();
         categorias.add("Test Category");
         
@@ -245,6 +319,11 @@ public class ControladorEventoTest {
     
     @Test
     void testGetTipoRegistro() throws UsuarioNoExisteException {
+    	try {  
+    	    controlador.altaCategoria("Test Category");
+    	} catch (CategoriaRepetidaException e) {
+    	    // No Hace nada
+    	}
         List<String> categorias = new ArrayList<>();
         categorias.add("Test Category");
         
