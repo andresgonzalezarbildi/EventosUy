@@ -8,7 +8,7 @@ public class DataRegistro {
     private final String tipoRegistro;
     private final Integer costo;    
     private final LocalDate fecha;   
-    private final String asistente;  // nickname
+    private final String asistente; 
 
     public DataRegistro(String evento, String edicion, String tipoRegistro,
                         Integer costo, LocalDate fecha, String asistente) {
@@ -36,5 +36,9 @@ public class DataRegistro {
     }
     public String getAsistente()    { 
     	return asistente; 
+    }
+    @Override
+    public String toString() {
+        return edicion; 
     }
 }
