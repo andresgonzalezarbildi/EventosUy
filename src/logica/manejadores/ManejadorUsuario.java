@@ -67,12 +67,14 @@ public class ManejadorUsuario {
     
 
     public Organizador getOrganizador(String nickname) throws UsuarioNoExisteException {
+        if (nickname == null || nickname.isBlank()) {
+            throw new UsuarioNoExisteException("Nickname inválido (null o vacío)");
+        }
         Organizador org = organizadores.get(nickname);
         if (org == null) {
             throw new UsuarioNoExisteException("No existe organizador con nickname: " + nickname);
         }
         return org;
-
     }
 
     // 🔹 obtener asistente por nickname
