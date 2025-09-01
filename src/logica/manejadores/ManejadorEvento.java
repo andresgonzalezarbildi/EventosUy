@@ -113,4 +113,9 @@ public class ManejadorEvento {
         return false;
     }
     
+    public void limpiar() {
+    	eventos.clear();
+    	categorias.clear();
+    }
+    
 }
