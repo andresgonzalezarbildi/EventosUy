@@ -1,6 +1,8 @@
 package logica.controladores;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -114,6 +116,7 @@ public class ControladorEvento implements IControladorEvento {
     		 for (Evento eve : eventos.values()) {
     			 de[i++] = new DataEvento(eve.getNombre(), eve.getDescripcionEvento(), eve.getSigla(), eve.getFecha(), eve.getCategoriasLista());
     		 }
+    		 Arrays.sort(de, Comparator.comparing(DataEvento::getNombre));
     		 return de;
     	 }else {
     		 throw new EventoNoExisteException("No existen eventos registrados");
@@ -142,7 +145,7 @@ public class ControladorEvento implements IControladorEvento {
     				);
 
     		}
-    		
+    		Arrays.sort(dEdi, Comparator.comparing(DataEdicion::getNombre));
     		return dEdi;
     	}else {
     		throw new EventoNoExisteException("No existen ediciones registradas del Evento");
@@ -265,8 +268,9 @@ public class ControladorEvento implements IControladorEvento {
 
     EdicionEvento edi = ev.getEdicion(nombreEdicion);
     if (edi == null) throw new IllegalArgumentException("No existe la edición: " + nombreEdicion);
-
-    return edi.getTiposRegistroDTO().toArray(new DataTipoRegistro[0]);
+    DataTipoRegistro[] lista = edi.getTiposRegistroDTO().toArray(new DataTipoRegistro[0]);
+    Arrays.sort(lista, Comparator.comparing(DataTipoRegistro::getNombre));
+    return lista;
 
 }
 

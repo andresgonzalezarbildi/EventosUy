@@ -365,6 +365,25 @@ public class CargaDatos implements ICargaDatos {
             ce.altaTipoRegistro("Conferencia de Tecnología", "Web Summit 2026", "Estudiante", "Acceso para estudiantes", 300, 1);
         } catch (IllegalArgumentException ignored) {}
 
-
+        
+        
+      //Carga registro a edicion a evento:
+        //altaRegistro(String nombreEvento, String nombreEdicion, String nombreTipoRegistro, String nombreAsistente, LocalDate fecha) throws UsuarioNoExisteException
+        try {
+            ce.altaRegistro(String nombreEvento, String nombreEdicion, String nombreTipoRegistro, String nombreAsistente, LocalDate fecha);
+        } catch (IllegalArgumentException ignored) {}
+        
     }
+    /*
+     "sofirod" 	 "Montevideo Rock" 			 EDEV01 "Montevideo Rock 2025" 			TR02 14/05/2025 4000
+	 "sofirod"	 "Maratón de Montevideo"	 EDEV03 "Maratón de Montevideo 2024"	TR07 30/07/2024 500
+	 "andrearod" "Conferencia de Tecnología" EDEV10 "Web Summit 2026" 				TR25 21/08/2025 300
+	 "sofirod" 	"Maratón de Montevideo" 	 EDEV02 "Maratón de Montevideo 2025"	TR03 03/03/2025 1200
+	 "vale23" 	"Conferencia de Tecnología"  EDEV09	"Mobile World Congress 2025"	TR20 22/08/2025 750
+	 "AnaG" 	"Maratón de Montevideo" 	 EDEV02 "Maratón de Montevideo 2025" 	TR05 09/04/2025 500
+	 "JaviL"	"Maratón de Montevideo" 	 EDEV02 "Maratón de Montevideo 2025" 	TR04 10/04/2025 800
+	 "MariR" 	 "Montevideo Comics" 		 EDEV06 "Montevideo Comics 2025" 		TR14 03/08/2025 500
+	 "SofiM" 	"Montevideo Comics"  		 EDEV05 "Montevideo Comics 2024" 		TR11 16/07/2024 600
+*/
+    
 }

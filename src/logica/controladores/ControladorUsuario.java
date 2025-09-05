@@ -3,6 +3,7 @@ package logica.controladores;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
 
 import excepciones.UsuarioNoExisteException;
@@ -109,25 +110,24 @@ public class ControladorUsuario implements IControladorUsuario {
         List<DataUsuario> lista = new ArrayList<>(orgs.size() + asis.size());
         for (Organizador o : orgs) lista.add(aDataUsuario(o));
         for (Asistente  a : asis)  lista.add(aDataUsuario(a));
-
+        lista.sort(Comparator.comparing(DataUsuario::getNombre)); // ordenamos antes de devolver
         return lista.toArray(new DataUsuario[0]);
     }
     
     public DataUsuario[] getOrganizadores(){
         Collection<Organizador> orgs = manejador.obtenerTodosOrganizadores();
-
-        
         List<DataUsuario> lista = new ArrayList<>(orgs.size());
         for (Organizador o : orgs) lista.add(aDataUsuario(o));
+        lista.sort(Comparator.comparing(DataUsuario::getNombre)); // ordenamos antes de devolver
         return lista.toArray(new DataUsuario[0]);
     }
     
+    
     public DataUsuario[] getAsistentes(){
         Collection<Asistente> orgs = manejador.obtenerTodosAsistentes();
-
-        
         List<DataUsuario> lista = new ArrayList<>(orgs.size());
         for (Asistente o : orgs) lista.add(aDataUsuario(o));
+        lista.sort(Comparator.comparing(DataUsuario::getNombre)); // ordenamos antes de devolver
         return lista.toArray(new DataUsuario[0]);
     }
 

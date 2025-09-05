@@ -1,6 +1,8 @@
 package logica.manejadores;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -58,6 +60,7 @@ public class ManejadorEvento {
                 e.getCategoriasLista()
             ));
         }
+        lista.sort(Comparator.comparing(DataEvento::getNombre)); // ordenamos antes de devolver
         return lista.toArray(new DataEvento[0]);
     }
     
@@ -77,15 +80,19 @@ public class ManejadorEvento {
     }
     
     public List<Categoria> getCategorias() {
-        return new ArrayList<>(categorias.values());
+        List<Categoria> lista = new ArrayList<>(categorias.values());
+        lista.sort(Comparator.comparing(Categoria::getNombre));// ordenamos antes de devolver
+        return lista;
     }
-
     public List<String> getNombresCategorias() {
-        return new ArrayList<>(categorias.keySet());
+        List<String> nombres = new ArrayList<>(categorias.keySet());
+        Collections.sort(nombres); // ordenamos antes de devolver
+        return nombres;
     }
-
     public Categoria[] getCategoriasArray() {
-        return categorias.values().toArray(new Categoria[0]);
+        List<Categoria> lista = new ArrayList<>(categorias.values());
+        lista.sort(Comparator.comparing(Categoria::getNombre)); //ordenamos antes de devolver
+        return lista.toArray(new Categoria[0]);
     }
     
     public boolean existeCategoria(String nombre) {
