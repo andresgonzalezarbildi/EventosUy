@@ -175,18 +175,17 @@ public class ConsultaEvento extends JInternalFrame {
         gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
         gbc_comboBox.gridx = 2;
         gbc_comboBox.gridy = 5;
-        panel.add(cbEdiciones, gbc_comboBox);
-        JScrollPane scrollInfo = new JScrollPane();
         
-        JButton btnVerEdicion = new JButton("Ver edición");
-        GridBagConstraints gbc_btn = new GridBagConstraints();
-        gbc_btn.gridx = 2;
-        gbc_btn.gridy = 6;
-        gbc_btn.insets = new Insets(6, 0, 0, 0);
-        gbc_btn.anchor = GridBagConstraints.LINE_START;
-        panel.add(btnVerEdicion, gbc_btn);
-
-        btnVerEdicion.addActionListener(e -> abrirConsultaEdicionSeleccionada());
+        panel.add(cbEdiciones, gbc_comboBox);
+        cbEdiciones.addActionListener(e -> {
+            Object sel = cbEdiciones.getSelectedItem();
+            // Evitamos que se dispare con "Seleccione..." o vacío
+            if (sel != null && !"Seleccione...".equals(sel) && !String.valueOf(sel).startsWith("No tiene")) {
+                abrirConsultaEdicionSeleccionada();
+            }
+        });
+        
+       
 
         JPanel panelInferior = new JPanel(new BorderLayout());
 

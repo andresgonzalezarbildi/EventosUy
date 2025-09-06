@@ -168,14 +168,23 @@ public class ConsultaDeTipoDeRegistro extends JInternalFrame {
         try {
             DataEvento[] eventos = IEV.listarEventoExistentes();
             if (eventos != null) {
+                java.util.List<DataEvento> lista = new java.util.ArrayList<>();
                 for (DataEvento ev : eventos) {
-                    if (ev != null) listaModel.addElement(ev);
+                    if (ev != null) lista.add(ev);
+                }
+
+                // Ordenar por nombre de evento (ignorar mayúsculas/minúsculas)
+                lista.sort(java.util.Comparator.comparing(DataEvento::getNombre, String.CASE_INSENSITIVE_ORDER));
+
+                for (DataEvento ev : lista) {
+                    listaModel.addElement(ev);
                 }
             }
         } catch (EventoNoExisteException ex) {
             JOptionPane.showMessageDialog(this, "No hay eventos cargados.", "Info", JOptionPane.INFORMATION_MESSAGE);
         }
     }
+
 
     private void cargarEdiciones(DataEvento ev) {
         cbListaEdicion.removeAllItems();

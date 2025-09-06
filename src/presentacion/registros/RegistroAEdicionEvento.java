@@ -238,7 +238,15 @@ public class RegistroAEdicionEvento extends JInternalFrame {
         try {
             DataEvento[] eventos = ctrlEvento.getEventosDTO();
             DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
-            for (DataEvento de : eventos) model.addElement(de.getNombre());
+            if (eventos != null) {
+                java.util.List<DataEvento> lista = new java.util.ArrayList<>();
+                for (DataEvento de : eventos) if (de != null) lista.add(de);
+
+                // Ordenar por nombre de evento
+                lista.sort(java.util.Comparator.comparing(DataEvento::getNombre, String.CASE_INSENSITIVE_ORDER));
+
+                for (DataEvento de : lista) model.addElement(de.getNombre());
+            }
             cbListaEvento.setModel(model);
             cbListaEvento.setSelectedIndex(-1);
         } catch (Exception ex) {
@@ -249,6 +257,7 @@ public class RegistroAEdicionEvento extends JInternalFrame {
         limpiarTiposRegistro();
     }
 
+
     private void cargarEdicionesParaEvento(String nombreEvento) {
         if (nombreEvento == null || nombreEvento.isBlank()) {
             limpiarEdiciones();
@@ -258,9 +267,19 @@ public class RegistroAEdicionEvento extends JInternalFrame {
         try {
             DataEdicion[] ediciones = ctrlEvento.listarEdiciones(nombreEvento);
             DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
-            if (ediciones != null) for (DataEdicion de : ediciones) model.addElement(de.getNombre());
+            if (ediciones != null) {
+                java.util.List<DataEdicion> lista = new java.util.ArrayList<>();
+                for (DataEdicion de : ediciones) if (de != null) lista.add(de);
+
+                // Ordenar por nombre alfabéticamente, sin importar mayúsculas
+                lista.sort(java.util.Comparator.comparing(DataEdicion::getNombre, String.CASE_INSENSITIVE_ORDER));
+
+                for (DataEdicion de : lista) {
+                    model.addElement(de.getNombre());
+                }
+            }
             cbListaEdiciones.setModel(model);
-            cbListaEdiciones.setSelectedIndex(-1);
+            cbListaEdiciones.setSelectedIndex(-1); // nada seleccionado al inicio
         } catch (EventoNoExisteException ex) {
             limpiarEdiciones();
         } catch (Exception ex) {
@@ -268,6 +287,7 @@ public class RegistroAEdicionEvento extends JInternalFrame {
         }
         limpiarTiposRegistro();
     }
+
 
     private void limpiarEdiciones() {
         if (cbListaEdiciones == null) return;
@@ -284,15 +304,26 @@ public class RegistroAEdicionEvento extends JInternalFrame {
         try {
             DataTipoRegistro[] tipos = ctrlEvento.listarTiposRegistro(nombreEvento, nombreEdicion);
             DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
-            if (tipos != null) for (DataTipoRegistro t : tipos) model.addElement(t.getNombre());
+            if (tipos != null) {
+                java.util.List<DataTipoRegistro> lista = new java.util.ArrayList<>();
+                for (DataTipoRegistro t : tipos) if (t != null) lista.add(t);
+
+                // Ordenar por nombre alfabéticamente (ignora mayúsculas)
+                lista.sort(java.util.Comparator.comparing(DataTipoRegistro::getNombre, String.CASE_INSENSITIVE_ORDER));
+
+                for (DataTipoRegistro t : lista) {
+                    model.addElement(t.getNombre());
+                }
+            }
             cbTipoRegistro.setModel(model);
-            cbTipoRegistro.setSelectedIndex(-1);
+            cbTipoRegistro.setSelectedIndex(-1); // sin selección inicial
         } catch (IllegalArgumentException ex) {
             limpiarTiposRegistro();
         } catch (Exception ex) {
             limpiarTiposRegistro();
         }
     }
+
 
     private void limpiarTiposRegistro() {
         if (cbTipoRegistro == null) return;
@@ -305,20 +336,29 @@ public class RegistroAEdicionEvento extends JInternalFrame {
             DataUsuario[] asistentes = ctrlUsuario.getAsistentes();
             DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
             if (asistentes != null) {
+                java.util.List<String> lista = new java.util.ArrayList<>();
                 for (DataUsuario du : asistentes) {
                     String nick = du.getNickname() != null ? du.getNickname().trim() : "";
                     if (!nick.isBlank()) {
-                        model.addElement(nick);
+                        lista.add(nick);
                     }
+                }
+
+                // Ordenar alfabéticamente (ignorando mayúsculas/minúsculas)
+                lista.sort(String.CASE_INSENSITIVE_ORDER);
+
+                for (String nick : lista) {
+                    model.addElement(nick);
                 }
             }
             cbAsistentes.setModel(model);
-            cbAsistentes.setSelectedIndex(-1);
+            cbAsistentes.setSelectedIndex(-1); // nada seleccionado al inicio
         } catch (Exception ex) {
             cbAsistentes.setModel(new DefaultComboBoxModel<>());
             cbAsistentes.setSelectedIndex(-1);
         }
     }
+
 
     @Override
     public void setVisible(boolean aFlag) {

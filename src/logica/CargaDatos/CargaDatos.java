@@ -365,6 +365,67 @@ public class CargaDatos implements ICargaDatos {
             ce.altaTipoRegistro("Conferencia de Tecnología", "Web Summit 2026", "Estudiante", "Acceso para estudiantes", 300, 1);
         } catch (IllegalArgumentException ignored) {}
 
+        
+        
+     // Carga registros a ediciones de eventos
+        try {
+            ce.altaRegistro("Montevideo Rock", "Montevideo Rock 2025", "VIP", "sofirod",
+                LocalDate.of(2025, 5, 14));
+
+            ce.altaRegistro("Maratón de Montevideo", "Maratón de Montevideo 2024", "Corredor 21K", "sofirod",
+                LocalDate.of(2024, 7, 30));
+
+            ce.altaRegistro("Conferencia de Tecnología", "Web Summit 2026", "Estudiante", "andrearod",
+                LocalDate.of(2025, 8, 21));
+
+            ce.altaRegistro("Maratón de Montevideo", "Maratón de Montevideo 2025", "Corredor 42K", "sofirod",
+                LocalDate.of(2025, 3, 3));
+
+            ce.altaRegistro("Conferencia de Tecnología", "Mobile World Congress 2025", "Full", "vale23",
+                LocalDate.of(2025, 8, 22));
+
+            ce.altaRegistro("Maratón de Montevideo", "Maratón de Montevideo 2025", "Corredor 10K", "AnaG",
+                LocalDate.of(2025, 4, 9));
+
+            ce.altaRegistro("Maratón de Montevideo", "Maratón de Montevideo 2025", "Corredor 21K", "JaviL",
+                LocalDate.of(2025, 4, 10));
+
+            ce.altaRegistro("Montevideo Comics", "Montevideo Comics 2025", "Cosplayer", "MariR",
+                LocalDate.of(2025, 8, 3));
+
+            ce.altaRegistro("Montevideo Comics", "Montevideo Comics 2024", "General", "SofiM",
+                LocalDate.of(2024, 7, 16));
+        } catch (IllegalArgumentException ignored) {
+        } catch (UsuarioNoExisteException ignored) {
+        }
+
+        
+//        //Carga registro a edicion a evento:
+//         1- //altaRegistro(String nombreEvento, String nombreEdicion, String nombreTipoRegistro, String nombreAsistente, LocalDate fecha) throws UsuarioNoExisteException
+//         2- try {
+//              ce.altaRegistro(String nombreEvento, String nombreEdicion, String nombreTipoRegistro, String nombreAsistente, LocalDate fecha);
+//          } catch (IllegalArgumentException ignored) {}
+//          
+//      }
+//      3-/*/
+//       "sofirod" 	 "Montevideo Rock" 			 EDEV01 "Montevideo Rock 2025" 			TR02 VIP	 14/05/2025 4000
+//  	 "sofirod"	 "Maratón de Montevideo"	 EDEV03 "Maratón de Montevideo 2024"	TR07 Corredor 21K	30/07/2024 500
+//  	 "andrearod" "Conferencia de Tecnología" EDEV10 "Web Summit 2026" 				TR25 Estudiante	21/08/2025 300
+//  	 "sofirod" 	"Maratón de Montevideo" 	 EDEV02 "Maratón de Montevideo 2025"	TR03 Corredor 42K	 03/03/2025 1200
+//  	 "vale23" 	"Conferencia de Tecnología"  EDEV09	"Mobile World Congress 2025"	TR20 Full	22/08/2025 750
+//  	 "AnaG" 	"Maratón de Montevideo" 	 EDEV02 "Maratón de Montevideo 2025" 	TR05 Corredor 10K	09/04/2025 500
+//  	 "JaviL"	"Maratón de Montevideo" 	 EDEV02 "Maratón de Montevideo 2025" 	TR04 Corredor 21K	10/04/2025 800
+//  	 "MariR" 	 "Montevideo Comics" 		 EDEV06 "Montevideo Comics 2025" 		TR14 Cosplayer	03/08/2025 500
+//  	 "SofiM" 	"Montevideo Comics"  		 EDEV05 "Montevideo Comics 2024" 		TR11 General	16/07/2024 600
+//  */
+//      
+//  }
+
+
+        
+        
+        
+        
 
     }
 }

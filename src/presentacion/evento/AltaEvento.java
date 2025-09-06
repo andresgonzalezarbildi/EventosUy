@@ -191,29 +191,29 @@ public class AltaEvento extends JInternalFrame {
         gbc.weightx = 0.5; gbc.weighty = 1.0;
         gbc.fill = GridBagConstraints.BOTH;
         panel.add(scrollSeleccionadas, cloneGbc(gbc));
+     // Panel que contendrá ambos botones, uno arriba del otro
+        JPanel panelBotones = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc_btn = new GridBagConstraints();
+        gbc_btn.gridx = 0;
+        gbc_btn.fill = GridBagConstraints.HORIZONTAL;
+        gbc_btn.insets = new Insets(2, 0, 2, 0); // margen entre botones
 
-        // Botón >> (mismo renglón 5, columna 1)
+        // Botón >>
         JButton btnAgregar = new JButton(">>");
         btnAgregar.addActionListener(e -> {
             for (String cat : listaCategoriasDisponibles.getSelectedValuesList()) {
                 if (!modeloSeleccionadas.contains(cat)) {
                     modeloSeleccionadas.addElement(cat);
                 }
-                // opcional: sacarla de disponibles
                 modeloDisponibles.removeElement(cat);
             }
             UIUtils.ordenarJList(modeloDisponibles);
             UIUtils.ordenarJList(modeloSeleccionadas);
         });
-        gbc.gridx = 1; gbc.gridy = 5; 
-        gbc.gridwidth = 1;
-        gbc.weightx = 0; gbc.weighty = 0;
-        gbc.fill = GridBagConstraints.NONE; 
-        gbc.anchor = GridBagConstraints.CENTER;
-        gbc.insets = new Insets(5, 5, 5, 5);
-        panel.add(btnAgregar, cloneGbc(gbc));
+        gbc_btn.gridy = 0;
+        panelBotones.add(btnAgregar, gbc_btn);
 
-        // Botón << (fila 6, columna 1)
+        // Botón <<
         JButton btnQuitar = new JButton("<<");
         btnQuitar.addActionListener(e -> {
             for (String cat : listaCategoriasSeleccionadas.getSelectedValuesList()) {
@@ -225,13 +225,16 @@ public class AltaEvento extends JInternalFrame {
             UIUtils.ordenarJList(modeloSeleccionadas);
             UIUtils.ordenarJList(modeloDisponibles);
         });
-        gbc.gridx = 1; gbc.gridy = 6; 
-        gbc.gridwidth = 1;
-        gbc.weightx = 0; gbc.weighty = 0;
-        gbc.fill = GridBagConstraints.NONE; 
+        gbc_btn.gridy = 1;
+        panelBotones.add(btnQuitar, gbc_btn);
+
+        // Ahora agregamos este panel de botones en la columna del medio
+        gbc.gridx = 1; 
+        gbc.gridy = 5; 
+        gbc.gridheight = 2; // ocupa espacio vertical de las listas
         gbc.anchor = GridBagConstraints.CENTER;
-        gbc.insets = new Insets(5, 5, 5, 5);
-        panel.add(btnQuitar, cloneGbc(gbc));
+        panel.add(panelBotones, cloneGbc(gbc));
+
 
         // Panel inferior de botones
         JPanel botones = new JPanel(new FlowLayout(FlowLayout.RIGHT));

@@ -199,7 +199,7 @@ public class ControladorEvento implements IControladorEvento {
         LocalDate FechaEvento = evento.getFecha();
         if (fechaAltaEnPlataforma.isBefore(FechaEvento))
         	throw new IllegalArgumentException(
-        	        "La fecha de inicio de la edición a crear no puede ser posterior a la fecha de alta en plataforma del evento \"" 
+        	        "La fecha de inicio de la edición a crear debe ser posterior a la fecha de alta en plataforma del evento \"" 
         	                + evento.getNombre() + "\""
         	            );
         if (evento.getEdicion(nombreEdicion) != null) {
