@@ -257,7 +257,7 @@ public class AltaUsuario extends JInternalFrame {
         // JDateChooser en vez de JTextField
         dateChooserFechaNac = new JDateChooser();
         dateChooserFechaNac.setDateFormatString("yyyy-MM-dd");
-        ((JTextField) dateChooserFechaNac.getDateEditor().getUiComponent()).setEditable(false);
+        ((JTextField) dateChooserFechaNac.getDateEditor().getUiComponent()).setEditable(true);
         GridBagConstraints gbc_dateChooserFechaNac = new GridBagConstraints();
         gbc_dateChooserFechaNac.gridwidth = 2;
         gbc_dateChooserFechaNac.fill = GridBagConstraints.BOTH;

@@ -201,7 +201,7 @@ public class AltaEdicionEvento extends JInternalFrame {
 		getContentPane().add(dateChooserFechaF, gbc_dateChooserFechaF);
 
 		// --- Fecha alta ---
-		JLabel lblFechaAlta = new JLabel("Fecha:");
+		JLabel lblFechaAlta = new JLabel("Fecha de Alta:");
 		GridBagConstraints gbc_lblFechaAlta = new GridBagConstraints();
 		gbc_lblFechaAlta.anchor = GridBagConstraints.EAST;
 		gbc_lblFechaAlta.insets = new Insets(0, 0, 5, 5);

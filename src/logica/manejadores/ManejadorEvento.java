@@ -1,6 +1,9 @@
 package logica.manejadores;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,6 +11,7 @@ import java.util.Map;
 import logica.clases.Categoria;
 import logica.clases.EdicionEvento;
 import logica.clases.Evento;
+import logica.clases.Organizador;
 import logica.datatypes.DataEvento;
 
 public class ManejadorEvento {
@@ -46,6 +50,10 @@ public class ManejadorEvento {
     public Map<String, Evento> getEventos() {
         return eventos;
     }
+    public Collection<Evento> obtenerTodosEventos() {
+        return eventos.values();
+    }
+
 
     public DataEvento[] getEventosDTO() {
         List<DataEvento> lista = new ArrayList<>();
@@ -58,6 +66,7 @@ public class ManejadorEvento {
                 e.getCategoriasLista()
             ));
         }
+        lista.sort(Comparator.comparing(DataEvento::getNombre));
         return lista.toArray(new DataEvento[0]);
     }
     
@@ -77,11 +86,17 @@ public class ManejadorEvento {
     }
     
     public List<Categoria> getCategorias() {
-        return new ArrayList<>(categorias.values());
+    	List<Categoria> lista = new ArrayList<>(categorias.values());
+        lista.sort(Comparator.comparing(Categoria::getNombre));// ordenamos antes de devolver
+        return lista;
+
     }
 
     public List<String> getNombresCategorias() {
-        return new ArrayList<>(categorias.keySet());
+    	List<String> nombres = new ArrayList<>(categorias.keySet());
+        Collections.sort(nombres); // ordenamos antes de devolver
+        return nombres;
+
     }
 
     public Categoria[] getCategoriasArray() {

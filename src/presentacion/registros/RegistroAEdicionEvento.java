@@ -146,9 +146,9 @@ public class RegistroAEdicionEvento extends JInternalFrame {
         panel.add(lblFecha, gbc_lblFecha);
 
         dcFecha = new JDateChooser();
-        dcFecha.setDateFormatString("dd/MM/yyyy");
+        dcFecha.setDateFormatString("yyyy/MM/dd");
         dcFecha.setToolTipText("Seleccioná la fecha del registro");
-        ((javax.swing.JTextField) dcFecha.getDateEditor().getUiComponent()).setEditable(false);
+        ((javax.swing.JTextField) dcFecha.getDateEditor().getUiComponent()).setEditable(true);
         GridBagConstraints gbc_dcFecha = new GridBagConstraints();
         gbc_dcFecha.weightx = 1.0;
         gbc_dcFecha.insets = new Insets(6, 6, 6, 12);

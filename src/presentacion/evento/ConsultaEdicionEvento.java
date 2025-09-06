@@ -1,6 +1,8 @@
 package presentacion.evento;
 
 import java.awt.*;
+import java.util.Comparator;
+
 import javax.swing.*;
 import logica.interfaces.IControladorEvento;
 import logica.datatypes.DataEvento;
@@ -193,8 +195,17 @@ public class ConsultaEdicionEvento extends JInternalFrame {
         comboBoxEvento.removeAllItems();
         DataEvento[] eventos = controlEvento.getEventosDTO();
         if (eventos != null) {
-            for (DataEvento ev : eventos) if (ev != null) comboBoxEvento.addItem(ev);
+            java.util.List<DataEvento> lista = new java.util.ArrayList<>();
+            for (DataEvento ev : eventos) if (ev != null) lista.add(ev);
+
+            // Ordenar por nombre de evento (ignorando mayúsculas/minúsculas)
+            lista.sort(Comparator.comparing(DataEvento::getNombre, String.CASE_INSENSITIVE_ORDER));
+
+            // Cargar en el combo ya ordenados
+            for (DataEvento ev : lista) comboBoxEvento.addItem(ev);
         }
+
+        // dejar sin selección inicial
         comboBoxEvento.setSelectedIndex(-1);
     }
 
@@ -203,13 +214,41 @@ public class ConsultaEdicionEvento extends JInternalFrame {
         try {
             DataEdicion[] ediciones = controlEvento.listarEdiciones(nombreEvento);
             if (ediciones != null) {
-                for (DataEdicion de : ediciones) comboBoxEdiciones.addItem(de);
+                java.util.List<DataEdicion> lista = new java.util.ArrayList<>();
+                for (DataEdicion de : ediciones) if (de != null) lista.add(de);
+
+                // Ordenar alfabéticamente por nombre
+                lista.sort(Comparator.comparing(DataEdicion::getNombre, String.CASE_INSENSITIVE_ORDER));
+
+                for (DataEdicion de : lista) comboBoxEdiciones.addItem(de);
             }
         } catch (EventoNoExisteException ex) {
-            JOptionPane.showMessageDialog(this, "No hay ediciones para el evento: " + nombreEvento, "Info", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this,
+                "No hay ediciones para el evento: " + nombreEvento,
+                "Info", JOptionPane.INFORMATION_MESSAGE);
         }
+
+        // 🔑 Importante: dejar combo sin selección
         comboBoxEdiciones.setSelectedIndex(-1);
+
+        // 🔑 Limpiar campos de detalle
+        limpiarCamposDetalle();
     }
+    private void limpiarCamposDetalle() {
+        textNombre.setText("");
+        textFechaIni.setText("");
+        textFechaFin.setText("");
+        textCiudad.setText("");
+        textPais.setText("");
+        textSigla.setText("");
+        textAlta.setText("");
+        textOrganizador.setText("");
+
+        modeloTipos.clear();
+        modeloPatrocinios.clear();
+    }
+
+
 
     private void mostrarInfoEdicion(DataEdicion de) {
         textNombre.setText(de.getNombre());

@@ -1,6 +1,9 @@
 package logica.controladores;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -19,6 +22,7 @@ import logica.datatypes.DataEdicion;
 import logica.datatypes.DataEvento;
 import logica.datatypes.DataRegistro;
 import logica.datatypes.DataTipoRegistro;
+import logica.datatypes.DataUsuario;
 import logica.interfaces.IControladorEvento;
 import logica.manejadores.ManejadorEvento;
 import logica.manejadores.ManejadorUsuario;
@@ -98,8 +102,23 @@ public class ControladorEvento implements IControladorEvento {
    }
     
    public DataEvento[] getEventosDTO() {
-	    DataEvento[] eventos = manejadorEvento.getEventosDTO();
-	    return eventos;
+	    Collection<Evento> evs = manejadorEvento.obtenerTodosEventos();
+
+	    List<DataEvento> lista = new ArrayList<>(evs.size());
+	    for (Evento e : evs) {
+	        lista.add(new DataEvento(
+	            e.getNombre(),
+	            e.getDescripcionEvento(),
+	            e.getSigla(),
+	            e.getFecha(),
+	            e.getCategoriasLista()
+	        ));
+	    }
+
+	    // Ordenamos por nombre, ignorando mayúsculas/minúsculas
+	    lista.sort(Comparator.comparing(DataEvento::getNombre, String.CASE_INSENSITIVE_ORDER));
+
+	    return lista.toArray(new DataEvento[0]);
 	}
 
    
@@ -114,6 +133,8 @@ public class ControladorEvento implements IControladorEvento {
     		 for (Evento eve : eventos.values()) {
     			 de[i++] = new DataEvento(eve.getNombre(), eve.getDescripcionEvento(), eve.getSigla(), eve.getFecha(), eve.getCategoriasLista());
     		 }
+    		Arrays.sort(de, Comparator.comparing(DataEvento::getNombre));
+
     		 return de;
     	 }else {
     		 throw new EventoNoExisteException("No existen eventos registrados");
@@ -142,8 +163,9 @@ public class ControladorEvento implements IControladorEvento {
     				);
 
     		}
-    		
+    		Arrays.sort(dEdi, Comparator.comparing(DataEdicion::getNombre));
     		return dEdi;
+
     	}else {
     		throw new EventoNoExisteException("No existen ediciones registradas del Evento");
     	}
@@ -163,12 +185,12 @@ public class ControladorEvento implements IControladorEvento {
         	throw new IllegalArgumentException("La ciudad es obligatoria.");
         if (pais == null || pais.isBlank())           
         	throw new IllegalArgumentException("El país es obligatorio.");
-        if (fechaInicio == null || fechaFin == null)
-        	throw new IllegalArgumentException("Las fechas de inicio y fin son obligatorias.");
+        if (fechaInicio == null || fechaFin == null || fechaAltaEnPlataforma == null)
+        	throw new IllegalArgumentException("Las fechas de Inicio ,Fin y Alta son obligatorias.");
         if (fechaFin.isBefore(fechaInicio))
         	throw new IllegalArgumentException("La fecha de fin no puede ser anterior a la de inicio.");
         if (fechaInicio.isBefore(fechaAltaEnPlataforma))
-        	throw new IllegalArgumentException("La fecha de Alta no puede ser posterior a la de inicio.");
+        	throw new IllegalArgumentException("La fecha de Alta de la edición no puede ser posterior a la fecha de de inicio de la edición.");
 
         Evento evento = manejadorEvento.obtenerEvento(nombreEvento);
         if (evento == null) {
@@ -176,7 +198,10 @@ public class ControladorEvento implements IControladorEvento {
         }
         LocalDate FechaEvento = evento.getFecha();
         if (fechaAltaEnPlataforma.isBefore(FechaEvento))
-        	throw new IllegalArgumentException("La fecha de Alta no puede ser anterior al evento.");
+        	throw new IllegalArgumentException(
+        	        "La fecha de inicio de la edición a crear no puede ser posterior a la fecha de alta en plataforma del evento \"" 
+        	                + evento.getNombre() + "\""
+        	            );
         if (evento.getEdicion(nombreEdicion) != null) {
             throw new IllegalArgumentException("Ya existe una edición con ese nombre en este evento: " + nombreEvento);
         }
@@ -266,7 +291,10 @@ public class ControladorEvento implements IControladorEvento {
     EdicionEvento edi = ev.getEdicion(nombreEdicion);
     if (edi == null) throw new IllegalArgumentException("No existe la edición: " + nombreEdicion);
 
-    return edi.getTiposRegistroDTO().toArray(new DataTipoRegistro[0]);
+    DataTipoRegistro[] lista = edi.getTiposRegistroDTO().toArray(new DataTipoRegistro[0]);
+    Arrays.sort(lista, Comparator.comparing(DataTipoRegistro::getNombre));
+    return lista;
+
 
 }
 
