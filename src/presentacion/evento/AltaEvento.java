@@ -9,6 +9,7 @@ import java.awt.Insets;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -31,6 +32,7 @@ import com.toedter.calendar.JDateChooser;
 import logica.clases.Categoria;
 import logica.interfaces.IControladorEvento;
 import logica.manejadores.ManejadorEvento;
+import presentacion.UIUtils;
 
 @SuppressWarnings("serial")
 public class AltaEvento extends JInternalFrame {
@@ -121,8 +123,8 @@ public class AltaEvento extends JInternalFrame {
         panel.add(lblFecha, gbc_lblFecha);
 
         dcFecha = new JDateChooser();
-        dcFecha.setDateFormatString("dd/MM/yyyy");
-        ((JTextField) dcFecha.getDateEditor().getUiComponent()).setEditable(false);
+        dcFecha.setDateFormatString("yyyy/MM/dd");
+        ((JTextField) dcFecha.getDateEditor().getUiComponent()).setEditable(true);
 
         GridBagConstraints gbc_dcFecha = new GridBagConstraints();
         gbc_dcFecha.gridx = 1; gbc_dcFecha.gridy = 3;
@@ -147,16 +149,30 @@ public class AltaEvento extends JInternalFrame {
         modeloDisponibles = new DefaultListModel<>();
         modeloSeleccionadas = new DefaultListModel<>();
 
-        // Cargar categorías desde el Manejador
+     // Pedir categorías y armar lista de Strings
         ManejadorEvento manejador = ManejadorEvento.getInstance();
+        List<String> nombres = new ArrayList<>();
         for (Categoria c : manejador.getCategorias()) {
             if (c != null && c.getNombre() != null) {
-                modeloDisponibles.addElement(c.getNombre());
+                nombres.add(c.getNombre());
             }
         }
+
+        // Ordenar primero
+        Collections.sort(nombres);
         
 
+        // Cargar ordenado al modelo
+        modeloDisponibles = new DefaultListModel<>();
+        for (String nombre : nombres) {
+            modeloDisponibles.addElement(nombre);
+        }
+
+        // Ahora sí crear la lista
         listaCategoriasDisponibles = new JList<>(modeloDisponibles);
+
+//        UIUtils.ordenarJList(modeloDisponibles);
+//        listaCategoriasDisponibles.updateUI(); 
         listaCategoriasDisponibles.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         JScrollPane scrollDisponibles = new JScrollPane(listaCategoriasDisponibles);
 
@@ -186,6 +202,8 @@ public class AltaEvento extends JInternalFrame {
                 // opcional: sacarla de disponibles
                 modeloDisponibles.removeElement(cat);
             }
+            UIUtils.ordenarJList(modeloDisponibles);
+            UIUtils.ordenarJList(modeloSeleccionadas);
         });
         gbc.gridx = 1; gbc.gridy = 5; 
         gbc.gridwidth = 1;
@@ -204,6 +222,8 @@ public class AltaEvento extends JInternalFrame {
                 }
                 modeloSeleccionadas.removeElement(cat);
             }
+            UIUtils.ordenarJList(modeloSeleccionadas);
+            UIUtils.ordenarJList(modeloDisponibles);
         });
         gbc.gridx = 1; gbc.gridy = 6; 
         gbc.gridwidth = 1;
@@ -233,19 +253,29 @@ public class AltaEvento extends JInternalFrame {
         modeloSeleccionadas.clear();
         modeloDisponibles.clear();
 
-        // Volver a cargar categorías
+        // Volver a cargar categorías en una lista temporal
+        List<String> nombres = new ArrayList<>();
         for (Categoria c : ManejadorEvento.getInstance().getCategorias()) {
             if (c != null && c.getNombre() != null && !modeloSeleccionadas.contains(c.getNombre())) {
-                modeloDisponibles.addElement(c.getNombre());
+                nombres.add(c.getNombre());
             }
         }
 
+        // Ordenar antes de cargar al modelo
+        Collections.sort(nombres);
+
+        for (String nombre : nombres) {
+            modeloDisponibles.addElement(nombre);
+        }
+
+        // Limpiar selección de las listas
         listaCategoriasDisponibles.clearSelection();
         listaCategoriasSeleccionadas.clearSelection();
 
         getContentPane().revalidate();
         getContentPane().repaint();
     }
+
 
     private void guardarEvento() {
         // 1) Validaciones de UI

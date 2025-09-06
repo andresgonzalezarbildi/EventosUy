@@ -166,9 +166,9 @@ public class AltaEdicionEvento extends JInternalFrame {
 		getContentPane().add(lblFechaInicio, gbc_lblFechaInicio);
 
 		dateChooserFechaI = new JDateChooser();
-		dateChooserFechaI.setDateFormatString("dd/MM/yyyy");
+		dateChooserFechaI.setDateFormatString("yyyy/MM/dd");
 		dateChooserFechaI.setDate(null);
-		((JTextField) dateChooserFechaI.getDateEditor().getUiComponent()).setEditable(false);
+		((JTextField) dateChooserFechaI.getDateEditor().getUiComponent()).setEditable(true);
 		dateChooserFechaI.getCalendarButton().setPreferredSize(new Dimension(30, 22));
 
 		GridBagConstraints gbc_dateChooserFechaI = new GridBagConstraints();
@@ -188,9 +188,9 @@ public class AltaEdicionEvento extends JInternalFrame {
 		getContentPane().add(lblFechaFin, gbc_lblFechaFin);
 
 		dateChooserFechaF = new JDateChooser();
-		dateChooserFechaF.setDateFormatString("dd/MM/yyyy");
+		dateChooserFechaF.setDateFormatString("yyyy/MM/dd");
 		dateChooserFechaF.setDate(null);
-		((JTextField) dateChooserFechaF.getDateEditor().getUiComponent()).setEditable(false);
+		((JTextField) dateChooserFechaF.getDateEditor().getUiComponent()).setEditable(true);
 		dateChooserFechaF.getCalendarButton().setPreferredSize(new Dimension(30, 22));
 
 		GridBagConstraints gbc_dateChooserFechaF = new GridBagConstraints();
@@ -210,9 +210,9 @@ public class AltaEdicionEvento extends JInternalFrame {
 		getContentPane().add(lblFechaAlta, gbc_lblFechaAlta);
 
 		dateChooserFechaAlta = new JDateChooser();
-		dateChooserFechaAlta.setDateFormatString("dd/MM/yyyy");
+		dateChooserFechaAlta.setDateFormatString("yyyy/MM/dd");
 		dateChooserFechaAlta.setDate(null);
-		((JTextField) dateChooserFechaAlta.getDateEditor().getUiComponent()).setEditable(false);
+		((JTextField) dateChooserFechaAlta.getDateEditor().getUiComponent()).setEditable(true);
 		dateChooserFechaAlta.getCalendarButton().setPreferredSize(new Dimension(30, 22));
 
 		GridBagConstraints gbc_dateChooserFechaAlta = new GridBagConstraints();
@@ -284,6 +284,7 @@ public class AltaEdicionEvento extends JInternalFrame {
 	    }
 	    if (dateChooserFechaF.getDate() != null) {
 	        fechaFin = dateChooserFechaF.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+	        
 	    }
 	    if (dateChooserFechaAlta.getDate() != null) {
 	        fechaAlta = dateChooserFechaAlta.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
