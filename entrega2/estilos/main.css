@@ -1,0 +1,170 @@
+/* Fondo general */
+body {
+  font-family: Arial, sans-serif;
+  background: #eef2f7;
+  margin: 0;
+  padding: 0;
+}
+
+/* Caja blanca centrada */
+.container {
+  max-width: 600px;
+  margin: 40px auto;
+  background: #fff;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+/* Títulos */
+h1, h2 {
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Navegación (menú) */
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 15px;
+  padding: 0;
+}
+
+nav a {
+  text-decoration: none;
+  color: #007bff;
+  font-weight: bold;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+nav a:hover {
+  background: #007bff;
+  color: white;
+}
+
+/* Formularios */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+label {
+  font-weight: bold;
+}
+
+input, textarea, select {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+/* Botones */
+button {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  font-size: 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background: #0056b3;
+}
+
+/* Banner */
+.banner {
+  background: #007bff;
+  color: white;
+  padding: 15px 20px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.banner h1 {
+  margin: 0;
+  font-size: 26px;
+}
+
+.banner .bandera {
+  height: 40px;
+  border-radius: 4px;
+}
+
+
+.botones {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+/* Consulta Usuario */
+.consulta-usuario .content {
+  display: flex;
+  gap: 20px;
+}
+
+/* Lista de usuarios */
+.usuarios {
+  width: 180px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background: #f9f9f9;
+  overflow-y: auto;
+  max-height: 400px;
+}
+
+.usuarios ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.usuarios li {
+  padding: 8px 12px;
+  border-bottom: 1px solid #ddd;
+  cursor: pointer;
+}
+
+.usuarios li:hover {
+  background: #007bff;
+  color: white;
+}
+
+/* Detalle del usuario */
+.detalle {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  gap: 10px;
+  align-items: center;
+}
+
+.detalle label {
+  font-weight: bold;
+  text-align: right;
+  padding-right: 10px;
+}
+
+.detalle input, 
+.detalle textarea {
+  width: 100%;
+  padding: 6px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.detalle textarea {
+  height: 80px;
+  resize: none;
+}
+
+
