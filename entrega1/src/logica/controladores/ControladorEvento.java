@@ -202,8 +202,8 @@ public class ControladorEvento implements IControladorEvento {
         	        "La fecha de inicio de la edición a crear debe ser posterior a la fecha de alta en plataforma del evento \"" 
         	                + evento.getNombre() + "\""
         	            );
-        if (evento.getEdicion(nombreEdicion) != null) {
-            throw new IllegalArgumentException("Ya existe una edición con ese nombre en este evento: " + nombreEvento);
+        if (nombreEdicionRepetido(nombreEdicion)) {
+            throw new IllegalArgumentException("Ya existe una edición con ese nombre" + nombreEdicion);
         }
         ManejadorUsuario manejadorUsuario = ManejadorUsuario.getInstance();
         Organizador org = manejadorUsuario.getOrganizador(organizadorNick);
@@ -340,5 +340,15 @@ public class ControladorEvento implements IControladorEvento {
 	
 	public void limpiar() {
 		manejadorEvento.limpiar();
+	}
+	
+	public Boolean nombreEdicionRepetido(String nombreEdicion) {
+		Collection<Evento> eventos = manejadorEvento.obtenerTodosEventos();
+		for(Evento eve : eventos) {
+			if(eve.getEdicion(nombreEdicion)!=null) {
+				return true;
+			}
+		}
+		return false;
 	}
 }
