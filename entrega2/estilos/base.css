@@ -158,6 +158,13 @@ button:hover {
   }
 }
 
+@media (max-width: 767.98px) {
+  .mobile-col-center{
+    display: flex;
+    justify-content: center;
+  }
+}
+
 .btn {
   width: 100%;
   color: white;

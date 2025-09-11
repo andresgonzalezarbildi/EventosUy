@@ -97,6 +97,7 @@
 @media (max-width: 767.98px) {
   .navbar_sesion {
     text-align: center;
+    margin-top: 1rem;
   }
   .navbar_sesion_perfil {
     margin-top: 0.5rem;
