@@ -29,12 +29,12 @@
   <div class="container-xxl">
     <div class="row navbar-row text-center text-md-start">
       <!-- Logo -->
-      <div class="col-12 col-md-3 mb-2 mb-md-0">
+      <div class="col-12 col-md-3 mobile-col-center">
         <h1><a class="title" href="index.html">Eventos.uy</a></h1>
       </div>
 
       <!-- Search -->
-      <div class="col-12 col-md-6 mb-2 mb-md-0">
+      <div class="col-12 col-md-6">
         <div class="navbar_search mx-auto">
           <input type="text" placeholder="Eventos, ediciones..." class="navbar_search-input">
           <button class="navbar_search-btn">Buscar</button>
@@ -42,8 +42,8 @@
       </div>
 
       <!-- Sesión -->
-      <div class="col-12 col-md-3">
-        <div class="navbar_sesion">
+      <div class="col-12 col-md-3 mobile-col-center">
+        <div class="navbar_sesion" >
             <a href="pages/iniciar-registrarse" class="navbar_sesion_link">Iniciar Sesion / Registrarse</a>
         </div>
       </div>
@@ -70,15 +70,72 @@
               </div>
             </div>
           </div>
+
+          <button class="btn" onclick="window.location.href='./pages/enProceso.html'">Usuarios</button>
         </aside>
 
         <!-- Contenido principal -->
         <main class="col-12 col-md-8 col-lg-9">
-          <div class="content-eventos"><!-- tus cards/lista --></div>
+
+          <div class="content-eventos">
+
+            <div class="row content-eventos-evento" onclick="window.location.href='./pages/enProceso.html'">
+              <div class="col-12 col-md-3 content-eventos-evento-imagen">
+                <img src="img/maratonMontevideo.png" alt="logo del evento">
+              </div>
+
+              <div class="col-12 col-md-9 content-eventos-evento-informacion col-12">
+                <p class="content-eventos-evento-informacion-titulo">
+                  Maraton Montevideo -
+                </p>
+                <p class="content-eventos-evento-informacion-descripcion">
+                  Competencia deportiva anual en la capita
+                </p>
+              </div>
+
+            </div>
+
+          <div class="row content-eventos-evento">
+            <div class="col-12 col-md-3 content-eventos-evento-imagen">
+              <img src="img/montevideoComic.jpg" alt="logo del evento">
+            </div>
+
+            <div class="col-12 col-md-9 content-eventos-evento-informacion col-12">
+              <p class="content-eventos-evento-informacion-titulo">
+                Montevideo Comic -
+              </p>
+              <p class="content-eventos-evento-informacion-descripcion">
+                Convencion de historietas, cine y cultura geek.
+              </p>
+            </div>
+          </div>
+
+        <div class="row content-eventos-evento">
+          <div class="col-12 col-md-3 content-eventos-evento-imagen">
+            <img src="img/montevideoRock.png" alt="logo del evento">
+          </div>
+
+          <div class="col-12 col-md-9 content-eventos-evento-informacion col-12">
+            <p class="content-eventos-evento-informacion-titulo">
+              Montevideo Rock -
+            </p>
+            <p class="content-eventos-evento-informacion-descripcion">
+              Festival de Rock con artistas nacionales e internacionales.
+            </p>
+          </div>
+        </div>
+      </div>
+
+
         </main>
       </div>
     </div>
   </section>
+
+  
+  <footer class="uc-footer">
+    <small>Eventos.uy — Grupo 42.</small>
+  </footer>
 </body>
 
 </html>

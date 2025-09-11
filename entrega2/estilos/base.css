@@ -157,3 +157,20 @@ button:hover {
     max-width: 100%; /* buscador ocupa ancho completo */
   }
 }
+
+@media (max-width: 767.98px) {
+  .mobile-col-center{
+    display: flex;
+    justify-content: center;
+  }
+}
+
+.btn {
+  width: 100%;
+  color: white;
+  background-color: var(--color-primary);
+  font-size: large;
+  font-weight: bold;
+}
+
+
