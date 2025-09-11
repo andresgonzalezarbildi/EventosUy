@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Página en construcción</title>
+  <link rel="stylesheet" href="../estilos/normalize.css" />
+  <link rel="stylesheet" href="../estilos/base.css" />
+  <link rel="stylesheet" href="../estilos/enProceso.css" />
+  <!-- Si ya usás base.css con variables, podés (opcional) incluirlo arriba de este CSS -->
+  <!-- <link rel="stylesheet" href="../estilos/base.css" /> -->
+</head>
+<body>
+  <header class="uc-header">
+    <a class="uc-brand" href="../index.html">Eventos.<span>uy</span></a>
+  </header>
+
+  <main class="uc-wrap">
+    <section class="uc-card" role="status" aria-live="polite">
+      <!-- Icono SVG: cono de obra -->
+      <div class="uc-illustration" aria-hidden="true">
+        <svg viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="currentColor" stop-opacity="0.15"/>
+              <stop offset="100%" stop-color="currentColor" stop-opacity="0.05"/>
+            </linearGradient>
+          </defs>
+          <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 114h104" stroke-width="6"/>
+            <path d="M32 98h64l-24-72h-16z" fill="url(#g)" stroke-width="3"/>
+            <path d="M48 74h32M44 58h40M52 42h24" stroke-width="5"/>
+          </g>
+        </svg>
+      </div>
+
+      <h1 class="uc-title">Estamos trabajando en esto</h1>
+      <p class="uc-text">
+        Esta sección todavía no está disponible. Estamos preparando todo para que tengas la mejor experiencia.
+      </p>
+
+      <div class="uc-actions">
+        <a class="uc-btn" href="../index.html" aria-label="Volver al inicio">Volver al inicio</a>
+        <!-- Opcional: enlazar a contacto o mail
+        <a class="uc-btn uc-btn--ghost" href="mailto:contacto@eventos.uy">Avisar un problema</a>
+        -->
+      </div>
+
+      <p class="uc-small">
+        Código: <strong>HTTP 501</strong> · Última actualización: 11/9/2025
+      </p>
+    </section>
+  </main>
+
+  <footer class="uc-footer">
+    <small>© <span id="year"></span> Eventos.uy — Todos los derechos reservados.</small>
+  </footer>
+
+</body>
+</html>
