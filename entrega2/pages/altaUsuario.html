@@ -3,13 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <title>Alta Usuario</title>
-  <link rel="stylesheet" href="../estilos/main.css">
+  <link rel="stylesheet" href="../estilos/base.css">
 </head>
 <body>
-  <div class="container">
-    <h2>Alta de Usuario</h2>
-    <form id="formUsuario">
+  <!-- Navbar (usa tus clases de base.css) -->
+  <header class="navbar">
+    <div class="navbar-row">
+      <h1><a class="title" href="../index.html">Eventos.uy</a></h1>
+    </div>
+  </header>
 
+  <!-- Contenido principal -->
+  <main style="max-width: 600px; margin: 2rem auto; padding: 1rem; background: #fff; border: 1px solid var(--color-border); border-radius: var(--radius);">
+    <h2 style="margin-bottom: 1rem; color: var(--color-primary);">Alta de Usuario</h2>
+
+    <form id="formUsuario">
       <!-- Tipo -->
       <label for="tipo">Tipo:</label>
       <select id="tipo" name="tipo" required>
@@ -35,16 +43,16 @@
         <option value="ucu">UCU</option>
       </select>
 
-      <!-- Campos que aparecen según el tipo -->
+      <!-- Campos dinámicos -->
       <div id="extraCampos"></div>
 
       <!-- Botones -->
-      <div class="botones">
+      <div style="margin-top: 1.5rem; display: flex; gap: 1rem;">
         <button type="submit">Aceptar</button>
         <button type="reset">Cancelar</button>
       </div>
     </form>
-  </div>
+  </main>
 
   <script>
     const tipoSelect = document.getElementById('tipo');
@@ -52,13 +60,12 @@
 
     tipoSelect.addEventListener('change', () => {
       const tipo = tipoSelect.value;
-      extraCampos.innerHTML = ''; // limpio campos anteriores
+      extraCampos.innerHTML = '';
 
       if (tipo === 'organizador') {
         extraCampos.innerHTML = `
           <label for="descripcion">Descripción:</label>
           <textarea id="descripcion" name="descripcion"></textarea>
-
           <label for="link">Link:</label>
           <input type="url" id="link" name="link">
         `;
@@ -66,7 +73,6 @@
         extraCampos.innerHTML = `
           <label for="apellido">Apellido:</label>
           <input type="text" id="apellido" name="apellido">
-
           <label for="fechaNac">Fecha de Nacimiento:</label>
           <input type="date" id="fechaNac" name="fechaNac">
         `;
@@ -75,4 +81,3 @@
   </script>
 </body>
 </html>
-	
