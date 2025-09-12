@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Consulta de Edición</title>
+  <link rel="stylesheet" href="../estilos/base.css">
+</head>
+<body>
+  <header class="navbar">
+    <div class="navbar-row">
+      <h1><a class="title" href="../index.html">Eventos.uy</a></h1>
+    </div>
+  </header>
+
+  <main style="max-width: 800px; margin: 2rem auto; padding: 1.5rem; background: #fff; border: 1px solid var(--color-border); border-radius: var(--radius);">
+    <h2 style="margin-bottom: 1rem; color: var(--color-primary);">Consulta de Edición de Evento</h2>
+    <!-- Selección de evento -->
+    <label for="evento">Evento:</label>
+    <select id="evento">
+      <option value="">Seleccione un evento</option>
+    </select>
+
+    <!-- Selección de edición aprobada -->
+    <label for="edicion">Edición (Aprobada):</label>
+    <select id="edicion" disabled>
+      <option value="">Seleccione una edición</option>
+    </select>
+
+    <!-- Detalle de edición -->
+    <section id="detalleEdicion" style="margin-top: 1.5rem; display: none;">
+      <h3>Detalle de la Edición</h3>
+      <p><strong>Nombre:</strong> <span id="edicionNombre"></span></p>
+      <p><strong>Ciudad:</strong> <span id="edicionCiudad"></span></p>
+      <p><strong>Fechas:</strong> <span id="edicionFechas"></span></p>
+      <p><strong>Estado:</strong> <span id="edicionEstado"></span></p>
+      <p><strong>Organizador:</strong> <span id="edicionOrganizador"></span></p>
+      <p><strong>Imagen:</strong> <span id="edicionImagen"></span></p>
+
+      <h4>Tipos de Registro</h4>
+      <ul id="listaRegistros"></ul>
+
+      <h4>Patrocinios</h4>
+      <ul id="listaPatrocinios"></ul>
+
+      <!-- Solo para organizador -->
+      <div id="bloqueOrganizador" style="display: none;">
+        <h4>Listado de Registros</h4>
+        <ul id="listaRegistrosOrganizador"></ul>
+      </div>
+
+      <!-- Solo para asistente -->
+      <div id="bloqueAsistente" style="display: none;">
+        <h4>Mi Registro</h4>
+        <p id="detalleRegistroAsistente"></p>
+      </div>
+    </section>
+  </main>
+
+  <script src="../scripts/mock.js"></script>
+  <script src="../scripts/consultaEdicion.js"></script>
+</body>
+</html>
