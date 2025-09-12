@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Alta de Evento</title>
+  <title>Alta Tipo de Registro</title>
   <link rel="stylesheet" href="../estilos/base.css">
 </head>
 <body>
@@ -13,25 +13,25 @@
   </header>
 
   <main style="max-width: 600px; margin: 2rem auto; padding: 1rem; background: #fff; border: 1px solid var(--color-border); border-radius: var(--radius);">
-    <h2 style="margin-bottom: 1rem; color: var(--color-primary);">Alta de Evento</h2>
+    <h2 style="margin-bottom: 1rem; color: var(--color-primary);">Alta de Tipo de Registro</h2>
 
-    <form id="formEvento">
-      <label for="nombre">Nombre:</label>
+    <form id="formTipoRegistro">
+      <label for="edicion">Seleccione Edición:</label>
+      <select id="edicion" name="edicion" required>
+        <!-- opciones cargadas desde mock.js -->
+      </select>
+
+      <label for="nombre">Nombre del Tipo de Registro:</label>
       <input type="text" id="nombre" name="nombre" required>
 
       <label for="descripcion">Descripción:</label>
       <textarea id="descripcion" name="descripcion" required></textarea>
 
-      <label for="sigla">Sigla:</label>
-      <input type="text" id="sigla" name="sigla" required>
+      <label for="costo">Costo:</label>
+      <input type="number" id="costo" name="costo" step="0.01" required>
 
-      <label for="categorias">Categorías:</label>
-      <select id="categorias" name="categorias" multiple required>
-        <!-- Estas categorías se cargan desde mock.js -->
-      </select>
-
-      <label for="imagen">Imagen (opcional):</label>
-      <input type="file" id="imagen" name="imagen" accept="image/*">
+      <label for="cupo">Cupo:</label>
+      <input type="number" id="cupo" name="cupo" min="1" required>
 
       <div style="margin-top: 1.5rem; display: flex; gap: 1rem;">
         <button type="submit">Aceptar</button>
@@ -42,6 +42,6 @@
 
   <!-- Scripts -->
   <script src="../scripts/mock.js"></script>
-  <script src="../scripts/altaEvento.js"></script>
+  <script src="../scripts/altaTipoRegistro.js"></script>
 </body>
 </html>
