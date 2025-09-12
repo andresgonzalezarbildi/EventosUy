@@ -4,13 +4,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Eventos</title>
-  <link rel="stylesheet" href="../estilos/normalize.css">
+  <title>Registro a Edición</title>
 
+  <!-- Reset y estilos base -->
+  <link rel="stylesheet" href="../estilos/normalize.css">
   <link rel="stylesheet" href="../estilos/base.css">
   <link rel="stylesheet" href="../estilos/registroAEdicion.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap-grid.min.css">
 
+  <!-- Bootstrap grid -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap-grid.min.css">
 </head>
 
 <body>
@@ -34,114 +36,119 @@
         <!-- Sesión -->
         <div class="col-12 col-md-3 mobile-col-center">
           <div class="navbar_sesion">
-            <a href="pages/iniciar-registrarse" class="navbar_sesion_link">Iniciar Sesion / Registrarse</a>
+            <a href="pages/iniciar-registrarse" class="navbar_sesion_link">Iniciar Sesión / Registrarse</a>
           </div>
         </div>
       </div>
     </div>
   </header>
-  <div>
-    <main class="row">
-      <form class="col-12 col-md-8">
 
-        <!-- Evento -->
-        <div class="row mb-3">
-          <label for="evento">Evento:</label>
-          <div>
-            <select id="evento" name="evento">
-              <option value="" selected disabled>-- Seleccione un evento --</option>
-              <option value="Montevideo Rock">Montevideo Rock</option>
-              <option value="Montevideo Comic">Montevideo Comic</option>
-              <option value="Maraton Montevideo">Maratón Montevideo</option>
-            </select>
+  <!-- Main -->
+  <main class="container-xxl py-4">
+    <div class="row justify-content-center">
+      <div class="col-12 col-md-11 col-lg-10 col-xl-9">
+        <form class="p-4 p-md-5 rounded-4 shadow-sm bg-white">
+
+          <div class="row mb-3 align-items-center gx-2">
+            <label for="evento" class="col-12 col-md-auto col-form-label pe-md-2">Evento:</label>
+            <div class="col-12 col-md">
+              <select id="evento" name="evento" class="form-select w-100">
+                <option value="" selected disabled>-- Seleccione un evento --</option>
+
+                <option value="Montevideo Rock">Montevideo Rock</option>
+                <option value="Montevideo Comic">Montevideo Comic</option>
+                <option value="Maraton Montevideo">Maratón Montevideo</option>
+              </select>
+            </div>
           </div>
-        </div>
 
-        <!-- Edición -->
-        <div class="row mb-3">
-          <label for="edicion">Edición:</label>
-          <div>
-            <select id="edicion" name="edicion">
-              <option value="" selected disabled>-- Seleccione una edición --</option>
-              <option value="Edicion 1">Edición 1</option>
-              <option value="Edicion 2">Edición 2</option>
-              <option value="Edicion 3">Edición 3</option>
-            </select>
+          <div class="row mb-3 align-items-center gx-2">
+            <label for="edicion" class="col-12 col-md-auto col-form-label pe-md-2">Edición:</label>
+            <div class="col-12 col-md">
+              <select id="edicion" name="edicion" class="form-select w-100">
+                <option value="" selected disabled>-- Seleccione una edición --</option>
+
+                <option value="Edicion 1">Edición 1</option>
+                <option value="Edicion 2">Edición 2</option>
+                <option value="Edicion 3">Edición 3</option>
+              </select>
+            </div>
           </div>
-        </div>
 
-        <hr>
+          <hr class="my-3">
 
-        <!-- Datos de la edición -->
-        <div>
-          <p>Nombre: NombreDeLaEdicion</p>
-          <p>Organizador: OrganizadorDeLaEdicion</p>
-          <p>Fecha de inicio: dd/mm/aaaa</p>
-          <p>Fecha de fin: dd/mm/aaaa</p>
-          <p>Ciudad: CiudadDeLaEdicion</p>
-          <p>País: PaisDeLaEdicion</p>
-        </div>
-
-        <hr>
-
-        <!-- Tipo de registro -->
-        <div class="row mb-3">
-          <label for="tipoRegistro">Tipo de registro:</label>
-          <div>
-            <select id="tipoRegistro" name="tipoRegistro">
-              <option value="" selected disabled>-- Seleccione un tipo de registro --</option>
-              <option value="tipoRegistro 1">Tipo de registro 1</option>
-              <option value="tipoRegistro 2">Tipo de registro 2</option>
-              <option value="tipoRegistro 3">Tipo de registro 3</option>
-            </select>
+          <!-- Datos de la edición -->
+          <div class="row gy-2 mb-3">
+            <p class="col-12 col-md-6 mb-0">Nombre: NombreDeLaEdicion</p>
+            <p class="col-12 col-md-6 mb-0">Organizador: OrganizadorDeLaEdicion</p>
+            <p class="col-12 col-md-6 mb-0">Fecha de inicio: dd/mm/aaaa</p>
+            <p class="col-12 col-md-6 mb-0">Fecha de fin: dd/mm/aaaa</p>
+            <p class="col-12 col-md-6 mb-0">Ciudad: CiudadDeLaEdicion</p>
+            <p class="col-12 col-md-6 mb-0">País: PaisDeLaEdicion</p>
           </div>
-        </div>
 
-        <!-- Código promocional -->
-        <div>
-          <label for="codigoPromocional">Código Promocional:</label>
-          <div>
-            <select id="codigoPromocional" name="codigoPromocional">
-              <option value="" selected disabled>--Usar código promocional--</option>
-              <option value="SI">Sí</option>
-              <option value="NO">No</option>
-            </select>
+          <hr class="my-3">
+
+          <!-- Tipo de registro -->
+          <div class="row mb-3 align-items-center gx-2">
+            <label for="tipoRegistro" class="col-12 col-md-auto col-form-label pe-md-2">Tipo de registro:</label>
+            <div class="col-12 col-md">
+              <select id="tipoRegistro" name="tipoRegistro" class="form-select">
+                <option value="" selected disabled>-- Seleccione un tipo de registro --</option>
+                <option value="tipoRegistro 1">Tipo de registro 1</option>
+                <option value="tipoRegistro 2">Tipo de registro 2</option>
+                <option value="tipoRegistro 3">Tipo de registro 3</option>
+              </select>
+            </div>
           </div>
-        </div>
 
-        <!-- Input de código (oculto por defecto) -->
-        <div id="inputCodigo" style="display:none;">
-          <label for="codigo">Ingrese el código:</label>
-          <div>
-            <input type="text" id="codigo" name="codigo" class="form-control">
+          <div class="row mb-3 align-items-center gx-2">
+            <label for="codigoPromocional" class="col-12 col-md-auto col-form-label pe-md-2">Código Promocional:</label>
+            <div class="col-12 col-md">
+              <select id="codigoPromocional" name="codigoPromocional" class="form-select">
+                <option value="" selected disabled>--Usar código promocional--</option>
+                <option value="SI">Sí</option>
+                <option value="NO">No</option>
+              </select>
+            </div>
+
+            <!-- Oculto por defecto -->
+            <div id="grupoCodigo" class="col-12 col-md-6 d-none align-items-center gap-2 mt-1 mt-md-0">
+              <label for="codigo" class="col-form-label mb-0 nowrap">Ingrese el código:</label>
+              <input type="text" id="codigo" name="codigo" class="form-control w-100">
+            </div>
           </div>
-        </div>
 
-        <!-- Botón -->
-        <div class="row">
-          <div class="col-12">
+          <!-- Botón -->
+          <div class="text-end">
             <button type="submit" class="btn btn-primary">Confirmar Registro</button>
           </div>
-        </div>
+        </form>
+      </div>
+    </div>
+  </main>
 
-      </form>
-    </main>
-  </div>
-
-
+  <!-- Footer -->
   <footer class="uc-footer">
     <small>Eventos.uy — Grupo 42.</small>
   </footer>
+
+  <!-- Script -->
   <script>
-    const select = document.getElementById("codigoPromocional");
-    const inputBox = document.getElementById("inputCodigo");
-    select.addEventListener("change", function () {
-      if (this.value === "SI") {
-        inputBox.style.display = "block"; // mostrar input
+    const sel = document.getElementById('codigoPromocional');
+    const grupo = document.getElementById('grupoCodigo');
+
+    function toggleCodigo() {
+      grupo.classList.remove('d-block', 'd-md-flex'); // limpiamos cualquier clase previa
+      if (sel.value === 'SI') {
+        grupo.classList.remove('d-none');
       } else {
-        inputBox.style.display = "none";  // ocultar input
+        grupo.classList.add('d-none');
       }
-    });
+    }
+
+    sel.addEventListener('change', toggleCodigo);
+    toggleCodigo(); // sincroniza al cargar
   </script>
 </body>
 
