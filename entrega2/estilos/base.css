@@ -79,7 +79,8 @@ button:hover {
 }
 
 /* Centro: buscador */
-.col-search { /* centra el bloque del buscador dentro de su columna */
+.col-search { 
+/* centra el bloque del buscador dentro de su columna */
   /* sin utilidades bootstrap, lo centramos con margin auto */
 }
 .navbar_search{

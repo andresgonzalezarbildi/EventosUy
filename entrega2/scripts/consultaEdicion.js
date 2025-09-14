@@ -49,7 +49,7 @@ eventoSelect.addEventListener("change", () => {
 
 // 3. Mostrar detalle al elegir edición
 edicionSelect.addEventListener("change", () => {
-  const edicion = ediciones.find(ed => ed.id == edicionSelect.value);
+  const edicion = edicion.find(ed => ed.id == edicionSelect.value);
   if (!edicion) return;
 
   // Datos generales
@@ -76,7 +76,7 @@ edicionSelect.addEventListener("change", () => {
     listaPatrocinios.appendChild(li);
   });
 
-  // 🔹 Diferencias según el usuario logueado
+  // 🔹 Diferencias según el usuario loguead
   const user = getUsuarioLogueado();
   bloqueOrganizador.style.display = "none";
   bloqueAsistente.style.display = "none";

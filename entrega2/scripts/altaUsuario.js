@@ -18,13 +18,28 @@ tipoSelect.addEventListener('change', () => {
       <input type="url" id="link" name="link">
     `;
   } else if (tipo === 'asistente') {
+    // Campos que van en extraCampos
     extraCampos.innerHTML = `
-      <label for="apellido">Apellido:</label>
-      <input type="text" id="apellido" name="apellido" required>
-
       <label for="fechaNac">Fecha de Nacimiento:</label>
       <input type="date" id="fechaNac" name="fechaNac" required>
+
+      <label for="institucion">Institución:</label>
+      <select id="institucion" name="institucion" required>
+        <option value="">Seleccione...</option>
+        <option value="Universidad de la República">Universidad de la República</option>
+        <option value="ORT">ORT</option>
+        <option value="UTEC">UTEC</option>
+        <option value="IPA">IPA</option>
+        <option value="Otra">Otra</option>
+      </select>
     `;
+
+    // Insertar Apellido justo después de Nombre
+    const campoNombre = document.getElementById('nombre');
+    campoNombre.insertAdjacentHTML("afterend", `
+      <label for="apellido">Apellido:</label>
+      <input type="text" id="apellido" name="apellido" required>
+    `);
   }
 });
 

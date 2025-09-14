@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Elegir Evento y Edición</title>
+  <link rel="stylesheet" href="../estilos/base.css">
+</head>
+<body>
+  <header class="navbar">
+    <div class="navbar-row">
+      <h1><a class="title" href="../index.html">Eventos.uy</a></h1>
+    </div>
+  </header>
+
+  <main style="max-width: 600px; margin: 2rem auto; padding: 1rem; background: #fff; border: 1px solid var(--color-border); border-radius: var(--radius);">
+    <h2 style="margin-bottom: 1rem; color: var(--color-primary);">Consulta de Edición de Evento</h2>
+
+    <form>
+      <!-- Combo de evento -->
+      <label for="evento">Evento:</label>
+      <select id="evento" name="evento">
+        <option value="evento1">Evento 1</option>
+      </select>
+
+      <!-- Combo de edición -->
+      <label for="edicion">Edición:</label>
+      <select id="edicion" name="edicion">
+        <option value="edicion1">Edición 1 del Evento 1</option>
+      </select>
+
+      <!-- Botones de redirección (simulación de "consultar") -->
+      <p>¿Cómo desea consultar esta Edición?</p>
+      <button type="submit" formaction="detalleEdicionVisitante.html">como Visitante</button>
+      <button type="submit" formaction="detalleOrganizador.html">como Organizador de la Edición</button>
+      <button type="submit" formaction="detalleAsistente.html">como Asistente registrado a la Edición</button>
+    </form>
+  </main>
+</body>
+</html>

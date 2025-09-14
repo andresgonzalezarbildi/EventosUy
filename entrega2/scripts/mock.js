@@ -13,8 +13,10 @@ const categorias = ["Música", "Deportes", "Conferencias", "Cine"];
 const eventos = [
   { id: 1, nombre: "Maratón Montevideo" },
   { id: 2, nombre: "Montevideo Comic" },
-  { id: 3, nombre: "Rock Festival" }
+  { id: 3, nombre: "Rock Festival" },
+  { id: 4, nombre: "Rocksito Festival" }
 ];
+
 // Ediciones de prueba
 const ediciones = [
   {
@@ -35,7 +37,7 @@ const ediciones = [
   },
   {
     id: 2,
-    eventoId: 1,
+    eventoId: 2,
     nombre: "Maratón 2025",
     ciudad: "Montevideo",
     fechaInicio: "2025-05-01",
@@ -48,7 +50,7 @@ const ediciones = [
   },
   {
     id: 3,
-    eventoId: 2,
+    eventoId: 3,
     nombre: "Comic 2025",
     ciudad: "Salto",
     fechaInicio: "2025-01-10",
@@ -61,7 +63,7 @@ const ediciones = [
   },
   {
     id: 4,
-    eventoId: 3,
+    eventoId: 4,
     nombre: "Rock 2024",
     ciudad: "Punta del Este",
     fechaInicio: "2024-11-15",
