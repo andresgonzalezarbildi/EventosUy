@@ -103,10 +103,10 @@
           </div>
 
           <div class="row mb-3 align-items-center gx-2">
-            <label for="codigoPromocional" class="col-12 col-md-auto col-form-label pe-md-2">Código Promocional:</label>
+            <label for="codigoPatrocinio" class="col-12 col-md-auto col-form-label pe-md-2">Código Patrocinio:</label>
             <div class="col-12 col-md">
-              <select id="codigoPromocional" name="codigoPromocional" class="form-select">
-                <option value="" selected disabled>--Usar código promocional--</option>
+              <select id="codigoPatrocinio" name="codigoPatrocinio" class="form-select">
+                <option value="" selected disabled>--Usar código patrocinio--</option>
                 <option value="SI">Sí</option>
                 <option value="NO">No</option>
               </select>
@@ -135,7 +135,7 @@
 
   <!-- Script -->
   <script>
-    const sel = document.getElementById('codigoPromocional');
+    const sel = document.getElementById('codigoPatrocinio');
     const grupo = document.getElementById('grupoCodigo');
 
     function toggleCodigo() {
