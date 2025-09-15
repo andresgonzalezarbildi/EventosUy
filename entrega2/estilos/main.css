@@ -1,68 +1,8 @@
 /* =========================
-   VARIABLES GLOBALES
-========================= */
-:root {
-  --color-primary: #159574;
-  --color-secondary: #00796B;
-  --color-bg: #F9FAFB;
-  --color-text: #212121;
-  --color-border: #E5E7EB;
-
-  --font-main: 'Arial', sans-serif;
-  --spacing: 1rem;
-  --radius: 6px;
-
-  --md-width: 767.98px;
-}
-
-/* =========================
-   ESTILOS BASE
-========================= */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  display: flex;
-  flex-direction: column;
-  font-family: var(--font-main);
-  background-color: var(--color-bg);
-  color: var(--color-text);
-  line-height: 1.5;
-  height: 100%;
-}
-html{
-  height: 100%;
-}
-a {
-  text-decoration: none;
-  color: black;
-}
-a:hover {
-  color: var(--color-secondary);
-}
-
-button {
-  background-color: var(--color-primary);
-  color: white;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: var(--radius);
-  cursor: pointer;
-  transition: background 0.3s;
-}
-button:hover {
-  background-color: var(--color-secondary);
-}
-
-/* =========================
    NAVBAR
 ========================= */
 /* Barra */
 .navbar{
-  width: 100%;
   margin: 0 auto;
   padding: 16px;                 /* padding vertical */
   background: #fff;
@@ -87,8 +27,7 @@ button:hover {
 }
 
 /* Centro: buscador */
-.col-search { 
-/* centra el bloque del buscador dentro de su columna */
+.col-search { /* centra el bloque del buscador dentro de su columna */
   /* sin utilidades bootstrap, lo centramos con margin auto */
 }
 .navbar_search{
@@ -128,7 +67,6 @@ button:hover {
   justify-content: flex-end;
   font-weight: bold;
   text-align: right;   /* desktop */
-  margin-top: 1rem;
 
 }
 .navbar_sesion_perfil{
@@ -147,8 +85,8 @@ button:hover {
 }
 
 .perfil_image{
-  width: 50px;
-  height: auto;
+  width: 40px;
+  height: 40px;
   border-radius: 8px;
   object-fit: cover;
   display: block;
@@ -157,34 +95,51 @@ button:hover {
 
 /* Responsivo: en mobile alineamos la sesión a la izquierda para que no quede “pegada” */
 @media (max-width: 767.98px) {
+  .navbar-row {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
   .navbar_sesion {
+    order: -1; /* primero */
+    margin-bottom: 10px;
     text-align: center;
   }
-  .navbar_sesion_perfil {
-    margin-top: 0.5rem;
+
+  .navbar-row > div:first-child { /* logo */
+    order: 0; /* segundo */
+    text-align: center;
+    margin-bottom: 10px;
   }
+
   .navbar_search {
-    max-width: 100%; /* buscador ocupa ancho completo */
+    order: 1; /* tercero */
+    margin-bottom: 10px;
+    max-width: 100%;
   }
+
 }
 
-@media (max-width: 767.98px) {
-  .mobile-col-center{
-    display: flex;
-    justify-content: center;
-  }
+
+/* =========================
+   MAIN CONTENT
+========================= */
+.content {
+  display: block; /* grid maneja las columnas */
+  margin-top: 1rem;
 }
 
-.btn {
-  width: 100%;
-  color: white;
-  background-color: var(--color-primary);
-  font-size: large;
-  font-weight: bold;
-  margin-bottom: 1rem;
+.content-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 2rem;
 }
 
-.seccion-titulo {
+.content-bar-seccion { }
+
+.content-bar-seccion-titulo {
   background-color: var(--color-secondary);
   border: 2px solid var(--color-border);
   padding: 0.5rem 1rem;
@@ -197,45 +152,67 @@ button:hover {
 .content-bar-seccion-list {
   border: 2px solid var(--color-border);
   border-top: none;
+  background-color: white;
 }
 
-.content-bar-seccion-list-options {
+.content-bar-categorias-categoria {
   display: flex;
   justify-content: center;
   padding: 0.5rem;
   cursor: pointer;
   transition: background 0.2s;
+}
+
+.content-bar-categorias-categoria:hover {
+  background-color: #f4f4f4;
+}
+
+.content-eventos {
   background-color: white;
-}
-
-.content-bar-seccion-list-options:hover {
-  filter: brightness(85%);
-}
-
-form label {
-  display: block;
-  margin-top: 12px;
-  font-weight: bold;
-}
-
-form input,
-form select,
-form textarea {
-  display: block;
-  width: 100%;
-  padding: 8px;
-  margin-top: 4px;
   border: 1px solid var(--color-border);
-  border-radius: var(--radius);
+  border-radius: 6px;
+  min-height: 200px; /* placeholder */
+  padding: 1rem;
+}
+#formulario {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 95%;
+  max-width: none;
+  margin: 20px auto;
+  padding: 20px;
   box-sizing: border-box;
 }
 
-.uc-footer{
-  background-color: white;
-  padding: 20px 24px 28px;
-  text-align: center;
-  color: black;
-  border-top: 1px solid var(--color-border);
-  font-size: .95rem;
-  margin-top: auto;
+#formulario input,
+#formulario button {
+  width: 100%;
+  padding: 10px 14px;
+  font-size: 1rem;
+  box-sizing: border-box;
 }
+
+#formulario .botones {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+@media (min-width: 576px) {
+  #formulario {
+    width: 400px;
+    max-width: 90%;
+  }
+  #formulario .botones {
+    flex-direction: row;
+    justify-content: flex-start;
+  }
+  #formulario .botones button {
+    width: auto;
+    flex: 1;
+  }
+}
+
+
+
