@@ -1,111 +1,3 @@
-/* =========================
-   NAVBAR
-========================= */
-/* Barra */
-.navbar{
-  margin: 0 auto;
-  padding: 16px;                 /* padding vertical */
-  background: #fff;
-  border-bottom: 1px solid var(--color-border);
-}
-
-/* Alineación vertical del row del header (Bootstrap usa flex en .row) */
-.navbar-row { 
-  justify-content: space-around;
-  align-items: center;              /* centra verticalmente las 3 columnas */
-}
-
-/* Logo */
-.navbar .title{
-  color: var(--color-primary);
-  text-decoration: none;
-  font-weight: 800;
-  font-size: 1.8rem;
-  line-height: 1;
-  display: inline-block;
-  margin: 0;
-}
-
-/* Centro: buscador */
-.col-search { /* centra el bloque del buscador dentro de su columna */
-  /* sin utilidades bootstrap, lo centramos con margin auto */
-}
-.navbar_search{
-  max-width: 560px;
-  margin: 0 auto;                   /* centrado horizontal */
-  border: 1px solid var(--color-border);
-  border-radius: 999px;
-  padding: 4px;
-  background: #fff;
-  display: flex;
-}
-.navbar_search-input{
-  flex: 1;
-  border: 0;
-  padding: 10px 14px;
-  outline: none;
-  border-radius: 999px;
-  font-size: 0.95rem;
-}
-.navbar_search-btn{
-  border: 0;
-  border-radius: 999px;
-  background: var(--color-primary);
-  color: #fff;
-  padding: 10px 14px;
-  cursor: pointer;
-  transition: background .2s;
-}
-.navbar_search-btn:hover{ background: var(--color-secondary); }
-
-/* Derecha: sesión */
-.col-session { /* el texto va a la derecha en md+, a la izquierda en mobile */
-}
-.navbar_sesion {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  font-weight: bold;
-  text-align: right;   /* desktop */
-
-}
-.navbar_sesion_perfil{
-  display: inline-block;
-  margin-left: 12px;
-  text-align: center;
-}
-.navbar_username{
-  display: block;
-  font-size: .9rem;
-  margin-bottom: 4px;
-}
-
-.navbar_sesion_link{
-
-}
-
-.perfil_image{
-  width: 40px;
-  height: 40px;
-  border-radius: 8px;
-  object-fit: cover;
-  display: block;
-  margin: 0 auto;
-}
-
-/* Responsivo: en mobile alineamos la sesión a la izquierda para que no quede “pegada” */
-@media (max-width: 767.98px) {
-  .navbar_sesion {
-    text-align: center;
-    margin-top: 1rem;
-  }
-  .navbar_sesion_perfil {
-    margin-top: 0.5rem;
-  }
-  .navbar_search {
-    max-width: 100%; /* buscador ocupa ancho completo */
-  }
-}
 
 /* =========================
    MAIN CONTENT
@@ -122,46 +14,12 @@
   margin-bottom: 2rem;
 }
 
-.content-bar-seccion { }
-
-.content-bar-seccion-titulo {
-  background-color: var(--color-secondary);
-  border: 2px solid var(--color-border);
-  padding: 0.5rem 1rem;
-  text-align: center;
-  color: white;
-  font-weight: bold;
-  border-radius: 4px 4px 0 0;
-}
-
-.content-bar-seccion-list {
-  border: 2px solid var(--color-border);
-  border-top: none;
-  background-color: white;
-}
-
-.content-bar-categorias-categoria {
-  display: flex;
-  justify-content: center;
-  padding: 0.5rem;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-.content-bar-categorias-categoria:hover {
-  background-color: #f4f4f4;
-}
-
 .content-eventos {
   background-color: white;
   border: 1px solid var(--color-border);
   border-radius: 6px;
   min-height: 200px; /* placeholder */
   padding: 1rem;
-}
-
-/* Contenedor general de eventos */
-.content-eventos {
   display: grid;
   gap: 1.5rem;
   margin-bottom: 1rem;

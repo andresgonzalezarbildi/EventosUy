@@ -1,0 +1,130 @@
+/* =========================
+   MAIN CONTENT
+========================= */
+
+.content {
+  margin-top: 1rem;
+}
+
+.content-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.section-evento{
+  justify-content: center;
+}
+/* Contenedor general de eventos */
+.content-evento {
+  display: flex;
+  justify-content: center;
+  background-color: white;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  min-height: 200px; /* placeholder */
+  padding: 1rem;
+  display: grid;
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .content-evento{
+    margin-bottom: 0;
+  }
+}
+
+.content-evento-resumen{
+  justify-content: center;
+  align-items: center;
+}
+
+.content-evento-imagen{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  max-width: 350px;
+}
+
+.content-evento-imagen img {
+  border-radius: 0.5rem;
+  max-width: 360px;
+  max-height: 360px;
+  width: 100%;
+  height: auto;
+}
+
+@media (max-width: 768px){
+  .content-evento-imagen{
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+  .content-evento-imagen img{  
+    max-width: 200px;           /* que no ocupe todo el ancho */
+    max-height: 200px;
+  }
+}
+
+.content-evento-titulo {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #212529;
+  margin-bottom: 0.5rem;
+
+  justify-items: center;
+}
+
+.content-ediciones{
+  border: 2px solid var(--color-border);
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.content-edicion{
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.content-edicion:hover {
+  filter: brightness(80%);
+}
+
+.content-edicion-titulo{
+  display: inline;
+  font-size: medium;
+  font-weight:800;
+  text-decoration: underline;
+  margin-bottom: 1rem;
+}
+
+.content-edicion-imagen img{
+  width: 100%;
+  height: auto;            /* mantiene proporción */
+  max-width: 100px;        /* límite en cel */
+  max-height: 100px;        /* por si es MUY alta */
+}
+
+/* tablet/desktop: permití que crezca un poco más */
+@media (min-width: 768px){
+  .content-edicion-imagen img{
+    max-width: 200px;
+  }
+}
+
+.contenido-main{
+  justify-content: space-around;
+  margin-bottom: 1rem;
+}
+
+.informacion-label {
+  font-weight: bold;
+}
