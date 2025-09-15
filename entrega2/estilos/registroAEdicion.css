@@ -1,0 +1,69 @@
+/* Card del formulario */
+form.rounded-4 {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 12px 28px rgba(0,0,0,.08);
+}
+
+/* Separadores y tipografía */
+hr { opacity: .2; }
+label.col-form-label { color: #444; font-weight: 500; }
+p { color: #2b2b2b; }
+
+/* Inputs redondeados */
+.form-select, .form-control { border-radius: 10px; }
+
+/* Evita que el label "Ingrese el código" se parta */
+.nowrap { white-space: nowrap; }
+
+/* Botón verde */
+.btn.btn-primary {
+  background: #158a6a;
+  border-color: #158a6a;
+  font-weight: 600;
+  padding: .75rem 1rem;
+  border-radius: 10px;
+}
+.btn.btn-primary:hover { filter: brightness(0.95); }
+
+/* Grupo "Ingrese el código" */
+#grupoCodigo { 
+  gap: 0.5rem; 
+}
+#grupoCodigo .form-control {
+  flex: 1;          /* ocupa el espacio disponible */
+  max-width: none;  /* sin límite fijo */
+}
+
+/* Footer */
+.uc-footer{
+  background-color: white;
+  padding: 20px 24px 28px;
+  text-align: center;
+  color: var(--color-muted);
+  border-top: 1px solid var(--color-border);
+  font-size: .95rem;
+}
+
+/* Forzar que #grupoCodigo se comporte como fila bootstrap */
+#grupoCodigo:not(.d-none) {
+  display: flex;          /* la fila vuelve a ser flex */
+  flex-wrap: wrap;        /* permite que las cols se acomoden */
+}
+
+/* Anchos de columnas en mobile */
+#grupoCodigo:not(.d-none) > .col-12 { 
+  width: 100%;
+}
+
+/* Anchos de columnas en desktop (md+) */
+@media (min-width: 768px) {
+  #grupoCodigo:not(.d-none) > .col-md-4 { 
+    flex: 0 0 auto; 
+    width: 33.3333333%;
+  }
+  #grupoCodigo:not(.d-none) > .col-md-8 { 
+    flex: 0 0 auto; 
+    width: 66.6666667%;
+  }
+}
