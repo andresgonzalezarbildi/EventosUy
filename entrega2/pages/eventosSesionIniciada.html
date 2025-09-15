@@ -20,7 +20,7 @@
       <div class="row navbar-row text-center text-md-start">
         <!-- Logo -->
         <div class="col-12 col-md-3 mobile-col-center">
-          <h1><a class="title" href="./index.html">Eventos.uy</a></h1>
+          <h1><a class="title" href="./eventosSesionIniciada.html">Eventos.uy</a></h1>
         </div>
 
         <!-- Search -->
@@ -34,7 +34,7 @@
         <!-- Sesión -->
         <div class="col-12 col-md-3 mobile-col-center">
           <div class="navbar_sesion">
-            <a href="../index.html" class="navbar_sesion_link">Cerrar Sesion</a>
+            <a href="../index.html" class="navbar_sesion_link" onclick="window.location.href='../index.html'" >Cerrar Sesion</a>
             <div class="navbar_sesion_perfil">
               <p class="navbar_username">imm</p>
               <img class="perfil_image" src="../img/immAvatar.jpg" alt="foto perfil" />
@@ -72,13 +72,13 @@
               </div>
               <div class="content-bar-seccion-list">
                 <div class="content-bar-seccion-list-options"><span>Alta Evento</span></div>
-                <div class="content-bar-seccion-list-options"><span>Alta Edicion</span></div>
+                <div class="content-bar-seccion-list-options" onclick="window.location.href='/entrega2/pages/altaEdicion.html'"><span>Alta Edicion</span></div>
                 <div class="content-bar-seccion-list-options"><span>Alta Institucion</span></div>
               </div>
             </div>
           </div>
 
-          <button class="btn" onclick="window.location.href='./pages/enProceso.html'">Usuarios</button>
+          <button class="btn" onclick="window.location.href='/entrega2/pages/enProceso.html'">Usuarios</button>
         </aside>
 
         <!-- Contenido principal -->
@@ -102,7 +102,7 @@
 
             </div>
 
-            <div class="row content-eventos-evento" onclick="window.location.href='./enProceso.html'">
+            <div class="row content-eventos-evento" onclick="window.location.href='./consultaEvento.html'">
               <div class="col-12 col-md-3 content-eventos-evento-imagen">
                 <img src="../img/montevideoComic.jpg" alt="logo del evento">
               </div>
@@ -117,7 +117,7 @@
               </div>
             </div>
 
-            <div class="row content-eventos-evento" onclick="window.location.href='./enProceso.html'">
+            <div class="row content-eventos-evento" onclick="window.location.href='./consultaEvento.html'">
               <div class="col-12 col-md-3 content-eventos-evento-imagen">
                 <img src="../img/montevideoRock.png" alt="logo del evento">
               </div>

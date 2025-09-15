@@ -12,27 +12,35 @@
   >
 </head>
 <body>
-    <!-- Header -->
-  <header class="navbar">
-  <div class="container-xxl">
-    <div class="row navbar-row text-center text-md-start">
-      <!-- Logo -->
-      <div class="col-12 col-md-3 mb-2 mb-md-0">
-        <h1><a class="title" href="../index.html">Eventos.uy</a></h1>
-      </div>
+<header class="navbar">
+    <div class="container-xxl">
+      <div class="row navbar-row">
+        <!-- Logo -->
+        <div class="col-12 col-md-3 mobile-col-center">
+          <h1><a class="title" href="./eventosSesionIniciada.html">Eventos.uy</a></h1>
+        </div>
 
-      <!-- Search -->
-      <div class="col-12 col-md-6 mb-2 mb-md-0">
-        <div class="navbar_search mx-auto">
-          <input type="text" placeholder="Eventos, ediciones..." class="navbar_search-input">
-          <button class="navbar_search-btn">Buscar</button>
+        <!-- Search -->
+        <div class="col-12 col-md-6">
+          <div class="navbar_search mx-auto">
+            <input type="text" placeholder="Eventos, ediciones..." class="navbar_search-input">
+            <button class="navbar_search-btn">Buscar</button>
+          </div>
+        </div>
+
+        <!-- Sesión -->
+        <div class="col-12 col-md-3 mobile-col-center">
+          <div class="navbar_sesion">
+            <a href="../index.html" class="navbar_sesion_link">Cerrar Sesion</a>
+            <div class="navbar_sesion_perfil">
+              <p class="navbar_username">imm</p>
+              <img class="perfil_image" src="../img/immAvatar.jpg" alt="foto perfil" />
+            </div>
+          </div>
         </div>
       </div>
-
-    
     </div>
-  </div>
-</header>
+  </header>
 
   <div class="container">
     <form id="formulario">
@@ -69,6 +77,10 @@
       </div>
     </form>
   </div>
+
+  <footer class="uc-footer">
+    <small>Eventos.uy — Grupo 42.</small>
+  </footer>
 
   <script>
     const tipoSelect = document.getElementById('tipo');
