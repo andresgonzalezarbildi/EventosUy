@@ -3,13 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <title>Alta Usuario</title>
-  <link rel="stylesheet" href="../estilos/main.css">
+  <link rel="stylesheet" href="../estilos/base.css">
 </head>
 <body>
-  <div class="container">
-    <h2>Alta de Usuario</h2>
-    <form id="formUsuario">
+  <header class="navbar">
+    <div class="navbar-row">
+      <h1><a class="title" href="../index.html">Eventos.uy</a></h1>
+    </div>
+  </header>
 
+  <main style="max-width: 600px; margin: 2rem auto; padding: 1rem; background: #fff; border: 1px solid var(--color-border); border-radius: var(--radius);">
+    <h2 style="margin-bottom: 1rem; color: var(--color-primary);">Alta de Usuario</h2>
+
+    <!-- Formulario -->
+    <form id="formUsuario">
       <!-- Tipo -->
       <label for="tipo">Tipo:</label>
       <select id="tipo" name="tipo" required>
@@ -28,51 +35,28 @@
       <label for="correo">Correo:</label>
       <input type="email" id="correo" name="correo" required>
 
-      <label for="institucion">Institución:</label>
-      <select id="institucion" name="institucion">
-        <option value="udelar">UDELAR</option>
-        <option value="ort">ORT</option>
-        <option value="ucu">UCU</option>
-      </select>
+      <label for="password">Contraseña:</label>
+      <input type="password" id="password" name="password" required>
 
-      <!-- Campos que aparecen según el tipo -->
+      <label for="confirmPassword">Confirmar Contraseña:</label>
+      <input type="password" id="confirmPassword" name="confirmPassword" required>
+
+      <label for="imagen">Imagen (opcional):</label>
+      <input type="file" id="imagen" name="imagen" accept="image/*">
+
+      <!-- Campos dinámicos (dependen del tipo) -->
       <div id="extraCampos"></div>
 
       <!-- Botones -->
-      <div class="botones">
+      <div style="margin-top: 1.5rem; display: flex; gap: 1rem;">
         <button type="submit">Aceptar</button>
         <button type="reset">Cancelar</button>
       </div>
     </form>
-  </div>
+  </main>
 
-  <script>
-    const tipoSelect = document.getElementById('tipo');
-    const extraCampos = document.getElementById('extraCampos');
-
-    tipoSelect.addEventListener('change', () => {
-      const tipo = tipoSelect.value;
-      extraCampos.innerHTML = ''; // limpio campos anteriores
-
-      if (tipo === 'organizador') {
-        extraCampos.innerHTML = `
-          <label for="descripcion">Descripción:</label>
-          <textarea id="descripcion" name="descripcion"></textarea>
-
-          <label for="link">Link:</label>
-          <input type="url" id="link" name="link">
-        `;
-      } else if (tipo === 'asistente') {
-        extraCampos.innerHTML = `
-          <label for="apellido">Apellido:</label>
-          <input type="text" id="apellido" name="apellido">
-
-          <label for="fechaNac">Fecha de Nacimiento:</label>
-          <input type="date" id="fechaNac" name="fechaNac">
-        `;
-      }
-    });
-  </script>
+  <!-- Scripts -->
+  <script src="../scripts/mock.js"></script>
+  <script src="../scripts/altaUsuario.js"></script>
 </body>
 </html>
-	

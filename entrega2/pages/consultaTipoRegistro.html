@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Consulta Tipo de Registro</title>
+  <link rel="stylesheet" href="../estilos/base.css">
+</head>
+<body>
+  <header class="navbar">
+    <div class="navbar-row">
+      <h1><a class="title" href="../index.html">Eventos.uy</a></h1>
+    </div>
+  </header>
+
+  <main style="max-width: 600px; margin: 2rem auto; padding: 1rem; background: #fff; border: 1px solid var(--color-border); border-radius: var(--radius);">
+    <h2 style="margin-bottom: 1rem; color: var(--color-primary);">Consulta de Tipo de Registro</h2>
+
+    <form id="consultaForm">
+      <!-- Selección de evento -->
+      <label for="evento">Evento:</label>
+      <select id="evento" required>
+        <option value="">Seleccione un evento</option>
+      </select>
+
+      <!-- Selección de ediciones aprobadas -->
+      <label for="edicion">Edición (Aprobada):</label>
+      <select id="edicion" required disabled>
+        <option value="">Seleccione una edición</option>
+      </select>
+
+      <!-- Selección de tipos de registro -->
+      <label for="tipo">Tipo de Registro:</label>
+      <select id="tipo" required disabled>
+        <option value="">Seleccione un tipo de registro</option>
+      </select>
+    </form>
+
+    <!-- Detalle -->
+    <div id="detalle" style="margin-top: 1.5rem; padding: 1rem; border: 1px solid var(--color-border); border-radius: var(--radius); background: #f9f9f9;">
+      <p><strong>Nombre:</strong> <span id="detalleNombre"></span></p>
+      <p><strong>Descripción:</strong> <span id="detalleDescripcion"></span></p>
+      <p><strong>Costo:</strong> <span id="detalleCosto"></span></p>
+      <p><strong>Cupo:</strong> <span id="detalleCupo"></span></p>
+    </div>
+  </main>
+
+  <!-- Scripts -->
+  <script src="../scripts/mock.js"></script>
+  <script src="../scripts/consultaTipoRegistro.js"></script>
+</body>
+</html>

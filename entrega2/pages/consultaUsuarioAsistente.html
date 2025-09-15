@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Alta Edición de Evento</title>
+  <link rel="stylesheet" href="../estilos/base.css">
+</head>
+<body>
+  <header class="navbar">
+    <div class="container-xxl">
+      <div class="row navbar-row text-center text-md-start">
+        <!-- Logo -->
+        <div class="col-12 col-md-3 mobile-col-center">
+          <h1><a class="title" href="../index.html">Eventos.uy</a></h1>
+        </div>
+
+        <!-- Search -->
+        <div class="col-12 col-md-6">
+          <div class="navbar_search mx-auto">
+            <input type="text" placeholder="Eventos, ediciones..." class="navbar_search-input">
+            <button class="navbar_search-btn">Buscar</button>
+          </div>
+        </div>
+
+        <!-- Sesión -->
+        <div class="col-12 col-md-3 mobile-col-center">
+          <div class="navbar_sesion">
+            <a href="pages/iniciar-registrarse" class="navbar_sesion_link">Iniciar Sesion / Registrarse</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Contenedor principal -->
+  <main style="max-width: 600px; margin: 2rem auto; padding: 1rem; background: #fff; border: 1px solid var(--color-border); border-radius: var(--radius);">
+    <h2 style="margin-bottom: 1rem; color: var(--color-primary);">Consulta Usuario</h2>
+      
+    <form id="formconsultaUsuario" style="width: 500px;">
+      <!-- Detalle del usuario -->
+      <div class="detalle">
+        <div style="padding-left: 180px;">
+          <h3><img src="../img/PerfilSinFoto.jpg" alt="foto usuario" style="width: 50px; height: 50px;">atorres</h3>
+        </div>
+        
+
+        <label>Tipo:</label>
+        <input type="text" value="Asistente" readonly>
+
+        <label>Nombre:</label>
+        <input type="text" value="Ana" readonly>
+
+        <label>Apellido:</label>
+        <input type="text" value="Torres" readonly>
+
+        <label>Correo:</label>
+        <input type="email" value="atorres@gmail.com" readonly>
+
+        <label>Fecha nac.:</label>
+        <input type="date" value="1990-05-12" readonly>
+
+        <label>Institución:</label>
+        <input type="text" value="" readonly>
+
+        <label>Registros:</label>
+        <textarea style="height: 100px;"></textarea>
+      </div>
+    </form>
+  </main>
+</body>
+</html>
