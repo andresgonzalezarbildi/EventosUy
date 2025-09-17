@@ -23,33 +23,47 @@
         <button type="button">Modificar</button>
       </div>
 
-      <!-- Apellido (si es asistente) -->
-      <div style="display:flex; align-items:center; gap:1rem; margin-bottom:1rem;">
-        <label for="apellido" style="min-width:120px;">Apellido:</label>
-        <input type="text" id="apellido" name="apellido" value="Pérez" readonly>
-        <button type="button">Modificar</button>
-      </div>
+        <!-- Campos de Asistente -->
+      <fieldset style="margin-bottom:1.5rem; padding:1rem; border:1px solid #ccc; border-radius:8px;">
+        <legend style="font-weight:bold;">Si es asistente...</legend>
 
-      <!-- Descripción (si es organizador) -->
-      <div style="display:flex; align-items:center; gap:1rem; margin-bottom:1rem;">
-        <label for="descripcion" style="min-width:120px;">Descripción:</label>
-        <textarea id="descripcion" name="descripcion" readonly>Organizador de eventos deportivos</textarea>
-        <button type="button">Modificar</button>
-      </div>
+        <!-- Apellido -->
+        <div style="display:flex; align-items:center; gap:1rem; margin-bottom:1rem;">
+          <label for="apellido" style="min-width:120px;">Apellido:</label>
+          <input type="text" id="apellido" name="apellido" value="Pérez" readonly>
+          <button type="button">Modificar</button>
+        </div>
 
-      <!-- Link (si es organizador) -->
-      <div style="display:flex; align-items:center; gap:1rem; margin-bottom:1rem;">
-        <label for="link" style="min-width:120px;">Link:</label>
-        <input type="url" id="link" name="link" value="https://miweb.com" readonly>
-        <button type="button">Modificar</button>
-      </div>
+        <!-- Fecha de Nacimiento -->
+        <div style="display:flex; align-items:center; gap:1rem; margin-bottom:1rem;">
+          <label for="fechaNac" style="min-width:120px;">Fecha Nac.:</label>
+          <input type="date" id="fechaNac" name="fechaNac" value="1998-05-10" readonly>
+          <button type="button">Modificar</button>
+        </div>
+      </fieldset>
+      
+   <!-- Campos de Organizador -->
+      <fieldset style="margin-bottom:1.5rem; padding:1rem; border:1px solid #ccc; border-radius:8px;">
+        <legend style="font-weight:bold;">Si es organizador...</legend>
 
-      <!-- Fecha de Nacimiento (si es asistente) -->
-      <div style="display:flex; align-items:center; gap:1rem; margin-bottom:1rem;">
-        <label for="fechaNac" style="min-width:120px;">Fecha Nac.:</label>
-        <input type="date" id="fechaNac" name="fechaNac" value="1998-05-10" readonly>
-        <button type="button">Modificar</button>
-      </div>
+        <!-- Descripción -->
+        <div style="display:flex; align-items:center; gap:1rem; margin-bottom:1rem;">
+          <label for="descripcion" style="min-width:120px;">Descripción:</label>
+          <textarea id="descripcion" name="descripcion" readonly>Organizador de eventos deportivos</textarea>
+          <button type="button">Modificar</button>
+        </div>
+
+        <!-- Link -->
+        <div style="display:flex; align-items:center; gap:1rem; margin-bottom:1rem;">
+          <label for="link" style="min-width:120px;">Link:</label>
+          <input type="url" id="link" name="link" value="https://miweb.com" readonly>
+          <button type="button">Modificar</button>
+        </div>
+      </fieldset>
+
+      
+
+     
 
       <!-- Imagen de perfil -->
       <h3 style="margin-top:2rem;">Imagen de perfil</h3>
