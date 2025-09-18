@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Modificar Usuario</title>
+  <link rel="stylesheet" href="../estilos/base.css">
+</head>
+<body>
+  <header class="navbar">
+    <div class="navbar-row">
+      <h1><a class="title" href="../index.html">Eventos.uy</a></h1>
+    </div>
+  </header>
+
+  <main style="max-width: 700px; margin: 2rem auto; padding: 1.5rem; background: #fff; border: 1px solid var(--color-border); border-radius: var(--radius);">
+    <h2 style="margin-bottom: 1rem; color: var(--color-primary);">Modificar Usuario</h2>
+
+    <form>
+      <!-- Nombre -->
+      <div style="display:flex; align-items:center; gap:1rem; margin-bottom:1rem;">
+        <label for="nombre" style="min-width:120px;">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" value="Juan" readonly>
+        <button type="button">Modificar</button>
+      </div>
+
+        <!-- Campos de Asistente -->
+      <fieldset style="margin-bottom:1.5rem; padding:1rem; border:1px solid #ccc; border-radius:8px;">
+        <legend style="font-weight:bold;">Si es asistente...</legend>
+
+        <!-- Apellido -->
+        <div style="display:flex; align-items:center; gap:1rem; margin-bottom:1rem;">
+          <label for="apellido" style="min-width:120px;">Apellido:</label>
+          <input type="text" id="apellido" name="apellido" value="Pérez" readonly>
+          <button type="button">Modificar</button>
+        </div>
+
+        <!-- Fecha de Nacimiento -->
+        <div style="display:flex; align-items:center; gap:1rem; margin-bottom:1rem;">
+          <label for="fechaNac" style="min-width:120px;">Fecha Nac.:</label>
+          <input type="date" id="fechaNac" name="fechaNac" value="1998-05-10" readonly>
+          <button type="button">Modificar</button>
+        </div>
+      </fieldset>
+      
+   <!-- Campos de Organizador -->
+      <fieldset style="margin-bottom:1.5rem; padding:1rem; border:1px solid #ccc; border-radius:8px;">
+        <legend style="font-weight:bold;">Si es organizador...</legend>
+
+        <!-- Descripción -->
+        <div style="display:flex; align-items:center; gap:1rem; margin-bottom:1rem;">
+          <label for="descripcion" style="min-width:120px;">Descripción:</label>
+          <textarea id="descripcion" name="descripcion" readonly>Organizador de eventos deportivos</textarea>
+          <button type="button">Modificar</button>
+        </div>
+
+        <!-- Link -->
+        <div style="display:flex; align-items:center; gap:1rem; margin-bottom:1rem;">
+          <label for="link" style="min-width:120px;">Link:</label>
+          <input type="url" id="link" name="link" value="https://miweb.com" readonly>
+          <button type="button">Modificar</button>
+        </div>
+      </fieldset>
+
+      
+
+     
+
+      <!-- Imagen de perfil -->
+      <h3 style="margin-top:2rem;">Imagen de perfil</h3>
+      <input type="file" id="imagen" name="imagen" accept="image/*">
+
+      <!-- Cambiar contraseña -->
+      <h3 style="margin-top:2rem;">Cambiar contraseña</h3>
+      <label for="newPassword">Nueva contraseña:</label>
+      <input type="password" id="newPassword" name="newPassword">
+
+      <label for="confirmPassword">Confirmar contraseña:</label>
+      <input type="password" id="confirmPassword" name="confirmPassword">
+
+      <!-- Botones -->
+      <div style="margin-top: 2rem; display: flex; gap: 1rem;">
+        <button type="submit">Guardar cambios</button>
+        <button type="reset">Cancelar</button>
+      </div>
+    </form>
+  </main>
+</body>
+</html>
