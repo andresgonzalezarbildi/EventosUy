@@ -30,7 +30,7 @@
         <!-- Sesión -->
         <div class="col-12 col-md-3 mobile-col-center">
           <div class="navbar_sesion">
-            <a href="/entrega2/pages/iniciarSesion.html" class="navbar_sesion_link">Iniciar Sesion</a>
+            <a href="./iniciarSesion.html" class="navbar_sesion_link">Iniciar Sesion</a>
           </div>
         </div>
       </div>
@@ -38,17 +38,9 @@
   </header>
 
   <main style="max-width: 600px; margin: 2rem auto; padding: 1rem; background: #fff; border: 1px solid var(--color-border); border-radius: var(--radius);">
-    <h2 style="margin-bottom: 1rem; color: var(--color-primary);">Alta de Usuario</h2>
+    <h2 style="margin-bottom: 1rem; color: var(--color-primary);">Alta de Asistente</h2>
     
     <form>
-      <!-- Selección de tipo -->
-      <label for="tipo">Tipo:</label>
-      <select id="tipo" name="tipo" required>
-        <option value="">Seleccione...</option>
-        <option value="asistente">Asistente</option>
-        <option value="organizador">Organizador</option>
-      </select>
-
       <!-- Datos comunes -->
       <label for="nick">Nick:</label>
       <input type="text" id="nick" name="nick" required>
@@ -70,7 +62,6 @@
 
       <!-- Campos específicos de asistente -->
       <fieldset style="margin-top: 1.5rem; border: 1px solid #ccc; padding: 1rem; border-radius: 8px;">
-        <legend style="font-weight: bold;">Como es Asistente</legend>
 		
 		<label for="apellido">Apellido:</label>
       <input type="apellido" id="apellido" name="apellido" required>

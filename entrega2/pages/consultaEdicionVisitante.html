@@ -97,20 +97,7 @@
       </div>
     </section>
 
-    <!-- Vista organizador -->
     <fieldset style="margin-top: 2rem; border: 1px solid #ccc; padding: 1rem; border-radius: 8px;">
-      <legend style="font-weight: bold;">Si el usuario fuese Organizador de la Edición se vería...</legend>
-      <label for="registros"><strong>Listado de Registros:</strong></label>
-      <select id="registros" name="registros" style="margin-left:0.5rem;">
-        <option value="reg1">Registro #1 - Juan Gómez</option>
-        <option value="reg2">Registro #2 - María López</option>
-        <option value="reg3">Registro #3 - Carlos Pérez</option>
-      </select>
-    </fieldset>
-
-    <!-- Vista asistente -->
-    <fieldset style="margin-top: 2rem; border: 1px solid #ccc; padding: 1rem; border-radius: 8px;">
-      <legend style="font-weight: bold;">Si el usuario fuese Asistente se vería...</legend>
       <dl style="display:grid; grid-template-columns: 150px 1fr; row-gap:0.5rem; column-gap:1rem;">
         <dt><strong>Nombre:</strong></dt> <dd>Juan Gómez</dd>
         <dt><strong>Tipo de Registro:</strong></dt> <dd>Estudiante</dd>
@@ -118,6 +105,10 @@
         <dt><strong>Estado:</strong></dt> <dd>Confirmado</dd>
       </dl>
     </fieldset>
+
+    <div style="margin-top: 1rem;">
+      <button onclick="window.location.href='./registroAEdicion.html'" type="reset">Registrarse</button>
+    </div>
 
   </main>
 
