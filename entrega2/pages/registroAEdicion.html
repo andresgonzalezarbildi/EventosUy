@@ -16,13 +16,13 @@
 </head>
 
 <body>
-  <!-- Header -->
+    <!-- Header -->
   <header class="navbar">
     <div class="container-xxl">
-      <div class="row navbar-row text-center text-md-start">
+      <div class="row navbar-row">
         <!-- Logo -->
         <div class="col-12 col-md-3 mobile-col-center">
-          <h1><a class="title" href="../index.html">Eventos.uy</a></h1>
+          <h1><a class="title" href="./index.html">Eventos.uy</a></h1>
         </div>
 
         <!-- Search -->
@@ -36,7 +36,11 @@
         <!-- Sesión -->
         <div class="col-12 col-md-3 mobile-col-center">
           <div class="navbar_sesion">
-            <a href="./iniciarSesion.html" class="navbar_sesion_link">Iniciar Sesión / Registrarse</a>
+            <a href="../index.html" class="navbar_sesion_link" onclick="window.location.href='../index.html'" >Cerrar Sesion</a>
+            <div class="navbar_sesion_perfil">
+              <p class="navbar_username">AnaG</p>
+              <img class="perfil_image" src="../img/PerfilSinFoto.jpg" alt="foto perfil" />
+            </div>
           </div>
         </div>
       </div>

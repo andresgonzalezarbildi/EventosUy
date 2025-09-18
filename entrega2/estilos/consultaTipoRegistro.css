@@ -1,6 +1,5 @@
-.content {
-  display: block; /* grid maneja las columnas */
-  margin: 1rem;
+.content-row{
+  justify-content: space-around;
 }
 
 .content-consulta{
@@ -9,6 +8,10 @@
   border-radius: 6px;
   min-height: 200px; /* placeholder */
   padding: 1rem;
-  display: grid;
-  gap: 1.5rem;
+  max-width: 600px;
+  font-size: medium;
+}
+
+.form-titulo{
+  color: var(--color-primary)
 }
