@@ -4,3 +4,5 @@ bin/
 .classpath
 entrega2web/
 *.md
+*.xml
+*.pmd

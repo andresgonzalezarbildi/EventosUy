@@ -178,7 +178,7 @@ button:hover {
 .btn {
   width: 100%;
   color: white;
-  background-color: var(--color-primary);
+  background-color: var(--color-secondary);
   font-size: large;
   font-weight: bold;
   margin-bottom: 1rem;
