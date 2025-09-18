@@ -18,11 +18,12 @@
   <!-- Header -->
   <header class="navbar">
     <div class="container-xxl">
-      <div class="row navbar-row text-center text-md-start">
+      <div class="row navbar-row">
         <!-- Logo -->
         <div class="col-12 col-md-3 mobile-col-center">
-          <h1><a class="title" href="../index.html">Eventos.uy</a></h1>
+          <h1><a class="title" href="./eventosAsistente.html">Eventos.uy</a></h1>
         </div>
+
         <!-- Search -->
         <div class="col-12 col-md-6">
           <div class="navbar_search mx-auto">
@@ -34,7 +35,11 @@
         <!-- Sesión -->
         <div class="col-12 col-md-3 mobile-col-center">
           <div class="navbar_sesion">
-            <a href="./iniciarSesion.html" class="navbar_sesion_link">Iniciar Sesion / Registrarse</a>
+            <a href="../index.html" class="navbar_sesion_link" onclick="window.location.href='../index.html'" >Cerrar Sesion</a>
+            <div class="navbar_sesion_perfil">
+              <p class="navbar_username">AnaG</p>
+              <img class="perfil_image" src="../img/PerfilSinFoto.jpg" alt="foto perfil" />
+            </div>
           </div>
         </div>
       </div>
@@ -46,6 +51,7 @@
   <main class="content">
     <div class="container-xxl">
       <div class="row contenido-main">
+
         <!-- Contenido principal -->
         <section class="col-12 col-md-8 section-evento row">
 
@@ -85,7 +91,7 @@
             <div class="seccion-titulo">
               <h3>Ediciones</h3>
             </div>
-              <div class="content-edicion" onclick="window.location.href='/entrega2/pages/consultaEdicionVisitante.html'">
+              <div class="content-edicion" onclick="window.location.href='./consultaEdicionAsistente.html'">
                 <p class="content-edicion-titulo">
                   Maraton Montevideo 2025
                 </p>
@@ -93,7 +99,7 @@
                   <img src="../img/maratonMontevideo.png" alt="logo del evento">
                 </div>
               </div>
-              <div class="content-edicion" onclick="window.location.href='/entrega2/pages/consultaEdicionVisitante.html'">
+              <div class="content-edicion" onclick="window.location.href='./consultaEdicionAsistente.html'">
                 <p class="content-edicion-titulo">
                   Maraton Montevideo 2024
                 </p>
@@ -101,7 +107,7 @@
                   <img src="../img/maratonMontevideo.png" alt="logo del evento">
                 </div>
               </div>
-              <div class="content-edicion" onclick="window.location.href='/entrega2/pages/consultaEdicionVisitante.html'">
+              <div class="content-edicion" onclick="window.location.href='./consultaEdicionAsistente.html'">
                 <p class="content-edicion-titulo">
                   Maraton Montevideo 2023
                 </p>

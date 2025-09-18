@@ -16,32 +16,36 @@
 </head>
 
 <body>
-    <!-- Header -->
-    <header class="navbar">
-        <div class="container-xxl">
-            <div class="row navbar-row text-center text-md-start">
-                <!-- Logo -->
-                <div class="col-12 col-md-3 mobile-col-center">
-                    <h1><a class="title" href="../index.html">Eventos.uy</a></h1>
-                </div>
-
-                <!-- Search -->
-                <div class="col-12 col-md-6">
-                    <div class="navbar_search mx-auto">
-                        <input type="text" placeholder="Eventos, ediciones..." class="navbar_search-input">
-                        <button class="navbar_search-btn">Buscar</button>
-                    </div>
-                </div>
-
-                <!-- Sesión -->
-                <div class="col-12 col-md-3 mobile-col-center">
-                    <div class="navbar_sesion">
-                        <a href="./iniciarSesion.html" class="navbar_sesion_link">Iniciar Sesión / Registrarse</a>
-                    </div>
-                </div>
-            </div>
+  <!-- Header -->
+  <header class="navbar">
+    <div class="container-xxl">
+      <div class="row navbar-row">
+        <!-- Logo -->
+        <div class="col-12 col-md-3 mobile-col-center">
+          <h1><a class="title" href="./index.html">Eventos.uy</a></h1>
         </div>
-    </header>
+
+        <!-- Search -->
+        <div class="col-12 col-md-6">
+          <div class="navbar_search mx-auto">
+            <input type="text" placeholder="Eventos, ediciones..." class="navbar_search-input">
+            <button class="navbar_search-btn">Buscar</button>
+          </div>
+        </div>
+
+        <!-- Sesión -->
+        <div class="col-12 col-md-3 mobile-col-center">
+          <div class="navbar_sesion">
+            <a href="../index.html" class="navbar_sesion_link" onclick="window.location.href='../index.html'" >Cerrar Sesion</a>
+            <div class="navbar_sesion_perfil">
+              <p class="navbar_username">AnaG</p>
+              <img class="perfil_image" src="../img/PerfilSinFoto.jpg" alt="foto perfil" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
 
     <!-- Main -->
     <main class="container-xxl py-4">

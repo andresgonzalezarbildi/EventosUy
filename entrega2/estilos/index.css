@@ -4,7 +4,6 @@
 ========================= */
 .content {
   display: block; /* grid maneja las columnas */
-  margin-top: 1rem;
 }
 
 .content-bar {
