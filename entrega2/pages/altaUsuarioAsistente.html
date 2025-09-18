@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Alta Usuario</title>
+  <title>Alta Usuario Asistente</title>
   <link rel="stylesheet" href="../estilos/normalize.css">
    <link
     rel="stylesheet"
@@ -66,20 +66,11 @@
       <label for="confirmPassword">Confirmar Contraseña:</label>
       <input type="password" id="confirmPassword" name="confirmPassword" required>
 
-      <!-- Campos específicos de organizador -->
-      <fieldset style="margin-top: 1.5rem; border: 1px solid #ccc; padding: 1rem; border-radius: 8px;">
-        <legend style="font-weight: bold;">Si fuese Organizador</legend>
-
-        <label for="descripcion">Descripción general:</label>
-        <textarea id="descripcion" name="descripcion"></textarea>
-
-        <label for="link">Link (Opcional):</label>
-        <input type="url" id="link" name="link">
-      </fieldset>
+    
 
       <!-- Campos específicos de asistente -->
       <fieldset style="margin-top: 1.5rem; border: 1px solid #ccc; padding: 1rem; border-radius: 8px;">
-        <legend style="font-weight: bold;">Si fuese Asistente</legend>
+        <legend style="font-weight: bold;">Como es Asistente</legend>
 		
 		<label for="apellido">Apellido:</label>
       <input type="apellido" id="apellido" name="apellido" required>
@@ -97,13 +88,14 @@
           <option value="Otra">Otra</option>
         </select>
 
-        <label for="imagen">Imagen de perfil (Opcional):</label>
-        <input type="file" id="imagen" name="imagen" accept="image/*">
+        
       </fieldset>
+	<label for="imagen">Imagen de perfil (Opcional):</label>
+        <input type="file" id="imagen" name="imagen" accept="image/*">
 
       <!-- Botón -->
       <div style="margin-top: 1.5rem; display: flex; gap: 1rem;">
-        <button type="submit">¡Registrar usuario!</button>
+        <button type="submit">¡Registrar Asistente!</button>
         <button type="submit">Cancelar</button>
       </div>
     </form>
