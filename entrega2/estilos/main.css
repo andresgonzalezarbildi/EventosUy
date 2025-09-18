@@ -67,6 +67,7 @@
   justify-content: flex-end;
   font-weight: bold;
   text-align: right;   /* desktop */
+  margin-top: 0;
 
 }
 .navbar_sesion_perfil{

@@ -130,7 +130,12 @@ button:hover {
   font-weight: bold;
   text-align: right;   /* desktop */
   margin-top: 1rem;
+}
 
+@media (min-width: 768px) {
+  .navbar_sesion{
+    margin: 0;
+  }
 }
 .navbar_sesion_perfil{
   display: inline-block;
