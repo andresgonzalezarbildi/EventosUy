@@ -66,8 +66,9 @@
   align-items: center;
   justify-content: flex-end;
   font-weight: bold;
-  text-align: right;   /* desktop */
+  text-align: right;   
   margin-top: 0;
+   gap: 15px;
 
 }
 .navbar_sesion_perfil{
@@ -81,9 +82,10 @@
   margin-bottom: 4px;
 }
 
-.navbar_sesion_link{
-
+.navbar_sesion_link {
+  padding-left: 10px;
 }
+
 
 .perfil_image{
   width: 40px;
