@@ -1,24 +1,20 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Registro</title>
-  <link rel="stylesheet" href="../estilos/normalize.css">
+  <title>Usuario</title>
+  <link rel="stylesheet" href="estilos/normalize.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap-grid.min.css">
   <link rel="stylesheet" href="../estilos/base.css">
-  <link rel="stylesheet" href="../estilos/consultaTipoRegistro.css">
+  <link rel="stylesheet" href="../estilos/consultaUsuario.css">
 </head>
-
 <body>
-  <!-- Header -->
   <header class="navbar">
     <div class="container-xxl">
-      <div class="row navbar-row">
+      <div class="row navbar-row text-center text-md-start">
         <!-- Logo -->
         <div class="col-12 col-md-3 mobile-col-center">
-          <h1><a class="title" href="./eventosAsistente.html">Eventos.uy</a></h1>
+          <h1><a class="title" href="../index.html">Eventos.uy</a></h1>
         </div>
 
         <!-- Search -->
@@ -32,10 +28,10 @@
         <!-- Sesión -->
         <div class="col-12 col-md-3 mobile-col-center">
           <div class="navbar_sesion">
-            <a href="../index.html" class="navbar_sesion_link" onclick="window.location.href='../index.html'" >Cerrar Sesion</a>
+            <a href="pages/iniciar-registrarse" class="navbar_sesion_link">Cerrar Sesion</a>
             <div class="navbar_sesion_perfil">
-              <p class="navbar_username">AnaG</p>
-              <img class="perfil_image" src="../img/AnaG.jpg" alt="foto perfil" />
+              <p class="navbar_username">imm</p>
+              <img class="perfil_image" src="../img/immAvatar.jpg" alt="foto perfil" />
             </div>
           </div>
         </div>
@@ -43,20 +39,17 @@
     </div>
   </header>
 
-  <!-- Contenedor principal -->
-  <section class="container-fluid content">
+    <section class="container-fluid content">
     <div class="row content-row">
       <aside class="col-12 col-md-3">
         <div class="content-bar">
           <div class="content-bar-seccion">
             <div class="seccion-titulo">
-              <h3>Acciones de Registro</h3>
+              <h3>Acciones de Usuario</h3>
             </div>
             <div class="content-bar-seccion-list">
-              <div class="content-bar-seccion-list-options"
-                onclick="window.location.href='./registroAEdicion.html'"><span>Registro a Edicion Evento</span></div>
-              <div class="content-bar-seccion-list-options" onclick="window.location.href='./consultaRegistroAsistente.html'">
-                <span>Consulta Registro</span></div>
+              <div class="content-bar-seccion-list-options" onclick="window.location.href='./modificarUsuarioOrganizador.html'">
+                <span>Modificar Usuario</span></div>
             </div>
           </div>
         </div>
@@ -87,45 +80,50 @@
           </div>
         </div>
       </aside>
-      <main class="col-12 col-md-6 contenedor-main">
-        <div class="content-consulta">
-        <h2 class="form-titulo">Consulta Tipo de Registro</h2>
 
-        <form id="formconsultaTipoRegistro">
+      <!-- Contenedor principal -->
+      <main style="max-width: 600px; margin: 2rem auto; padding: 1rem; background: #fff; border: 1px solid var(--color-border); border-radius: var(--radius);">
+        <h2 style="margin-bottom: 1rem; color: var(--color-primary);">Consulta Usuario</h2>
+          
+          <!-- Lista de usuarios -->
+          <form id="formconsultaUsuario" style="width: 500px;">
           <!-- Detalle del usuario -->
           <div class="detalle">
+            <div style="padding-left: 180px;">
+              <h3><img src="../img/immAvatar.jpg" alt="foto usuario" style="width: 50px; height: 50px;">imm</h3>
+            </div>
 
-            <label>Evento:</label>
-            <select>
-              <option selected disabled>-- Seleccione un evento --</option>
-              <option>Evento1</option>
-              <option>Evento2</option>
-              <option>Evento3</option>
-            </select>
+            <label>Tipo:</label>
+            <input type="text" value="Organizador" readonly>
 
-            <label>Edicion:</label>
-            <select>
-              <option selected disabled>-- Seleccione una edicion --</option>
-              <option>Edicion1</option>
-              <option>Edicion2</option>
-              <option>Edicion3</option>
-            </select>
+            <label>Nombre:</label>
+            <input type="text" value="Intendencia de Montevideo" readonly>
 
-            <label>Tipos de registro:</label>
-            <textarea style="height: 100px;" readonly>
-Tipo1
-Tipo2
-Tipo3
-            </textarea>
+            <label>Descripcion:</label>
+            <input type="text" value="Gobierno departamental de Montevideo" readonly>
+
+            <label>Correo:</label>
+            <input type="email" value="contacto@imm.gub.uy" readonly>
+
+            <label>Sitio Web:</label>
+            <input type="text" value="https://montevideo.gub.uy" readonly>
+
+            <label>Ediciones:</label>
+              <div class="lista-scrollable">
+                <ul>
+                    <li><a href="./consultaEdicion.html">Montevideo Comics 2024 (Aceptada)</a></li>
+                    <li><a href="./consultaEdicion.html">Montevideo Comics 2025 (Aceptada)</a></li>
+                    <li>Maraton Montevideo 2022 (Rechazada)</li>
+                    <li>Mobile World Congress 2025 (Ingresada)</li>
+                </ul>
+              </div>
           </div>
         </form>
-        </div>
       </main>
     </div>
-  </section>
+    </section>
   <footer class="uc-footer">
     <small>Eventos.uy — Grupo 42.</small>
   </footer>
 </body>
-
 </html>
