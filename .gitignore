@@ -6,3 +6,4 @@ entrega2web/
 *.md
 *.xml
 *.pmd
+*.checkstyle
