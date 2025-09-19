@@ -41,36 +41,88 @@
     </div>
   </header>
 
-  <main style="max-width: 600px; margin: 2rem auto; padding: 1rem; background: #fff; border: 1px solid var(--color-border); border-radius: var(--radius);">
-    <h2 style="margin-bottom: 1rem; color: var(--color-primary);">Alta de Evento</h2>
+  <section class="content">
+    <div class="container-xxl">
+      <div class="row">
+        <!-- Sidebar -->
+        <aside class="col-12 col-md-4 ">
+          <div class="content-bar">
+            <div class="content-bar-seccion">
+              <div class="seccion-titulo">
+                <h3>Acciones</h3>
+              </div>
+              <div class="content-bar-seccion-list">
+                <div class="content-bar-seccion-list-options" onclick="window.location.href='./usuariosOrganizador.html'"><span>Usuario</span></div>
+                <div class="content-bar-seccion-list-options" onclick="window.location.href='./index.html'"><span>Institución</span></div>
+                <div class="content-bar-seccion-list-options" onclick="window.location.href='./consultaTipoRegistroOrganizador.html'"><span>Registro</span></div>
+              </div>
+            </div>
+          </div>          
+          
+          <div class="content-bar">
+            <div class="content-bar-seccion">
+              <div class="seccion-titulo">
+                <h3>Categorias</h3>
+              </div>
+              <div class="content-bar-seccion-list">
+                <div class="content-bar-seccion-list-options"><span>Tecnologia</span></div>
+                <div class="content-bar-seccion-list-options"><span>Innovación</span></div>
+                <div class="content-bar-seccion-list-options"><span>Salud</span></div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="content-bar">
+            <div class="content-bar-seccion">
+              <div class="seccion-titulo">
+                <h3>Mi Perfil</h3>
+              </div>
+              <div class="content-bar-seccion-list">
+                <div class="content-bar-seccion-list-options" onclick="window.location.href='./altaEvento.html'"><span>Alta Evento</span></div>
+                <div class="content-bar-seccion-list-options" onclick="window.location.href='./altaEdicion.html'"><span>Alta Edicion</span></div>
+                <div class="content-bar-seccion-list-options"><span>Alta Institucion</span></div>
+              </div>
+            </div>
+          </div>
+        </aside>
 
-    <form id="formEvento">
-      <label for="nombre">Nombre:</label>
-      <input type="text" id="nombre" name="nombre" required>
+      <main style="max-width: 600px; margin: 2rem auto; padding: 1rem; background: #fff; border: 1px solid var(--color-border); border-radius: var(--radius);">
+        <h2 style="margin-bottom: 1rem; color: var(--color-primary);">Alta de Evento</h2>
 
-      <label for="descripcion">Descripción:</label>
-      <textarea id="descripcion" name="descripcion" required></textarea>
+        <form id="formEvento">
+          <label for="nombre">Nombre:</label>
+          <input type="text" id="nombre" name="nombre" required>
 
-      <label for="sigla">Sigla:</label>
-      <input type="text" id="sigla" name="sigla" required>
+          <label for="descripcion">Descripción:</label>
+          <textarea id="descripcion" name="descripcion" required></textarea>
 
-      <label for="categorias">Categorías:</label>
-      <select id="categorias" name="categorias" multiple required>
-        <option>Tecnologia</option>
-        <option>Innovación</option>
-        <option>Salud</option>
-        <!-- Estas categorías se cargan desde mock.js -->
-      </select>
+          <label for="sigla">Sigla:</label>
+          <input type="text" id="sigla" name="sigla" required>
 
-      <label for="imagen">Imagen (opcional):</label>
-      <input type="file" id="imagen" name="imagen" accept="image/*">
+          <label for="categorias">Categorías:</label>
+          <select id="categorias" name="categorias" multiple required>
+            <option>Tecnologia</option>
+            <option>Innovación</option>
+            <option>Salud</option>
+            <!-- Estas categorías se cargan desde mock.js -->
+          </select>
 
-      <div style="margin-top: 1.5rem; display: flex; gap: 1rem;">
-        <button type="submit">Aceptar</button>
-        <button type="reset">Cancelar</button>
-      </div>
-    </form>
-  </main>
+          <label for="imagen">Imagen (opcional):</label>
+          <input type="file" id="imagen" name="imagen" accept="image/*">
+
+          <div style="margin-top: 1.5rem; display: flex; gap: 1rem;">
+            <button type="submit">Aceptar</button>
+            <button type="reset">Cancelar</button>
+          </div>
+        </form>
+      </main>
+    </div>
+    </div>
+    </section>
+      <!-- Footer -->
+  <footer class="uc-footer">
+    <small>Eventos.uy — Grupo 42.</small>
+  </footer>
 
   <!-- Scripts -->
   <script src="../scripts/mock.js"></script>

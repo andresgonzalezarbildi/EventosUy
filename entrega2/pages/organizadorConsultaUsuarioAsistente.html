@@ -39,47 +39,91 @@
     </div>
   </header>
 
-  <!-- Contenedor principal -->
-  <main style="max-width: 600px; margin: 2rem auto; padding: 1rem; background: #fff; border: 1px solid var(--color-border); border-radius: var(--radius);">
-    <h2 style="margin-bottom: 1rem; color: var(--color-primary);">Consulta Usuario</h2>
-      
-    <form id="formconsultaUsuario" style="width: 500px;">
-      <!-- Detalle del usuario -->
-      <div class="detalle">
-        <div style="padding-left: 180px;">
-          <h3><img src="../img/PerfilSinFoto.jpg" alt="foto usuario" style="width: 50px; height: 50px;">sofirod</h3>
+  <section class="container-fluid content">
+    <div class="row content-row">
+      <aside class="col-12 col-md-3">
+        <div class="content-bar">
+          <div class="content-bar-seccion">
+            <div class="seccion-titulo">
+              <h3>Acciones de Usuario</h3>
+            </div>
+            <div class="content-bar-seccion-list">
+              <div class="content-bar-seccion-list-options" onclick="window.location.href='./modificarUsuarioOrganizador.html'">
+                <span>Modificar Usuario</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="content-bar">
+          <div class="content-bar-seccion">
+            <div class="seccion-titulo">
+              <h3>Acciones</h3>
+            </div>
+            <div class="content-bar-seccion-list">
+              <div class="content-bar-seccion-list-options" onclick="window.location.href='./usuariosVisitante.html'"><span>Usuario</span></div>
+              <div class="content-bar-seccion-list-options" onclick="window.location.href='../index.html'"><span>Institución</span></div>
+              <div class="content-bar-seccion-list-options" onclick="window.location.href='./consultaTipoRegistroVisitante.html'"><span>Registro</span></div>
+            </div>
+          </div>
         </div>
         
-
-        <label>Tipo:</label>
-        <input type="text" value="Asistente" readonly>
-
-        <label>Nombre:</label>
-        <input type="text" value="Sofia" readonly>
-
-        <label>Apellido:</label>
-        <input type="text" value="Rodriguez" readonly>
-
-        <label>Correo:</label>
-        <input type="email" value="srodriguez@outlook.com" readonly>
-
-        <label>Fecha nac.:</label>
-        <input type="date" value="1995-03-02" readonly>
-
-        <label>Institución:</label>
-        <input type="text" value="Universidad Catolica del Uruguay" readonly>
-
-        <label>Registros:</label>
-        <div class="lista-scrollable">
-          <ul>
-            <li>Maraton Montevideo 2024</li>
-            <li>Maraton Montevideo 2025</li>
-            <li>Montevideo Rock 2025</li>
-          </ul>
+        <div class="content-bar">
+          <div class="content-bar-seccion">
+            <div class="seccion-titulo">
+              <h3>Categorias</h3>
+            </div>
+            <div class="content-bar-seccion-list">
+              <div class="content-bar-seccion-list-options" onclick="window.location.href='../index.html'"><span>Tecnologia</span></div>
+              <div class="content-bar-seccion-list-options" onclick="window.location.href='../index.html'"><span>Innovación</span></div>
+              <div class="content-bar-seccion-list-options" onclick="window.location.href='../index.html'"><span>Salud</span></div>
+            </div>
+          </div>
         </div>
-      </div>
-    </form>
-  </main>
+      </aside>
+
+  <!-- Contenedor principal -->
+      <main style="max-width: 600px; margin: 2rem auto; padding: 1rem; background: #fff; border: 1px solid var(--color-border); border-radius: var(--radius);">
+        <h2 style="margin-bottom: 1rem; color: var(--color-primary);">Consulta Usuario</h2>
+          
+        <form id="formconsultaUsuario" style="width: 500px;">
+          <!-- Detalle del usuario -->
+          <div class="detalle">
+            <div style="padding-left: 180px;">
+              <h3><img src="../img/PerfilSinFoto.jpg" alt="foto usuario" style="width: 50px; height: 50px;">sofirod</h3>
+            </div>
+            
+
+            <label>Tipo:</label>
+            <input type="text" value="Asistente" readonly>
+
+            <label>Nombre:</label>
+            <input type="text" value="Sofia" readonly>
+
+            <label>Apellido:</label>
+            <input type="text" value="Rodriguez" readonly>
+
+            <label>Correo:</label>
+            <input type="email" value="srodriguez@outlook.com" readonly>
+
+            <label>Fecha nac.:</label>
+            <input type="date" value="1995-03-02" readonly>
+
+            <label>Institución:</label>
+            <input type="text" value="Universidad Catolica del Uruguay" readonly>
+
+            <label>Registros:</label>
+            <div class="lista-scrollable">
+              <ul>
+                <li>Maraton Montevideo 2024</li>
+                <li>Maraton Montevideo 2025</li>
+                <li>Montevideo Rock 2025</li>
+              </ul>
+            </div>
+          </div>
+        </form>
+      </main>
+    </div>
+  </section>
   <footer class="uc-footer">
     <small>Eventos.uy — Grupo 42.</small>
   </footer>
