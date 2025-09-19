@@ -57,6 +57,10 @@ button:hover {
   background-color: var(--color-secondary);
 }
 
+h1{
+  margin: 1rem;
+}
+
 /* =========================
    NAVBAR
 ========================= */
@@ -64,7 +68,7 @@ button:hover {
 .navbar{
   width: 100%;
   margin: 0 auto;
-  padding: 16px;                 /* padding vertical */
+  padding: 0 16px;                 /* padding vertical */
   background: #fff;
   border-bottom: 1px solid var(--color-border);
   margin-bottom: 1rem;
@@ -120,16 +124,15 @@ button:hover {
 }
 .navbar_search-btn:hover{ background: var(--color-secondary); }
 
-/* Derecha: sesión */
-.col-session { /* el texto va a la derecha en md+, a la izquierda en mobile */
-}
+
 .navbar_sesion {
   display: flex;
   align-items: center;
   justify-content: flex-end;
   font-weight: bold;
   text-align: right;   /* desktop */
-  margin-top: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
 }
 
 @media (min-width: 768px) {
@@ -192,24 +195,25 @@ button:hover {
 
 .seccion-titulo {
   background-color: var(--color-secondary);
-  border: 2px solid var(--color-border);
+  border-bottom: 2px solid var(--color-border);
   padding: 0.5rem 1rem;
   text-align: center;
   color: white;
   font-weight: bold;
-  border-radius: 4px 4px 0 0;
 }
 
 .content-bar {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
+}
+
+.content-bar-seccion{
+   border: 2px solid var(--color-border);
 }
 
 .content-bar-seccion-list {
-  border: 2px solid var(--color-border);
-  border-top: none;
+
 }
 
 .content-bar-seccion-list-options {
@@ -251,4 +255,83 @@ form textarea {
   border-top: 1px solid var(--color-border);
   font-size: .95rem;
   margin-top: auto;
+}
+
+/* Clases para el contenido principal de la pagina, contenedor y cards */
+.contenido-principal {
+  background-color: white;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  min-height: 200px; /* placeholder */
+  padding: 1rem;
+  display: grid;
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+/* Cada evento como card */
+.contenido-principal-card {
+  /* border: 1px solid var(--color-border); */
+  border-radius: 0.75rem;
+  padding: 1rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  align-items: center;
+
+  height: 200px;
+  overflow: hidden;
+}
+
+/* Efecto hover */
+.contenido-principal-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+/* Imagen */
+.contenido-principal-card-imagen{
+  display: flex;
+  flex-direction: row;
+  justify-items: center;
+  align-items: center;
+  max-width: 100%;
+  height: 55%;
+}
+
+.contenido-principal-card-imagen img {
+  display: block;
+  border-radius: 0.5rem;
+  height: 100%;
+  width: auto;
+}
+
+/* Texto */
+.contenido-principal-card-informacion {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+  min-width: 0;
+  height: 35%;
+  
+}
+
+.contenido-principal-card-informacion-titulo {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #212529;
+  margin-bottom: 0.5rem;
+}
+
+.contenido-principal-card-informacion-descripcion {
+  font-size: 0.95rem;
+  color: #6c757d;
+  margin: 0;
+}
+
+@media (min-width: 768px) {
+  .contenido-principal-card-imagen{
+    height: 100%;
+    width: auto;
+  }
 }
