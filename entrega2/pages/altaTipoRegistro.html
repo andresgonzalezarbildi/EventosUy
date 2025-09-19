@@ -17,7 +17,7 @@
       <div class="row navbar-row">
         <!-- Logo -->
         <div class="col-12 col-md-3 mobile-col-center">
-          <h1><a class="title" href="./eventosSesionIniciada.html">Eventos.uy</a></h1>
+          <h1><a class="title" href="./eventosOrganizador.html">Eventos.uy</a></h1>
         </div>
 
         <!-- Search -->
@@ -82,33 +82,7 @@
     <small>Eventos.uy — Grupo 42.</small>
   </footer>
 
-  <script>
-    const tipoSelect = document.getElementById('tipo');
-    const extraCampos = document.getElementById('extraCampos');
-
-    tipoSelect.addEventListener('change', () => {
-      const tipo = tipoSelect.value;
-      extraCampos.innerHTML = ''; // limpio campos anteriores
-
-      if (tipo === 'organizador') {
-        extraCampos.innerHTML = `
-          <label for="descripcion">Descripción:</label>
-          <textarea id="descripcion" name="descripcion"></textarea>
-
-          <label for="link">Link:</label>
-          <input type="url" id="link" name="link">
-        `;
-      } else if (tipo === 'asistente') {
-        extraCampos.innerHTML = `
-          <label for="apellido">Apellido:</label>
-          <input type="text" id="apellido" name="apellido">
-
-          <label for="fechaNac">Fecha de Nacimiento:</label>
-          <input type="date" id="fechaNac" name="fechaNac">
-        `;
-      }
-    });
-  </script>
+  
 </body>
 </html>
 	
