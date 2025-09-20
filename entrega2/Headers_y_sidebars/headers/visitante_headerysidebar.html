@@ -1,9 +1,8 @@
- <!-- esto abajo del tag de head, cuando no haya sesion iniciada -->
 <body>
-<!-- Header -->
+  <!-- Header -->
   <header class="navbar">
     <div class="container-fluid">
-      <div class="row navbar-row">
+      <div class="row navbar-row text-center text-md-start">
         <!-- Logo -->
         <div class="col-12 col-md-3 mobile-col-center">
           <h1><a class="title" href="./index.html">Eventos.uy</a></h1>
@@ -20,19 +19,21 @@
         <!-- Sesión -->
         <div class="col-12 col-md-3 mobile-col-center">
           <div class="navbar_sesion">
-            <a href="./pages/iniciarSesion.html" class="navbar_sesion_link">Iniciar Sesion</a>
+            <a href="./pages/iniciarSesion.html" class="navbar_sesion_link">Iniciar Sesión</a>
             <a href="./pages/altaUsuario.html" class="navbar_sesion_link">Registrarse</a>
           </div>
         </div>
       </div>
     </div>
   </header>
-  <!-- Main -->
+
+  <!-- Main + Sidebar -->
   <section class="content">
-    <div class="container-xxl">
+    <div class="container-fluid">
       <div class="row">
         <!-- Sidebar -->
-        <aside class="col-12 col-md-4 ">
+        <aside class="col-12 col-md-4">
+          <!-- Acciones -->
           <div class="content-bar">
             <div class="content-bar-seccion">
               <div class="seccion-titulo">
@@ -45,19 +46,18 @@
               </div>
             </div>
           </div>
-          
+
+          <!-- Categorías -->
           <div class="content-bar">
             <div class="content-bar-seccion">
               <div class="seccion-titulo">
-                <h3>Categorias</h3>
+                <h3>Categorías</h3>
               </div>
               <div class="content-bar-seccion-list">
-                <div class="content-bar-seccion-list-options" onclick="window.location.href='./index.html'"><span>Tecnologia</span></div>
+                <div class="content-bar-seccion-list-options" onclick="window.location.href='./index.html'"><span>Tecnología</span></div>
                 <div class="content-bar-seccion-list-options" onclick="window.location.href='./index.html'"><span>Innovación</span></div>
                 <div class="content-bar-seccion-list-options" onclick="window.location.href='./index.html'"><span>Salud</span></div>
               </div>
             </div>
           </div>
-          
         </aside>
-<!-- DESPUES DE ESTO VA EL TAG DE CONTENIDO PRINCIPAL -->

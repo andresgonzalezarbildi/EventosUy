@@ -1,9 +1,8 @@
- <!-- esto abajo del tag de head, cuando haya sesion iniciada como organizador -->
 <body>
-<!-- Header -->
+  <!-- Header -->
   <header class="navbar">
     <div class="container-fluid">
-      <div class="row navbar-row">
+      <div class="row navbar-row text-center text-md-start">
         <!-- Logo -->
         <div class="col-12 col-md-3 mobile-col-center">
           <h1><a class="title" href="./eventosOrganizador.html">Eventos.uy</a></h1>
@@ -20,52 +19,54 @@
         <!-- Sesión -->
         <div class="col-12 col-md-3 mobile-col-center">
           <div class="navbar_sesion">
-            <a href="./pages/index.html" class="navbar_sesion_link">Cerrar sesion</a>
+            <a href="./pages/index.html" class="navbar_sesion_link">Cerrar Sesión</a>
           </div>
         </div>
       </div>
     </div>
   </header>
-  <!-- Sidebar -->
-        <aside class="col-12 col-md-4 ">
+
+  <!-- Main + Sidebar -->
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row">
+
+        <!-- Sidebar -->
+        <aside class="col-12 col-md-4">
+          <!-- Acciones -->
           <div class="content-bar">
             <div class="content-bar-seccion">
-              <div class="seccion-titulo">
-                <h3>Acciones</h3>
-              </div>
+              <div class="seccion-titulo"><h3>Acciones</h3></div>
               <div class="content-bar-seccion-list">
                 <div class="content-bar-seccion-list-options" onclick="window.location.href='./usuariosOrganizador.html'"><span>Usuario</span></div>
                 <div class="content-bar-seccion-list-options" onclick="window.location.href='../index.html'"><span>Institución</span></div>
                 <div class="content-bar-seccion-list-options" onclick="window.location.href='./consultaTipoRegistroOrganizador.html'"><span>Registro</span></div>
               </div>
             </div>
-          </div>          
-          
+          </div>
+
+          <!-- Categorías -->
           <div class="content-bar">
             <div class="content-bar-seccion">
-              <div class="seccion-titulo">
-                <h3>Categorias</h3>
-              </div>
+              <div class="seccion-titulo"><h3>Categorías</h3></div>
               <div class="content-bar-seccion-list">
-                <div class="content-bar-seccion-list-options"><span>Tecnologia</span></div>
+                <div class="content-bar-seccion-list-options"><span>Tecnología</span></div>
                 <div class="content-bar-seccion-list-options"><span>Innovación</span></div>
                 <div class="content-bar-seccion-list-options"><span>Salud</span></div>
               </div>
             </div>
           </div>
-          
+
+          <!-- Mi Perfil -->
           <div class="content-bar">
             <div class="content-bar-seccion">
-              <div class="seccion-titulo">
-                <h3>Mi Perfil</h3>
-              </div>
+              <div class="seccion-titulo"><h3>Mi Perfil</h3></div>
               <div class="content-bar-seccion-list">
                 <div class="content-bar-seccion-list-options" onclick="window.location.href='./altaEvento.html'"><span>Alta Evento</span></div>
-                <div class="content-bar-seccion-list-options" onclick="window.location.href='./altaEdicion.html'"><span>Alta Edicion</span></div>
-                <div class="content-bar-seccion-list-options"><span>Alta Institucion</span></div>
+                <div class="content-bar-seccion-list-options" onclick="window.location.href='./altaEdicion.html'"><span>Alta Edición</span></div>
+                <div class="content-bar-seccion-list-options"><span>Alta Institución</span></div>
                 <div class="content-bar-seccion-list-options" onclick="window.location.href='./modificarUsuarioOrganizador.html'"><span>Modificar Usuario</span></div>
               </div>
             </div>
           </div>
         </aside>
-  <!-- DESPUES DE ESTO VA EL TAG DE CONTENIDO PRINCIPAL -->
