@@ -10,8 +10,6 @@
   
   <link rel="stylesheet" href="../estilos/base.css">
   <link rel="stylesheet" href="../estilos/consultaEvento.css">
-
-
 </head>
 
 <body>
@@ -46,81 +44,88 @@
     </div>
   </header>
 
-
   <!-- Main -->
   <main class="content">
     <div class="container-xxl">
       <div class="row contenido-main">
-        <!-- Sidebar -->
-          <aside class="col-12 col-md-3">
+        
+        <!-- //dentro del main, antes del content -->
+
+<!-- Sidebar -->
+         <aside class="col-12 col-md-3">
           <div class="content-bar">
             <div class="content-bar-seccion">
               <div class="seccion-titulo">
-                <h3>Mi Perfil</h3>
+                <h3>Acciones</h3>
               </div>
               <div class="content-bar-seccion-list">
-                <div class="content-bar-seccion-list-options"><span>Alta Evento</span></div>
-                <div class="content-bar-seccion-list-options"><span>Alta Edicion</span></div>
-                <div class="content-bar-seccion-list-options"><span>Alta Institucion</span></div>
+                <div class="content-bar-seccion-list-options" onclick="window.location.href='./pages/usuariosVisitante.html'"><span>Usuario</span></div>
+                <div class="content-bar-seccion-list-options" onclick="window.location.href='./index.html'"><span>Institución</span></div>
+                <div class="content-bar-seccion-list-options" onclick="window.location.href='./pages/consultaTipoRegistroVisitante.html'"><span>Registro</span></div>
               </div>
             </div>
           </div>
-
+          
           <div class="content-bar">
             <div class="content-bar-seccion">
               <div class="seccion-titulo">
                 <h3>Categorias</h3>
               </div>
               <div class="content-bar-seccion-list">
-                <div class="content-bar-seccion-list-options"><span>Tecnologia</span></div>
-                <div class="content-bar-seccion-list-options"><span>Innovación</span></div>
-                <div class="content-bar-seccion-list-options"><span>Salud</span></div>
+                <div class="content-bar-seccion-list-options" onclick="window.location.href='./index.html'"><span>Tecnologia</span></div>
+                <div class="content-bar-seccion-list-options" onclick="window.location.href='./index.html'"><span>Innovación</span></div>
+                <div class="content-bar-seccion-list-options" onclick="window.location.href='./index.html'"><span>Salud</span></div>
               </div>
             </div>
           </div>
+          
+        </aside>
 
-          <button class="btn" onclick="window.location.href='./pages/enProceso.html'">Usuarios</button>
-        </aside> 
-
-        <!-- Contenido principal -->
-        <section class="col-12 col-md-8 section-evento row">
-
-          <div class="col-12 content-evento row">
-
-            <div class="col-12 row content-evento-resumen">
-              <div class="col-12 content-evento-titulo">
-                  <p>Maraton Montevideo</p>
-              </div>
-              <div class="col-12 content-evento-imagen ">
-                <img src="../img/maratonMontevideo.png" alt="logo del evento">
-              </div>
+        <!-- Contenido + Ediciones -->
+        <div class="col-12 col-md-9 row">
+          
+          <!-- Contenido principal -->
+         <section class="col-12 col-md-8 section-evento">
+          <div class="card shadow-sm p-4 mb-4">
+            <!-- Título + imagen -->
+            <div class="text-center mb-4">
+              <h1 class="fw-bold mb-3" style="font-size:2rem;">Maratón Montevideo</h1>
+              <img src="../img/maratonMontevideo.png" alt="logo del evento" class="img-fluid rounded" style="max-height:220px;">
             </div>
-            <div class="col-12 row content-evento-informacion">
-              <div>
-                <p class="informacion-label">Descripcion:</p>
-                <p>Competencia deportiva anual en la capital</p>
+
+            <!-- Información -->
+            <div class="row g-4">
+              <div class="col-12">
+                <h5 class="text-primary fw-semibold mb-2">Descripción</h5>
+                <p style="font-size:1.1rem;">Competencia deportiva anual en la capital</p>
               </div>
-              <div>
-                <p class="informacion-label">Sigla:</p>
-                <p>Maraton</p>
+              <div class="col-6">
+                <h5 class="text-primary fw-semibold mb-2">Sigla</h5>
+                <p style="font-size:1.1rem;">Maratón</p>
               </div>
-              <div>
-                <p class="informacion-label">Categorías</p>
-                <p>Deporte, Salid</p>
+              <div class="col-6">
+                <h5 class="text-primary fw-semibold mb-2">Fecha Alta</h5>
+                <p style="font-size:1.1rem;">01/01/2022</p>
               </div>
-              <div>
-                <p class="informacion-label">Fecha Alta:</p>
-                <p>01/01/2022</p>
+              <div class="col-12">
+                <h5 class="text-primary fw-semibold mb-2">Categorías</h5>
+                <div class="d-flex flex-wrap gap-2">
+                  <span class="badge bg-primary fs-6">Deporte</span>
+                  <span class="badge bg-success fs-6">Salud</span>
+                </div>
               </div>
             </div>
           </div>
         </section>
 
-        <aside class="col-12 col-md-4">
-          <div class="content-ediciones">
-            <div class="seccion-titulo">
-              <h3>Ediciones</h3>
-            </div>
+
+
+          <!-- Ediciones -->
+          <aside class="col-12 col-md-4">
+            <div class="content-ediciones">
+              <div class="seccion-titulo">
+                <h3>Ediciones</h3>
+              </div>
               <div class="content-edicion" onclick="window.location.href='./consultaEdicion.html'">
                 <p class="content-edicion-titulo">
                   Maraton Montevideo 2025
@@ -145,12 +150,13 @@
                   <img src="../img/maratonMontevideo.png" alt="logo del evento">
                 </div>
               </div>    
-          </div>
-        </aside>
+            </div>
+          </aside>
+
+        </div>
       </div>
     </div>
   </main>
-
 
   <footer class="uc-footer">
     <small>Eventos.uy — Grupo 42.</small>
