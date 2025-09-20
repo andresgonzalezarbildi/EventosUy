@@ -26,14 +26,6 @@ p { color: #2b2b2b; }
 }
 .btn.btn-primary:hover { filter: brightness(0.95); }
 
-/* Grupo "Ingrese el código" */
-#grupoCodigo { 
-  gap: 0.5rem; 
-}
-#grupoCodigo .form-control {
-  flex: 1;          /* ocupa el espacio disponible */
-  max-width: none;  /* sin límite fijo */
-}
 
 /* Footer */
 .uc-footer{
@@ -45,16 +37,6 @@ p { color: #2b2b2b; }
   font-size: .95rem;
 }
 
-/* Forzar que #grupoCodigo se comporte como fila bootstrap */
-#grupoCodigo:not(.d-none) {
-  display: flex;          /* la fila vuelve a ser flex */
-  flex-wrap: wrap;        /* permite que las cols se acomoden */
-}
-
-/* Anchos de columnas en mobile */
-#grupoCodigo:not(.d-none) > .col-12 { 
-  width: 100%;
-}
 
 /* Anchos de columnas en desktop (md+) */
 @media (min-width: 768px) {
@@ -66,4 +48,8 @@ p { color: #2b2b2b; }
     flex: 0 0 auto; 
     width: 66.6666667%;
   }
+}
+
+.negrita{
+  font-weight: bold;
 }
