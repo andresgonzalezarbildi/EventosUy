@@ -35,25 +35,39 @@
     </div>
   </header>
 	
-	
+	<!-- Sidebar -->
+        <aside class="col-12 col-md-4 ">
+          <div class="content-bar">
+            <div class="content-bar-seccion">
+              <div class="seccion-titulo">
+                <h3>Acciones</h3>
+              </div>
+              <div class="content-bar-seccion-list">
+                <div class="content-bar-seccion-list-options" onclick="window.location.href='./pages/usuariosVisitante.html'"><span>Usuario</span></div>
+                <div class="content-bar-seccion-list-options" onclick="window.location.href='./index.html'"><span>Institución</span></div>
+                <div class="content-bar-seccion-list-options" onclick="window.location.href='./pages/consultaTipoRegistroVisitante.html'"><span>Registro</span></div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="content-bar">
+            <div class="content-bar-seccion">
+              <div class="seccion-titulo">
+                <h3>Categorias</h3>
+              </div>
+              <div class="content-bar-seccion-list">
+                <div class="content-bar-seccion-list-options" onclick="window.location.href='./index.html'"><span>Tecnologia</span></div>
+                <div class="content-bar-seccion-list-options" onclick="window.location.href='./index.html'"><span>Innovación</span></div>
+                <div class="content-bar-seccion-list-options" onclick="window.location.href='./index.html'"><span>Salud</span></div>
+              </div>
+            </div>
+          </div>
+          
+        </aside>
   <main style="max-width: 700px; margin: 2rem auto; padding: 1.5rem; background: #fff; border: 1px solid var(--color-border); border-radius: var(--radius); box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
-    <h2 style="margin-bottom: 1rem; color: var(--color-primary); text-align:center;">Detalle de Edición</h2>
+
     
-    <!-- Combo de evento -->
-    <div style="margin-bottom: 1rem; display:flex; gap:1rem; justify-content:center;">
-      <div>
-        <label for="evento"><strong>Evento:</strong></label>
-        <select id="evento" name="evento">
-          <option value="evento1">Evento 1</option>
-        </select>
-      </div>
-      <div>
-        <label for="edicion"><strong>Edición:</strong></label>
-        <select id="edicion" name="edicion">
-          <option value="edicion1">Edición 1 del Evento 1</option>
-        </select>
-      </div>
-    </div>
+    <h2 style="margin-bottom: 1rem; color: var(--color-primary); text-align:center;">Detalle de Edición</h2>
 
     <!-- Imagen -->
     <div style="text-align:center; margin-bottom:1.5rem;">
@@ -72,14 +86,15 @@
     </dl>
 
     <!-- Tipo de registros -->
-    <section style="margin-bottom:2rem;">
-      <h3 style="margin-bottom:0.5rem; color: var(--color-primary);">Tipos de Registro</h3>
-      <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
-        <span style="background:#f0f0f0; padding:0.4rem 0.8rem; border-radius:12px;">General</span>
-        <span style="background:#f0f0f0; padding:0.4rem 0.8rem; border-radius:12px;">Estudiante</span>
-        <span style="background:#f0f0f0; padding:0.4rem 0.8rem; border-radius:12px;">VIP</span>
-      </div>
-    </section>
+<section style="margin-bottom:2rem;">
+  <h3 style="margin-bottom:0.5rem; color: var(--color-primary);">Tipos de Registro</h3>
+  <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+    <a href="../pages/consultaTipoRegistroAsistente.html" style="background:#f0f0f0; padding:0.4rem 0.8rem; border-radius:12px; text-decoration:none; color:inherit; display:inline-block;">General</a>
+    <a href="../pages/consultaTipoRegistroAsistente.html" style="background:#f0f0f0; padding:0.4rem 0.8rem; border-radius:12px; text-decoration:none; color:inherit; display:inline-block;">Estudiante</a>
+    <a href="../pages/consultaTipoRegistroAsistente.html" style="background:#f0f0f0; padding:0.4rem 0.8rem; border-radius:12px; text-decoration:none; color:inherit; display:inline-block;">VIP</a>
+  </div>
+</section>
+
 
     <!-- Organizador -->
     <section style="margin-bottom:2rem;">
