@@ -13,84 +13,15 @@
   margin-bottom: 2rem;
 }
 
-.content-eventos {
-  background-color: white;
-  border: 1px solid var(--color-border);
-  border-radius: 6px;
-  min-height: 200px; /* placeholder */
-  padding: 1rem;
-  display: grid;
-  gap: 1.5rem;
-  margin-bottom: 1rem;
-}
-
-/* Cada evento como card */
-.content-eventos-evento {
-  /* border: 1px solid var(--color-border); */
-  border-radius: 0.75rem;
-  padding: 1rem;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  align-items: center;
-
-  height: auto;
-  overflow: hidden;
-}
-
-/* Efecto hover */
-.content-eventos-evento:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  cursor: pointer;
-}
-
-/* Imagen */
-.content-eventos-evento-imagen{
-  display: flex;
-  flex-direction: row;
-  justify-items: center;
-  align-items: center;
-  max-width: 100%;
-}
-
-.content-eventos-evento-imagen img {
-  display: block;
-  border-radius: 0.5rem;
-  width: 100%;
-  height: auto;
-}
-
-/* Texto */
-.content-eventos-evento-informacion {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  flex: 1;
-  min-width: 0;
-  
-}
-
-.content-eventos-evento-informacion-titulo {
-  font-size: 1.2rem;
-  font-weight: bold;
-  color: #212529;
-  margin-bottom: 0.5rem;
-}
-
-.content-eventos-evento-informacion-descripcion {
-  font-size: 0.95rem;
-  color: #6c757d;
-  margin: 0;
-}
-
 /* ===== Mobile (pantallas chicas) ===== */
 @media (max-width: 767.98px) {
-  .content-eventos-evento {
+  .contenido-principal-card {
     flex-direction: column;   /* apila imagen y texto */
     text-align: center;       /* centra el texto */
     align-items: center;      /* centra la imagen */
   }
 
-  .content-eventos-evento-imagen {
+  .contenido-principal-card-imagen {
     width: 100%;
     margin-bottom: 1rem;      /* espacio entre imagen y texto */
     flex-direction: column;   /* apila imagen y texto */
@@ -98,13 +29,13 @@
     align-items: center;
   }
 
-  .content-eventos-evento-imagen img {
+  .contenido-principal-card-imagen img {
     margin-bottom: 1rem;      /* espacio entre imagen y texto */
     max-width: 160px;           /* que no ocupe todo el ancho */
     max-height: 160px;
   }
 
-  .content-eventos-evento-informacion {
+  .contenido-principal-card-informacion {
     text-align: center;       /* centra títulos y descripción */
   }
 }

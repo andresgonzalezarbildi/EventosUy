@@ -42,26 +42,13 @@
     </div>
   </header>
 
-  <!-- Main + Sidebar -->
+  <!-- Main -->
   <section class="content">
     <div class="container-fluid">
       <div class="row">
-        <!-- Sidebar -->
-        <aside class="col-12 col-md-4">
-          <!-- Acciones -->
-          <div class="content-bar">
-            <div class="content-bar-seccion">
-              <div class="seccion-titulo">
-                <h3>Acciones</h3>
-              </div>
-              <div class="content-bar-seccion-list">
-                <div class="content-bar-seccion-list-options" onclick="window.location.href='./pages/usuariosVisitante.html'"><span>Usuario</span></div>
-                <div class="content-bar-seccion-list-options" onclick="window.location.href='./index.html'"><span>Institución</span></div>
-                <div class="content-bar-seccion-list-options" onclick="window.location.href='./pages/consultaTipoRegistroVisitante.html'"><span>Registro</span></div>
-              </div>
-            </div>
-          </div>
 
+        <!-- Sidebar -->
+        <aside class="col-12 col-md-3">
           <!-- Categorías -->
           <div class="content-bar">
             <div class="content-bar-seccion">
@@ -69,67 +56,75 @@
                 <h3>Categorías</h3>
               </div>
               <div class="content-bar-seccion-list">
-                <div class="content-bar-seccion-list-options" onclick="window.location.href='./index.html'"><span>Tecnología</span></div>
-                <div class="content-bar-seccion-list-options" onclick="window.location.href='./index.html'"><span>Innovación</span></div>
-                <div class="content-bar-seccion-list-options" onclick="window.location.href='./index.html'"><span>Salud</span></div>
+                <div class="content-bar-seccion-list-options" onclick="window.location.href='./index.html'">
+                  <span>Tecnología</span>
+                </div>
+                <div class="content-bar-seccion-list-options" onclick="window.location.href='./index.html'">
+                  <span>Innovación</span>
+                </div>
+                <div class="content-bar-seccion-list-options" onclick="window.location.href='./index.html'">
+                  <span>Deporte</span>
+                </div>
+                <div class="content-bar-seccion-list-options" onclick="window.location.href='./index.html'">
+                  <span>Salud</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Acciones -->
+          <div class="content-bar">
+            <div class="content-bar-seccion">
+              <div class="seccion-titulo">
+                <h3>Acciones</h3>
+              </div>
+              <div class="content-bar-seccion-list">
+                <div class="content-bar-seccion-list-options"
+                  onclick="window.location.href='./pages/usuariosVisitante.html'">
+                  <span>Usuario</span>
+                </div>
+                <div class="content-bar-seccion-list-options">
+                  <span>Institución</span>
+                </div>
+                <div class="content-bar-seccion-list-options"
+                  onclick="window.location.href='./pages/consultaTipoRegistroVisitante.html'"><span>Registro</span>
+                </div>
               </div>
             </div>
           </div>
         </aside>
-
         <!-- Contenido principal -->
-        <main class="col-12 col-md-8">
+        <main class="col-12 col-md-9">
 
-          <div class="content-eventos">
+          <div class="contenido-principal">
 
-            <div class="row content-eventos-evento" onclick="window.location.href='./pages/consultaEventoVisitante.html'">
-              <div class="col-12 col-md-3 content-eventos-evento-imagen">
-                <img src="img/maratonMontevideo.png" alt="logo del evento">
+            <div class="row contenido-principal-card"
+              onclick="window.location.href='./pages/consultaEventoVisitante.html'">
+              <div class="col-12 col-md-3 contenido-principal-card-imagen">
+                <img src="img/IMG-EV04.png" alt="logo del evento">
               </div>
 
-              <div class="col-12 col-md-9 content-eventos-evento-informacion col-12">
-                <p class="content-eventos-evento-informacion-titulo">
+              <div class="col-12 col-md-9 contenido-principal-card-informacion col-12">
+                <p class="contenido-principal-card-informacion-titulo">
                   Maraton Montevideo -
                 </p>
-                <p class="content-eventos-evento-informacion-descripcion">
+                <p class="contenido-principal-card-informacion-descripcion">
                   Competencia deportiva anual en la capita
                 </p>
               </div>
 
             </div>
-
-            <div class="row content-eventos-evento" onclick="window.location.href='./pages/consultaEventoVisitante.html'">
-              <div class="col-12 col-md-3 content-eventos-evento-imagen">
-                <img src="img/montevideoComic.jpg" alt="logo del evento">
-              </div>
-
-              <div class="col-12 col-md-9 content-eventos-evento-informacion col-12">
-                <p class="content-eventos-evento-informacion-titulo">
-                  Montevideo Comic -
+            <div class="row contenido-principal-card"
+              onclick="window.location.href='./pages/consultaEventoVisitante.html'">
+              <div class="col-12 col-md-9 contenido-principal-card-informacion col-12">
+                <p class="contenido-principal-card-informacion-titulo">
+                  Conferencia de Tecnología -
                 </p>
-                <p class="content-eventos-evento-informacion-descripcion">
-                  Convencion de historietas, cine y cultura geek.
-                </p>
-              </div>
-            </div>
-
-            <div class="row content-eventos-evento"onclick="window.location.href='./pages/consultaEventoVisitante.html'">
-              <div class="col-12 col-md-3 content-eventos-evento-imagen">
-                <img src="img/montevideoRock.png" alt="logo del evento">
-              </div>
-
-              <div class="col-12 col-md-9 content-eventos-evento-informacion col-12">
-                <p class="content-eventos-evento-informacion-titulo">
-                  Montevideo Rock -
-                </p>
-                <p class="content-eventos-evento-informacion-descripcion">
-                  Festival de Rock con artistas nacionales e internacionales.
+                <p class="contenido-principal-card-informacion-descripcion">
+                  Evento sobre innovación tecnológica
                 </p>
               </div>
             </div>
           </div>
-
-
         </main>
       </div>
     </div>
