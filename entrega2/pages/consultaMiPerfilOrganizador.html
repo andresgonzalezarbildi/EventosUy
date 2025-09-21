@@ -9,77 +9,84 @@
   <link rel="stylesheet" href="../estilos/consultaUsuario.css">
 </head>
 <body>
-  <header class="navbar">
-    <div class="container-fluid">
-      <div class="row navbar-row text-center text-md-start">
-        <!-- Logo -->
-        <div class="col-12 col-md-3 mobile-col-center">
-          <h1><a class="title" href="../index.html">Eventos.uy</a></h1>
-        </div>
+ <!-- Header -->
+<header class="navbar">
+  <div class="container-fluid">
+    <div class="row navbar-row text-center text-md-start">
+      <!-- Logo -->
+      <div class="col-12 col-md-3 mobile-col-center">
+        <h1><a class="title" href="./eventosOrganizador.html">Eventos.uy</a></h1>
+      </div>
 
-        <!-- Search -->
-        <div class="col-12 col-md-6">
-          <div class="navbar_search mx-auto">
-            <input type="text" placeholder="Eventos, ediciones..." class="navbar_search-input">
-            <button class="navbar_search-btn">Buscar</button>
-          </div>
+      <!-- Search -->
+      <div class="col-12 col-md-6">
+        <div class="navbar_search mx-auto">
+          <input type="text" placeholder="Eventos, ediciones..." class="navbar_search-input">
+          <button class="navbar_search-btn">Buscar</button>
         </div>
+      </div>
 
-        <!-- Sesión -->
-        <div class="col-12 col-md-3 mobile-col-center">
-          <div class="navbar_sesion">
-            <a href="pages/iniciar-registrarse" class="navbar_sesion_link">Cerrar Sesion</a>
-            <div class="navbar_sesion_perfil">
-              <p class="navbar_username">imm</p>
-              <img class="perfil_image" src="../img/immAvatar.jpg" alt="foto perfil" />
-            </div>
+      <!-- Sesión -->
+      <div class="col-12 col-md-3 mobile-col-center">
+        <div class="navbar_sesion">
+          <div class="navbar_sesion_perfil">
+            <p class="navbar_username">miseventos</p>
+            <a href="./modificarUsuarioOrganizador.html">
+              <img class="perfil_image" src="../img/IMG-US04.jpeg" alt="foto perfil" style="cursor:pointer;">
+            </a>
           </div>
+          <a href="../index.html" class="navbar_sesion_link">Cerrar Sesión</a>
         </div>
       </div>
     </div>
-  </header>
+  </div>
+</header>
 
-    <section class="container-fluid content">
-    <div class="row content-row">
-      <aside class="col-12 col-md-3">
+<!-- Main + Sidebar -->
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+
+      <!-- Sidebar -->
+      <aside class="col-12 col-md-4">
+        <!-- Acciones -->
         <div class="content-bar">
           <div class="content-bar-seccion">
-            <div class="seccion-titulo">
-              <h3>Acciones de Usuario</h3>
-            </div>
+            <div class="seccion-titulo"><h3>Acciones</h3></div>
             <div class="content-bar-seccion-list">
-              <div class="content-bar-seccion-list-options" onclick="window.location.href='./modificarUsuarioOrganizador.html'">
-                <span>Modificar Usuario</span></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="content-bar">
-          <div class="content-bar-seccion">
-            <div class="seccion-titulo">
-              <h3>Acciones</h3>
-            </div>
-            <div class="content-bar-seccion-list">
-              <div class="content-bar-seccion-list-options" onclick="window.location.href='./usuariosVisitante.html'"><span>Usuario</span></div>
+              <div class="content-bar-seccion-list-options" onclick="window.location.href='./usuariosOrganizador.html'"><span>Usuario</span></div>
               <div class="content-bar-seccion-list-options" onclick="window.location.href='../index.html'"><span>Institución</span></div>
-              <div class="content-bar-seccion-list-options" onclick="window.location.href='./consultaTipoRegistroVisitante.html'"><span>Registro</span></div>
+              <div class="content-bar-seccion-list-options" onclick="window.location.href='./consultaTipoRegistroOrganizador.html'"><span>Registro</span></div>
             </div>
           </div>
         </div>
-        
+
+        <!-- Categorías -->
         <div class="content-bar">
           <div class="content-bar-seccion">
-            <div class="seccion-titulo">
-              <h3>Categorias</h3>
-            </div>
+            <div class="seccion-titulo"><h3>Categorías</h3></div>
             <div class="content-bar-seccion-list">
-              <div class="content-bar-seccion-list-options" onclick="window.location.href='../index.html'"><span>Tecnologia</span></div>
-              <div class="content-bar-seccion-list-options" onclick="window.location.href='../index.html'"><span>Innovación</span></div>
-              <div class="content-bar-seccion-list-options" onclick="window.location.href='../index.html'"><span>Salud</span></div>
+              <div class="content-bar-seccion-list-options"><span>Tecnología</span></div>
+              <div class="content-bar-seccion-list-options"><span>Innovación</span></div>
+              <div class="content-bar-seccion-list-options"><span>Salud</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mi Perfil -->
+        <div class="content-bar">
+          <div class="content-bar-seccion">
+            <div class="seccion-titulo"><h3>Mi Perfil</h3></div>
+            <div class="content-bar-seccion-list">
+              <div class="content-bar-seccion-list-options" onclick="window.location.href='./altaEvento.html'"><span>Alta Evento</span></div>
+              <div class="content-bar-seccion-list-options" onclick="window.location.href='./altaEdicion.html'"><span>Alta Edición</span></div>
+              <div class="content-bar-seccion-list-options"><span>Alta Institución</span></div>
+              <div class="content-bar-seccion-list-options" onclick="window.location.href='./modificarUsuarioOrganizador.html'"><span>Modificar Usuario</span></div>
             </div>
           </div>
         </div>
       </aside>
+
 
       <!-- Contenedor principal -->
       <main style="max-width: 600px; margin: 2rem auto; padding: 1rem; background: #fff; border: 1px solid var(--color-border); border-radius: var(--radius);">
