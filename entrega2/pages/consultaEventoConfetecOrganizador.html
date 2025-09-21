@@ -11,30 +11,7 @@
   <link rel="stylesheet" href="../estilos/base.css">
   <link rel="stylesheet" href="../estilos/consultaEvento.css">
 
-  <style>
-    /* --- Fix imágenes --- */
-    .perfil_image {
-      max-width: 48px;
-      max-height: 48px;
-      border-radius: 50%;
-      object-fit: cover;
-      display: block;
-    }
 
-    .section-evento img {
-      max-width: 100%;
-      max-height: 220px;
-      object-fit: contain;
-    }
-
-    .content-edicion-imagen img {
-      max-width: 100%;
-      max-height: 120px;
-      object-fit: contain;
-      display: block;
-      margin: 0 auto;
-    }
-  </style>
 </head>
 
 <body>
@@ -71,119 +48,131 @@
     </div>
   </header>
 
-  <!-- Main + Sidebar -->
-  <section class="content">
-    <div class="container-fluid">
-      <div class="row">
+  <!-- Main -->
+  <main class="container-fluid">
+    <div class="row" style="margin-bottom: 1rem;">
 
-        <!-- Sidebar -->
-        <aside class="col-12 col-md-4">
-          <!-- Acciones -->
-          <div class="content-bar">
-            <div class="content-bar-seccion">
-              <div class="seccion-titulo">
-                <h3>Acciones</h3>
+      <!-- Sidebar -->
+      <aside class="col-12 col-md-3">
+        <div class="content-bar">
+          <div class="content-bar-seccion">
+            <div class="seccion-titulo">
+              <h3>Categorias</h3>
+            </div>
+            <div class="content-bar-seccion-list">
+              <div class="content-bar-seccion-list-options" onclick="window.location.href='./eventosOrganizador.html'">
+                <span>Tecnologia</span>
               </div>
-              <div class="content-bar-seccion-list">
-                <div class="content-bar-seccion-list-options" onclick="window.location.href='./usuariosOrganizador.html'"><span>Usuario</span></div>
-                <div class="content-bar-seccion-list-options" onclick="window.location.href='../index.html'"><span>Institución</span></div>
-                <div class="content-bar-seccion-list-options" onclick="window.location.href='./consultaTipoRegistroOrganizador.html'"><span>Registro</span></div>
+              <div class="content-bar-seccion-list-options" onclick="window.location.href='./eventosOrganizador.html'">
+                <span>Innovación</span>
+              </div>
+              <div class="content-bar-seccion-list-options" onclick="window.location.href='./eventosOrganizador.html'">
+                <span>Deporte</span>
+              </div>
+              <div class="content-bar-seccion-list-options" onclick="window.location.href='./eventosOrganizador.html'">
+                <span>Salud</span>
               </div>
             </div>
           </div>
-
-          <!-- Categorías -->
-          <div class="content-bar">
-            <div class="content-bar-seccion">
-              <div class="seccion-titulo">
-                <h3>Categorías</h3>
+        </div>
+        <!-- Acciones -->
+        <div class="content-bar">
+          <div class="content-bar-seccion">
+            <div class="seccion-titulo">
+              <h3>Acciones</h3>
+            </div>
+            <div class="content-bar-seccion-list">
+              <div class="content-bar-seccion-list-options" onclick="window.location.href='./usuariosOrganizador.html'">
+                <span>Usuario</span>
               </div>
-              <div class="content-bar-seccion-list">
-                <div class="content-bar-seccion-list-options"><span>Tecnología</span></div>
-                <div class="content-bar-seccion-list-options"><span>Innovación</span></div>
-                <div class="content-bar-seccion-list-options"><span>Salud</span></div>
+              <div class="content-bar-seccion-list-options">
+                <span>Institución</span>
+              </div>
+              <div class="content-bar-seccion-list-options"
+                onclick="window.location.href='./consultaTipoRegistroOrganizador.html'"><span>Registro</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mi Perfil -->
+        <div class="content-bar">
+          <div class="content-bar-seccion">
+            <div class="seccion-titulo">
+              <h3>Mi Perfil</h3>
+            </div>
+            <div class="content-bar-seccion-list">
+              <div class="content-bar-seccion-list-options" onclick="window.location.href='./altaEvento.html'">
+                <span>Alta Evento</span>
+              </div>
+              <div class="content-bar-seccion-list-options" onclick="window.location.href='./altaEdicion.html'">
+                <span>Alta Edición</span>
+              </div>
+              <div class="content-bar-seccion-list-options"><span>Alta Institución</span></div>
+              <div class="content-bar-seccion-list-options"
+                onclick="window.location.href='./modificarUsuarioOrganizador.html'"><span>Modificar Usuario</span>
               </div>
             </div>
           </div>
+        </div>
+      </aside>
 
-          <!-- Mi Perfil -->
-          <div class="content-bar">
-            <div class="content-bar-seccion">
-              <div class="seccion-titulo">
-                <h3>Mi Perfil</h3>
-              </div>
-              <div class="content-bar-seccion-list">
-                <div class="content-bar-seccion-list-options" onclick="window.location.href='./altaEvento.html'"><span>Alta Evento</span></div>
-                <div class="content-bar-seccion-list-options" onclick="window.location.href='./altaEdicion.html'"><span>Alta Edición</span></div>
-                <div class="content-bar-seccion-list-options"><span>Alta Institución</span></div>
-                <div class="content-bar-seccion-list-options" onclick="window.location.href='./modificarUsuarioOrganizador.html'"><span>Modificar Usuario</span></div>
-              </div>
-            </div>
-          </div>
-        </aside>
-
-        <!-- Contenido + Ediciones -->
-        <div class="col-12 col-md-8">
+      <div class="col-12 col-md-9">
+        <!-- Contenido principal -->
+        <div class="contenido-main">
           <div class="row">
-
-
-          <!-- Contenido principal -->
-          <section class="col-12 col-md-8 section-evento">
-            <div class="card shadow-sm p-4 mb-4">
-              <!-- Título + imagen -->
-              <div class="text-center mb-4">
-                <h1 class="fw-bold mb-3" style="font-size:2rem;">Conferencia de Tecnología</h1>
-                <img src="../img/IMG-EDEV01.jpeg" alt="logo del evento" class="img-fluid rounded">
-              </div>
-
-              <!-- Información -->
-              <div class="row g-4">
-                <div class="col-12">
-                  <h5 class="text-primary fw-semibold mb-2">Descripción</h5>
-                  <p style="font-size:1.1rem;">Evento sobre innovación tecnológica</p>
+            <section class="col-12 col-md-7 content-evento row">
+              <div class="col-12 row content-evento-resumen">
+                <div class="col-12 content-evento-titulo">
+                  <p>Conferencia de Tecnología</p>
                 </div>
-                <div class="col-6">
-                  <h5 class="text-primary fw-semibold mb-2">Sigla</h5>
-                  <p style="font-size:1.1rem;">CONFTEC</p>
-                </div>
-                <div class="col-6">
-                  <h5 class="text-primary fw-semibold mb-2">Fecha Alta</h5>
-                  <p style="font-size:1.1rem;">10/01/2025</p>
-                </div>
-                <div class="col-12">
-                  <h5 class="text-primary fw-semibold mb-2">Categorías</h5>
-                  <div class="d-flex flex-column gap-2">
-                    <span class="badge bg-primary fs-6">Tecnología</span>
-                    <span class="badge bg-success fs-6">Innovación</span>
-                  </div>
+                <div class="col-12 content-evento-imagen ">
+
                 </div>
               </div>
-            </div>
-          </section>
-
-          <!-- Ediciones -->
-          <aside class="col-12 col-md-4">
-            <div class="content-ediciones">
-              <div class="seccion-titulo">
+              <div class="col-12 row content-evento-informacion">
+                <div>
+                  <p class="informacion-label">Descripcion:</p>
+                  <p>Evento sobre innovación tecnológica</p>
+                </div>
+                <div>
+                  <p class="informacion-label">Sigla:</p>
+                  <p>CONFTEC</p>
+                </div>
+                <div>
+                  <p class="informacion-label">Categorías</p>
+                  <p>Tecnología, Innovación</p>
+                </div>
+                <div>
+                  <p class="informacion-label">Fecha Alta:</p>
+                  <p>10/01/2025</p>
+                </div>
+              </div>
+            </section>
+            <aside class="col-12 col-md-5 content-ediciones">
+              <div class="seccion-titulo-edicion">
                 <h3>Ediciones</h3>
               </div>
-              <div class="content-edicion" onclick="window.location.href='./consultasEdiciones/organizadorus04ConsultaEdicionEDEV08QueNOOOrganiza.html'">
-                <p class="content-edicion-titulo">
-                  Tecnología Punta del Este 2026 
-                </p>
-                <div class="content-edicion-imagen">
-                  <img src="../img/IMG-EDEV08.jpeg" alt="logo del evento">
+              <div class="ediciones"
+                onclick="window.location.href='./consultasEdiciones/organizadorus04ConsultaEdicionEDEV08QueNOOOrganiza.html'">
+                <div class="content-edicion">
+                  <div class="content-edicion-imagen">
+
+                  </div>
+                  <p class="content-edicion-titulo">
+                    Tecnología Punta del Este 2026
+                  </p>
                 </div>
               </div>
-            </div>
-          </aside>
+            </aside>
+          </div>
         </div>
       </div>
     </div>
-  </section>
+  </main>
 
   <footer class="uc-footer">
     <small>Eventos.uy — Grupo 42.</small>
   </footer>
 </body>
+
 </html>
