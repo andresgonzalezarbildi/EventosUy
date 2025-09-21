@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <title>Usuario</title>
@@ -9,13 +10,17 @@
   <link rel="stylesheet" href="../estilos/consultaUsuario.css">
 
 </head>
+
 <body>
+
+  <!-- Header -->
   <header class="navbar">
     <div class="container-fluid">
       <div class="row navbar-row text-center text-md-start">
+
         <!-- Logo -->
         <div class="col-12 col-md-3 mobile-col-center">
-          <h1><a class="title" href="../index.html">Eventos.uy</a></h1>
+          <h1><a class="title" href="./eventosAsistente.html">Eventos.uy</a></h1>
         </div>
 
         <!-- Search -->
@@ -29,28 +34,55 @@
         <!-- Sesión -->
         <div class="col-12 col-md-3 mobile-col-center">
           <div class="navbar_sesion">
-            <a href="pages/iniciar-registrarse" class="navbar_sesion_link">Cerrar Sesion</a>
+            <a href="../index.html" class="navbar_sesion_link" onclick="window.location.href='../index.html'">Cerrar
+              Sesion</a>
             <div class="navbar_sesion_perfil">
-              <p class="navbar_username">AnaG</p>
-              <img class="perfil_image" src="../img/AnaG.jpg" alt="foto perfil" />
+              <a href="./consultaMiPerfilAsistente.html">
+                <p class="navbar_username">AnaG</p>
+                <img class="perfil_image" src="../img/AnaG.jpg" alt="foto perfil" />
+              </a>
             </div>
           </div>
         </div>
+
       </div>
-    </div>
   </header>
 
-    <section class="container-fluid content">
+  <section class="container-fluid content">
     <div class="row content-row">
+
+      <!-- Sidebar -->
       <aside class="col-12 col-md-3">
+
+        <div class="content-bar">
+          <div class="content-bar-seccion">
+            <div class="seccion-titulo">
+              <h3>Categorias</h3>
+            </div>
+            <div class="content-bar-seccion-list">
+              <div class="content-bar-seccion-list-options">
+                <span>Tecnologia</span>
+              </div>
+              <div class="content-bar-seccion-list-options">
+                <span>Innovación</span>
+              </div>
+              <div class="content-bar-seccion-list-options">
+                <span>Salud</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div class="content-bar">
           <div class="content-bar-seccion">
             <div class="seccion-titulo">
               <h3>Acciones de Usuario</h3>
             </div>
             <div class="content-bar-seccion-list">
-              <div class="content-bar-seccion-list-options" onclick="window.location.href='./modificarUsuarioAsistente.html'">
-                <span>Modificar Usuario</span></div>
+              <div class="content-bar-seccion-list-options"
+                onclick="window.location.href='./modificarUsuarioAsistente.html'">
+                <span>Modificar Usuario</span>
+              </div>
             </div>
           </div>
         </div>
@@ -61,39 +93,31 @@
               <h3>Acciones</h3>
             </div>
             <div class="content-bar-seccion-list">
-              <div class="content-bar-seccion-list-options" onclick="window.location.href='./usuariosVisitante.html'"><span>Usuario</span></div>
-              <div class="content-bar-seccion-list-options" onclick="window.location.href='../index.html'"><span>Institución</span></div>
-              <div class="content-bar-seccion-list-options" onclick="window.location.href='./consultaTipoRegistroVisitante.html'"><span>Registro</span></div>
+              <div class="content-bar-seccion-list-options" onclick="window.location.href='./usuariosAsistente.html'">
+                <span>Usuario</span>
+              </div>
+              <div class="content-bar-seccion-list-options">
+                <span>Institución</span>
+              </div>
+              <div class="content-bar-seccion-list-options"
+                onclick="window.location.href='./consultaTipoRegistroAsistente.html'"><span>Registro</span></div>
             </div>
           </div>
         </div>
-        
-        <div class="content-bar">
-          <div class="content-bar-seccion">
-            <div class="seccion-titulo">
-              <h3>Categorias</h3>
-            </div>
-            <div class="content-bar-seccion-list">
-              <div class="content-bar-seccion-list-options" onclick="window.location.href='../index.html'"><span>Tecnologia</span></div>
-              <div class="content-bar-seccion-list-options" onclick="window.location.href='../index.html'"><span>Innovación</span></div>
-              <div class="content-bar-seccion-list-options" onclick="window.location.href='../index.html'"><span>Salud</span></div>
-            </div>
-          </div>
-        </div>
-
       </aside>
 
-  <!-- Contenedor principal -->
-      <main style="max-width: 600px; margin: 2rem auto; padding: 1rem; background: #fff; border: 1px solid var(--color-border); border-radius: var(--radius);">
+      <!-- Contenedor principal -->
+      <main
+        style="max-width: 600px; margin: 2rem auto; padding: 1rem; background: #fff; border: 1px solid var(--color-border); border-radius: var(--radius);">
         <h2 style="margin-bottom: 1rem; color: var(--color-primary);">Consulta Usuario</h2>
-          
+
         <form id="formconsultaUsuario" style="width: 500px;">
           <!-- Detalle del usuario -->
           <div class="detalle">
             <div style="padding-left: 180px;">
               <h3><img src="../img/PerfilSinFoto.jpg" alt="foto usuario" style="width: 50px; height: 50px;">sofirod</h3>
             </div>
-            
+
 
             <label>Tipo:</label>
             <input type="text" value="Asistente" readonly>
@@ -113,14 +137,7 @@
             <label>Institución:</label>
             <input type="text" value="Universidad Catolica del Uruguay" readonly>
 
-            <label>Registros:</label>
-            <div class="lista-scrollable">
-              <ul>
-                <li><a href="./consultaRegistroAsistente.html">Maraton Montevideo 2024</a></li>
-                <li><a href="./consultaRegistroAsistente.html">Maraton Montevideo 2025</a></li>
-                <li><a href="./consultaRegistroAsistente.html">Montevideo Rock 2025</a></li>
-              </ul>
-            </div>
+
           </div>
         </form>
       </main>
@@ -130,4 +147,5 @@
     <small>Eventos.uy — Grupo 42.</small>
   </footer>
 </body>
+
 </html>
