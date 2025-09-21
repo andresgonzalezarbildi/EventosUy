@@ -14,7 +14,7 @@
       <div class="row navbar-row text-center text-md-start">
         <!-- Logo -->
         <div class="col-12 col-md-3 mobile-col-center">
-          <h1><a class="title" href="./eventosOrganizador.html">Eventos.uy</a></h1>
+          <h1><a class="title" href="../../pages/eventosOrganizador.html">Eventos.uy</a></h1>
         </div>
 
         <!-- Search -->
@@ -30,8 +30,8 @@
           <div class="navbar_sesion">
             <div class="navbar_sesion_perfil">
               <p class="navbar_username">miseventos</p>
-              <a href="./consultaMiPerfilOrganizador.html">
-                <img class="perfil_image" src="../img/IMG-US04.jpeg" alt="foto perfil" style="cursor:pointer;">
+              <a href="../consultaEventoMaratonOrganizador.html">
+                <img class="perfil_image" src="../../img/IMG-US04.jpeg" alt="foto perfil" style="cursor:pointer;">
               </a>
             </div>
             <a href="../index.html" class="navbar_sesion_link">Cerrar Sesión</a>
@@ -42,7 +42,7 @@
   </header>
 
   <!-- Main + Sidebar -->
-  <section class="content">
+  <main class="content">
     <div class="container-fluid">
       <div class="row">
 
@@ -86,47 +86,56 @@
           </div>
         </aside>
 
-        <!-- Contenido principal -->
-        <div class="col-12 col-md-8">
-          <h2 style="margin-bottom: 1rem; color: var(--color-primary); text-align:center;">Detalle de Edición</h2>
+        <!-- Contenido principal + imagen clickeable -->
+        <div class="col-12 col-md-8 d-flex align-items-start">
+          <!-- Datos del evento -->
+          <div style="flex:1; text-align:center;">
+            <img src="." alt="Imagen del evento" style="max-width:350px; border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,0.15); margin-bottom:1rem;">
+            
+            <dl style="display:grid; grid-template-columns:150px 1fr; row-gap:0.5rem; column-gap:1rem; margin-bottom:1.5rem; text-align:left; justify-content:center;">
+              <dt><strong>Nombre:</strong></dt> <dd>Web Summit 2026</dd>
+              <dt><strong>Sigla:</strong></dt> <dd>WS26</dd>
+              <dt><strong>Ciudad:</strong></dt> <dd>Lisboa</dd>
+              <dt><strong>País:</strong></dt> <dd>Portugal</dd>
+              <dt><strong>Fecha Inicio:</strong></dt> <dd>13/01/2026</dd>
+              <dt><strong>Fecha Fin:</strong></dt> <dd>01/02/2026</dd>
+              <dt><strong>Alta en Plataforma:</strong></dt> <dd>04/06/2025</dd>
+            </dl>
 
-          <!-- Datos principales -->
-          <dl style="display:grid; grid-template-columns: 150px 1fr; row-gap:0.5rem; column-gap:1rem; margin-bottom:2rem;">
-            <dt><strong>Nombre:</strong></dt> <dd>Web Summit 2026</dd>
-            <dt><strong>Sigla:</strong></dt> <dd>WS26</dd>
-            <dt><strong>Ciudad:</strong></dt> <dd>Lisboa</dd>
-            <dt><strong>País:</strong></dt> <dd>Portugal</dd>
-            <dt><strong>Fecha Inicio:</strong></dt> <dd>13/01/2026</dd>
-            <dt><strong>Fecha Fin:</strong></dt> <dd>01/02/2026</dd>
-            <dt><strong>Alta en Plataforma:</strong></dt> <dd>04/06/2025</dd>
-          </dl>
+            <!-- Tipo de registros -->
+            <section style="margin-bottom:1.5rem;">
+              <h3 style="margin-bottom:0.5rem; color: var(--color-primary);">Tipos de Registro</h3>
+              <div style="display:flex; gap:0.5rem; flex-wrap:wrap; justify-content:center;">
+                <span style="background:#f0f0f0; padding:0.4rem 0.8rem; border-radius:12px;">Estudiante</span>
+              </div>
+            </section>
 
-          <!-- Tipo de registros -->
-          <section style="margin-bottom:2rem;">
-            <h3 style="margin-bottom:0.5rem; color: var(--color-primary);">Tipos de Registro</h3>
-            <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
-              <span style="background:#f0f0f0; padding:0.4rem 0.8rem; border-radius:12px;">Estudiante</span>
-            </div>
-          </section>
+            <!-- Organizador -->
+            <section style="margin-bottom:1.5rem;">
+              <h3 style="margin-bottom:0.5rem; color: var(--color-primary);">Organizador</h3>
+              <p>Corporación Tecnológica</p>
+            </section>
 
-          <!-- Organizador -->
-          <section style="margin-bottom:2rem;">
-            <h3 style="margin-bottom:0.5rem; color: var(--color-primary);">Organizador</h3>
-            <p>Corporación Tecnológica</p>
-          </section>
+            <!-- Patrocinios -->
+            <section style="margin-bottom:1.5rem;">
+              <h3 style="margin-bottom:0.5rem; color: var(--color-primary);">Patrocinios</h3>
+              <div style="display:flex; gap:0.5rem; flex-wrap:wrap; justify-content:center;">
+                <span style="background:#e3f2fd; padding:0.4rem 0.8rem; border-radius:12px;">No tiene patrocinios-.</span>
+              </div>
+            </section>
+          </div>
 
-          <!-- Patrocinios -->
-          <section style="margin-bottom:2rem;">
-            <h3 style="margin-bottom:0.5rem; color: var(--color-primary);">Patrocinios</h3>
-            <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
-              <span style="background:#e3f2fd; padding:0.4rem 0.8rem; border-radius:12px;">No tiene patrocinios-.</span>
-            </div>
-          </section>
+          <!-- Imagen clickeable a la derecha -->
+          <div class="ms-3" style="display:flex; align-items:flex-start;">
+            <a href="../consultaEventoMaratonOrganizador.html">
+              <img src="" alt="Consultar Evento" style="max-width:150px; cursor:pointer; border-radius:8px; box-shadow:0 2px 6px rgba(0,0,0,0.2);">
+            </a>
+          </div>
         </div> <!-- /col-12 col-md-8 -->
 
       </div> <!-- /row -->
     </div> <!-- /container-fluid -->
-  </section>
+  </main>
 
   <footer class="uc-footer">
     <small>Eventos.uy — Grupo 42.</small>
