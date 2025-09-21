@@ -39,8 +39,10 @@
                         <a href="../index.html" class="navbar_sesion_link"
                             onclick="window.location.href='../index.html'">Cerrar Sesion</a>
                         <div class="navbar_sesion_perfil">
-                            <p class="navbar_username">imm</p>
-                            <img class="perfil_image" src="../img/immAvatar.jpg" alt="foto perfil" />
+                            <a href="./consultarMiPerfilOrganizador.html">
+                                <p class="navbar_username">imm</p>
+                                <img class="perfil_image" src="../img/immAvatar.jpg" alt="foto perfil" />
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -48,54 +50,86 @@
         </div>
     </header>
 
-    <!-- Main -->
-    <main class="container-fluid py-4">
-        <div class="row justify-content-center">
-            <div class="col-12 col-md-11 col-lg-10 col-xl-9">
-                <form class="p-4 p-md-5 rounded-4 shadow-sm bg-white">
 
-                    <div class="row mb-3 align-items-center gx-2">
-                        <label for="edicion" class="col-12 col-md-auto col-form-label pe-md-2">Edición:</label>
-                        <div class="col-12 col-md">
-                            <select id="edicion" name="edicion" class="form-select w-100">
-                                <option value="" selected disabled>-- Seleccione una edición --</option>
-
-                                <option value="Edicion 1">Edición 1</option>
-                                <option value="Edicion 2">Edición 2</option>
-                                <option value="Edicion 3">Edición 3</option>
-                            </select>
+    <section class="container-fluid content">
+        <div class="row content-row">
+            <aside class="col-12 col-md-3 ">
+                <div class="content-bar">
+                    <div class="content-bar-seccion">
+                        <div class="seccion-titulo">
+                            <h3>Categorias</h3>
+                        </div>
+                        <div class="content-bar-seccion-list">
+                            <div class="content-bar-seccion-list-options"><span>Tecnologia</span></div>
+                            <div class="content-bar-seccion-list-options"><span>Innovación</span></div>
+                            <div class="content-bar-seccion-list-options"><span>Salud</span></div>
                         </div>
                     </div>
+                </div>
 
-                    <div class="row mb-3 align-items-center gx-2">
-                        <label for="evento" class="col-12 col-md-auto col-form-label pe-md-2">Usuario:</label>
-                        <div class="col-12 col-md">
-                            <select id="evento" name="evento" class="form-select w-100">
-                                <option value="" selected disabled>-- Seleccione un usuario --</option>
-
-                                <option value="User1">nicknameUsuario1</option>
-                                <option value="User2">nicknameUsuario2</option>
-                                <option value="User3">nicknameUsuario3</option>
-                            </select>
+                <div class="content-bar">
+                    <div class="content-bar-seccion">
+                        <div class="seccion-titulo">
+                            <h3>Acciones</h3>
+                        </div>
+                        <div class="content-bar-seccion-list">
+                            <div class="content-bar-seccion-list-options"
+                                onclick="window.location.href='./usuariosOrganizador.html'"><span>Usuario</span></div>
+                            <div class="content-bar-seccion-list-options"><span>Institución</span>
+                            </div>
+                            <div class="content-bar-seccion-list-options"
+                                onclick="window.location.href='./consultaTipoRegistroOrganizador.html'">
+                                <span>Registro</span>
+                            </div>
                         </div>
                     </div>
+                </div>
 
-                    <hr class="my-3">
 
-                    <!-- Datos de la edición -->
-                    <div class="row gy-2 mb-3">
-                        <p class="col-12 col-md-6 mb-0">Nombre: NombreUsuario</p>
-                        <p class="col-12 col-md-6 mb-0">Fecha registro: dd/mm/aaaa</p>
-                        <p class="col-12 col-md-6 mb-0">Tipo de registro: nombreTipoRegistro</p>
-                        <p class="col-12 col-md-6 mb-0">Código de patrocinio: si/no</p>
+                <div class="content-bar">
+                    <div class="content-bar-seccion">
+                        <div class="seccion-titulo">
+                            <h3>Mi Perfil</h3>
+                        </div>
+                        <div class="content-bar-seccion-list">
+                            <div class="content-bar-seccion-list-options"
+                                onclick="window.location.href='./altaEvento.html'"><span>Alta Evento</span></div>
+                            <div class="content-bar-seccion-list-options"
+                                onclick="window.location.href='./altaEdicion.html'"><span>Alta Edicion</span></div>
+                            <div class="content-bar-seccion-list-options"><span>Alta Institucion</span></div>
+                            <div class="content-bar-seccion-list-options"
+                                onclick="window.location.href='./modificarUsuarioOrganizador.html'"><span>Modificar
+                                    Usuario</span></div>
+                        </div>
                     </div>
+                </div>
+            </aside>
 
+            <!-- Main -->
+            <main class="col-12 col-md-9 py-4">
+                <div class="row justify-content-center">
+                    <div class="col-12 col-md-11">
+                        <form class="p-4 p-md-5 rounded-4 shadow-sm bg-white">
+                            <!-- Datos de la edición -->
+                            <div class="row gy-2 mb-3">
+                                <p class="col-12 col-md-6"><span class="negrita">Edición:</span> Maratón de Montevideo
+                                    2024</p>
 
-
-                </form>
-            </div>
+                                <p class="col-12 col-md-6 mb-0"><span class="negrita">Nombre:</span> Ana Gomez</p>
+                                <p class="col-12 col-md-6 mb-0"><span class="negrita">Fecha registro:</span> 30/07/2024
+                                </p>
+                                <p class="col-12 col-md-6 mb-0"><span class="negrita">Tipo de registro:</span>
+                                    Corredor21K</p>
+                                <p class="col-12 col-md-6 mb-0"><span class="negrita">Código de patrocinio:</span> No
+                                </p>
+                                <p class="col-12 col-md-6"><span class="negrita">Costo: </span> $ 500 </p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </main>
         </div>
-    </main>
+    </section>
 
     <!-- Footer -->
     <footer class="uc-footer">
