@@ -1,65 +1,95 @@
 <body>
-<!-- Header -->
-<header class="navbar">
-  <div class="container-fluid">
-    <div class="row navbar-row text-center text-md-start">
-      <!-- Logo -->
-      <div class="col-12 col-md-3 mobile-col-center">
-        <h1><a class="title" href="../index.html">Eventos.uy</a></h1>
-      </div>
+  <!-- Header -->
+  <header class="navbar">
+    <div class="container-fluid">
+      <div class="row navbar-row text-center text-md-start">
 
-      <!-- Search -->
-      <div class="col-12 col-md-6">
-        <div class="navbar_search mx-auto">
-          <input type="text" placeholder="Eventos, ediciones..." class="navbar_search-input">
-          <button class="navbar_search-btn">Buscar</button>
+        <!-- Logo -->
+        <div class="col-12 col-md-3 mobile-col-center">
+          <h1><a class="title" href="./eventosAsistente.html">Eventos.uy</a></h1>
         </div>
-      </div>
 
-      <!-- Sesión -->
-      <div class="col-12 col-md-3 mobile-col-center">
-        <div class="navbar_sesion">
-          <a href="../index.html" class="navbar_sesion_link">Cerrar Sesión</a>
-          <div class="navbar_sesion_perfil">
-            <p class="navbar_username">AnaG</p>
-            <a href="./modificarUsuarioAsistente.html">
-              <img class="perfil_image" src="../img/AnaG.jpg" alt="foto perfil" style="cursor:pointer;">
-            </a>
+        <!-- Search -->
+        <div class="col-12 col-md-6">
+          <div class="navbar_search mx-auto">
+            <input type="text" placeholder="Eventos, ediciones..." class="navbar_search-input">
+            <button class="navbar_search-btn">Buscar</button>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
-</header>
 
-<!-- Main -->
-<main class="content">
-  <div class="container-fluid">
-    <div class="row contenido-main">
-
-      <!-- Sidebar -->
-      <aside class="col-12 col-md-3">
-        <!-- Acciones -->
-        <div class="content-bar">
-          <div class="content-bar-seccion">
-            <div class="seccion-titulo"><h3>Acciones</h3></div>
-            <div class="content-bar-seccion-list">
-              <div class="content-bar-seccion-list-options" onclick="window.location.href='./usuariosOrganizador.html'"><span>Usuario</span></div>
-              <div class="content-bar-seccion-list-options" onclick="window.location.href='../index.html'"><span>Institución</span></div>
-              <div class="content-bar-seccion-list-options" onclick="window.location.href='./consultaTipoRegistroOrganizador.html'"><span>Registro</span></div>
+        <!-- Sesión -->
+        <div class="col-12 col-md-3 mobile-col-center">
+          <div class="navbar_sesion">
+            <a href="../index.html" class="navbar_sesion_link" onclick="window.location.href='../index.html'">Cerrar
+              Sesion</a>
+            <div class="navbar_sesion_perfil">
+              <a href="./consultaMiPerfilAsistente.html">
+                <p class="navbar_username">AnaG</p>
+                <img class="perfil_image" src="../img/AnaG.jpg" alt="foto perfil" />
+              </a>
             </div>
           </div>
         </div>
 
-        <!-- Categorías -->
-        <div class="content-bar">
-          <div class="content-bar-seccion">
-            <div class="seccion-titulo"><h3>Categorías</h3></div>
-            <div class="content-bar-seccion-list">
-              <div class="content-bar-seccion-list-options"><span>Tecnología</span></div>
-              <div class="content-bar-seccion-list-options"><span>Innovación</span></div>
-              <div class="content-bar-seccion-list-options"><span>Salud</span></div>
+      </div>
+  </header>
+
+  <!-- Main -->
+  <main class="content">
+    <div class="container-fluid">
+      <div class="row contenido-main">
+
+        <!-- Sidebar -->
+        <aside class="col-12 col-md-3">
+
+          <div class="content-bar">
+            <div class="content-bar-seccion">
+              <div class="seccion-titulo">
+                <h3>Categorias</h3>
+              </div>
+              <div class="content-bar-seccion-list">
+                <div class="content-bar-seccion-list-options">
+                  <span>Tecnologia</span>
+                </div>
+                <div class="content-bar-seccion-list-options">
+                  <span>Innovación</span>
+                </div>
+                <div class="content-bar-seccion-list-options">
+                  <span>Salud</span>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </aside>
+
+          <div class="content-bar">
+            <div class="content-bar-seccion">
+              <div class="seccion-titulo">
+                <h3>Acciones de Usuario</h3>
+              </div>
+              <div class="content-bar-seccion-list">
+                <div class="content-bar-seccion-list-options"
+                  onclick="window.location.href='./modificarUsuarioAsistente.html'">
+                  <span>Modificar Usuario</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="content-bar">
+            <div class="content-bar-seccion">
+              <div class="seccion-titulo">
+                <h3>Acciones</h3>
+              </div>
+              <div class="content-bar-seccion-list">
+                <div class="content-bar-seccion-list-options" onclick="window.location.href='./usuariosAsistente.html'">
+                  <span>Usuario</span>
+                </div>
+                <div class="content-bar-seccion-list-options">
+                  <span>Institución</span>
+                </div>
+                <div class="content-bar-seccion-list-options"
+                  onclick="window.location.href='./consultaTipoRegistroAsistente.html'"><span>Registro</span></div>
+              </div>
+            </div>
+          </div>
+        </aside>
