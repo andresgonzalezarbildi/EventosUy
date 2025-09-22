@@ -14,7 +14,7 @@
       <div class="row navbar-row text-center text-md-start">
         <!-- Logo -->
         <div class="col-12 col-md-3 mobile-col-center">
-          <h1><a class="title" href="../index.html">Eventos.uy</a></h1>
+          <h1><a class="title" href="./eventosOrganizador.html">Eventos.uy</a></h1>
         </div>
 
         <!-- Search -->
@@ -28,10 +28,12 @@
         <!-- Sesión -->
         <div class="col-12 col-md-3 mobile-col-center">
           <div class="navbar_sesion">
-            <a href="pages/iniciar-registrarse" class="navbar_sesion_link">Cerrar Sesion</a>
+            <a href="../index.html" class="navbar_sesion_link">Cerrar Sesion</a>
             <div class="navbar_sesion_perfil">
-              <p class="navbar_username">imm</p>
-              <img class="perfil_image" src="../img/immAvatar.jpg" alt="foto perfil" />
+              <a href="./consultaMiPerfilOrganizador.html">              
+                <p class="navbar_username">miseventos</p>
+                <img class="perfil_image" src="../img/IMG-US04.jpeg" alt="foto perfil" />
+              </a>
             </div>
           </div>
         </div>
@@ -41,45 +43,71 @@
 
   <section class="container-fluid content">
     <div class="row content-row">
-      <aside class="col-12 col-md-3">
-        <div class="content-bar">
-          <div class="content-bar-seccion">
-            <div class="seccion-titulo">
-              <h3>Acciones de Usuario</h3>
-            </div>
-            <div class="content-bar-seccion-list">
-              <div class="content-bar-seccion-list-options" onclick="window.location.href='./modificarUsuarioOrganizador.html'">
-                <span>Modificar Usuario</span></div>
+        <aside class="col-12 col-md-3">
+          <div class="content-bar">
+            <div class="content-bar-seccion">
+              <div class="seccion-titulo">
+                <h3>Categorias</h3>
+              </div>
+              <div class="content-bar-seccion-list">
+                <div class="content-bar-seccion-list-options"
+                  onclick="window.location.href='./eventosOrganizador.html'">
+                  <span>Tecnologia</span>
+                </div>
+                <div class="content-bar-seccion-list-options"
+                  onclick="window.location.href='./eventosOrganizador.html'">
+                  <span>Innovación</span>
+                </div>
+                <div class="content-bar-seccion-list-options"
+                  onclick="window.location.href='./eventosOrganizador.html'">
+                  <span>Deporte</span>
+                </div>
+                <div class="content-bar-seccion-list-options"
+                  onclick="window.location.href='./eventosOrganizador.html'">
+                  <span>Salud</span>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
+          <!-- Acciones -->
+          <div class="content-bar">
+            <div class="content-bar-seccion">
+              <div class="seccion-titulo">
+                <h3>Acciones</h3>
+              </div>
+              <div class="content-bar-seccion-list">
+                <div class="content-bar-seccion-list-options"
+                  onclick="window.location.href='./usuariosOrganizador.html'"><span>Usuario</span></div>
+                <div class="content-bar-seccion-list-options">
+                  <span>Institución</span>
+                </div>
+                <div class="content-bar-seccion-list-options"
+                  onclick="window.location.href='./consultaTipoRegistroOrganizador.html'"><span>Registro</span></div>
+              </div>
+            </div>
+          </div>
 
-        <div class="content-bar">
-          <div class="content-bar-seccion">
-            <div class="seccion-titulo">
-              <h3>Acciones</h3>
-            </div>
-            <div class="content-bar-seccion-list">
-              <div class="content-bar-seccion-list-options" onclick="window.location.href='./usuariosVisitante.html'"><span>Usuario</span></div>
-              <div class="content-bar-seccion-list-options" onclick="window.location.href='../index.html'"><span>Institución</span></div>
-              <div class="content-bar-seccion-list-options" onclick="window.location.href='./consultaTipoRegistroVisitante.html'"><span>Registro</span></div>
-            </div>
-          </div>
-        </div>
-        
-        <div class="content-bar">
-          <div class="content-bar-seccion">
-            <div class="seccion-titulo">
-              <h3>Categorias</h3>
-            </div>
-            <div class="content-bar-seccion-list">
-              <div class="content-bar-seccion-list-options" onclick="window.location.href='../index.html'"><span>Tecnologia</span></div>
-              <div class="content-bar-seccion-list-options" onclick="window.location.href='../index.html'"><span>Innovación</span></div>
-              <div class="content-bar-seccion-list-options" onclick="window.location.href='../index.html'"><span>Salud</span></div>
+          <!-- Mi Perfil -->
+          <div class="content-bar">
+            <div class="content-bar-seccion">
+              <div class="seccion-titulo">
+                <h3>Mi Perfil</h3>
+              </div>
+              <div class="content-bar-seccion-list">
+                <div class="content-bar-seccion-list-options" onclick="window.location.href='./altaEvento.html'">
+                  <span>Alta Evento</span>
+                </div>
+                <div class="content-bar-seccion-list-options" onclick="window.location.href='./altaEdicion.html'">
+                  <span>Alta Edición</span>
+                </div>
+                <div class="content-bar-seccion-list-options"><span>Alta Institución</span></div>
+                <div class="content-bar-seccion-list-options"
+                  onclick="window.location.href='./modificarUsuarioOrganizador.html'"><span>Modificar Usuario</span>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </aside>
+        </aside>
 
   <!-- Contenedor principal -->
       <main style="max-width: 600px; margin: 2rem auto; padding: 1rem; background: #fff; border: 1px solid var(--color-border); border-radius: var(--radius);">
@@ -89,34 +117,33 @@
           <!-- Detalle del usuario -->
           <div class="detalle">
             <div style="padding-left: 180px;">
-              <h3><img src="../img/PerfilSinFoto.jpg" alt="foto usuario" style="width: 50px; height: 50px;">sofirod</h3>
+              <h3><img src="../img/IMG-US01.jpg" alt="foto usuario" style="width: 50px; height: 50px;">atorres</h3>
             </div>
-            
+
 
             <label>Tipo:</label>
             <input type="text" value="Asistente" readonly>
 
             <label>Nombre:</label>
-            <input type="text" value="Sofia" readonly>
+            <input type="text" value="Ana" readonly>
 
             <label>Apellido:</label>
-            <input type="text" value="Rodriguez" readonly>
+            <input type="text" value="Torres" readonly>
 
             <label>Correo:</label>
-            <input type="email" value="srodriguez@outlook.com" readonly>
+            <input type="email" value="atorres@gmail.com" readonly>
 
             <label>Fecha nac.:</label>
-            <input type="date" value="1995-03-02" readonly>
+            <input type="date" value="1990-05-12" readonly>
 
             <label>Institución:</label>
-            <input type="text" value="Universidad Catolica del Uruguay" readonly>
+            <input type="text" value="Facultad de Ingeniería" readonly>
 
             <label>Registros:</label>
             <div class="lista-scrollable">
               <ul>
-                <li>Maraton Montevideo 2024</li>
-                <li>Maraton Montevideo 2025</li>
-                <li>Montevideo Rock 2025</li>
+                <li><a href="./consultaRegistroAsistente.html">Maraton Montevideo 2024</a></li>
+                <li><a href="./consultaRegistroAsistente2.html">Web Summit 2026</a></li>
               </ul>
             </div>
           </div>
