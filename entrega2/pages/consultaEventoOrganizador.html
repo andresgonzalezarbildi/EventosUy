@@ -18,10 +18,10 @@
   <!-- Header -->
   <header class="navbar">
     <div class="container-fluid">
-      <div class="row navbar-row">
+      <div class="row navbar-row text-center text-md-start">
         <!-- Logo -->
         <div class="col-12 col-md-3 mobile-col-center">
-          <h1><a class="title" href="./eventosOrganizador.html">Eventos.uy</a></h1>
+          <h1><a class="title" href="/entrega2/pages/eventosOrganizador.html">Eventos.uy</a></h1>
         </div>
 
         <!-- Search -->
@@ -34,11 +34,15 @@
 
         <!-- Sesión -->
         <div class="col-12 col-md-3 mobile-col-center">
+
           <div class="navbar_sesion">
-            <a href="../index.html" class="navbar_sesion_link">Cerrar Sesion</a>
+            <a href="/entrega2/index.html" class="navbar_sesion_link">Cerrar Sesión</a>
+
             <div class="navbar_sesion_perfil">
-              <p class="navbar_username">imm</p>
-              <img class="perfil_image" src="../img/immAvatar.jpg" alt="foto perfil" />
+              <p class="navbar_username">miseventos</p>
+              <a href="/entrega2/pages/consultaMiPerfilOrganizador.html">
+                <img class="perfil_image" src="../img/IMG-US04.jpeg" alt="foto perfil" style="cursor:pointer;">
+              </a>
             </div>
           </div>
         </div>
@@ -50,52 +54,66 @@
   <main class="container-fluid">
     <div class="row" style="margin-bottom: 1rem;">
       <!-- Sidebar -->
-      <aside class="col-12 col-md-3">
-        <div class="content-bar">
-          <div class="content-bar-seccion">
-            <div class="seccion-titulo">
-              <h3>Categorias</h3>
-            </div>
-            <div class="content-bar-seccion-list">
-              <div class="content-bar-seccion-list-options"><span>Tecnologia</span></div>
-              <div class="content-bar-seccion-list-options"><span>Innovación</span></div>
-              <div class="content-bar-seccion-list-options"><span>Salud</span></div>
-            </div>
-          </div>
-        </div>
-        <div class="content-bar">
-          <div class="content-bar-seccion">
-            <div class="seccion-titulo">
-              <h3>Acciones</h3>
-            </div>
-            <div class="content-bar-seccion-list">
-              <div class="content-bar-seccion-list-options" onclick="window.location.href='./usuariosOrganizador.html'">
-                <span>Usuario</span></div>
-              <div class="content-bar-seccion-list-options" onclick="window.location.href='./index.html'">
-                <span>Institución</span></div>
-              <div class="content-bar-seccion-list-options"
-                onclick="window.location.href='./consultaTipoRegistroOrganizador.html'"><span>Registro</span></div>
-            </div>
-          </div>
-        </div>
-
-
-        <div class="content-bar">
-          <div class="content-bar-seccion">
-            <div class="seccion-titulo">
-              <h3>Mi Perfil</h3>
-            </div>
-            <div class="content-bar-seccion-list">
-              <div class="content-bar-seccion-list-options" onclick="window.location.href='./altaEvento.html'">
-                <span>Alta Evento</span></div>
-              <div class="content-bar-seccion-list-options" onclick="window.location.href='./altaEdicion.html'">
-                <span>Alta Edicion</span></div>
-              <div class="content-bar-seccion-list-options"><span>Alta Institucion</span></div>
+        <aside class="col-12 col-md-3">
+          <div class="content-bar">
+            <div class="content-bar-seccion">
+              <div class="seccion-titulo">
+                <h3>Categorias</h3>
+              </div>
+              <div class="content-bar-seccion-list">
+                <div class="content-bar-seccion-list-options"
+                  onclick="window.location.href='/entrega2/pages/eventosOrganizador.html'">
+                  <span>Tecnologia</span>
+                </div>
+                <div class="content-bar-seccion-list-options"
+                  onclick="window.location.href='/entrega2/pages/eventosOrganizador.html'">
+                  <span>Innovación</span>
+                </div>
+                <div class="content-bar-seccion-list-options"
+                  onclick="window.location.href='/entrega2/pages/eventosOrganizador.html'">
+                  <span>Deporte</span>
+                </div>
+                <div class="content-bar-seccion-list-options"
+                  onclick="window.location.href='/entrega2/pages/eventosOrganizador.html'">
+                  <span>Salud</span>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
+          <!-- Acciones -->
+          <div class="content-bar">
+            <div class="content-bar-seccion">
+              <div class="seccion-titulo">
+                <h3>Acciones</h3>
+              </div>
+              <div class="content-bar-seccion-list">
+                <div class="content-bar-seccion-list-options"
+                  onclick="window.location.href='/entrega2/pages/usuariosOrganizador.html'"><span>Usuario</span></div>
+                <div class="content-bar-seccion-list-options">
+                  <span>Institución</span>
+                </div>
+              </div>
+            </div>
+          </div>
 
-      </aside>
+          <!-- Mi Perfil -->
+          <div class="content-bar">
+            <div class="content-bar-seccion">
+              <div class="seccion-titulo">
+                <h3>Mi Perfil</h3>
+              </div>
+              <div class="content-bar-seccion-list">
+                <div class="content-bar-seccion-list-options"
+                  onclick="window.location.href='/entrega2/pages/altaEvento.html'">
+                  <span>Alta Evento</span>
+                </div>
+
+                <div class="content-bar-seccion-list-options"><span>Alta Institución</span></div>
+
+              </div>
+            </div>
+          </div>
+        </aside>
       <div class="col-12 col-md-9">
         <!-- Contenido principal -->
         <div class="contenido-main">
