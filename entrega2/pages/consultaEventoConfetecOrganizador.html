@@ -15,15 +15,13 @@
 </head>
 
 <body>
-
   <!-- Header -->
   <header class="navbar">
     <div class="container-fluid">
       <div class="row navbar-row text-center text-md-start">
-
         <!-- Logo -->
         <div class="col-12 col-md-3 mobile-col-center">
-          <h1><a class="title" href="./eventosAsistente.html">Eventos.uy</a></h1>
+          <h1><a class="title" href="./eventosOrganizador.html">Eventos.uy</a></h1>
         </div>
 
         <!-- Search -->
@@ -37,20 +35,18 @@
         <!-- Sesión -->
         <div class="col-12 col-md-3 mobile-col-center">
           <div class="navbar_sesion">
-            <a href="../index.html" class="navbar_sesion_link" onclick="window.location.href='../index.html'">Cerrar
-              Sesion</a>
             <div class="navbar_sesion_perfil">
-              <a href="./consultaMiPerfilAsistente.html">
-                <p class="navbar_username">atorres</p>
-                <img class="perfil_image" src="../img/IMG-US01.jpg" alt="foto perfil" />
+              <p class="navbar_username">miseventos</p>
+              <a href="./consultaMiPerfilOrganizador.html">
+                <img class="perfil_image" src="../img/IMG-US04.jpeg" alt="foto perfil" style="cursor:pointer;">
               </a>
             </div>
+            <a href="../index.html" class="navbar_sesion_link">Cerrar Sesión</a>
           </div>
         </div>
-
       </div>
+    </div>
   </header>
-
 
   <!-- Main -->
   <main class="container-fluid">
@@ -58,56 +54,62 @@
 
       <!-- Sidebar -->
       <aside class="col-12 col-md-3">
-
         <div class="content-bar">
           <div class="content-bar-seccion">
             <div class="seccion-titulo">
               <h3>Categorias</h3>
             </div>
             <div class="content-bar-seccion-list">
-              <div class="content-bar-seccion-list-options" onclick="window.location.href='./eventosAsistente.html'">
+              <div class="content-bar-seccion-list-options" onclick="window.location.href='./eventosOrganizador.html'">
                 <span>Tecnologia</span>
               </div>
-              <div class="content-bar-seccion-list-options" onclick="window.location.href='./eventosAsistente.html'">
+              <div class="content-bar-seccion-list-options" onclick="window.location.href='./eventosOrganizador.html'">
                 <span>Innovación</span>
               </div>
-              <div class="content-bar-seccion-list-options" onclick="window.location.href='./eventosAsistente.html'">
+              <div class="content-bar-seccion-list-options" onclick="window.location.href='./eventosOrganizador.html'">
                 <span>Deporte</span>
               </div>
-              <div class="content-bar-seccion-list-options" onclick="window.location.href='./eventosAsistente.html'">
+              <div class="content-bar-seccion-list-options" onclick="window.location.href='./eventosOrganizador.html'">
                 <span>Salud</span>
               </div>
             </div>
           </div>
         </div>
-
+        <!-- Acciones -->
         <div class="content-bar">
           <div class="content-bar-seccion">
             <div class="seccion-titulo">
               <h3>Acciones</h3>
             </div>
             <div class="content-bar-seccion-list">
-              <div class="content-bar-seccion-list-options" onclick="window.location.href='./usuariosAsistente.html'">
+              <div class="content-bar-seccion-list-options" onclick="window.location.href='./usuariosOrganizador.html'">
                 <span>Usuario</span>
               </div>
               <div class="content-bar-seccion-list-options">
                 <span>Institución</span>
               </div>
               <div class="content-bar-seccion-list-options"
-                onclick="window.location.href='./consultaTipoRegistroAsistente.html'"><span>Registro</span></div>
+                onclick="window.location.href='./consultaTipoRegistroOrganizador.html'"><span>Registro</span></div>
             </div>
           </div>
         </div>
 
+        <!-- Mi Perfil -->
         <div class="content-bar">
           <div class="content-bar-seccion">
             <div class="seccion-titulo">
-              <h3>Acciones de Usuario</h3>
+              <h3>Mi Perfil</h3>
             </div>
             <div class="content-bar-seccion-list">
+              <div class="content-bar-seccion-list-options" onclick="window.location.href='./altaEvento.html'">
+                <span>Alta Evento</span>
+              </div>
+              <div class="content-bar-seccion-list-options" onclick="window.location.href='./altaEdicion.html'">
+                <span>Alta Edición</span>
+              </div>
+              <div class="content-bar-seccion-list-options"><span>Alta Institución</span></div>
               <div class="content-bar-seccion-list-options"
-                onclick="window.location.href='./modificarUsuarioAsistente.html'">
-                <span>Modificar Usuario</span>
+                onclick="window.location.href='./modificarUsuarioOrganizador.html'"><span>Modificar Usuario</span>
               </div>
             </div>
           </div>
@@ -120,43 +122,44 @@
             <section class="col-12 col-md-7 content-evento row">
               <div class="col-12 row content-evento-resumen">
                 <div class="col-12 content-evento-titulo">
-                  <p>Maraton Montevideo</p>
+                  <p>Conferencia de Tecnología</p>
                 </div>
                 <div class="col-12 content-evento-imagen ">
-                  <img src="../img/IMG-EV04.png" alt="logo del evento">
+
                 </div>
               </div>
               <div class="col-12 row content-evento-informacion">
                 <div>
                   <p class="informacion-label">Descripcion:</p>
-                  <p>Competencia deportiva anual en la capital</p>
+                  <p>Evento sobre innovación tecnológica</p>
                 </div>
                 <div>
                   <p class="informacion-label">Sigla:</p>
-                  <p>Maraton</p>
+                  <p>CONFTEC</p>
                 </div>
                 <div>
                   <p class="informacion-label">Categorías</p>
-                  <p>Deporte, Salid</p>
+                  <p>Tecnología, Innovación</p>
                 </div>
                 <div>
                   <p class="informacion-label">Fecha Alta:</p>
-                  <p>01/01/2022</p>
+                  <p>10/01/2025</p>
                 </div>
               </div>
+              <button class="btn" onclick="window.location.href='./altaEdicion.html'">Crear Edicion</button>
             </section>
             <aside class="col-12 col-md-5 content-ediciones">
               <div class="seccion-titulo-edicion">
                 <h3>Ediciones</h3>
               </div>
               <div class="ediciones"
-                onclick="window.location.href='./consultasEdiciones/asistenteUS01ConsultaEdicionEDEV03SiendoAsistenteDeElla.html'">
+                onclick="window.location.href='./consultasEdiciones/organizadorus04ConsultaEdicionEDEV08QueNOOOrganiza.html'">
                 <div class="content-edicion">
                   <div class="content-edicion-imagen">
-                    <img src="../img/IMG-EDEV03.jpeg" alt="logo del evento">
+
                   </div>
                   <p class="content-edicion-titulo">
-                    Maraton Montevideo 2025
+                    Tecnología Punta del Este 2026
                   </p>
                 </div>
               </div>

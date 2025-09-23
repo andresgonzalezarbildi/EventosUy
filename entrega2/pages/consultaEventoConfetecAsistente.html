@@ -3,16 +3,18 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Usuario</title>
-  <link rel="stylesheet" href="estilos/normalize.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eventos</title>
+  <link rel="stylesheet" href="../estilos/normalize.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap-grid.min.css">
+
   <link rel="stylesheet" href="../estilos/base.css">
-  <link rel="stylesheet" href="../estilos/consultaUsuario.css">
+  <link rel="stylesheet" href="../estilos/consultaEvento.css">
+
 
 </head>
 
 <body>
-
   <!-- Header -->
   <header class="navbar">
     <div class="container-fluid">
@@ -48,8 +50,9 @@
       </div>
   </header>
 
-  <section class="container-fluid content">
-    <div class="row content-row">
+  <!-- Main -->
+  <main class="container-fluid">
+    <div class="row" style="margin-bottom: 1rem;">
 
       <!-- Sidebar -->
       <aside class="col-12 col-md-3">
@@ -109,46 +112,58 @@
         </div>
       </aside>
 
-      <!-- Contenedor principal -->
-      <main
-        style="max-width: 600px; margin: 2rem auto; padding: 1rem; background: #fff; border: 1px solid var(--color-border); border-radius: var(--radius);">
-        <h2 style="margin-bottom: 1rem; color: var(--color-primary);">Consulta Usuario</h2>
+      <div class="col-12 col-md-9">
+        <!-- Contenido principal -->
+        <div class="contenido-main row">
+          <section class="col-12 col-md-7 content-evento row">
+            <div class="col-12 row content-evento-resumen">
+              <div class="col-12 content-evento-titulo">
+                <p>Conferencia de Tecnología</p>
+              </div>
+              <div class="col-12 content-evento-imagen ">
 
-        <form id="formconsultaUsuario" style="width: 500px;">
-          <!-- Detalle del usuario -->
-          <div class="detalle">
-            <div style="padding-left: 180px;">
-              <h3><img src="../img/PerfilSinFoto.jpg" alt="foto usuario" style="width: 50px; height: 50px;">sofirod</h3>
+              </div>
             </div>
-
-
-            <label>Tipo:</label>
-            <input type="text" value="Asistente" readonly>
-
-            <label>Nombre:</label>
-            <input type="text" value="Sofia" readonly>
-
-            <label>Apellido:</label>
-            <input type="text" value="Rodriguez" readonly>
-
-            <label>Correo:</label>
-            <input type="email" value="srodriguez@outlook.com" readonly>
-
-            <label>Fecha nac.:</label>
-            <input type="date" value="1995-03-02" readonly>
-
-            <label>Institución:</label>
-            <input type="text" value="Universidad Catolica del Uruguay" readonly>
-
-            <label>Registros:</label>
-            <div class="lista-scrollable">
+            <div class="col-12 row content-evento-informacion">
+              <div>
+                <p class="informacion-label">Descripcion:</p>
+                <p>Evento sobre innovación tecnológica</p>
+              </div>
+              <div>
+                <p class="informacion-label">Sigla:</p>
+                <p>CONFTEC</p>
+              </div>
+              <div>
+                <p class="informacion-label">Categorías</p>
+                <p>Tecnología, Innovación</p>
+              </div>
+              <div>
+                <p class="informacion-label">Fecha Alta:</p>
+                <p>10/01/2025</p>
+              </div>
             </div>
-            
-          </div>
-        </form>
-      </main>
+          </section>
+          <aside class="col-12 col-md-5 content-ediciones">
+            <div class="seccion-titulo-edicion">
+              <h3>Ediciones</h3>
+            </div>
+            <div class="ediciones"
+              onclick="window.location.href='./consultasEdiciones/asistenteUS01ConsultaEdicionEDEV08DelaQuenoEsAsistente.html'">
+              <div class="content-edicion">
+                <div class="content-edicion-imagen">
+
+                </div>
+                <p class="content-edicion-titulo">
+                  Tecnología Punta del Este 2026
+                </p>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
     </div>
-  </section>
+  </main>
+
   <footer class="uc-footer">
     <small>Eventos.uy — Grupo 42.</small>
   </footer>

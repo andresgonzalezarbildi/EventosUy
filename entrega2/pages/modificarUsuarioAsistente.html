@@ -1,18 +1,25 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Modificar Usuario Asistente</title>
+  <link rel="stylesheet" href="../estilos/normalize.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap-grid.min.css">
   <link rel="stylesheet" href="../estilos/base.css">
 </head>
 
 <body>
+
+  <!-- Header -->
   <header class="navbar">
     <div class="container-fluid">
       <div class="row navbar-row text-center text-md-start">
+
         <!-- Logo -->
         <div class="col-12 col-md-3 mobile-col-center">
-          <h1><a class="title" href="./eventosSesionIniciada.html">Eventos.uy</a></h1>
+          <h1><a class="title" href="./eventosAsistente.html">Eventos.uy</a></h1>
         </div>
 
         <!-- Search -->
@@ -26,66 +33,138 @@
         <!-- Sesión -->
         <div class="col-12 col-md-3 mobile-col-center">
           <div class="navbar_sesion">
-            <a href="../index.html" class="navbar_sesion_link" onclick="window.location.href='../index.html'" >Cerrar Sesion</a>
+            <a href="../index.html" class="navbar_sesion_link" onclick="window.location.href='../index.html'">Cerrar
+              Sesion</a>
             <div class="navbar_sesion_perfil">
-              <p class="navbar_username">AnaG</p>
-              <img class="perfil_image" src="../img/AnaG.jpg" alt="foto perfil" />
+              <a href="./consultaMiPerfilAsistente.html">
+                <p class="navbar_username">atorres</p>
+                <img class="perfil_image" src="../img/IMG-US01.jpg" alt="foto perfil" />
+              </a>
             </div>
           </div>
         </div>
+
       </div>
-    </div>
   </header>
 
-  <main style="max-width: 700px; margin: 2rem auto; padding: 1.5rem; background: #fff; border: 1px solid var(--color-border); border-radius: var(--radius);">
-    <h2 style="margin-bottom: 1rem; color: var(--color-primary);">Modificar Usuario</h2>
+  <!-- Main + Sidebar -->
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row contenido-main">
 
-    <form>
-      <!-- Nombre -->
-      <div style="display:flex; align-items:center; gap:1rem; margin-bottom:1rem;">
-        <label for="nombre" style="min-width:120px;">Nombre:</label>
-        <input type="text" id="nombre" name="nombre" value="Juan" readonly>
-        <button type="button">Modificar</button>
+        <!-- Sidebar -->
+        <aside class="col-12 col-md-3">
+
+          <div class="content-bar">
+            <div class="content-bar-seccion">
+              <div class="seccion-titulo">
+                <h3>Categorias</h3>
+              </div>
+              <div class="content-bar-seccion-list">
+                <div class="content-bar-seccion-list-options" onclick="window.location.href='./eventosAsistente.html'">
+                  <span>Tecnologia</span>
+                </div>
+                <div class="content-bar-seccion-list-options" onclick="window.location.href='./eventosAsistente.html'">
+                  <span>Innovación</span>
+                </div>
+                <div class="content-bar-seccion-list-options" onclick="window.location.href='./eventosAsistente.html'">
+                  <span>Deporte</span>
+                </div>
+                <div class="content-bar-seccion-list-options" onclick="window.location.href='./eventosAsistente.html'">
+                  <span>Salud</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="content-bar">
+            <div class="content-bar-seccion">
+              <div class="seccion-titulo">
+                <h3>Acciones</h3>
+              </div>
+              <div class="content-bar-seccion-list">
+                <div class="content-bar-seccion-list-options" onclick="window.location.href='./usuariosAsistente.html'">
+                  <span>Usuario</span>
+                </div>
+                <div class="content-bar-seccion-list-options">
+                  <span>Institución</span>
+                </div>
+                <div class="content-bar-seccion-list-options"
+                  onclick="window.location.href='./consultaTipoRegistroAsistente.html'"><span>Registro</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="content-bar">
+            <div class="content-bar-seccion">
+              <div class="seccion-titulo">
+                <h3>Acciones de Usuario</h3>
+              </div>
+              <div class="content-bar-seccion-list">
+                <div class="content-bar-seccion-list-options"
+                  onclick="window.location.href='./modificarUsuarioAsistente.html'">
+                  <span>Modificar Usuario</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </aside>
+
+        <!-- Contenido principal -->
+        <main class="col-12 col-md-8 d-flex justify-content-center">
+          <form style="width:100%; max-width:500px;">
+            <h2 style="margin-bottom: 1rem; color: var(--color-primary);">Modificar Usuario</h2>
+
+            <!-- Nombre -->
+            <div style="margin-bottom:1rem;">
+              <label for="nombre" class="form-label">Nombre:</label>
+              <input type="text" id="nombre" name="nombre" class="form-control" value="Juan">
+            </div>
+
+            <!-- Apellido -->
+            <div style="margin-bottom:1rem;">
+              <label for="apellido" class="form-label">Apellido:</label>
+              <input type="text" id="apellido" name="apellido" class="form-control" value="Pérez">
+            </div>
+
+            <!-- Fecha de Nacimiento -->
+            <div style="margin-bottom:1rem;">
+              <label for="fechaNac" class="form-label">Fecha Nac.:</label>
+              <input type="date" id="fechaNac" name="fechaNac" class="form-control" value="1998-05-10">
+            </div>
+
+            <!-- Imagen de perfil -->
+            <div style="margin-bottom:1rem;">
+              <h3>Imagen de perfil</h3>
+              <input type="file" id="imagen" name="imagen" accept="image/*" class="form-control">
+            </div>
+
+            <!-- Cambiar contraseña -->
+            <div style="margin-bottom:1rem;">
+              <h3>Cambiar contraseña</h3>
+              <label for="newPassword" class="form-label">Nueva contraseña:</label>
+              <input type="password" id="newPassword" name="newPassword" class="form-control">
+
+              <label for="confirmPassword" class="form-label mt-2">Confirmar contraseña:</label>
+              <input type="password" id="confirmPassword" name="confirmPassword" class="form-control">
+            </div>
+
+            <!-- Botones -->
+            <div class="mt-3 d-flex gap-2">
+              <button type="submit" class="btn btn-primary">Guardar cambios</button>
+              <button type="reset" class="btn btn-secondary">Cancelar</button>
+            </div>
+          </form>
+        </main>
+
       </div>
+    </div>
+  </section>
 
-        
-
-        <!-- Apellido -->
-        <div style="display:flex; align-items:center; gap:1rem; margin-bottom:1rem;">
-          <label for="apellido" style="min-width:120px;">Apellido:</label>
-          <input type="text" id="apellido" name="apellido" value="Pérez" readonly>
-          <button type="button">Modificar</button>
-        </div>
-
-        <!-- Fecha de Nacimiento -->
-        <div style="display:flex; align-items:center; gap:1rem; margin-bottom:1rem;">
-          <label for="fechaNac" style="min-width:120px;">Fecha Nac.:</label>
-          <input type="date" id="fechaNac" name="fechaNac" value="1998-05-10" readonly>
-          <button type="button">Modificar</button>
-        </div>
-   
-      <!-- Imagen de perfil -->
-      <h3 style="margin-top:2rem;">Imagen de perfil</h3>
-      <input type="file" id="imagen" name="imagen" accept="image/*">
-
-      <!-- Cambiar contraseña -->
-      <h3 style="margin-top:2rem;">Cambiar contraseña</h3>
-      <label for="newPassword">Nueva contraseña:</label>
-      <input type="password" id="newPassword" name="newPassword">
-
-      <label for="confirmPassword">Confirmar contraseña:</label>
-      <input type="password" id="confirmPassword" name="confirmPassword">
-
-      <!-- Botones -->
-      <div style="margin-top: 2rem; display: flex; gap: 1rem;">
-        <button type="submit">Guardar cambios</button>
-        <button type="reset">Cancelar</button>
-      </div>
-    </form>
-  </main>
-      <!-- Footer -->
-    <footer class="uc-footer">
-        <small>Eventos.uy — Grupo 42.</small>
-    </footer>
+  <!-- Footer -->
+  <footer class="uc-footer">
+    <small>Eventos.uy — Grupo 42.</small>
+  </footer>
 </body>
+
 </html>

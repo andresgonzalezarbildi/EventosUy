@@ -2,16 +2,6 @@
 /* =========================
    MAIN CONTENT
 ========================= */
-.content {
-  display: block; /* grid maneja las columnas */
-}
-
-.content-bar {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  margin-bottom: 2rem;
-}
 
 /* ===== Mobile (pantallas chicas) ===== */
 @media (max-width: 767.98px) {
