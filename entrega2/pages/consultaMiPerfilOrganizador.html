@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <title>Usuario</title>
@@ -8,93 +9,110 @@
   <link rel="stylesheet" href="../estilos/base.css">
   <link rel="stylesheet" href="../estilos/consultaUsuario.css">
 </head>
+
 <body>
- <!-- Header -->
-<header class="navbar">
-  <div class="container-fluid">
-    <div class="row navbar-row text-center text-md-start">
-      <!-- Logo -->
-      <div class="col-12 col-md-3 mobile-col-center">
-        <h1><a class="title" href="./eventosOrganizador.html">Eventos.uy</a></h1>
-      </div>
 
-      <!-- Search -->
-      <div class="col-12 col-md-6">
-        <div class="navbar_search mx-auto">
-          <input type="text" placeholder="Eventos, ediciones..." class="navbar_search-input">
-          <button class="navbar_search-btn">Buscar</button>
+  <!-- Header -->
+  <header class="navbar">
+    <div class="container-fluid">
+      <div class="row navbar-row text-center text-md-start">
+
+        <!-- Logo -->
+        <div class="col-12 col-md-3 mobile-col-center">
+          <h1><a class="title" href="./eventosOrganizador.html">Eventos.uy</a></h1>
         </div>
-      </div>
 
-      <!-- Sesión -->
-      <div class="col-12 col-md-3 mobile-col-center">
-        <div class="navbar_sesion">
-          <div class="navbar_sesion_perfil">
-              <a href="./consultaMiPerfilOrganizador.html">              
+        <!-- Search -->
+        <div class="col-12 col-md-6">
+          <div class="navbar_search mx-auto">
+            <input type="text" placeholder="Eventos, ediciones..." class="navbar_search-input">
+            <button class="navbar_search-btn">Buscar</button>
+          </div>
+        </div>
+
+        <!-- Sesión -->
+        <div class="col-12 col-md-3 mobile-col-center">
+          <div class="navbar_sesion">
+            <a href="../index.html" class="navbar_sesion_link" onclick="window.location.href='../index.html'">Cerrar Sesión</a>
+            <div class="navbar_sesion_perfil">
+              <a href="./consultaMiPerfilOrganizador.html">
                 <p class="navbar_username">miseventos</p>
                 <img class="perfil_image" src="../img/IMG-US04.jpeg" alt="foto perfil" />
               </a>
+            </div>
           </div>
-          <a href="../index.html" class="navbar_sesion_link">Cerrar Sesión</a>
         </div>
+
       </div>
     </div>
-  </div>
-</header>
+  </header>
 
-<!-- Main + Sidebar -->
-<section class="content">
-  <div class="container-fluid">
-    <div class="row">
+  <section class="container-fluid content">
+    <div class="row content-row">
 
       <!-- Sidebar -->
-      <aside class="col-12 col-md-4">
-        <!-- Acciones -->
+      <aside class="col-12 col-md-3">
+
         <div class="content-bar">
           <div class="content-bar-seccion">
-            <div class="seccion-titulo"><h3>Acciones</h3></div>
+            <div class="seccion-titulo">
+              <h3>Categorias</h3>
+            </div>
             <div class="content-bar-seccion-list">
-              <div class="content-bar-seccion-list-options" onclick="window.location.href='./usuariosOrganizador.html'"><span>Usuario</span></div>
-              <div class="content-bar-seccion-list-options" onclick="window.location.href='../index.html'"><span>Institución</span></div>
-              <div class="content-bar-seccion-list-options" onclick="window.location.href='./consultaTipoRegistroOrganizador.html'"><span>Registro</span></div>
+              <div class="content-bar-seccion-list-options" onclick="window.location.href='./eventosOrganizador.html'">
+                <span>Tecnologia</span>
+              </div>
+              <div class="content-bar-seccion-list-options" onclick="window.location.href='./eventosOrganizador.html'">
+                <span>Innovación</span>
+              </div>
+              <div class="content-bar-seccion-list-options" onclick="window.location.href='./eventosOrganizador.html'">
+                <span>Deporte</span>
+              </div>
+              <div class="content-bar-seccion-list-options" onclick="window.location.href='./eventosOrganizador.html'">
+                <span>Salud</span>
+              </div>
             </div>
           </div>
         </div>
 
-        <!-- Categorías -->
         <div class="content-bar">
           <div class="content-bar-seccion">
-            <div class="seccion-titulo"><h3>Categorías</h3></div>
+            <div class="seccion-titulo">
+              <h3>Acciones</h3>
+            </div>
             <div class="content-bar-seccion-list">
-              <div class="content-bar-seccion-list-options"><span>Tecnología</span></div>
-              <div class="content-bar-seccion-list-options"><span>Innovación</span></div>
-              <div class="content-bar-seccion-list-options"><span>Salud</span></div>
+              <div class="content-bar-seccion-list-options" onclick="window.location.href='./usuariosOrganizador.html'">
+                <span>Usuario</span>
+              </div>
+              <div class="content-bar-seccion-list-options">
+                <span>Institución</span>
+              </div>
             </div>
           </div>
         </div>
 
-        <!-- Mi Perfil -->
         <div class="content-bar">
           <div class="content-bar-seccion">
-            <div class="seccion-titulo"><h3>Mi Perfil</h3></div>
+            <div class="seccion-titulo">
+              <h3>Acciones de Usuario</h3>
+            </div>
             <div class="content-bar-seccion-list">
-              <div class="content-bar-seccion-list-options" onclick="window.location.href='./altaEvento.html'"><span>Alta Evento</span></div>
-              <div class="content-bar-seccion-list-options" onclick="window.location.href='./altaEdicion.html'"><span>Alta Edición</span></div>
-              <div class="content-bar-seccion-list-options"><span>Alta Institución</span></div>
-              <div class="content-bar-seccion-list-options" onclick="window.location.href='./modificarUsuarioOrganizador.html'"><span>Modificar Usuario</span></div>
+              <div class="content-bar-seccion-list-options"
+                onclick="window.location.href='./modificarUsuarioOrganizador.html'">
+                <span>Modificar Usuario</span>
+              </div>
             </div>
           </div>
         </div>
+
       </aside>
 
-
       <!-- Contenedor principal -->
-      <main style="max-width: 600px; margin: 2rem auto; padding: 1rem; background: #fff; border: 1px solid var(--color-border); border-radius: var(--radius);">
+      <main
+        style="max-width: 600px; margin: 2rem auto; padding: 1rem; background: #fff; border: 1px solid var(--color-border); border-radius: var(--radius);">
         <h2 style="margin-bottom: 1rem; color: var(--color-primary);">Consulta Usuario</h2>
-          
-          <!-- Lista de usuarios -->
-          <form id="formconsultaUsuario" style="width: 500px;">
-          <!-- Detalle del usuario -->
+
+        <form id="formconsultaUsuario" style="width: 500px;">
           <div class="detalle">
             <div style="padding-left: 180px;">
               <h3><img src="../img/IMG-US04.jpeg" alt="foto usuario" style="width: 50px; height: 50px;">miseventos</h3>
@@ -106,8 +124,8 @@
             <label>Nombre:</label>
             <input type="text" value="MisEventos" readonly>
 
-            <label>Descripcion:</label>
-            <input type="text" value="Empresa de organización de eventos. " readonly>
+            <label>Descripción:</label>
+            <input type="text" value="Empresa de organización de eventos." readonly>
 
             <label>Correo:</label>
             <input type="email" value="contacto@miseventos.com" readonly>
@@ -117,15 +135,26 @@
 
             <label>Ediciones:</label>
             <div class="lista-scrollable">
-
+              <ul>
+                <li><a href="./consultaEdicion1.html">Edición 1</a></li>
+                <li><a href="./consultaEdicion2.html">Edición 2</a></li>
+              </ul>
             </div>
           </div>
         </form>
+
+        <div style="margin-top: 1rem; text-align: center;">
+          <button type="button" class="btn btn-primary"
+            onclick="window.location.href='./modificarUsuarioOrganizador.html'">Modificar datos</button>
+        </div>
       </main>
     </div>
-    </section>
+  </section>
+
   <footer class="uc-footer">
     <small>Eventos.uy — Grupo 42.</small>
   </footer>
+
 </body>
+
 </html>
