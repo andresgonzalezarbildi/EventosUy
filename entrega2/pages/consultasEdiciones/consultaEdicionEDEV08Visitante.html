@@ -9,11 +9,11 @@
 </head>
 <body>
   <!-- Header -->
-  <header class="navbar">
-    <div class="container-xxl">
-      <div class="row navbar-row">
+   <header class="navbar">
+    <div class="container-fluid">
+      <div class="row navbar-row text-center text-md-start">
         <!-- Logo -->
-        <div class="col-12 col-md-3 mb-2 mb-md-0">
+        <div class="col-12 col-md-3 mobile-col-center">
           <h1><a class="title" href="../../index.html">Eventos.uy</a></h1>
         </div>
 
@@ -28,7 +28,9 @@
         <!-- Sesión -->
         <div class="col-12 col-md-3 mobile-col-center">
           <div class="navbar_sesion">
-            <a href="./../pages/iniciarSesion.html" class="navbar_sesion_link">Iniciar Sesion / Registrarse</a>
+            <a href="../iniciarSesion.html" class="navbar_sesion_link">Iniciar Sesión</a>
+            <p>/</p>
+            <a href="../altaUsuario.html" class="navbar_sesion_link">Registrarse</a>
           </div>
         </div>
       </div>
@@ -36,14 +38,61 @@
   </header>
 	
 	
+	<section class="content">
+    <div class="container-fluid">
+      <div class="row">
+
+        <!-- Sidebar -->
+        <aside class="col-12 col-md-3">
+          <!-- Categorías -->
+          <div class="content-bar">
+            <div class="content-bar-seccion">
+              <div class="seccion-titulo">
+                <h3>Categorías</h3>
+              </div>
+              <div class="content-bar-seccion-list">
+                <div class="content-bar-seccion-list-options" onclick="window.location.href='/entrega2/index.html'">
+                  <span>Tecnología</span>
+                </div>
+                <div class="content-bar-seccion-list-options" onclick="window.location.href='/entrega2/index.html'">
+                  <span>Innovación</span>
+                </div>
+                <div class="content-bar-seccion-list-options" onclick="window.location.href='/entrega2/index.html'">
+                  <span>Deporte</span>
+                </div>
+                <div class="content-bar-seccion-list-options" onclick="window.location.href='/entrega2/index.html'">
+                  <span>Salud</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Acciones -->
+          <div class="content-bar">
+            <div class="content-bar-seccion">
+              <div class="seccion-titulo">
+                <h3>Acciones</h3>
+              </div>
+              <div class="content-bar-seccion-list">
+                <div class="content-bar-seccion-list-options"
+                  onclick="window.location.href='/entrega2/pages/usuariosVisitante.html'">
+                  <span>Usuario</span>
+                </div>
+                <div class="content-bar-seccion-list-options" onclick="window.location.href='/entrega2/index.html'">
+                  <span>Institución</span>
+                </div>
+              </div>
+            </div>
+        </aside>
+	
+	
+	 <div class="col-12 col-md-8 d-flex">
+      <!-- Columna izquierda: imagen y datos -->
+      <div class="flex-grow-1 d-flex flex-column align-items-center">
   <main style="max-width: 700px; margin: 2rem auto; padding: 1.5rem; background: #fff; border: 1px solid var(--color-border); border-radius: var(--radius); box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
     <h2 style="margin-bottom: 1rem; color: var(--color-primary); text-align:center;">Detalle de Edición como Visitante</h2>
    
 
-<!--     Imagen -->
-<!--     <div style="text-align:center; margin-bottom:1.5rem;"> -->
-<!--       <img src="../../img/uruguay.png" alt="Imagen de la edición" style="max-width: 350px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);"> -->
-<!--     </div> -->
+
 
     <!-- Datos principales -->
     <dl style="display:grid; grid-template-columns: 150px 1fr; row-gap:0.5rem; column-gap:1rem; margin-bottom:2rem;">
@@ -56,15 +105,16 @@
       <dt><strong>Alta en Plataforma:</strong></dt> <dd>01/08/2025</dd>
     </dl>
 
-    <!-- Tipo de registros -->
-    <section style="margin-bottom:2rem;">
-      <h3 style="margin-bottom:0.5rem; color: var(--color-primary);">Tipos de Registro</h3>
-      <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
-        
-        <span style="background:#f0f0f0; padding:0.4rem 0.8rem; border-radius:12px;">Estudiante</span>
-        
-      </div>
-    </section>
+   <!-- Tipo de registros -->
+          <section style="margin-bottom:2rem;">
+            <h3 style="margin-bottom:0.5rem; color: var(--color-primary);">Tipos de Registro</h3>
+            <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+   				 <a href="../tipoDeRegistroEstudianteTecVisitante.html"
+			       style="display:inline-block; background:#f0f0f0; padding:0.4rem 0.8rem; border-radius:12px; text-decoration:none; color:inherit;">
+			      Estudiante
+    			</a>
+  		</div>
+          </section>
 
     <!-- Organizador -->
     <section style="margin-bottom:2rem;">
@@ -77,25 +127,33 @@
       <h3 style="margin-bottom:0.5rem; color: var(--color-primary);">Patrocinios</h3>
       <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
         <span style="background:#e3f2fd; padding:0.4rem 0.8rem; border-radius:12px;">Facultad de Ingeniería</span>
-<!--         <span style="background:#e3f2fd; padding:0.4rem 0.8rem; border-radius:12px;">Coca-Cola</span> -->
-<!--         <span style="background:#e3f2fd; padding:0.4rem 0.8rem; border-radius:12px;">Movistar</span> -->
       </div>
     </section>
+    </div>
+<div class="flex-direction: column;">
+      <!-- Evento 1 -->
+<div style="margin-bottom:12px; text-align:center;">
+  <a href="../consultaEventoVisitante.html">
+    <img src="../../img/IMG-EV04.png" alt="Consultar Evento"
+         style="max-width:150px; width:100%; cursor:pointer; border-radius:8px; box-shadow:0 2px 6px rgba(0,0,0,0.2);">
+  </a>
+  <div style="margin-top:4px; font-size:0.9rem; color:#555;">Maratón Montevideo</div>
+</div>
 
-<!--     <fieldset style="margin-top: 2rem; border: 1px solid #ccc; padding: 1rem; border-radius: 8px;"> -->
-<!--       <dl style="display:grid; grid-template-columns: 150px 1fr; row-gap:0.5rem; column-gap:1rem;"> -->
-<!--         <dt><strong>Nombre:</strong></dt> <dd>Juan Gómez</dd> -->
-<!--         <dt><strong>Tipo de Registro:</strong></dt> <dd>Estudiante</dd> -->
-<!--         <dt><strong>Fecha de Registro:</strong></dt> <dd>22/04/2024</dd> -->
-<!--         <dt><strong>Estado:</strong></dt> <dd>Confirmado</dd> -->
-<!--       </dl> -->
-<!--     </fieldset> -->
+<!-- Evento 2 -->
+<div style="margin-bottom:12px; text-align:center;">
+  <a href="../consultaEventoConfetecVisitante.html">
+    <img src="" alt="Consultar Evento"
+         style="max-width:150px; width:100%; cursor:pointer; border-radius:8px; box-shadow:0 2px 6px rgba(0,0,0,0.2);">
+  </a>
+  <div style="margin-top:4px; font-size:0.9rem; color:#555;">Conferencia de Tecnología</div>
+</div>
+	</div>
+    </div> 
+  </div> 
+  
+</main>
 
-<!--     <div style="margin-top: 1rem;"> -->
-<!--       <button onclick="window.location.href='./../registroAEdicion.html'" type="reset">Registrarse</button> -->
-<!--     </div> -->
-
-  </main>
 
   <footer class="uc-footer">
     <small>Eventos.uy — Grupo 42.</small>

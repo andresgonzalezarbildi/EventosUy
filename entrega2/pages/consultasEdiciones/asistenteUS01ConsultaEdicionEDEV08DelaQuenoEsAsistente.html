@@ -10,6 +10,7 @@
 </head>
 
 <body>
+
   <!-- Header -->
   <header class="navbar">
     <div class="container-fluid">
@@ -17,7 +18,7 @@
 
         <!-- Logo -->
         <div class="col-12 col-md-3 mobile-col-center">
-          <h1><a class="title" href="./../eventosAsistente.html">Eventos.uy</a></h1>
+          <h1><a class="title" href="/entrega2/pages/eventosAsistente.html">Eventos.uy</a></h1>
         </div>
 
         <!-- Search -->
@@ -31,12 +32,13 @@
         <!-- Sesión -->
         <div class="col-12 col-md-3 mobile-col-center">
           <div class="navbar_sesion">
-            <a href="../../index.html" class="navbar_sesion_link" onclick="window.location.href='../index.html'">Cerrar
-              Sesion</a>
+            <a href="/entrega2/index.html" class="navbar_sesion_link"
+              onclick="window.location.href='/entrega2/index.html'">Cerrar
+              Sesión</a>
             <div class="navbar_sesion_perfil">
-              <a href="./../consultaMiPerfilAsistente.html">
+              <a href="/entrega2/pages/consultaMiPerfilAsistente.html">
                 <p class="navbar_username">atorres</p>
-                <img class="perfil_image" src="../../img/IMG-US01.jpg" alt="foto perfil" />
+                <img class="perfil_image" src="/entrega2/img/IMG-US01.jpg" alt="foto perfil" />
               </a>
             </div>
           </div>
@@ -46,73 +48,140 @@
   </header>
 
 
-  <main
-    style="max-width: 700px; margin: 2rem auto; padding: 1.5rem; background: #fff; border: 1px solid var(--color-border); border-radius: var(--radius); box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
-    <h2 style="margin-bottom: 1rem; color: var(--color-primary); text-align:center;">Detalle de Edición</h2>
+  <main class="content">
+    <div class="container-fluid">
+      <div class="row">
+
+        <!-- Sidebar -->
+        <aside class="col-12 col-md-3">
+
+          <div class="content-bar">
+            <div class="content-bar-seccion">
+              <div class="seccion-titulo">
+                <h3>Categorias</h3>
+              </div>
+              <div class="content-bar-seccion-list">
+                <div class="content-bar-seccion-list-options"
+                  onclick="window.location.href='/entrega2/pages/eventosAsistente.html'">
+                  <span>Tecnologia</span>
+                </div>
+                <div class="content-bar-seccion-list-options"
+                  onclick="window.location.href='/entrega2/pages/eventosAsistente.html'">
+                  <span>Innovación</span>
+                </div>
+                <div class="content-bar-seccion-list-options"
+                  onclick="window.location.href='/entrega2/pages/eventosAsistente.html'">
+                  <span>Deporte</span>
+                </div>
+                <div class="content-bar-seccion-list-options"
+                  onclick="window.location.href='/entrega2/pages/eventosAsistente.html'">
+                  <span>Salud</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="content-bar">
+            <div class="content-bar-seccion">
+              <div class="seccion-titulo">
+                <h3>Acciones</h3>
+              </div>
+              <div class="content-bar-seccion-list">
+                <div class="content-bar-seccion-list-options"
+                  onclick="window.location.href='/entrega2/pages/usuariosAsistente.html'">
+                  <span>Usuario</span>
+                </div>
+                <div class="content-bar-seccion-list-options">
+                  <span>Institución</span>
+                </div>
+              </div>
+            </div>
+        </aside>
+        <div class="col-12 col-md-8 d-flex">
+
+          <div class="flex-grow-1 d-flex flex-column align-items-center">
+
+            <main
+              style="max-width: 700px; margin: 2rem auto; padding: 1.5rem; background: #fff; border: 1px solid var(--color-border); border-radius: var(--radius); box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+              <h2 style="margin-bottom: 1rem; color: var(--color-primary); text-align:center;">Detalle de Edición</h2>
+
+              <div style="margin-bottom:1.5rem;">
+                <img src=alt="Imagen de la edición"
+                  style="max-width: 350px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
+              </div>
+
+              <!-- Datos principales -->
+              <dl
+                style="display:grid; grid-template-columns: 150px 1fr; row-gap:0.5rem; column-gap:1rem; margin-bottom:2rem;">
+                <dt><strong>Nombre:</strong></dt>
+                <dd>Tecnología Punta del Este 2026</dd>
+                <dt><strong>Sigla:</strong></dt>
+                <dd>CONFTECH26</dd>
+                <dt><strong>Ciudad:</strong></dt>
+                <dd>Punta del Este</dd>
+                <dt><strong>País:</strong></dt>
+                <dd>Uruguay</dd>
+                <dt><strong>Fecha Inicio:</strong></dt>
+                <dd>06/04/2026</dd>
+                <dt><strong>Fecha Fin:</strong></dt>
+                <dd>10/04/2026</dd>
+                <dt><strong>Alta en Plataforma:</strong></dt>
+                <dd>01/08/2025</dd>
+              </dl>
+
+              <section style="margin-bottom:2rem;">
+                <h3 style="margin-bottom:0.5rem; color: var(--color-primary);">Tipos de Registro</h3>
+                <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+                  <a href="../tipoDeRegistroEstudianteTecAsistente.html"
+                    style="display:inline-block; background:#f0f0f0; padding:0.4rem 0.8rem; border-radius:12px; text-decoration:none; color:inherit;">
+                    Estudiante
+                  </a>
+                </div>
+              </section>
+
+              <!-- Organizador -->
+              <section style="margin-bottom:2rem;">
+                <h3 style="margin-bottom:0.5rem; color: var(--color-primary);">Organizador</h3>
+                <p>Universidad de la República</p>
+              </section>
+
+              <!-- Patrocinios -->
+              <section style="margin-bottom:2rem;">
+                <h3 style="margin-bottom:0.5rem; color: var(--color-primary);">Patrocinios</h3>
+                <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+                  <span style="background:#e3f2fd; padding:0.4rem 0.8rem; border-radius:12px;">Facultad de
+                    Ingeniería</span>
+                  <!--         <span style="background:#e3f2fd; padding:0.4rem 0.8rem; border-radius:12px;">Coca-Cola</span> -->
+                  <!--         <span style="background:#e3f2fd; padding:0.4rem 0.8rem; border-radius:12px;">Movistar</span> -->
+                </div>
+              </section>
+          </div>
 
 
-    <!--     Imagen -->
-    <!--     <div style="text-align:center; margin-bottom:1.5rem;"> -->
-    <!--       <img src="../../img/uruguay.png" alt="Imagen de la edición" style="max-width: 350px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);"> -->
-    <!--     </div> -->
+          <div class="flex-direction: column;">
+            <!-- Evento 1 -->
+            <div style="margin-bottom:12px; text-align:center;">
+              <a href="../consultaEventoAsistente.html">
+                <img src="../../img/IMG-EV04.png" alt="Consultar Evento"
+                  style="max-width:150px; width:100%; cursor:pointer; border-radius:8px; box-shadow:0 2px 6px rgba(0,0,0,0.2);">
+              </a>
+              <div style="margin-top:4px; font-size:0.9rem; color:#555;">Maratón Montevideo</div>
+            </div>
 
-    <!-- Datos principales -->
-    <dl style="display:grid; grid-template-columns: 150px 1fr; row-gap:0.5rem; column-gap:1rem; margin-bottom:2rem;">
-      <dt><strong>Nombre:</strong></dt>
-      <dd>Tecnología Punta del Este 2026</dd>
-      <dt><strong>Sigla:</strong></dt>
-      <dd>CONFTECH26</dd>
-      <dt><strong>Ciudad:</strong></dt>
-      <dd>Punta del Este</dd>
-      <dt><strong>País:</strong></dt>
-      <dd>Uruguay</dd>
-      <dt><strong>Fecha Inicio:</strong></dt>
-      <dd>06/04/2026</dd>
-      <dt><strong>Fecha Fin:</strong></dt>
-      <dd>10/04/2026</dd>
-      <dt><strong>Alta en Plataforma:</strong></dt>
-      <dd>01/08/2025</dd>
-    </dl>
+            <!-- Evento 2 -->
+            <div style="margin-bottom:12px; text-align:center;">
+              <a href="../consultaEventoConfetecAsistente.html">
+                <img src="" alt="Consultar Evento"
+                  style="max-width:150px; width:100%; cursor:pointer; border-radius:8px; box-shadow:0 2px 6px rgba(0,0,0,0.2);">
+              </a>
+              <div style="margin-top:4px; font-size:0.9rem; color:#555;">Conferencia de Tecnología</div>
+            </div>
+            </a>
+          </div>
+        </div> <!-- /col-12 col-md-8 -->
 
-    <!-- Tipo de registros -->
-    <section style="margin-bottom:2rem;">
-      <h3 style="margin-bottom:0.5rem; color: var(--color-primary);">Tipos de Registro</h3>
-      <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
-
-        <span style="background:#f0f0f0; padding:0.4rem 0.8rem; border-radius:12px;">Estudiante</span>
-
-      </div>
-    </section>
-
-    <!-- Organizador -->
-    <section style="margin-bottom:2rem;">
-      <h3 style="margin-bottom:0.5rem; color: var(--color-primary);">Organizador</h3>
-      <p>Universidad de la República</p>
-    </section>
-
-    <!-- Patrocinios -->
-    <section style="margin-bottom:2rem;">
-      <h3 style="margin-bottom:0.5rem; color: var(--color-primary);">Patrocinios</h3>
-      <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
-        <span style="background:#e3f2fd; padding:0.4rem 0.8rem; border-radius:12px;">Facultad de Ingeniería</span>
-        <!--         <span style="background:#e3f2fd; padding:0.4rem 0.8rem; border-radius:12px;">Coca-Cola</span> -->
-        <!--         <span style="background:#e3f2fd; padding:0.4rem 0.8rem; border-radius:12px;">Movistar</span> -->
-      </div>
-    </section>
-
-    <!--     <fieldset style="margin-top: 2rem; border: 1px solid #ccc; padding: 1rem; border-radius: 8px;"> -->
-    <!--       <dl style="display:grid; grid-template-columns: 150px 1fr; row-gap:0.5rem; column-gap:1rem;"> -->
-    <!--         <dt><strong>Nombre:</strong></dt> <dd>Juan Gómez</dd> -->
-    <!--         <dt><strong>Tipo de Registro:</strong></dt> <dd>Estudiante</dd> -->
-    <!--         <dt><strong>Fecha de Registro:</strong></dt> <dd>22/04/2024</dd> -->
-    <!--         <dt><strong>Estado:</strong></dt> <dd>Confirmado</dd> -->
-    <!--       </dl> -->
-    <!--     </fieldset> -->
-
-    <!--     <div style="margin-top: 1rem;"> -->
-    <!--       <button onclick="window.location.href='./../registroAEdicion.html'" type="reset">Registrarse</button> -->
-    <!--     </div> -->
-
+      </div> <!-- /row -->
+    </div> <!-- /container-fluid -->
   </main>
 
   <footer class="uc-footer">
