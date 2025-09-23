@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <title>Usuario</title>
@@ -8,6 +9,7 @@
   <link rel="stylesheet" href="../estilos/base.css">
   <link rel="stylesheet" href="../estilos/consultaUsuario.css">
 </head>
+
 <body>
   <header class="navbar">
     <div class="container-fluid">
@@ -45,71 +47,72 @@
 
   <section class="container-fluid content">
     <div class="row content-row">
-        <aside class="col-12 col-md-3">
-          <div class="content-bar">
-            <div class="content-bar-seccion">
-              <div class="seccion-titulo">
-                <h3>Categorias</h3>
+      <aside class="col-12 col-md-3">
+        <div class="content-bar">
+          <div class="content-bar-seccion">
+            <div class="seccion-titulo">
+              <h3>Categorias</h3>
+            </div>
+            <div class="content-bar-seccion-list">
+              <div class="content-bar-seccion-list-options"
+                onclick="window.location.href='/entrega2/pages/eventosOrganizador.html'">
+                <span>Tecnologia</span>
               </div>
-              <div class="content-bar-seccion-list">
-                <div class="content-bar-seccion-list-options"
-                  onclick="window.location.href='/entrega2/pages/eventosOrganizador.html'">
-                  <span>Tecnologia</span>
-                </div>
-                <div class="content-bar-seccion-list-options"
-                  onclick="window.location.href='/entrega2/pages/eventosOrganizador.html'">
-                  <span>Innovación</span>
-                </div>
-                <div class="content-bar-seccion-list-options"
-                  onclick="window.location.href='/entrega2/pages/eventosOrganizador.html'">
-                  <span>Deporte</span>
-                </div>
-                <div class="content-bar-seccion-list-options"
-                  onclick="window.location.href='/entrega2/pages/eventosOrganizador.html'">
-                  <span>Salud</span>
-                </div>
+              <div class="content-bar-seccion-list-options"
+                onclick="window.location.href='/entrega2/pages/eventosOrganizador.html'">
+                <span>Innovación</span>
+              </div>
+              <div class="content-bar-seccion-list-options"
+                onclick="window.location.href='/entrega2/pages/eventosOrganizador.html'">
+                <span>Deporte</span>
+              </div>
+              <div class="content-bar-seccion-list-options"
+                onclick="window.location.href='/entrega2/pages/eventosOrganizador.html'">
+                <span>Salud</span>
               </div>
             </div>
           </div>
-          <!-- Acciones -->
-          <div class="content-bar">
-            <div class="content-bar-seccion">
-              <div class="seccion-titulo">
-                <h3>Acciones</h3>
-              </div>
-              <div class="content-bar-seccion-list">
-                <div class="content-bar-seccion-list-options"
-                  onclick="window.location.href='/entrega2/pages/usuariosOrganizador.html'"><span>Usuario</span></div>
-                <div class="content-bar-seccion-list-options">
-                  <span>Institución</span>
-                </div>
+        </div>
+        <!-- Acciones -->
+        <div class="content-bar">
+          <div class="content-bar-seccion">
+            <div class="seccion-titulo">
+              <h3>Acciones</h3>
+            </div>
+            <div class="content-bar-seccion-list">
+              <div class="content-bar-seccion-list-options"
+                onclick="window.location.href='/entrega2/pages/usuariosOrganizador.html'"><span>Usuario</span></div>
+              <div class="content-bar-seccion-list-options">
+                <span>Institución</span>
               </div>
             </div>
           </div>
+        </div>
 
-          <!-- Mi Perfil -->
-          <div class="content-bar">
-            <div class="content-bar-seccion">
-              <div class="seccion-titulo">
-                <h3>Mi Perfil</h3>
+        <!-- Mi Perfil -->
+        <div class="content-bar">
+          <div class="content-bar-seccion">
+            <div class="seccion-titulo">
+              <h3>Mi Perfil</h3>
+            </div>
+            <div class="content-bar-seccion-list">
+              <div class="content-bar-seccion-list-options"
+                onclick="window.location.href='/entrega2/pages/altaEvento.html'">
+                <span>Alta Evento</span>
               </div>
-              <div class="content-bar-seccion-list">
-                <div class="content-bar-seccion-list-options"
-                  onclick="window.location.href='/entrega2/pages/altaEvento.html'">
-                  <span>Alta Evento</span>
-                </div>
 
-                <div class="content-bar-seccion-list-options"><span>Alta Institución</span></div>
+              <div class="content-bar-seccion-list-options"><span>Alta Institución</span></div>
 
-              </div>
             </div>
           </div>
-        </aside>
+        </div>
+      </aside>
 
-  <!-- Contenedor principal -->
-      <main style="max-width: 600px; margin: 2rem auto; padding: 1rem; background: #fff; border: 1px solid var(--color-border); border-radius: var(--radius);">
+      <!-- Contenedor principal -->
+      <main
+        style="max-width: 600px; margin: 2rem auto; padding: 1rem; background: #fff; border: 1px solid var(--color-border); border-radius: var(--radius);">
         <h2 style="margin-bottom: 1rem; color: var(--color-primary);">Consulta Usuario</h2>
-          
+
         <form id="formconsultaUsuario" style="width: 500px;">
           <!-- Detalle del usuario -->
           <div class="detalle">
@@ -139,8 +142,8 @@
             <label>Registros:</label>
             <div class="lista-scrollable">
               <ul>
-                <li><a href="./consultaRegistroAsistente.html">Maraton Montevideo 2024</a></li>
-                <li><a href="./consultaRegistroAsistente2.html">Web Summit 2026</a></li>
+                <li><a href="./consultaRegistroOrganizador.html">Maraton Montevideo 2024</a></li>
+                <li><a href="./consultaRegistroOrganizador2.html">Web Summit 2026</a></li>
               </ul>
             </div>
           </div>
@@ -152,4 +155,5 @@
     <small>Eventos.uy — Grupo 42.</small>
   </footer>
 </body>
+
 </html>
