@@ -1,3 +1,4 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -31,7 +32,7 @@
           </div>
         </div>
 
-        <!-- Sesión -->
+        <!-- SesiÃ³n -->
         <div class="col-12 col-md-3 mobile-col-center">
           <div class="navbar_sesion">
             <a href="/entrega2/pages/iniciarSesion.html" class="navbar_sesion_link">Iniciar Sesión</a>
@@ -50,7 +51,7 @@
 
         <!-- Sidebar -->
        <aside class="col-12 col-md-3">
-          <!-- Categorías -->
+          <!-- CategorÃ­as -->
           <div class="content-bar">
             <div class="content-bar-seccion">
               <div class="seccion-titulo">
@@ -115,10 +116,10 @@
               onclick="window.location.href='./pages/consultaEventoConfetecVisitante.html'">
               <div class="col-12 col-md-9 contenido-principal-card-informacion col-12">
                 <p class="contenido-principal-card-informacion-titulo">
-                  Conferencia de Tecnología -
+                  Conferencia de TecnologÃ­a -
                 </p>
                 <p class="contenido-principal-card-informacion-descripcion">
-                  Evento sobre innovación tecnológica
+                  Evento sobre innovaciÃ³n tecnolÃ³gica
                 </p>
               </div>
             </div>
@@ -127,10 +128,11 @@
       </div>
     </div>
   </section>
+ 
 
 
   <footer class="uc-footer">
-    <small>Eventos.uy — Grupo 42.</small>
+    <small>Eventos.uy -- Grupo 42.</small>
   </footer>
 </body>
 
