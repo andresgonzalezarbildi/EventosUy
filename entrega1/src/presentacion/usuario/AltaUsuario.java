@@ -35,8 +35,8 @@ public class AltaUsuario extends JInternalFrame {
     private IControladorUsuario controlUsr;
     
     private JComboBox<String> comboTipoUsuario;
-    private JTextField textFieldNickname, textFieldNombre, textFieldCorreo;
-    private JLabel lblIngreseNickname, lblIngreseNombre, lblIngreseCorreo;
+    private JTextField textFieldNickname, textFieldNombre, textFieldCorreo, textFieldImagen, textFieldPassword ;
+    private JLabel lblIngreseNickname, lblIngreseNombre, lblIngreseCorreo, lblIngreseImagen, lblIngresePassword ;
     private JButton btnAceptar, btnCancelar;
     private JLabel lblInstitucion;
     private JComboBox<String> comboInstitucion;
@@ -176,6 +176,47 @@ public class AltaUsuario extends JInternalFrame {
         gbc_textFieldCorreo.gridx = 1;
         gbc_textFieldCorreo.gridy = 3;
         getContentPane().add(textFieldCorreo, gbc_textFieldCorreo);
+        
+        lblIngreseImagen = new JLabel("Imagen:");
+        lblIngreseImagen.setHorizontalAlignment(SwingConstants.RIGHT);
+        GridBagConstraints gbc_lblIngreseImagen = new GridBagConstraints();
+        gbc_lblIngreseImagen.fill = GridBagConstraints.BOTH;
+        gbc_lblIngreseImagen.insets = new Insets(0, 0, 5, 5);
+        gbc_lblIngreseImagen.gridx = 0;
+        gbc_lblIngreseImagen.gridy = 4;
+        getContentPane().add(lblIngreseImagen, gbc_lblIngreseImagen);
+
+        textFieldImagen = new JTextField();
+        textFieldImagen.setToolTipText("Ingrese una Imagen valida");
+        textFieldImagen.setColumns(10);
+        GridBagConstraints gbc_textFieldImagen = new GridBagConstraints();
+        gbc_textFieldImagen.gridwidth = 2;
+        gbc_textFieldImagen.fill = GridBagConstraints.BOTH;
+        gbc_textFieldImagen.insets = new Insets(0, 0, 5, 0);
+        gbc_textFieldImagen.gridx = 1;
+        gbc_textFieldImagen.gridy = 4;
+        getContentPane().add(textFieldImagen, gbc_textFieldImagen);
+
+        lblIngresePassword = new JLabel("Contraseña:");
+        lblIngresePassword.setHorizontalAlignment(SwingConstants.RIGHT);
+        GridBagConstraints gbc_lblIngresePassword = new GridBagConstraints();
+        gbc_lblIngresePassword.fill = GridBagConstraints.BOTH;
+        gbc_lblIngresePassword.insets = new Insets(0, 0, 5, 5);
+        gbc_lblIngresePassword.gridx = 0;
+        gbc_lblIngresePassword.gridy = 5;
+        getContentPane().add(lblIngresePassword, gbc_lblIngresePassword);
+
+        textFieldPassword = new JTextField();
+        textFieldPassword.setToolTipText("Ingrese una Contraseña valida");
+        textFieldPassword.setColumns(10);
+        GridBagConstraints gbc_textFieldPassword = new GridBagConstraints();
+        gbc_textFieldPassword.gridwidth = 2;
+        gbc_textFieldPassword.fill = GridBagConstraints.BOTH;
+        gbc_textFieldPassword.insets = new Insets(0, 0, 5, 0);
+        gbc_textFieldPassword.gridx = 1;
+        gbc_textFieldPassword.gridy = 5;
+        getContentPane().add(textFieldPassword, gbc_textFieldPassword);
+        
 
         // Campos adicionales
         lblDescripcion = new JLabel("Descripción:");
@@ -184,7 +225,7 @@ public class AltaUsuario extends JInternalFrame {
         gbc_lblDescripcion.fill = GridBagConstraints.BOTH;
         gbc_lblDescripcion.insets = new Insets(0, 0, 5, 5);
         gbc_lblDescripcion.gridx = 0;
-        gbc_lblDescripcion.gridy = 4;
+        gbc_lblDescripcion.gridy = 6;
         getContentPane().add(lblDescripcion, gbc_lblDescripcion);
         lblDescripcion.setVisible(false);
 
@@ -200,7 +241,7 @@ public class AltaUsuario extends JInternalFrame {
         gbc_scrollDescripcion.fill = GridBagConstraints.BOTH;
         gbc_scrollDescripcion.insets = new Insets(0, 0, 5, 0);
         gbc_scrollDescripcion.gridx = 1;
-        gbc_scrollDescripcion.gridy = 4;
+        gbc_scrollDescripcion.gridy = 6;
         getContentPane().add(scrollDescripcion, gbc_scrollDescripcion);
         scrollDescripcion.setVisible(false);
 
@@ -211,7 +252,7 @@ public class AltaUsuario extends JInternalFrame {
         gbc_lblLink.fill = GridBagConstraints.BOTH;
         gbc_lblLink.insets = new Insets(0, 0, 5, 5);
         gbc_lblLink.gridx = 0;
-        gbc_lblLink.gridy = 5;
+        gbc_lblLink.gridy = 7;
         getContentPane().add(lblLink, gbc_lblLink);
         lblLink.setVisible(false);
 
@@ -220,7 +261,7 @@ public class AltaUsuario extends JInternalFrame {
         gbc_textFieldLink.fill = GridBagConstraints.BOTH;
         gbc_textFieldLink.insets = new Insets(0, 0, 5, 0);
         gbc_textFieldLink.gridx = 1;
-        gbc_textFieldLink.gridy = 5;
+        gbc_textFieldLink.gridy = 7;
         getContentPane().add(textFieldLink, gbc_textFieldLink);
         textFieldLink.setVisible(false);
 
@@ -231,7 +272,7 @@ public class AltaUsuario extends JInternalFrame {
         gbc_lblApellido.fill = GridBagConstraints.BOTH;
         gbc_lblApellido.insets = new Insets(0, 0, 5, 5);
         gbc_lblApellido.gridx = 0;
-        gbc_lblApellido.gridy = 4;
+        gbc_lblApellido.gridy = 6;
         getContentPane().add(lblApellido, gbc_lblApellido);
         lblApellido.setVisible(false);
 
@@ -240,7 +281,7 @@ public class AltaUsuario extends JInternalFrame {
         gbc_textFieldApellido.fill = GridBagConstraints.BOTH;
         gbc_textFieldApellido.insets = new Insets(0, 0, 5, 0);
         gbc_textFieldApellido.gridx = 1;
-        gbc_textFieldApellido.gridy = 4;
+        gbc_textFieldApellido.gridy = 6;
         getContentPane().add(textFieldApellido, gbc_textFieldApellido);
         textFieldApellido.setVisible(false);
 
@@ -250,7 +291,7 @@ public class AltaUsuario extends JInternalFrame {
         gbc_lblFechaNacimiento.fill = GridBagConstraints.BOTH;
         gbc_lblFechaNacimiento.insets = new Insets(0, 0, 5, 5);
         gbc_lblFechaNacimiento.gridx = 0;
-        gbc_lblFechaNacimiento.gridy = 5;
+        gbc_lblFechaNacimiento.gridy = 7;
         getContentPane().add(lblFechaNacimiento, gbc_lblFechaNacimiento);
         lblFechaNacimiento.setVisible(false);
 
@@ -263,7 +304,7 @@ public class AltaUsuario extends JInternalFrame {
         gbc_dateChooserFechaNac.fill = GridBagConstraints.BOTH;
         gbc_dateChooserFechaNac.insets = new Insets(0, 0, 5, 0);
         gbc_dateChooserFechaNac.gridx = 1;
-        gbc_dateChooserFechaNac.gridy = 5;
+        gbc_dateChooserFechaNac.gridy = 7;
         getContentPane().add(dateChooserFechaNac, gbc_dateChooserFechaNac);
         dateChooserFechaNac.setVisible(false);
 
@@ -274,7 +315,7 @@ public class AltaUsuario extends JInternalFrame {
         gbc_lblInstitucion.fill = GridBagConstraints.BOTH;
         gbc_lblInstitucion.insets = new Insets(0, 0, 5, 5);
         gbc_lblInstitucion.gridx = 0;
-        gbc_lblInstitucion.gridy = 6;           // fila libre
+        gbc_lblInstitucion.gridy = 8;           // fila libre
         getContentPane().add(lblInstitucion, gbc_lblInstitucion);
 
         // Combo de Instituciones 
@@ -291,7 +332,7 @@ public class AltaUsuario extends JInternalFrame {
         gbc_comboInstitucion.fill = GridBagConstraints.BOTH;
         gbc_comboInstitucion.insets = new Insets(0, 0, 5, 0);
         gbc_comboInstitucion.gridx = 1;
-        gbc_comboInstitucion.gridy = 6;          // misma fila, columna derecha
+        gbc_comboInstitucion.gridy = 8;          // misma fila, columna derecha
         getContentPane().add(comboInstitucion, gbc_comboInstitucion);
 
         // Botones
@@ -305,7 +346,7 @@ public class AltaUsuario extends JInternalFrame {
         gbc_btnAceptar.fill = GridBagConstraints.BOTH;
         gbc_btnAceptar.insets = new Insets(0, 0, 0, 5);
         gbc_btnAceptar.gridx = 1;
-        gbc_btnAceptar.gridy = 8;
+        gbc_btnAceptar.gridy = 9;
         getContentPane().add(btnAceptar, gbc_btnAceptar);
 
         btnCancelar = new JButton("Cancelar");
@@ -318,7 +359,7 @@ public class AltaUsuario extends JInternalFrame {
         GridBagConstraints gbc_btnCancelar = new GridBagConstraints();
         gbc_btnCancelar.fill = GridBagConstraints.BOTH;
         gbc_btnCancelar.gridx = 2;
-        gbc_btnCancelar.gridy = 8;
+        gbc_btnCancelar.gridy = 9;
         getContentPane().add(btnCancelar, gbc_btnCancelar);
     }
 
@@ -326,6 +367,8 @@ public class AltaUsuario extends JInternalFrame {
     String nicknameU = textFieldNickname.getText().trim();
     String nombreU = textFieldNombre.getText().trim();
     String correoU = textFieldCorreo.getText().trim();
+    String imagenU = textFieldImagen.getText().trim();
+    String passwordU = textFieldPassword.getText().trim();
     String tipoU = (String) comboTipoUsuario.getSelectedItem();
 
     String descripcionU = textAreaDescripcion.getText().trim();
@@ -343,10 +386,10 @@ public class AltaUsuario extends JInternalFrame {
     if (checkFormulario()) {
         try {
             if ("Organizador".equals(tipoU)) {
-                controlUsr.altaUsuario(nicknameU, nombreU, correoU, "Organizador",
+                controlUsr.altaUsuario(nicknameU, nombreU, correoU, imagenU, passwordU, "Organizador",
                         descripcionU, linkU, null, null);
             } else if ("Asistente".equals(tipoU)) {
-                controlUsr.altaUsuario(nicknameU, nombreU, correoU, "Asistente",
+                controlUsr.altaUsuario(nicknameU, nombreU, correoU, imagenU, passwordU, "Asistente",
                         null, null, apellidoU, fechaNacLD);
             }
 
