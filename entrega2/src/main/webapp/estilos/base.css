@@ -44,19 +44,6 @@ a:hover {
   color: var(--color-secondary);
 }
 
-button {
-  background-color: var(--color-primary);
-  color: white;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: var(--radius);
-  cursor: pointer;
-  transition: background 0.3s;
-}
-button:hover {
-  background-color: var(--color-secondary);
-}
-
 h1{
   margin: 1rem;
 }

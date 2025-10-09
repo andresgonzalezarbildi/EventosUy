@@ -1,139 +1,119 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page import="java.util.*" %>
+<%@ page import="logica.datatypes.DataEvento" %>
+
+<%
+  String ctx = request.getContextPath();
+
+  List<DataEvento> eventos = null;
+  try {
+      Object ev = request.getAttribute("eventos");
+      if (ev != null) {
+          eventos = (List<DataEvento>) ev;
+      }
+  } catch (Exception ignore) { }
+%>
+
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Eventos</title>
-  <link rel="stylesheet" href="estilos/normalize.css">
+  <title>Eventos.uy - Plataforma de Eventos</title>
+  <link rel="stylesheet" href="<%= ctx %>/estilos/normalize.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap-grid.min.css">
-
-  <link rel="stylesheet" href="estilos/base.css">
-  <link rel="stylesheet" href="estilos/index.css">
-
+  <link rel="stylesheet" href="<%= ctx %>/estilos/base.css">
+  <link rel="stylesheet" href="<%= ctx %>/estilos/index.css">
 </head>
 
 <body>
   <!-- Header -->
-  <header class="navbar">
-    <div class="container-fluid">
-      <div class="row navbar-row text-center text-md-start">
-        <!-- Logo -->
-        <div class="col-12 col-md-3 mobile-col-center">
-          <h1><a class="title" href="/entrega2/index.html">Eventos.uy</a></h1>
-        </div>
+  <jsp:include page="includes/header.jsp" />
 
-        <!-- Search -->
-        <div class="col-12 col-md-6">
-          <div class="navbar_search mx-auto">
-            <input type="text" placeholder="Eventos, ediciones..." class="navbar_search-input">
-            <button class="navbar_search-btn">Buscar</button>
-          </div>
-        </div>
-
-        <!-- SesiÃ³n -->
-        <div class="col-12 col-md-3 mobile-col-center">
-          <div class="navbar_sesion">
-            <a href="/entrega2/pages/iniciarSesion.html" class="navbar_sesion_link">Iniciar Sesión</a>
-            <p>/</p>
-            <a href="/entrega2/pages/altaUsuario.html" class="navbar_sesion_link">Registrarse</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </header>
-
-  <!-- Main -->
+  <!-- Main Content -->
   <section class="content">
     <div class="container-fluid">
       <div class="row">
-
         <!-- Sidebar -->
-       <aside class="col-12 col-md-3">
-          <!-- CategorÃ­as -->
-          <div class="content-bar">
-            <div class="content-bar-seccion">
-              <div class="seccion-titulo">
-                <h3>Categorías</h3>
-              </div>
-              <div class="content-bar-seccion-list">
-                <div class="content-bar-seccion-list-options" onclick="window.location.href='/entrega2/index.html'">
-                  <span>Tecnología</span>
-                </div>
-                <div class="content-bar-seccion-list-options" onclick="window.location.href='/entrega2/index.html'">
-                  <span>Innovación</span>
-                </div>
-                <div class="content-bar-seccion-list-options" onclick="window.location.href='/entrega2/index.html'">
-                  <span>Deporte</span>
-                </div>
-                <div class="content-bar-seccion-list-options" onclick="window.location.href='/entrega2/index.html'">
-                  <span>Salud</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- Acciones -->
-          <div class="content-bar">
-            <div class="content-bar-seccion">
-              <div class="seccion-titulo">
-                <h3>Acciones</h3>
-              </div>
-              <div class="content-bar-seccion-list">
-                <div class="content-bar-seccion-list-options"
-                  onclick="window.location.href='/entrega2/pages/usuariosVisitante.html'">
-                  <span>Usuario</span>
-                </div>
-                <div class="content-bar-seccion-list-options" onclick="window.location.href='/entrega2/index.html'">
-                  <span>Institución</span>
-                </div>
-              </div>
-            </div>
-        </aside>
+        <jsp:include page="includes/sidebar.jsp" />
 
         <!-- Contenido principal -->
         <main class="col-12 col-md-9">
-
           <div class="contenido-principal">
 
-            <div class="row contenido-principal-card"
-              onclick="window.location.href='./pages/consultaEventoVisitante.html'">
-              <div class="col-12 col-md-3 contenido-principal-card-imagen">
-                <img src="img/IMG-EV04.png" alt="logo del evento">
+            <!-- Mensajes de feedback -->
+            <%
+              String mensaje = (String) request.getAttribute("mensaje");
+              String tipoMensaje = (String) request.getAttribute("tipoMensaje");
+              if (mensaje != null && !mensaje.isEmpty()) {
+                boolean ok = "success".equalsIgnoreCase(tipoMensaje);
+            %>
+              <div class="alert"
+                   style="padding:1rem;margin-bottom:1rem;border-radius:4px;
+                          background-color:<%= ok ? "#d4edda" : "#f8d7da" %>;
+                          color:<%= ok ? "#155724" : "#721c24" %>;
+                          border:1px solid <%= ok ? "#c3e6cb" : "#f5c6cb" %>;">
+                <%= mensaje %>
+              </div>
+            <%
+              }
+            %>
+
+            <%
+              if (eventos == null || eventos.isEmpty()) {
+            %>
+              <!-- Sin eventos: placeholder -->
+              <div class="row contenido-principal-card">
+                <div class="col-12 col-md-3 contenido-principal-card-imagen">
+                  <img src="<%= ctx %>/img/EventoSinFoto.png" alt="imagen por defecto">
+                </div>
+                <div class="col-12 col-md-9 contenido-principal-card-informacion col-12">
+                  <p class="contenido-principal-card-informacion-titulo">
+                    No hay eventos cargados
+                  </p>
+                  <p class="contenido-principal-card-informacion-descripcion">
+                    Presioná “Cargar Datos” para insertar datos de prueba.
+                  </p>
+                </div>
+              </div>
+            <%
+              } else {
+                for (DataEvento e : eventos) {
+                  String nombre = "";
+                  String descripcion = "";
+                  String imagen = "EventoSinFoto.png";
+
+                  try { if (e.getNombre() != null) nombre = e.getNombre(); } catch (Exception ignore) {}
+                  try { if (e.getDescripcion() != null) descripcion = e.getDescripcion(); } catch (Exception ignore) {}
+                  try { if (e.getImagen() != null) imagen = e.getImagen(); } catch (Exception ignore) {}
+
+                  String detalleUrl = ctx + "/pages/consultaEventoVisitante.jsp"
+                                    + ( true ? ("?id=" + e.getNombre()) : "");
+            %>
+
+              <div class="row contenido-principal-card"
+                   onclick="window.location.href='<%= detalleUrl %>'">
+                <div class="col-12 col-md-3 contenido-principal-card-imagen">
+                  <img src="<%= ctx %>/img/<%=imagen %>" alt="imagen del evento">
+                </div>
+                <div class="col-12 col-md-9 contenido-principal-card-informacion col-12">
+                  <p class="contenido-principal-card-informacion-titulo"><%= nombre %></p>
+                  <p class="contenido-principal-card-informacion-descripcion"><%= descripcion %></p>
+                </div>
               </div>
 
-              <div class="col-12 col-md-9 contenido-principal-card-informacion col-12">
-                <p class="contenido-principal-card-informacion-titulo">
-                  Maraton Montevideo -
-                </p>
-                <p class="contenido-principal-card-informacion-descripcion">
-                  Competencia deportiva anual en la capita
-                </p>
-              </div>
+            <%
+                } // fin for
+              } // fin else
+            %>
 
-            </div>
-            <div class="row contenido-principal-card"
-              onclick="window.location.href='./pages/consultaEventoConfetecVisitante.html'">
-              <div class="col-12 col-md-9 contenido-principal-card-informacion col-12">
-                <p class="contenido-principal-card-informacion-titulo">
-                  Conferencia de TecnologÃ­a -
-                </p>
-                <p class="contenido-principal-card-informacion-descripcion">
-                  Evento sobre innovaciÃ³n tecnolÃ³gica
-                </p>
-              </div>
-            </div>
           </div>
         </main>
       </div>
     </div>
   </section>
- 
 
-
-  <footer class="uc-footer">
-    <small>Eventos.uy -- Grupo 42.</small>
-  </footer>
+  <!-- Footer -->
+  <jsp:include page="includes/footer.jsp" />
 </body>
-
 </html>
