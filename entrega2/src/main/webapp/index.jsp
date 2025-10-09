@@ -63,19 +63,7 @@
               if (eventos == null || eventos.isEmpty()) {
             %>
               <!-- Sin eventos: placeholder -->
-              <div class="row contenido-principal-card">
-                <div class="col-12 col-md-3 contenido-principal-card-imagen">
-                  <img src="<%= ctx %>/img/EventoSinFoto.png" alt="imagen por defecto">
-                </div>
-                <div class="col-12 col-md-9 contenido-principal-card-informacion col-12">
-                  <p class="contenido-principal-card-informacion-titulo">
-                    No hay eventos cargados
-                  </p>
-                  <p class="contenido-principal-card-informacion-descripcion">
-                    Presioná “Cargar Datos” para insertar datos de prueba.
-                  </p>
-                </div>
-              </div>
+              <h1>No hay Eventos :(</h1>
             <%
               } else {
                 for (DataEvento e : eventos) {

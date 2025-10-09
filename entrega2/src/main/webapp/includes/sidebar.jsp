@@ -36,10 +36,10 @@
         <h3>Acciones</h3>
       </div>
       <div class="content-bar-seccion-list">
-        <div class="content-bar-seccion-list-options" 
-             onclick="window.location.href='<%= request.getContextPath() %>/usuarios'">
+        <div class="content-bar-seccion-list-options" onclick="location.href='<%= request.getContextPath() %>/UsuarioServlet?op=listar'">
           <span>Usuario</span>
         </div>
+        
         <div class="content-bar-seccion-list-options" 
              onclick="window.location.href='<%= request.getContextPath() %>/instituciones'">
           <span>Institución</span>

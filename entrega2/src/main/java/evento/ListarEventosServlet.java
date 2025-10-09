@@ -10,18 +10,22 @@ import java.util.List;
 
 import excepciones.EventoNoExisteException;
 import logica.interfaces.IControladorEvento;
-import logica.controladores.ControladorEvento;
+import logica.Fabrica;
 import logica.datatypes.DataEvento;
 
 @WebServlet("/eventos")
 public class ListarEventosServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
-
+    private Fabrica fabrica = Fabrica.getInstance();
+    private IControladorEvento ce = fabrica.getControladorEvento();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
+    	
+    	req.setCharacterEncoding("UTF-8");
+    	resp.setCharacterEncoding("UTF-8");
+    	resp.setContentType("text/html; charset=UTF-8");
 
-        IControladorEvento ce = new ControladorEvento();
 
         DataEvento[] eventosArray = null;
         List<DataEvento> eventosList = Collections.emptyList();

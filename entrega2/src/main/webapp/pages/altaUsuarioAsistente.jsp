@@ -1,3 +1,4 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -12,30 +13,8 @@
   <link rel="stylesheet" href="../estilos/base.css">
 </head>
 <body>
-  <header class="navbar">
-    <div class="container-fluid">
-      <div class="row navbar-row text-center text-md-start">
-        <!-- Logo -->
-       <div class="col-12 col-md-3 mb-2 mb-md-0">
-          <h1><a class="title" href="../index.html">Eventos.uy</a></h1>
-        </div>
-        <!-- Search -->
-        <div class="col-12 col-md-6">
-          <div class="navbar_search mx-auto">
-            <input type="text" placeholder="Eventos, ediciones..." class="navbar_search-input">
-            <button class="navbar_search-btn">Buscar</button>
-          </div>
-        </div>
-
-        <!-- Sesión -->
-        <div class="col-12 col-md-3 mobile-col-center">
-          <div class="navbar_sesion">
-            <a href="./iniciarSesion.html" class="navbar_sesion_link">Iniciar Sesion</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </header>
+    <!-- Header -->
+  	<jsp:include page="../includes/header.jsp" />
 
   <main style="max-width: 600px; margin: 2rem auto; padding: 1rem; background: #fff; border: 1px solid var(--color-border); border-radius: var(--radius);">
     <h2 style="margin-bottom: 1rem; color: var(--color-primary);">Alta de Asistente</h2>
@@ -48,19 +27,19 @@
       <label for="nombre">Nombre:</label>
       <input type="text" id="nombre" name="nombre" required>
 
-      <label for="correo">Correo electrónico:</label>
+      <label for="correo">Correo electrÃ³nico:</label>
       <input type="email" id="correo" name="correo" required>
 
-      <!-- Contraseñas -->
-      <label for="password">Contraseña:</label>
+      <!-- ContraseÃ±as -->
+      <label for="password">ContraseÃ±a:</label>
       <input type="password" id="password" name="password" required>
 
-      <label for="confirmPassword">Confirmar Contraseña:</label>
+      <label for="confirmPassword">Confirmar ContraseÃ±a:</label>
       <input type="password" id="confirmPassword" name="confirmPassword" required>
 
     
 
-      <!-- Campos específicos de asistente -->
+      <!-- Campos especÃ­ficos de asistente -->
       <fieldset style="margin-top: 1.5rem; border: 1px solid #ccc; padding: 1rem; border-radius: 8px;">
 		
 		<label for="apellido">Apellido:</label>
@@ -69,10 +48,10 @@
         <label for="fechaNac">Fecha de Nacimiento:</label>
         <input type="date" id="fechaNac" name="fechaNac">
 		
-        <label for="institucion">Institución:</label>
+        <label for="institucion">InstituciÃ³n:</label>
         <select id="institucion" name="institucion">
           <option value="">Seleccione...</option>
-          <option value="Universidad de la República">Universidad de la República</option>
+          <option value="Universidad de la RepÃºblica">Universidad de la RepÃºblica</option>
           <option value="ORT">ORT</option>
           <option value="UTEC">UTEC</option>
           <option value="IPA">IPA</option>
@@ -84,16 +63,14 @@
 	<label for="imagen">Imagen de perfil (Opcional):</label>
         <input type="file" id="imagen" name="imagen" accept="image/*">
 
-      <!-- Botón -->
+      <!-- BotÃ³n -->
       <div style="margin-top: 1.5rem; display: flex; gap: 1rem;">
-        <button type="submit">¡Registrar Asistente!</button>
+        <button type="submit">Â¡Registrar Asistente!</button>
         <button type="submit">Cancelar</button>
       </div>
     </form>
   </main>
 
-  <footer class="uc-footer">
-    <small>Eventos.uy — Grupo 42.</small>
-  </footer>
+  <jsp:include page="../includes/footer.jsp">
 </body>
 </html>
