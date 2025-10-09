@@ -17,6 +17,7 @@ import logica.datatypes.DataEdicion;
 import logica.datatypes.DataEvento;
 import logica.interfaces.IControladorEvento;
 import logica.interfaces.IControladorUsuario;
+import presentacion.evento.AceptarRechazarEdicion;
 import presentacion.evento.AltaEdicionEvento;
 import presentacion.evento.AltaEvento;
 import presentacion.evento.ConsultaEdicionEvento;
@@ -47,6 +48,7 @@ public class Principal {
     private AltaDeTipoDeRegistro altaTipoDeRegistroInternalFrame;
     private ConsultaDeTipoDeRegistro consultaDeTipoDeRegistroInternalFrame;
     private ConsultaDeRegistro consultaRegistroInternalFrame;
+    private AceptarRechazarEdicion AceptarRechazarEdicionInternalFrame;
 
 
     public static void main(String[] args) {
@@ -145,6 +147,13 @@ public class Principal {
         desktop.add(consultaRegistroInternalFrame);
         consultaRegistroInternalFrame.setVisible(false);
         consultaRegistroInternalFrame.setDefaultCloseOperation(JInternalFrame.HIDE_ON_CLOSE);
+        
+        AceptarRechazarEdicionInternalFrame = new AceptarRechazarEdicion(IEV);
+        AceptarRechazarEdicionInternalFrame.setLocation(10, 23);
+        AceptarRechazarEdicionInternalFrame.setClosable(true);
+        desktop.add(AceptarRechazarEdicionInternalFrame);
+        AceptarRechazarEdicionInternalFrame.setVisible(false);
+        AceptarRechazarEdicionInternalFrame.setDefaultCloseOperation(JInternalFrame.HIDE_ON_CLOSE);
         
     }
 
@@ -363,7 +372,24 @@ public class Principal {
         });
         mnTipoDeRegistros.add(mntmConsultaTipoDeRegistro);
 
-
+//////////////////////////////////////////////////////////////////////////////////
+        // Menú Administrador
+        JMenu mnAdministrador = new JMenu("Administrador");
+        menuBar.add(mnAdministrador);
+        
+        JMenuItem mntmAdminEdicion = new JMenuItem("Aceptar/Rechazar Edición");
+        mntmAdminEdicion.addActionListener(e -> {
+        	if (AceptarRechazarEdicionInternalFrame == null || AceptarRechazarEdicionInternalFrame.isClosed()) {
+        		AceptarRechazarEdicionInternalFrame = new AceptarRechazarEdicion(IEV);
+        	    desktop.add(AceptarRechazarEdicionInternalFrame);
+      	} 
+        	AceptarRechazarEdicionInternalFrame.setVisible(true);
+        	AceptarRechazarEdicionInternalFrame.toFront(); 
+            ensureSize(AceptarRechazarEdicionInternalFrame, 600, 400);
+            showInternal(AceptarRechazarEdicionInternalFrame);
+        });
+        mnAdministrador.add(mntmAdminEdicion);
+        
     }
 
     private void showInternal(JInternalFrame f) {
@@ -388,6 +414,7 @@ public class Principal {
 //            e.printStackTrace();
 //        }
 //    }
+
 
 
 private void abrirConsultaEvento() {

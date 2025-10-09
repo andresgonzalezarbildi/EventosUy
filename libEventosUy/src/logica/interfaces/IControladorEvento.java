@@ -22,7 +22,7 @@ public interface IControladorEvento {
     public void altaCategoria(String nombre) throws CategoriaRepetidaException;
     public DataEvento[] getEventosDTO() ;
     public DataEvento[] listarEventoExistentes() throws EventoNoExisteException;
-    public DataEdicion[] listarEdiciones(String nombreEvento) throws EventoNoExisteException;
+   
     public DataTipoRegistro[] listarTiposRegistro(String nombreEvento, String nombreEdicion);
     public DataTipoRegistro getTipoRegistro(String nombreEvento, String nombreEdicion, String nombreTipo);
 	public DataEdicion getInfoEdicion(String idEdicion) throws EdicionNoExisteException ;
@@ -30,4 +30,9 @@ public interface IControladorEvento {
     
     public void aceptarEdicion(String nombreEdicion, Boolean aceptada) throws EdicionNoExisteException, TransicionEstadoInvalidaException;
 
+    public DataEdicion[] listarEdiciones(String nombreEvento) throws EventoNoExisteException;
+    public DataEdicion[] listarEdicionesAceptadas() throws EdicionNoExisteException;
+    public DataEdicion[] listarEdicionesIngresadas() throws EdicionNoExisteException;
+    public DataEdicion[] listarEdicionesRechazadas() throws EdicionNoExisteException;
+    
 }

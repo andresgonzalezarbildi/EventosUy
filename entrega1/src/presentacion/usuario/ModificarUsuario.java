@@ -260,7 +260,7 @@ public class ModificarUsuario extends JInternalFrame {
         try {
             controlUsr.modificarUsuario(
                     textFieldNickname.getText(), nombreU,
-                    descripcionU, linkU, apellidoU,fechaNacU
+                    descripcionU,null , linkU, apellidoU,fechaNacU
             );
             JOptionPane.showMessageDialog(this, "El usuario se ha modificado con éxito",
                     "Modificar Usuario", JOptionPane.INFORMATION_MESSAGE);

@@ -197,7 +197,7 @@ public class ConsultaDeTipoDeRegistro extends JInternalFrame {
             if (ediciones != null && ediciones.length > 0) {
                 for (DataEdicion ed : ediciones) cbListaEdicion.addItem(ed);
             } else {
-                cbListaEdicion.addItem(new DataEdicion("No tiene ediciones", null, null, "", "", "", null, "", null, null));
+                cbListaEdicion.addItem(new DataEdicion("No tiene ediciones", null, null, "", "", "", null, "", null, null, null ,null));
             }
         } catch (EventoNoExisteException ex) {
             JOptionPane.showMessageDialog(this,

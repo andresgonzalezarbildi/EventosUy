@@ -16,14 +16,23 @@ if %errorlevel% neq 0 (
     exit /b 1
 )
 
-echo [3/4] Creando nuevo JAR...
+echo [3/5] Creando nuevo JAR...
 jar -cf logicaEventosUy.jar -C bin .
 
-echo [4/4] Copiando JAR al proyecto web...
+echo [4/5] Copiando JAR al proyecto web...
 copy logicaEventosUy.jar "..\entrega2\src\main\webapp\WEB-INF\lib\logicaEventosUy.jar"
 
 if %errorlevel% neq 0 (
-    echo ERROR: Fallo la copia del JAR
+    echo ERROR: Fallo la copia del JAR al proyecto web
+    pause
+    exit /b 1
+)
+
+echo [5/5] Copiando JAR al proyecto entrega1...
+copy logicaEventosUy.jar "..\entrega1\lib\logicaEventosUy.jar"
+
+if %errorlevel% neq 0 (
+    echo ERROR: Fallo la copia del JAR al proyecto entrega1
     pause
     exit /b 1
 )

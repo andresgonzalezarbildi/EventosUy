@@ -9,10 +9,11 @@ import logica.datatypes.DataEvento;
 import logica.datatypes.DataEdicion;
 import logica.datatypes.DataTipoRegistro;
 import logica.datatypes.DataPatrocinio;
+import excepciones.EdicionNoExisteException;
 import excepciones.EventoNoExisteException;
 import presentacion.registros.ConsultaDeTipoDeRegistro;
 
-public class ConsultaEdicionEvento extends JInternalFrame {
+public class AceptarRechazarEdicion extends JInternalFrame {
     private JTextField textOrganizador, textNombre, textFechaIni, textFechaFin, textCiudad, textPais, textSigla, textAlta;
     private IControladorEvento controlEvento;
 
@@ -27,7 +28,7 @@ public class ConsultaEdicionEvento extends JInternalFrame {
 
     private ConsultaDeTipoDeRegistro ventanaConsulta = null;
 
-    public ConsultaEdicionEvento(IControladorEvento controlEvento) {
+    public AceptarRechazarEdicion(IControladorEvento controlEvento) {
         super("Consulta Edicion Evento", false, true, true, true);
         this.controlEvento = controlEvento;
         setBounds(100, 100, 800, 600);
@@ -39,22 +40,6 @@ public class ConsultaEdicionEvento extends JInternalFrame {
         gridBagLayout.columnWeights = new double[]{0.0, 0.0, 1.0, Double.MIN_VALUE};
         gridBagLayout.rowWeights = new double[]{0.0, 0.0, 1.0, Double.MIN_VALUE};
         getContentPane().setLayout(gridBagLayout);
-
-        JLabel lblEvento = new JLabel("Evento:");
-        GridBagConstraints gbc_lblEvento = new GridBagConstraints();
-        gbc_lblEvento.anchor = GridBagConstraints.EAST;
-        gbc_lblEvento.insets = new Insets(0, 0, 5, 5);
-        gbc_lblEvento.gridx = 1;
-        gbc_lblEvento.gridy = 0;
-        getContentPane().add(lblEvento, gbc_lblEvento);
-
-        comboBoxEvento = new JComboBox<>();
-        GridBagConstraints gbc_comboBoxEvento = new GridBagConstraints();
-        gbc_comboBoxEvento.fill = GridBagConstraints.HORIZONTAL;
-        gbc_comboBoxEvento.insets = new Insets(0, 0, 5, 0);
-        gbc_comboBoxEvento.gridx = 2;
-        gbc_comboBoxEvento.gridy = 0;
-        getContentPane().add(comboBoxEvento, gbc_comboBoxEvento);
 
         JLabel lblEdicion = new JLabel("Edicion:");
         GridBagConstraints gbc_lblEdicion = new GridBagConstraints();
@@ -127,7 +112,6 @@ public class ConsultaEdicionEvento extends JInternalFrame {
         gbc_scrollTipos.gridy = 8;
         gbc_scrollTipos.weightx = 0.5;
         gbc_scrollTipos.weighty = 1.0;
-        gbc_scrollTipos.fill = GridBagConstraints.BOTH;
         panelCampos.add(scrollTipos, gbc_scrollTipos);
 
         GridBagConstraints gbc_scrollPatrocinios = new GridBagConstraints();
@@ -137,11 +121,6 @@ public class ConsultaEdicionEvento extends JInternalFrame {
         gbc_scrollPatrocinios.weighty = 1.0;
         gbc_scrollPatrocinios.fill = GridBagConstraints.BOTH;
         panelCampos.add(scrollPatrocinios, gbc_scrollPatrocinios);
-
-        comboBoxEvento.addActionListener(e -> {
-            DataEvento seleccionado = (DataEvento) comboBoxEvento.getSelectedItem();
-            if (seleccionado != null) cargarEdiciones(seleccionado.getNombre());
-        });
 
         comboBoxEdiciones.addActionListener(e -> {
             DataEdicion de = (DataEdicion) comboBoxEdiciones.getSelectedItem();
@@ -159,7 +138,7 @@ public class ConsultaEdicionEvento extends JInternalFrame {
                         ventanaConsulta = new ConsultaDeTipoDeRegistro(controlEvento);
                         ventanaConsulta.setVisible(true); 
                         ventanaConsulta.seleccionarEventoYEdicionYTipo(ev, de, tr); 
-                        JDesktopPane desktop = ConsultaEdicionEvento.this.getDesktopPane();
+                        JDesktopPane desktop = AceptarRechazarEdicion.this.getDesktopPane();
                         if (desktop != null) {
                             desktop.add(ventanaConsulta);
                             try { ventanaConsulta.setSelected(true); } catch (java.beans.PropertyVetoException ex) {}
@@ -168,8 +147,7 @@ public class ConsultaEdicionEvento extends JInternalFrame {
                 }
             }
         });
-
-        cargarEventos();
+        ;
     }
 
     private JTextField addTextField(JPanel panel, String label, int row) {
@@ -191,28 +169,11 @@ public class ConsultaEdicionEvento extends JInternalFrame {
         return tf;
     }
 
-    private void cargarEventos() {
-        comboBoxEvento.removeAllItems();
-        DataEvento[] eventos = controlEvento.getEventosDTO();
-        if (eventos != null) {
-            java.util.List<DataEvento> lista = new java.util.ArrayList<>();
-            for (DataEvento ev : eventos) if (ev != null) lista.add(ev);
 
-            // Ordenar por nombre de evento (ignorando mayúsculas/minúsculas)
-            lista.sort(Comparator.comparing(DataEvento::getNombre, String.CASE_INSENSITIVE_ORDER));
-
-            // Cargar en el combo ya ordenados
-            for (DataEvento ev : lista) comboBoxEvento.addItem(ev);
-        }
-
-        // dejar sin selección inicial
-        comboBoxEvento.setSelectedIndex(-1);
-    }
-
-    private void cargarEdiciones(String nombreEvento) {
+    private void cargarEdiciones( ) {
         comboBoxEdiciones.removeAllItems();
         try {
-            DataEdicion[] ediciones = controlEvento.listarEdiciones(nombreEvento);
+            DataEdicion[] ediciones = controlEvento.listarEdicionesIngresadas();
             if (ediciones != null) {
                 java.util.List<DataEdicion> lista = new java.util.ArrayList<>();
                 for (DataEdicion de : ediciones) if (de != null) lista.add(de);
@@ -222,10 +183,8 @@ public class ConsultaEdicionEvento extends JInternalFrame {
 
                 for (DataEdicion de : lista) comboBoxEdiciones.addItem(de);
             }
-        } catch (EventoNoExisteException ex) {
-            JOptionPane.showMessageDialog(this,
-                "No hay ediciones para el evento: " + nombreEvento,
-                "Info", JOptionPane.INFORMATION_MESSAGE);
+        } catch (EdicionNoExisteException ex) {
+            
         }
 
         // 🔑 Importante: dejar combo sin selección
@@ -268,19 +227,8 @@ public class ConsultaEdicionEvento extends JInternalFrame {
     }
 
     public void setContext(DataEvento evento, DataEdicion edicion) {
-        if (evento == null) return;
 
-        cargarEventos();
-
-        for (int i = 0; i < comboBoxEvento.getItemCount(); i++) {
-            DataEvento ev = comboBoxEvento.getItemAt(i);
-            if (ev != null && ev.getNombre().equals(evento.getNombre())) {
-                comboBoxEvento.setSelectedIndex(i);
-                break;
-            }
-        }
-
-        cargarEdiciones(evento.getNombre());
+        cargarEdiciones();
 
         if (edicion != null) {
             for (int i = 0; i < comboBoxEdiciones.getItemCount(); i++) {
@@ -312,7 +260,6 @@ public class ConsultaEdicionEvento extends JInternalFrame {
         modeloTipos.clear();
         modeloPatrocinios.clear();
         
-        cargarEventos();
         
         comboBoxEdiciones.removeAllItems();
         

@@ -304,7 +304,7 @@ public class AltaEvento extends JInternalFrame {
 
         // 3) Llamada al controlador
         try {
-            controlEvento.altaEvento(nombre, descripcion, sigla, categoriasEvento, fecha);
+            controlEvento.altaEvento(nombre, descripcion, sigla, categoriasEvento, fecha, null);
             JOptionPane.showMessageDialog(this, "Evento guardado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
             limpiarFormulario();
             setVisible(false);
