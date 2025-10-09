@@ -34,7 +34,6 @@
 		<jsp:include page="../includes/sidebar.jsp"/>
 
       <!-- Contenedor principal -->
-      <%= "usuarios: " + (usuarios==null ? "null" : usuarios.length) %>
       <main style="max-width: 600px; margin: 2rem auto; padding: 1rem; background: #fff; border: 1px solid var(--color-border); border-radius: var(--radius);">
         <%
               if (usuarios == null || usuarios.length == 0) {
@@ -56,7 +55,7 @@
                   try { if (e.getImagen() != null) imagen = e.getImagen(); } catch (Exception ignore) {}
 
                   String detalleUrl = ctx + "/pages/consultaUsuario.jsp"
-                                    + ( true ? ("?id=" + e.getNombre()) : "");
+                                    + ("?id=" + nickname);
             %>
 				
               <li><a href="<%= detalleUrl %>"><img src="<%= ctx %>/img/<%=imagen%>" alt="foto usuario" style="width: 30px; height: 30px;"><%=nickname%></a></li>
