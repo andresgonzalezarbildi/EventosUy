@@ -33,4 +33,7 @@ public class Registro {
     public Asistente getAsistente() { 
     	return asistente; 
     }
+    public void setCosto(int precio) { 
+    	this.costoRegistro = precio;
+    }
     }

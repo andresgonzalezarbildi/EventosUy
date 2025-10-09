@@ -6,6 +6,9 @@ import java.util.List;
 import excepciones.CategoriaRepetidaException;
 import excepciones.UsuarioNoExisteException;
 import excepciones.UsuarioRepetidoException;
+import excepciones.EdicionNoExisteException;
+import excepciones.TransicionEstadoInvalidaException;
+
 import logica.interfaces.ICargaDatos;
 import logica.interfaces.IControladorEvento;
 import logica.interfaces.IControladorUsuario;
@@ -224,32 +227,50 @@ public class CargaDatos implements ICargaDatos {
 
         try {
             ce.altaEdicionEvento("Montevideo Rock","Montevideo Rock 2025", "MONROCK25","Montevideo", "Uruguay",LocalDate.of(2025,11,20),LocalDate.of(2025,11,22),LocalDate.of(2025,3,12),"imm", "IMG-EDEV01.jpeg");
-            ce.aceptarEdicion("Montevideo Rock 2025", true);
+            try {
+            	ce.aceptarEdicion("Montevideo Rock 2025", true);
+            } catch (EdicionNoExisteException ignored) {}
+            catch (TransicionEstadoInvalidaException ignored) {}
         } catch (UsuarioNoExisteException ignored) {}
         
         try {
             ce.altaEdicionEvento("Maratón de Montevideo","Maratón de Montevideo 2025", "MARATON25","Montevideo", "Uruguay",LocalDate.of(2025,9,14),LocalDate.of(2025,9,14),LocalDate.of(2025,2,5),"imm", "IMG-EDEV02.jpeg");
-            ce.aceptarEdicion("Maratón de Montevideo 2025", true);
+            try {
+            	ce.aceptarEdicion("Maratón de Montevideo 2025", true);
+	        } catch (EdicionNoExisteException ignored) {}
+	        catch (TransicionEstadoInvalidaException ignored) {}
         } catch (UsuarioNoExisteException ignored) {}
         
         try {
             ce.altaEdicionEvento("Maratón de Montevideo","Maratón de Montevideo 2024", "MARATON24","Montevideo", "Uruguay",LocalDate.of(2024,9,14),LocalDate.of(2024,9,14),LocalDate.of(2024,4,21),"imm", "IMG-EDEV03.jpeg");
-            ce.aceptarEdicion("Maratón de Montevideo 2024", true);
+            try {
+            	ce.aceptarEdicion("Maratón de Montevideo 2024", true);
+            }catch (EdicionNoExisteException ignored) {}
+	        catch (TransicionEstadoInvalidaException ignored) {}
         } catch (UsuarioNoExisteException ignored) {}
         
         try {
             ce.altaEdicionEvento("Maratón de Montevideo","Maratón de Montevideo 2022", "MARATON22","Montevideo", "Uruguay",LocalDate.of(2022,9,14),LocalDate.of(2022,9,14),LocalDate.of(2022,5,21),"imm", "IMG-EDEV04.jpeg");
-            ce.aceptarEdicion("Maratón de Montevideo 2022", false);
+            try {
+            	ce.aceptarEdicion("Maratón de Montevideo 2022", false);
+            }catch (EdicionNoExisteException ignored) {}
+	        catch (TransicionEstadoInvalidaException ignored) {}
         } catch (UsuarioNoExisteException ignored) {}
 
         try {
             ce.altaEdicionEvento("Montevideo Comics","Montevideo Comics 2024", "COMICS24","Montevideo", "Uruguay",LocalDate.of(2024,7,18),LocalDate.of(2024,7,21),LocalDate.of(2024,6,20),"miseventos", "IMG-EDEV05.jpeg");
-            ce.aceptarEdicion("Montevideo Comics 2024", true);
+            try {
+            	ce.aceptarEdicion("Montevideo Comics 2024", true);
+            }catch (EdicionNoExisteException ignored) {}
+	        catch (TransicionEstadoInvalidaException ignored) {}
         } catch (UsuarioNoExisteException ignored) {}
         
         try {
             ce.altaEdicionEvento("Montevideo Comics","Montevideo Comics 2025", "COMICS25","Montevideo", "Uruguay",LocalDate.of(2025,8,4),LocalDate.of(2025,8,6),LocalDate.of(2025,7,4),"miseventos", "IMG-EDEV06.jpeg");
-            ce.aceptarEdicion("Montevideo Comics 2025", true);
+            try {
+            	ce.aceptarEdicion("Montevideo Comics 2025", true);
+            }catch (EdicionNoExisteException ignored) {}
+	        catch (TransicionEstadoInvalidaException ignored) {}
         } catch (UsuarioNoExisteException ignored) {}
         
         try {
@@ -259,17 +280,26 @@ public class CargaDatos implements ICargaDatos {
         
         try {
             ce.altaEdicionEvento("Conferencia de Tecnología","Tecnología Punta del Este 2026", "CONFTECH26","Punta del Este", "Uruguay",LocalDate.of(2026,4,6),LocalDate.of(2026,4,10),LocalDate.of(2025,8,1),"udelar", "IMG-EDEV08.jpeg");
-            ce.aceptarEdicion("Tecnología Punta del Este 2026", true);
+            try {
+            	ce.aceptarEdicion("Tecnología Punta del Este 2026", true);
+            }catch (EdicionNoExisteException ignored) {}
+	        catch (TransicionEstadoInvalidaException ignored) {}
         } catch (UsuarioNoExisteException ignored) {}
         
         try {
             ce.altaEdicionEvento("Conferencia de Tecnología","Mobile World Congress 2025", "MWC","Barcelona", "España",LocalDate.of(2025,12,12),LocalDate.of(2025,12,15),LocalDate.of(2025,8,21),"techcorp", "EdicionSinFoto.png");
-            ce.aceptarEdicion("Mobile World Congress 2025", true);
+            try {
+            	ce.aceptarEdicion("Mobile World Congress 2025", true);
+            }catch (EdicionNoExisteException ignored) {}
+	        catch (TransicionEstadoInvalidaException ignored) {}
         } catch (UsuarioNoExisteException ignored) {}
         
         try {
             ce.altaEdicionEvento("Conferencia de Tecnología","Web Summit 2026", "WS26","Lisboa", "Portugal",LocalDate.of(2026,1,13),LocalDate.of(2026,2,1),LocalDate.of(2025,6,4),"techcorp", "EdicionSinFoto.png");
-            ce.aceptarEdicion("Web Summit 2026", true);
+            try {
+            	ce.aceptarEdicion("Web Summit 2026", true);
+            }catch (EdicionNoExisteException ignored) {}
+	        catch (TransicionEstadoInvalidaException ignored) {}
         } catch (UsuarioNoExisteException ignored) {}
         
         try {
@@ -416,6 +446,19 @@ public class CargaDatos implements ICargaDatos {
 
             ce.altaRegistro("Montevideo Comics", "Montevideo Comics 2024", "General", "SofiM",
                 LocalDate.of(2024, 7, 16));
+            
+            
+            ce.altaRegistro("Conferencia de Tecnología", "Tecnología Punta del Este 2026", "Estudiante", "msilva",
+                    LocalDate.of(2025, 10, 1));
+            ce.setCostoRegistro("msilva","Tecnología Punta del Este 2026","Estudiante", 0);
+            
+            ce.altaRegistro("Conferencia de Tecnología", "Tecnología Punta del Este 2026", "General", "andrearod",
+                    LocalDate.of(2025, 10, 6));
+            ce.setCostoRegistro("msilva" ,"Tecnología Punta del Este 2026" , "General", 0);
+            
+            ce.altaRegistro("Conferencia de Tecnología", "Tecnología Punta del Este 2026", "General", "MariR",
+                    LocalDate.of(2025, 10, 10));
+            
         } catch (IllegalArgumentException ignored) {
         } catch (UsuarioNoExisteException ignored) {
         }

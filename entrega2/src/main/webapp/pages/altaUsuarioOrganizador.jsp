@@ -15,41 +15,53 @@
   <main style="max-width:600px;margin:2rem auto;padding:1rem;background:#fff;border:1px solid var(--color-border);border-radius:var(--radius);">
     <h2 style="margin-bottom:1rem;color:var(--color-primary);">Alta de Organizador</h2>
 
-<form action="<%=request.getContextPath()%>/UsuarioServlet"
-      method="POST"
-      enctype="multipart/form-data">
+    <%
+      String error = (String) request.getAttribute("error");
+      String ok    = (String) request.getAttribute("ok");
 
-  <input type="hidden" name="op"   value="alta">
-  <input type="hidden" name="tipo" value="Organizador">
+      String nombre = request.getParameter("nombre") == null ? "" : request.getParameter("nombre");
+      String nick   = request.getParameter("nick")   == null ? "" : request.getParameter("nick");
+      String correo = request.getParameter("correo") == null ? "" : request.getParameter("correo");
+      String desc   = request.getParameter("descripcion") == null ? "" : request.getParameter("descripcion");
+      String link   = request.getParameter("link") == null ? "" : request.getParameter("link");
+    %>
+    <% if (error != null) { %>
+      <div class="alert alert-danger" role="alert" style="margin-bottom:1rem;"><%= error %></div>
+    <% } %>
+    <% if (ok != null) { %>
+      <div class="alert alert-success" role="alert" style="margin-bottom:1rem;"><%= ok %></div>
+    <% } %>
 
-  <!-- Campos comunes -->
-  <label for="nombre">Nombre:</label>
-  <input type="text" id="nombre" name="nombre" required>
-  
-  <label for="nick">Nick:</label>
-  <input type="text" id="nick" name="nick" required>
+    <form action="<%=request.getContextPath()%>/UsuarioServlet" method="POST" enctype="multipart/form-data">
+      <input type="hidden" name="op"   value="alta">
+      <input type="hidden" name="tipo" value="Organizador">
 
-  <label for="correo">Correo electrónico:</label>
-  <input type="email" id="correo" name="correo" required>
+      <label for="nombre">Nombre:</label>
+      <input type="text" id="nombre" name="nombre" required value="<%= nombre %>">
 
-  <label for="password">Contraseña:</label>
-  <input type="password" id="password" name="password" required>
+      <label for="nick">Nick:</label>
+      <input type="text" id="nick" name="nick" required value="<%= nick %>">
 
-  <label for="confirmPassword">Confirmar contraseña:</label>
-  <input type="password" id="confirmPassword" name="confirmPassword" required>
+      <label for="correo">Correo electrónico:</label>
+      <input type="email" id="correo" name="correo" required value="<%= correo %>">
 
-  <!-- Específicos Organizador -->
-  <label for="descripcion">Descripción:</label>
-  <textarea id="descripcion" name="descripcion"></textarea>
+      <label for="password">Contraseña:</label>
+      <input type="password" id="password" name="password" required>
 
-  <label for="link">Link (opcional):</label>
-  <input type="url" id="link" name="link">
+      <label for="confirmPassword">Confirmar contraseña:</label>
+      <input type="password" id="confirmPassword" name="confirmPassword" required>
 
-  <label for="imagen">Imagen (opcional):</label>
-  <input type="file" id="imagen" name="imagen" accept="image/*">
+      <label for="descripcion">Descripción:</label>
+      <textarea id="descripcion" name="descripcion"><%= desc %></textarea>
 
-  <button type="submit" class="btn btn-primary">¡Registrar Organizador!</button>
-</form>
+      <label for="link">Link (opcional):</label>
+      <input type="url" id="link" name="link" value="<%= link %>">
+
+      <label for="imagen">Imagen (opcional):</label>
+      <input type="file" id="imagen" name="imagen" accept="image/*">
+
+      <button type="submit" class="btn btn-primary" style="margin-top:1rem;">¡Registrar Organizador!</button>
+    </form>
   </main>
 
   <jsp:include page="/includes/footer.jsp" />

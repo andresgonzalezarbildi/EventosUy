@@ -35,4 +35,6 @@ public interface IControladorEvento {
     public DataEdicion[] listarEdicionesIngresadas() throws EdicionNoExisteException;
     public DataEdicion[] listarEdicionesRechazadas() throws EdicionNoExisteException;
     
+    public void  setCostoRegistro(String nickname,String edicion, String nombreTipo, int precio); 
+    
 }

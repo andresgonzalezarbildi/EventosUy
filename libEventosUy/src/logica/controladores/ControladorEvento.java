@@ -341,7 +341,22 @@ public class ControladorEvento implements IControladorEvento {
             tr.getCupo()
     );
 	}
-
+	
+	public void  setCostoRegistro(String nickname,String edicion, String nombreTipo, int precio) {
+		
+	    for (Evento e : manejadorEvento.getEventos().values()) {
+	        for (EdicionEvento ed : e.getEdiciones().values()) {
+	            for (Registro r : ed.getRegistros()) {
+	                if ( edicion.equals(ed.getNombre())
+	                		&& nickname.equals(r.getAsistente().getNickname()) 
+	                		&& nombreTipo.equals(r.getTipoRegistro().toString() ) ) {
+	                    r.setCosto(precio);
+	                }
+	            }
+	        }
+	    }
+	}
+	
 	public DataRegistro[] listarRegistrosDeUsuario(String nickname) {
 	    List<DataRegistro> out = new ArrayList<>();
 	    for (Evento e : manejadorEvento.getEventos().values()) {
