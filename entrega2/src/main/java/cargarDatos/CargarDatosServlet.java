@@ -38,7 +38,7 @@ public class CargarDatosServlet extends HttpServlet {
         try {
             System.out.println("[CargarDatosServlet] Iniciando carga de datos...");
             carga.CargarDatosIniciales(); // método de la interfaz del JAR
-            mensaje = "✅ Datos cargados correctamente. El sistema está listo para usar.";
+            mensaje = "Datos cargados correctamente. El sistema está listo para usar.";
             tipoMensaje = "success";
             System.out.println("[CargarDatosServlet] Carga de datos completada exitosamente");
             

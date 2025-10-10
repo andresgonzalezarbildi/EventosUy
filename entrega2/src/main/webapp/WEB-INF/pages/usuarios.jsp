@@ -25,13 +25,13 @@
 
 <body>
   <!-- Header -->
-  <jsp:include page="../includes/header.jsp"/>
+  <jsp:include page="header.jsp"/>
 
   <section class="container-fluid content">
     <div class="row content-row">
 
       <!-- Sidebar -->
-		<jsp:include page="../includes/sidebar.jsp"/>
+		<jsp:include page="sidebar.jsp"/>
 
       <!-- Contenedor principal -->
       <main style="max-width: 600px; margin: 2rem auto; padding: 1rem; background: #fff; border: 1px solid var(--color-border); border-radius: var(--radius);">
@@ -39,7 +39,7 @@
               if (usuarios == null || usuarios.length == 0) {
             %>
               <!-- Sin eventos: placeholder -->
-              <h1>No hay Usuarios registrados, quieres ser mi primer amigo? jeje</h1>
+              <h1>No hay Usuarios registrados</h1>
             <%
               } else {
            	%>
@@ -71,7 +71,7 @@
       </main>
     </div>
   </section>
-	<jsp:include page="../includes/footer.jsp"/>
+	<jsp:include page="footer.jsp"/>
 </body>
 
 </html>

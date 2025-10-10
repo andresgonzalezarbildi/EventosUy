@@ -17,5 +17,6 @@ public interface IControladorUsuario {
     public DataUsuario[] getAsistentes();
     public void modificarUsuario(String nickname, String nombre, String descripcion, String imagen,String link, String apellido, LocalDate fechaNac) throws UsuarioNoExisteException;
     public Organizador getOrganizador(String nickname) throws UsuarioNoExisteException;
+    public Asistente getAsistente(String nickname) throws UsuarioNoExisteException;
     public Usuario login(String nickname, String password) throws UsuarioNoExisteException, PasswordIncorrectaException;
 }

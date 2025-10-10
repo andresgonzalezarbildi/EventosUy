@@ -43,7 +43,7 @@ public class ListarEventosServlet extends HttpServlet {
         req.setAttribute("eventos", eventosList);
 
         // Redirigimos al index.jsp para mostrar los eventos
-        req.getRequestDispatcher("/index.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/pages/index.jsp").forward(req, resp);
     }
 }
 
