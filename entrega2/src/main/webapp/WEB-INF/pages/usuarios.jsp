@@ -50,7 +50,7 @@
             <%
               } else {
            	%>
-           	<h2 style="margin-bottom: 1rem; color: var(--color-primary);">Consulta Usuario</h2>
+           	<h2 style="margin-bottom: 1rem; color: var(--color-primary);">Usuarios</h2>
            	<div class="usuarios">
 		    	<ul style="list-style: none; width: 500px;" >
 		    <%
