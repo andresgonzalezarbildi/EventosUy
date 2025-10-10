@@ -22,6 +22,9 @@ import logica.datatypes.DataUsuario;
 import logica.interfaces.IControladorEvento;
 import logica.interfaces.IControladorUsuario;
 import logica.Fabrica;
+import logica.clases.Asistente;
+import logica.clases.Organizador;
+
 // import logica.controladores.ControladorUsuario; // o fábrica de controladores
 
 @WebServlet(name="UsuarioServlet", urlPatterns={"/UsuarioServlet"})
@@ -76,7 +79,7 @@ public class UsuarioServlet extends HttpServlet {
 
     	String op = p(req.getParameter("op")).toLowerCase();
         switch (op) {
-            case "alta":
+            case "altaUsuario":
                 altaUsuario(req, res);
                 break;
             case "listar": 
@@ -225,7 +228,7 @@ public class UsuarioServlet extends HttpServlet {
         req.setAttribute("usuarios", usuariosArray);
 
         // Redirigimos al index.jsp para mostrar los usuarios
-        req.getRequestDispatcher("/pages/usuarios.jsp").forward(req, res);
+        req.getRequestDispatcher("/WEB-INF/pages/usuarios.jsp").forward(req, res);
     }  
     
     private void consultaUsuario(HttpServletRequest req, HttpServletResponse res)

@@ -7,7 +7,7 @@
       <!-- Logo -->
       <div class="col-12 col-md-3 mobile-col-center">
         <h1>
-          <a class="title" href="<%= request.getContextPath() %>/index.jsp">
+          <a class="title" href="<%= request.getContextPath() %>/eventos">
             Eventos.uy
           </a>
         </h1>
@@ -67,11 +67,11 @@
           <%
             } else {
           %>
-            <a href="<%= request.getContextPath() %>/pages/iniciarSesion.jsp" class="navbar_sesion_link">
+            <a href="<%= request.getContextPath() %>/iniciarSesion" class="navbar_sesion_link">
               Iniciar Sesión
             </a>
             <p>/</p>
-            <a href="<%= request.getContextPath() %>/pages/altaUsuario.jsp" class="navbar_sesion_link">
+            <a href="<%= request.getContextPath() %>/altaUsuario" class="navbar_sesion_link">
               Registrarse
             </a>
           <%
