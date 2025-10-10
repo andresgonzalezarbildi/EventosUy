@@ -106,6 +106,9 @@ public class ControladorUsuario implements IControladorUsuario {
     public Organizador getOrganizador(String nickname) throws UsuarioNoExisteException {
         return manejador.getOrganizador(nickname);
     }
+    public Asistente getAsistente(String nickname) throws UsuarioNoExisteException {
+        return manejador.getAsistente(nickname);
+    }
     
     
     public DataUsuario[] getUsuarios() throws UsuarioNoExisteException {

@@ -16,6 +16,10 @@ import logica.interfaces.IControladorUsuario;
 import logica.datatypes.DataUsuario;
 import logica.Fabrica;
 
+//import logica.clases.Asistente;
+//import logica.clases.Organizador;
+
+
 @WebServlet(name="UsuarioServlet", urlPatterns={"/UsuarioServlet"})
 @MultipartConfig(
     fileSizeThreshold = 1024 * 1024,        // 1 MB en memoria
@@ -37,15 +41,13 @@ public class UsuarioServlet extends HttpServlet {
 
         String op = p(req.getParameter("op")).toLowerCase();
         switch (op) {
-            case "listar":
-                listarUsuarios(req, res);
-                break;
-            case "form-alta-organizador":
-                req.getRequestDispatcher("/pages/altaUsuarioOrganizador.jsp").forward(req, res);
-                break;
-            case "form-alta-asistente":
-                req.getRequestDispatcher("/pages/altaUsuarioAsistente.jsp").forward(req, res);
-                break;
+            case "listar": 
+            	listarUsuarios(req, res);
+            	break;
+            	
+            case "consultar":
+            	consultaUsuario(req, res);
+            	break;
             default:
                 res.sendError(HttpServletResponse.SC_NOT_FOUND, "Operación no disponible por GET.");
         }
@@ -60,12 +62,16 @@ public class UsuarioServlet extends HttpServlet {
 
         String op = p(req.getParameter("op")).toLowerCase();
         switch (op) {
-            case "alta":
+            case "altaUsuario":
                 altaUsuario(req, res);
                 break;
-            case "listar":
-                listarUsuarios(req, res);
-                break;
+            case "listar": 
+            	listarUsuarios(req, res);
+            	break;
+            	
+            case "consultar": 
+            	consultaUsuario(req, res);
+            	break;
             default:
                 res.sendError(HttpServletResponse.SC_BAD_REQUEST, "Operación inválida.");
         }
@@ -175,11 +181,11 @@ public class UsuarioServlet extends HttpServlet {
     private void volverAFormTipo(HttpServletRequest req, HttpServletResponse res, String tipo)
             throws ServletException, IOException {
         if ("Organizador".equalsIgnoreCase(tipo)) {
-            req.getRequestDispatcher("/pages/altaUsuarioOrganizador.jsp").forward(req, res);
+            req.getRequestDispatcher("/WEB-INF/pages/altaUsuarioOrganizador.jsp").forward(req, res);
         } else if ("Asistente".equalsIgnoreCase(tipo)) {
-            req.getRequestDispatcher("/pages/altaUsuarioAsistente.jsp").forward(req, res);
+            req.getRequestDispatcher("/WEB-INF/pages/altaUsuarioAsistente.jsp").forward(req, res);
         } else {
-            res.sendRedirect(req.getContextPath() + "/pages/altaUsuarioOrganizador.jsp");
+            res.sendRedirect(req.getContextPath() + "/WEB-INF/pages/altausuario.jsp");
         }
     }
 
@@ -189,9 +195,50 @@ public class UsuarioServlet extends HttpServlet {
         try {
             usuariosArray = cu.getUsuarios();
         } catch (UsuarioNoExisteException e) {
-            // sin usuarios: dejamos null/empty
+
+            System.out.println("No hay usuarios cargados: " + e.getMessage());
         }
         req.setAttribute("usuarios", usuariosArray);
-        req.getRequestDispatcher("/pages/usuarios.jsp").forward(req, res);
+
+        // Redirigimos al index.jsp para mostrar los usuarios
+        req.getRequestDispatcher("/WEB-INF/pages/usuarios.jsp").forward(req, res);
+    }  
+    
+    private void consultaUsuario(HttpServletRequest req, HttpServletResponse res)
+            throws ServletException, IOException {
+        String nick = p(req.getParameter("nick"));
+        if (nick.isEmpty()) {
+            req.setAttribute("error", "Debe ingresar un usuario a consultar.");
+            req.getRequestDispatcher("/WEB-INF/pages/consultaUsuario.jsp").forward(req, res);
+            return;
+        }
+
+//        try {
+//            DataUsuario usuario = null;
+//
+//            // Probamos primero con asistente
+//            try {
+//                usuario = null;
+//            } catch (UsuarioNoExisteException ignored) {}
+//
+//            // Si no existe, probamos con organizador
+//            if (usuario == null) {
+//                try {
+//                    usuario = null;
+//                } catch (UsuarioNoExisteException ignored) {}
+//            }
+//
+//            if (usuario == null) {
+//                throw new UsuarioNoExisteException("Usuario no encontrado.");
+//            }
+//
+//            req.setAttribute("usuario", usuario);
+//            req.getRequestDispatcher("/WEB-INF/pages/consultaUsuario.jsp").forward(req, res);
+//
+//        } catch (UsuarioNoExisteException e) {
+//            req.setAttribute("error", e.getMessage());
+//            req.getRequestDispatcher("/WEB-INF/pages/consultaUsuario.jsp").forward(req, res);
+//        }
     }
+
 }

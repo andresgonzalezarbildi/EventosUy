@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="<%=request.getContextPath()%>/estilos/base.css">
 </head>
 <body>
-  <jsp:include page="/includes/header.jsp" />
+  <jsp:include page="header.jsp" />
 
   <main style="max-width:600px;margin:2rem auto;padding:1rem;background:#fff;border:1px solid var(--color-border);border-radius:var(--radius);">
     <h2 style="margin-bottom:1rem;color:var(--color-primary);">Alta de Organizador</h2>
@@ -64,6 +64,6 @@
     </form>
   </main>
 
-  <jsp:include page="/includes/footer.jsp" />
+  <jsp:include page="footer.jsp" />
 </body>
 </html>

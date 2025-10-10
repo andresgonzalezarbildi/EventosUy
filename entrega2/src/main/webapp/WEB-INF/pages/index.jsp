@@ -28,14 +28,14 @@
 
 <body>
   <!-- Header -->
-  <jsp:include page="includes/header.jsp" />
+  <jsp:include page="header.jsp" />
 
   <!-- Main Content -->
   <section class="content">
     <div class="container-fluid">
       <div class="row">
         <!-- Sidebar -->
-        <jsp:include page="includes/sidebar.jsp" />
+        <jsp:include page="sidebar.jsp" />
 
         <!-- Contenido principal -->
         <main class="col-12 col-md-9">
@@ -102,6 +102,6 @@
   </section>
 
   <!-- Footer -->
-  <jsp:include page="includes/footer.jsp" />
+  <jsp:include page="footer.jsp" />
 </body>
 </html>
