@@ -22,9 +22,6 @@ public class ListarEventosServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
     	
-    	req.setCharacterEncoding("UTF-8");
-    	resp.setCharacterEncoding("UTF-8");
-    	resp.setContentType("text/html; charset=UTF-8");
 
 
         DataEvento[] eventosArray = null;
@@ -35,14 +32,10 @@ public class ListarEventosServlet extends HttpServlet {
             if (eventosArray != null) {
                 eventosList = Arrays.asList(eventosArray);
             }
-        } catch (EventoNoExisteException e) {
-            System.out.println("⚠️ No hay eventos cargados: " + e.getMessage());
-        }
+        } catch (EventoNoExisteException e) {}
 
-        // Mandamos la lista al JSP
         req.setAttribute("eventos", eventosList);
 
-        // Redirigimos al index.jsp para mostrar los eventos
         req.getRequestDispatcher("/WEB-INF/pages/index.jsp").forward(req, resp);
 
     }

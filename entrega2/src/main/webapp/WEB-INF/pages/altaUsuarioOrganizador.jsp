@@ -17,7 +17,6 @@
 
     <%
       String error = (String) request.getAttribute("error");
-      String ok    = (String) request.getAttribute("ok");
 
       String nombre = request.getParameter("nombre") == null ? "" : request.getParameter("nombre");
       String nick   = request.getParameter("nick")   == null ? "" : request.getParameter("nick");
@@ -26,21 +25,17 @@
       String link   = request.getParameter("link") == null ? "" : request.getParameter("link");
     %>
     <% if (error != null) { %>
-      <div class="alert alert-danger" role="alert" style="margin-bottom:1rem;"><%= error %></div>
-    <% } %>
-    <% if (ok != null) { %>
-      <div class="alert alert-success" role="alert" style="margin-bottom:1rem;"><%= ok %></div>
+      <div class="alerta-error" role="alert" style="margin-bottom:1rem;"><%= error %></div>
     <% } %>
 
-    <form action="<%=request.getContextPath()%>/UsuarioServlet" method="POST" enctype="multipart/form-data">
-      <input type="hidden" name="op"   value="alta">
+    <form action="<%=request.getContextPath()%>/usuarios/registrar" method="POST" enctype="multipart/form-data">
       <input type="hidden" name="tipo" value="Organizador">
 
+	  <label for="nick">Nick:</label>
+      <input type="text" id="nick" name="nick" required value="<%= nick %>">
+      
       <label for="nombre">Nombre:</label>
       <input type="text" id="nombre" name="nombre" required value="<%= nombre %>">
-
-      <label for="nick">Nick:</label>
-      <input type="text" id="nick" name="nick" required value="<%= nick %>">
 
       <label for="correo">Correo electrónico:</label>
       <input type="email" id="correo" name="correo" required value="<%= correo %>">
@@ -60,7 +55,7 @@
       <label for="imagen">Imagen (opcional):</label>
       <input type="file" id="imagen" name="imagen" accept="image/*">
 
-      <button type="submit" class="btn btn-primary" style="margin-top:1rem;">¡Registrar Organizador!</button>
+      <button type="submit" class="btn" style="margin-top:1rem;">Registrarse</button>
     </form>
   </main>
 

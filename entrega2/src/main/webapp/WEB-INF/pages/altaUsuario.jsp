@@ -25,8 +25,7 @@
             <h2 class="mb-4" style="color: var(--color-primary);">Alta de Usuario</h2>
 
             <!-- Un solo form con dos botones -->
-            <form action="<%=request.getContextPath()%>/UsuarioServlet" method="POST" class="d-flex flex-column gap-3">
-  				<input type="hidden" name="op" value="alta" />
+            <form action="<%=request.getContextPath()%>/usuarios/registrar" method="GET" class="d-flex flex-column gap-3">
   				<button type="submit" name="tipo" value="Organizador" class="btn btn-primary">Organizador</button>
   				<button type="submit" name="tipo" value="Asistente"   class="btn btn-secondary">Asistente</button>
 			</form>

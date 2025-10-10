@@ -12,6 +12,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.UUID;
@@ -24,77 +25,141 @@ import logica.interfaces.IControladorUsuario;
 @MultipartConfig
 public class RegistrarUsuarioServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
+    
+    private final Fabrica fabrica = Fabrica.getInstance();
+    private final IControladorUsuario cu = fabrica.getControladorUsuario();
+    
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse res)
+            throws ServletException, IOException {
+
+        String op = req.getParameter("tipo").toLowerCase();
+        switch (op) {
+            case "organizador":
+            	req.getRequestDispatcher("/WEB-INF/pages/altaUsuarioOrganizador.jsp").forward(req, res);
+            	break;
+        	case "asistente":
+            	req.getRequestDispatcher("/WEB-INF/pages/altaUsuarioAsistente.jsp").forward(req, res);
+            	break;
+            default:
+                res.sendError(HttpServletResponse.SC_NOT_FOUND, "El tipo Elegido no es valido.");
+        }
+    }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setContentType("application/json");
+    protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+    	String tipoUsuario = req.getParameter("tipo").toLowerCase();
+    	if("organizador".equalsIgnoreCase(tipoUsuario) || "asistente".equalsIgnoreCase(tipoUsuario)) {
+    		altaUsuario(req, res);
+    	} else {
+    		res.sendError(HttpServletResponse.SC_NOT_FOUND, "El tipo Elegido no es valido.");
+    	}
+    }
+    
+    private void altaUsuario(HttpServletRequest req, HttpServletResponse res)
+            throws ServletException, IOException {
 
-        String nickname = req.getParameter("nick");
-        String nombre = req.getParameter("nombre");
-        String correo = req.getParameter("correo");
-        String password = req.getParameter("password");
-        String tipo = req.getParameter("tipo"); // "Organizador" o "Asistente"
-        String imagen = req.getParameter("imagen"); // opcional si no se sube archivo
+        final String tipo     = req.getParameter("tipo");      
+        final String nombre   = req.getParameter("nombre");
+        final String nick     = req.getParameter("nick");
+        final String correo   = req.getParameter("correo");
+        final String password = req.getParameter("password");
+        final String pass2    = req.getParameter("confirmPassword");
 
-        String descripcion = req.getParameter("descripcion"); // solo organizador
-        String link = req.getParameter("link"); // solo organizador
-
-        String apellido = req.getParameter("apellido"); // solo asistente
-        String fechaNacStr = req.getParameter("fechaNac"); // solo asistente (yyyy-MM-dd)
-
-        if (nickname == null || nombre == null || correo == null || password == null || tipo == null) {
-            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            resp.getWriter().write("{\"error\":\"Parámetros obligatorios faltantes\"}");
+        if (nick.isBlank() || nombre.isBlank() || correo.isBlank()
+                || password.isBlank() || !password.equals(pass2)) {
+            req.setAttribute("error", "Datos inválidos o contraseñas no coinciden.");
+            volverAFormTipo(req, res, tipo);
             return;
         }
 
-        LocalDate fechaNac = null;
-        if (fechaNacStr != null && !fechaNacStr.isBlank()) {
-            try {
-                fechaNac = LocalDate.parse(fechaNacStr);
-            } catch (DateTimeParseException e) {
-                resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-                resp.getWriter().write("{\"error\":\"Fecha de nacimiento inválida\"}");
-                return;
+        // subir imagen
+        String nombreImagenGuardada = null;
+        Part filePart = null;
+        try {
+            filePart = req.getPart("imagen"); // nombre de l aimagen
+        } catch (IllegalStateException ex) {
+            req.setAttribute("error", "error al subir la imagen");
+            volverAFormTipo(req, res, tipo);
+            return;
+        } catch (ServletException | IOException ex) {
+            filePart = null;
+        }
+
+        if (filePart != null && filePart.getSize() > 0) {
+            String contentType = filePart.getContentType();
+            if (contentType != null && contentType.startsWith("image/")) {
+                String submitted = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
+                String ext = "";
+                int dot = submitted.lastIndexOf('.');
+                if (dot >= 0 && dot < submitted.length() - 1) ext = submitted.substring(dot).toLowerCase();
+                String nuevoNombre = UUID.randomUUID().toString().replace("-", "") + ext;
+
+                String imgDirPath = getServletContext().getRealPath("/img"); // <- carpeta pública
+                if (imgDirPath != null) {
+                    Path imgDir = Paths.get(imgDirPath);
+                    Files.createDirectories(imgDir);
+                    Path destino = imgDir.resolve(nuevoNombre);
+                    try (InputStream in = filePart.getInputStream()) {
+                        Files.copy(in, destino, StandardCopyOption.REPLACE_EXISTING);
+                    }
+                    nombreImagenGuardada = nuevoNombre;
+                } 
             }
         }
 
+        String descripcion = null;
+        String link        = null;
+        String apellido    = null;
+        LocalDate fechaNac = null;
+
+        if ("Organizador".equalsIgnoreCase(tipo)) {
+            descripcion = req.getParameter("descripcion");
+            link        = req.getParameter("link");
+        } else if ("Asistente".equalsIgnoreCase(tipo)) {
+            apellido    = req.getParameter("apellido");
+            fechaNac    = parseFecha(req.getParameter("fechaNacimiento"));
+        } else {
+            req.setAttribute("error", "Tipo de usuario inválido.");
+            volverAFormTipo(req, res, tipo);
+            return;
+        }
+
         try {
-            // Manejo de archivo (imagen) si viene en multipart
-            try {
-                Part filePart = req.getPart("imagen");
-                if (filePart != null && filePart.getSize() > 0) {
-                    String original = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
-                    String extension = "";
-                    int dot = original.lastIndexOf('.');
-                    if (dot >= 0) extension = original.substring(dot);
-                    String uniqueName = UUID.randomUUID().toString().replace("-", "") + extension;
+            cu.altaUsuario(
+                nick, nombre, correo, nombreImagenGuardada, password,
+                tipo, descripcion, link, apellido, fechaNac
+            );
 
-                    String imgDir = "/img/"; 
-                    String absoluteTarget = getServletContext().getRealPath(imgDir + uniqueName);
-                    Path targetPath = Paths.get(absoluteTarget);
-                    Files.createDirectories(targetPath.getParent());
-                    try (InputStream in = filePart.getInputStream()) {
-                        Files.copy(in, targetPath);
-                    }
-                    imagen = uniqueName; // guardar solo el nombre para luego resolver ruta pública
-                }
-            } catch (IllegalStateException | IOException ex) {
-                // si falla la subida, continuamos sin imagen personalizada
-                System.out.println("Error subiendo imagen: " + ex.getMessage());
-            }
+            // Éxito → ir a listar (o donde vos quieras)
+            req.getSession().setAttribute("usuarioCreado", "Usuario creado");
+            res.sendRedirect(req.getContextPath() + "/UsuarioServlet?op=listar");
 
-            IControladorUsuario cu = Fabrica.getInstance().getControladorUsuario();
-            cu.altaUsuario(nickname, nombre, correo, imagen, password, tipo, descripcion, link, apellido, fechaNac);
 
-            resp.setStatus(HttpServletResponse.SC_OK);
-            resp.getWriter().write("{\"ok\":true}");
         } catch (UsuarioRepetidoException e) {
-            resp.setStatus(HttpServletResponse.SC_CONFLICT);
-            resp.getWriter().write("{\"error\":\"" + e.getMessage().replace("\"", "'") + "\"}");
-        } catch (IllegalArgumentException e) {
-            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            resp.getWriter().write("{\"error\":\"" + e.getMessage().replace("\"", "'") + "\"}");
+            req.setAttribute("error", e.getMessage());
+            volverAFormTipo(req, res, tipo);
+
+        } catch (Exception e) {
+            req.setAttribute("error", "No se pudo dar de alta: " + e.getMessage());
+            volverAFormTipo(req, res, tipo);
+        }
+    }
+
+    /** Helpers */
+    private static LocalDate parseFecha(String iso) {
+        try { return (iso == null || iso.isBlank()) ? null : LocalDate.parse(iso); }
+        catch (Exception e) { return null; }
+    }
+
+    private void volverAFormTipo(HttpServletRequest req, HttpServletResponse res, String tipo)
+            throws ServletException, IOException {
+        if ("Organizador".equalsIgnoreCase(tipo)) {
+            req.getRequestDispatcher("/WEB-INF/pages/altaUsuarioOrganizador.jsp").forward(req, res);
+        } else if ("Asistente".equalsIgnoreCase(tipo)) {
+            req.getRequestDispatcher("/WEB-INF/pages/altaUsuarioAsistente.jsp").forward(req, res);
+        } else {
+            res.sendRedirect(req.getContextPath() + "/WEB-INF/pages/altausuario.jsp");
         }
     }
 }

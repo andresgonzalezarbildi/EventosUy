@@ -321,3 +321,31 @@ form textarea {
     width: auto;
   }
 }
+
+.alerta-exito {
+  display: block;
+  padding: 12px 18px;
+  margin-bottom: 1rem;
+  border: 1px solid #badbcc;      
+  border-radius: 8px;
+  background-color: #d1e7dd;         
+  color: #0f5132;                    
+  font-family: system-ui, sans-serif;
+  font-size: 0.95rem;
+  font-weight: 500;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.alerta-error {
+  display: block;
+  padding: 12px 18px;
+  margin-bottom: 1rem;
+  border: 1px solid #f5c2c7;        
+  border-radius: 8px;
+  background-color: #f8d7da;         
+  color: #842029;                   
+  font-family: system-ui, sans-serif;
+  font-size: 0.95rem;
+  font-weight: 500;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}

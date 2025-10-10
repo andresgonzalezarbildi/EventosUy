@@ -4,6 +4,7 @@
 <%
   String ctx = request.getContextPath();
 
+	String usuarioCreado = (String) request.getAttribute("usuarioCreado");
 	DataUsuario[] usuarios = null;
   try {
       Object usrs = request.getAttribute("usuarios");
@@ -35,6 +36,12 @@
 
       <!-- Contenedor principal -->
       <main style="max-width: 600px; margin: 2rem auto; padding: 1rem; background: #fff; border: 1px solid var(--color-border); border-radius: var(--radius);">
+        <% if (usuarioCreado != null) { %>
+		  <div class="alerta-exito" role="alert" style="margin-bottom:1rem;">
+		    <%= usuarioCreado %>
+		  </div>
+		<% } %>
+        
         <%
               if (usuarios == null || usuarios.length == 0) {
             %>

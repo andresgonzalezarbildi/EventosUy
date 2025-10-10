@@ -71,7 +71,7 @@
               Iniciar Sesión
             </a>
             <p>/</p>
-            <a href="<%= request.getContextPath() %>/altaUsuario" class="navbar_sesion_link">
+            <a href="<%= request.getContextPath() %>/UsuarioServlet?op=alta" class="navbar_sesion_link">
               Registrarse
             </a>
           <%
