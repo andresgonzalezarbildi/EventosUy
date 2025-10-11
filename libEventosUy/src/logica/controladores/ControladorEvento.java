@@ -127,6 +127,16 @@ public class ControladorEvento implements IControladorEvento {
 
 	    return lista.toArray(new DataEvento[0]);
 	}
+    public DataEvento getUnEventoDTO(String nombre){
+	    Collection<Evento> evs = manejadorEvento.obtenerTodosEventos();
+	    for (Evento e : evs) {
+            if (e.getNombre().equals(nombre)) {
+                DataEvento aDevolver = new DataEvento(e.getNombre(),e.getDescripcionEvento(),e.getSigla(), e.getFecha(),e.getCategoriasLista(), e.getImagen());
+                return aDevolver;
+            }
+	    }
+        return null;
+	}
 
    
    

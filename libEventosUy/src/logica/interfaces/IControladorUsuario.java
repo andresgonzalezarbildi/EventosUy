@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import excepciones.UsuarioNoExisteException;
 import excepciones.UsuarioRepetidoException;
 import logica.clases.Organizador;
+import logica.clases.Asistente;
 import logica.clases.Usuario;
 import excepciones.PasswordIncorrectaException;
 import logica.datatypes.DataUsuario;

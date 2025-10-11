@@ -122,7 +122,7 @@ public class ControladorUsuario implements IControladorUsuario {
         for (Organizador o : orgs) lista.add(aDataUsuario(o));
         for (Asistente  a : asis)  lista.add(aDataUsuario(a));
 
-        lista.sort(Comparator.comparing(DataUsuario::getNombre));
+        lista.sort(Comparator.comparing(DataUsuario::getNickname, String.CASE_INSENSITIVE_ORDER));
         return lista.toArray(new DataUsuario[0]);
     }
     

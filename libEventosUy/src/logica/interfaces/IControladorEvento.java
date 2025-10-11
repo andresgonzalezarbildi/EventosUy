@@ -21,6 +21,7 @@ public interface IControladorEvento {
 	void altaRegistro(String nombreEvento, String nombreEdicion, String nombreTipoRegistro, String nombreAsistente, LocalDate fecha) throws UsuarioNoExisteException;
     public void altaCategoria(String nombre) throws CategoriaRepetidaException;
     public DataEvento[] getEventosDTO() ;
+    public DataEvento getUnEventoDTO(String nombre) ;
     public DataEvento[] listarEventoExistentes() throws EventoNoExisteException;
    
     public DataTipoRegistro[] listarTiposRegistro(String nombreEvento, String nombreEdicion);
