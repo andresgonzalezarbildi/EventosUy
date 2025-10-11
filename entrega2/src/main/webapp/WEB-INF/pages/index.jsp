@@ -75,8 +75,8 @@
                   try { if (e.getDescripcion() != null) descripcion = e.getDescripcion(); } catch (Exception ignore) {}
                   try { if (e.getImagen() != null) imagen = e.getImagen(); } catch (Exception ignore) {}
 
-                  String detalleUrl = ctx + "/pages/consultaEventoVisitante.jsp"
-                                    + ( true ? ("?id=" + e.getNombre()) : "");
+                  String detalleUrl = ctx + "/evento/"
+                                    + "?id=" + e.getNombre();
             %>
 
               <div class="row contenido-principal-card"
