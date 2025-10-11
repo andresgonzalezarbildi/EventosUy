@@ -2,10 +2,11 @@
 bin/
 target/
 *.class
+
 *.war
 *.jar
-!src/main/webapp/WEB-INF/lib/logicaEventosUy.jar
-.settings/
-.metadata/
+!src/main/webapp/WEB-INF/lib/logicaEventosUy.jar  
 
+.metadata/
+Servers/
 
