@@ -1,8 +1,11 @@
 package evento;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
+import excepciones.EventoNoExisteException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -56,20 +59,29 @@ public class EdicionServlet extends HttpServlet {
         	            res.sendError(HttpServletResponse.SC_BAD_REQUEST, "Falta el parámetro 'id' de la edición.");
         	            return;
         	        }
-                    // Datos base de la edición
+        	            if (nickname != null && "asistente".equalsIgnoreCase(rol)) {        	            
+        	        	 DataRegistro registroAsistente = controladorEventos.listarUnRegistroDeUsuario(nombreEdicion,nickname);
+        	        	 req.setAttribute("registroAsistente", registroAsistente);
+        	        }
+        	            
+                    
+        	            DataEvento[] eventosArray = null;
+        	            List<DataEvento> eventosRelacionados = Collections.emptyList();
+
+        	            try {
+        	                eventosArray = controladorEventos.listarEventoExistentes();
+        	                if (eventosArray != null) {
+        	                	eventosRelacionados = Arrays.asList(eventosArray);
+        	                }
+        	            } catch (EventoNoExisteException e) {}
+
+        	            req.setAttribute("eventosRelacionados", eventosRelacionados);    
+        	            
+        	            
                     DataEdicion dataEd = controladorEventos.getInfoEdicion(nombreEdicion);
-                    DataRegistro[] registrosEd = controladorEventos.listarRegistrosDeEdicion(nombreEdicion);
-                    DataRegistro registroAsistente = controladorEventos.listarUnRegistroDeUsuario(nombreEdicion,nickname);
-                    DataEvento[] eventosRelacionados = controladorEventos.listarEventoExistentes();
-                    req.setAttribute("eventos", eventosRelacionados);
+                    DataRegistro[] registrosEd = controladorEventos.listarRegistrosDeEdicion(nombreEdicion);  
                     req.setAttribute("registrosEd", registrosEd);
                     req.setAttribute("edicion", dataEd);
-                    req.setAttribute("registroAsistente", registroAsistente);
-                   
-
-                   
-        	        
-                  
                     req.getRequestDispatcher("/WEB-INF/pages/consultaEdicion.jsp").forward(req, res);
                     break;
                 	default:

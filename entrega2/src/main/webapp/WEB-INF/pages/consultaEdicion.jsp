@@ -178,15 +178,14 @@
 				 <!-- ACA SE LISTAN A LA DERECHA, EN UNA COLUMNA, LOS EVENTOS PARA QUE SE PUEDA NAVEGAR COMO ELLOS QUERIAN -->	
 			<div style="display:flex; flex-direction:column; align-items:center;">
 			    <%
-			        DataEvento[] eventos = (DataEvento[]) request.getAttribute("eventosRelacionados");
-			        if (eventos != null && eventos.length > 0) {
+			        List<DataEvento> eventos = (List<DataEvento>) request.getAttribute("eventosRelacionados");
+			        if (eventos != null) {
 			            for (DataEvento ev : eventos) {
 			                String nombreEvento = ev.getNombre();
 			                String imagenEvento = (ev.getImagen() != null && !ev.getImagen().isEmpty()) 
 			                                      ? ev.getImagen() 
 			                                      : "EventoSinFoto.png"; 
 			    %>
-			
 			        <div style="margin-bottom:12px; text-align:center;">
 			            <a href="<%= request.getContextPath() %>/evento?op=consultar&id=<%= nombreEvento %>">
 			                <img src="<%= request.getContextPath() %>/img/<%= imagenEvento %>" 
@@ -197,10 +196,9 @@
 			            <div style="margin-top:4px; font-size:0.9rem; color:#555;">
 			                <%= ev.getNombre() %>
 			            </div>
-			        </div>
-			
+			        </div>			
 			    <%
-			            } // fin for
+			            } // termina el for
 			        } else {
 			    %>
 			        <p style="text-align:center; color:#777;">No hay eventos disponibles.</p>
@@ -208,9 +206,6 @@
 			        }
 			    %>
 			 </div>
-			
-				  
-				  
 				  <a href="<%= request.getContextPath() %>/eventos">Volver a eventos</a>
   
 

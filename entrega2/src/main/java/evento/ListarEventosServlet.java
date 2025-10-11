@@ -22,8 +22,6 @@ public class ListarEventosServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-    	
-
 
         DataEvento[] eventosArray = null;
         List<DataEvento> eventosList = Collections.emptyList();

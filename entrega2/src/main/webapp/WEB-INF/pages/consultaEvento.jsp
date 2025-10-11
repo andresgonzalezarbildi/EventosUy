@@ -91,7 +91,8 @@
 
                     try { if (edicion.getNombre() != null) nombre = edicion.getNombre(); } catch (Exception ignore) {}
                     try { if (edicion.getImagen() != null) imagen = edicion.getImagen(); } catch (Exception ignore) {}
-
+					
+                    
                     String detalleUrl = path + "/edicion"
                             + "?op=consultar&id=" + edicion.getNombre();
                %>
