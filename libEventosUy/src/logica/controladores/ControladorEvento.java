@@ -27,6 +27,7 @@ import logica.datatypes.DataUsuario;
 import logica.interfaces.IControladorEvento;
 import logica.manejadores.ManejadorEvento;
 import logica.manejadores.ManejadorUsuario;
+import logica.clases.EstadoEdicion;
 
 
 
@@ -127,21 +128,28 @@ public class ControladorEvento implements IControladorEvento {
 
 	    return lista.toArray(new DataEvento[0]);
 	}
-    public DataEvento getUnEventoDTO(String nombre){
-	    Collection<Evento> evs = manejadorEvento.obtenerTodosEventos();
-	    for (Evento e : evs) {
-            if (e.getNombre().equals(nombre)) {
-                DataEvento aDevolver = new DataEvento(e.getNombre(),e.getDescripcionEvento(),e.getSigla(), e.getFecha(),e.getCategoriasLista(), e.getImagen());
-                return aDevolver;
-            }
-	    }
-        return null;
-	}
+
+public DataEvento getUnEventoDTO(String nombre) throws EventoNoExisteException {
+    Collection<Evento> evs = manejadorEvento.obtenerTodosEventos();
+    for (Evento e : evs) {
+        if (e.getNombre().equals(nombre)) {
+            return new DataEvento(
+                e.getNombre(),
+                e.getDescripcionEvento(),
+                e.getSigla(),
+                e.getFecha(),
+                e.getCategoriasLista(),
+                e.getImagen()
+            );
+        }
+    }
+    throw new EventoNoExisteException("El evento con nombre \"" + nombre + "\" no existe.");
+}
 
    
    
    
-    public DataEvento[] listarEventoExistentes() throws EventoNoExisteException {
+public DataEvento[] listarEventoExistentes() throws EventoNoExisteException {
     	 Map<String,Evento> eventos = manejadorEvento.getEventos();
 
     	 if (eventos != null) {
@@ -156,10 +164,10 @@ public class ControladorEvento implements IControladorEvento {
     	 }else {
     		 throw new EventoNoExisteException("No existen eventos registrados");
     	 }
-    }
+}
       
     
-    public void altaEdicionEvento(
+public void altaEdicionEvento(
             String nombreEvento, String nombreEdicion, String sigla, String ciudad, String pais, LocalDate fechaInicio, LocalDate fechaFin, LocalDate fechaAltaEnPlataforma, String organizadorNick) throws UsuarioNoExisteException {
         if (nombreEvento == null || nombreEvento.isBlank())   
         	throw new IllegalArgumentException("El evento es obligatorio.");
@@ -205,9 +213,9 @@ public class ControladorEvento implements IControladorEvento {
         ed.setEventoPadre(evento);
         org.agregarEdicion(ed);
         evento.agregarEdicion(ed);
-    }
+}
     
-    public void altaEdicionEvento(
+public void altaEdicionEvento(
             String nombreEvento, String nombreEdicion, String sigla, String ciudad, String pais, LocalDate fechaInicio, LocalDate fechaFin, LocalDate fechaAltaEnPlataforma, String organizadorNick, String imagen) throws UsuarioNoExisteException {
         if (nombreEvento == null || nombreEvento.isBlank())   
         	throw new IllegalArgumentException("El evento es obligatorio.");
@@ -252,9 +260,9 @@ public class ControladorEvento implements IControladorEvento {
         ed.setEventoPadre(evento);
         org.agregarEdicion(ed);
         evento.agregarEdicion(ed);
-    }
+}
 
-    public void altaTipoRegistro(String nombreEvento, String nombreEdicion, String nombreTipoRegistro, String descripcion, Integer costo,  Integer cupos) {
+public void altaTipoRegistro(String nombreEvento, String nombreEdicion, String nombreTipoRegistro, String descripcion, Integer costo,  Integer cupos) {
     	if (nombreEvento == null || nombreEvento.isBlank())   
         	throw new IllegalArgumentException("El evento es obligatorio.");
         if (nombreEdicion == null || nombreEdicion.isBlank())  
@@ -280,9 +288,9 @@ public class ControladorEvento implements IControladorEvento {
         }
         TipoRegistro tipoRegistronuevo = new TipoRegistro(nombreTipoRegistro, descripcion, costo, cupos);
         edicion.agregarTipoDeRegistro(nombreTipoRegistro, tipoRegistronuevo);
-    }
+}
     
-    public void altaRegistro(String nombreEvento, String nombreEdicion, String nombreTipoRegistro, String nombreAsistente, LocalDate fecha) throws UsuarioNoExisteException {
+public void altaRegistro(String nombreEvento, String nombreEdicion, String nombreTipoRegistro, String nombreAsistente, LocalDate fecha) throws UsuarioNoExisteException {
         Evento ev = ManejadorEvento.getInstance().obtenerEvento(nombreEvento);
         if (ev == null) throw new IllegalArgumentException("No existe el evento: " + nombreEvento);
 
@@ -315,11 +323,9 @@ public class ControladorEvento implements IControladorEvento {
 
         ed.agregarRegistro(reg);
         asis.agregarRegistro(reg);
-    }
+}
 
-
-
-	public DataTipoRegistro[] listarTiposRegistro(String nombreEvento, String nombreEdicion) {
+public DataTipoRegistro[] listarTiposRegistro(String nombreEvento, String nombreEdicion) {
 		
     Evento ev = manejadorEvento.obtenerEvento(nombreEvento);
     if (ev == null) throw new IllegalArgumentException("No existe el evento: " + nombreEvento);
@@ -332,8 +338,7 @@ public class ControladorEvento implements IControladorEvento {
     return lista;
 }
 
-
-	public DataTipoRegistro getTipoRegistro(String nombreEvento, String nombreEdicion, String nombreTipo) {
+public DataTipoRegistro getTipoRegistro(String nombreEvento, String nombreEdicion, String nombreTipo) {
 		
     Evento ev = manejadorEvento.obtenerEvento(nombreEvento);
     if (ev == null) throw new IllegalArgumentException("No existe el evento: " + nombreEvento);
@@ -367,6 +372,18 @@ public class ControladorEvento implements IControladorEvento {
 	    }
 	}
 	
+    public DataRegistro[] listarRegistrosDeEdicion(String nombreEdicion) {
+	    List<DataRegistro> out = new ArrayList<>();
+        EdicionEvento edi = manejadorEvento.getEdicion(nombreEdicion);
+        if (edi == null) return new DataRegistro[0];
+        java.util.Collection<Registro> listaRegistros = edi.getRegistros();
+        if (listaRegistros == null || listaRegistros.isEmpty()) return new DataRegistro[0];
+        for (Registro r : listaRegistros) {
+            out.add(new DataRegistro(edi.getEvento().getNombre(),edi.getNombre(),r.getTipoRegistro().getNombre(),r.getCostoRegistro(),r.getFechaRegistro(),r.getAsistente().getNickname()));
+        }
+	    return out.toArray(new DataRegistro[0]);
+	}
+
 	public DataRegistro[] listarRegistrosDeUsuario(String nickname) {
 	    List<DataRegistro> out = new ArrayList<>();
 	    for (Evento e : manejadorEvento.getEventos().values()) {
@@ -388,6 +405,30 @@ public class ControladorEvento implements IControladorEvento {
 	    return out.toArray(new DataRegistro[0]);
 	}
 	
+    public DataRegistro listarUnRegistroDeUsuario(String nombreEdicion,String nickname){
+	    DataRegistro out = null;
+	    for (Evento e : manejadorEvento.getEventos().values()) {
+	        for (EdicionEvento ed : e.getEdiciones().values()) {
+                if (nombreEdicion.equals(ed.getNombre()) ){
+                    for (Registro r : ed.getRegistros()) {
+                        if (nickname.equals(r.getAsistente().getNickname())) {
+                            out = new DataRegistro(
+                                e.getNombre(),
+                                ed.getNombre(),
+                                r.getTipoRegistro().getNombre(),
+                                r.getCostoRegistro(),
+                                r.getFechaRegistro(),
+                                r.getAsistente().getNickname()
+                            );
+                        }
+                    }
+                }
+	        }
+	    }
+	    return out;
+	}
+
+
 	public void limpiar() {
 		manejadorEvento.limpiar();
 	}
@@ -402,18 +443,26 @@ public class ControladorEvento implements IControladorEvento {
 		return false;
 	}
 	
-	public void aceptarEdicion(String nombreEdicion, Boolean aceptada)
-	        throws EdicionNoExisteException, TransicionEstadoInvalidaException {
+public void aceptarEdicion(String nombreEdicion, Boolean aceptada)
+        throws EdicionNoExisteException, TransicionEstadoInvalidaException {
 
-	    EdicionEvento ed = manejadorEvento.getEdicion(nombreEdicion);
-	    if (ed == null) throw new EdicionNoExisteException("No existe la edición: " + nombreEdicion);
-	    if(ed.getEstadoString() != "ingresada") {
-	    	throw new TransicionEstadoInvalidaException(
-		            "Solo se puede cambiar el estado a una edición en estado INGRESADA");
-		    }
-	    if(aceptada) ed.aceptar();
-	    else ed.rechazar();
-	}
+    EdicionEvento ed = manejadorEvento.getEdicion(nombreEdicion);
+    if (ed == null) {
+        throw new EdicionNoExisteException("No existe la edición: " + nombreEdicion);
+    }
+
+    if (ed.getEstado() != EstadoEdicion.INGRESADA) {
+        throw new TransicionEstadoInvalidaException(
+            "Solo se puede cambiar el estado a una edición en estado INGRESADA"
+        );
+    }
+
+    if (aceptada) {
+        ed.aceptar();
+    } else {
+        ed.rechazar();
+    }
+}
 
 
 
@@ -452,6 +501,41 @@ public DataEdicion[] listarEdiciones(String nombreEvento) throws EventoNoExisteE
 	}
 }
 
+public DataEdicion[] listarEdicionesOrganizador(String nombreOrganizador) throws EdicionNoExisteException {
+    Map<String, Evento> eventos = manejadorEvento.getEventos();
+    List<DataEdicion> acumulado = new ArrayList<>();
+    if (eventos != null && !eventos.isEmpty()) {
+        for (Evento eve : eventos.values()) {
+            Map<String, EdicionEvento> ediciones = eve.getEdiciones();
+            if (ediciones == null || ediciones.isEmpty()) continue;
+ 
+            for (EdicionEvento edi : ediciones.values()) {
+                if (nombreOrganizador.equals(edi.getOrganizador().getNickname())) {
+                    acumulado.add(new DataEdicion(
+                        edi.getNombre(),
+                        edi.getFechaIni(),
+                        edi.getFechaFin(),
+                        edi.getCiudad(),
+                        edi.getPais(),
+                        edi.getSigla(),
+                        edi.getFechaAltaEnPlataforma(),
+                        edi.getOrganizadorDTO(),
+                        edi.getTiposRegistroDTO(),
+                        edi.getPatrociniosDTO(),
+                        edi.getImagen(),
+                        edi.getEstadoString()
+                    ));
+                }
+            }
+        }
+    }
+    if (acumulado.isEmpty()) {
+        throw new EdicionNoExisteException("No existen ediciones con estado ACEPTADA");
+    }
+    acumulado.sort(Comparator.comparing(DataEdicion::getNombre));
+    return acumulado.toArray(new DataEdicion[0]);
+}
+
 public DataEdicion[] listarEdicionesAceptadas() throws EdicionNoExisteException {
     Map<String, Evento> eventos = manejadorEvento.getEventos();
     List<DataEdicion> acumulado = new ArrayList<>();
@@ -487,6 +571,42 @@ public DataEdicion[] listarEdicionesAceptadas() throws EdicionNoExisteException 
     return acumulado.toArray(new DataEdicion[0]);
 }
 
+public DataEdicion[] listarEdicionesAceptadasEvento(String nombreEvento) throws EdicionNoExisteException , EventoNoExisteException {
+    Evento eve = manejadorEvento.obtenerEvento(nombreEvento);
+    if (eve == null) {
+        throw new EventoNoExisteException("El evento \"" + nombreEvento + "\" no existe");
+    }
+    Map<String, EdicionEvento> ediciones = eve.getEdiciones();
+    if (ediciones == null || ediciones.isEmpty()) {
+        throw new EdicionNoExisteException("El evento \"" + nombreEvento + "\" no tiene ediciones");
+    }
+    List<DataEdicion> acumulado = new ArrayList<>();
+    for (EdicionEvento edi : ediciones.values()) {
+        if (edi.getEstado() == EstadoEdicion.ACEPTADA) {
+            acumulado.add(new DataEdicion(
+                edi.getNombre(),
+                edi.getFechaIni(),
+                edi.getFechaFin(),
+                edi.getCiudad(),
+                edi.getPais(),
+                edi.getSigla(),
+                edi.getFechaAltaEnPlataforma(),
+                edi.getOrganizadorDTO(),
+                edi.getTiposRegistroDTO(),
+                edi.getPatrociniosDTO(),
+                edi.getImagen(),
+                edi.getEstadoString()
+            ));
+        }
+    }
+    if (acumulado.isEmpty()) {
+        throw new EdicionNoExisteException(
+            "No existen ediciones ACEPTADA para el evento \"" + nombreEvento + "\"");
+    }
+    acumulado.sort(Comparator.comparing(DataEdicion::getNombre, String.CASE_INSENSITIVE_ORDER));
+    return acumulado.toArray(new DataEdicion[0]);
+}
+
 public DataEdicion[] listarEdicionesIngresadas() throws EdicionNoExisteException {
     Map<String, Evento> eventos = manejadorEvento.getEventos();
     List<DataEdicion> acumulado = new ArrayList<>();
@@ -511,6 +631,43 @@ public DataEdicion[] listarEdicionesIngresadas() throws EdicionNoExisteException
                         edi.getImagen(),
                         edi.getEstadoString()
                     ));
+                }
+            }
+        }
+    }
+    if (acumulado.isEmpty()) {
+        throw new EdicionNoExisteException("No existen ediciones con estado INGRESADA");
+    }
+    acumulado.sort(Comparator.comparing(DataEdicion::getNombre));
+    return acumulado.toArray(new DataEdicion[0]);
+}
+    
+public DataEdicion[] listarEdicionesIngresadasEvento(String nombreEvento) throws EdicionNoExisteException{
+    Map<String, Evento> eventos = manejadorEvento.getEventos();
+    List<DataEdicion> acumulado = new ArrayList<>();
+    if (eventos != null && !eventos.isEmpty()) {
+        for (Evento eve : eventos.values()) {
+            if (nombreEvento.equals(eve.getNombre())) {
+                Map<String, EdicionEvento> ediciones = eve.getEdiciones();
+                if (ediciones == null || ediciones.isEmpty()) continue;
+
+                for (EdicionEvento edi : ediciones.values()) {
+                    if ("INGRESADA".equals(edi.getEstadoString())) {
+                        acumulado.add(new DataEdicion(
+                            edi.getNombre(),
+                            edi.getFechaIni(),
+                            edi.getFechaFin(),
+                            edi.getCiudad(),
+                            edi.getPais(),
+                            edi.getSigla(),
+                            edi.getFechaAltaEnPlataforma(),
+                            edi.getOrganizadorDTO(),
+                            edi.getTiposRegistroDTO(),
+                            edi.getPatrociniosDTO(),
+                            edi.getImagen(),
+                            edi.getEstadoString()
+                        ));
+                    }
                 }
             }
         }
@@ -556,5 +713,44 @@ public DataEdicion[] listarEdicionesRechazadas() throws EdicionNoExisteException
     acumulado.sort(Comparator.comparing(DataEdicion::getNombre));
     return acumulado.toArray(new DataEdicion[0]);
 }
+
+public DataEdicion[] listarEdicionesRechazadasEvento(String nombreEvento) throws EdicionNoExisteException{
+    Map<String, Evento> eventos = manejadorEvento.getEventos();
+    List<DataEdicion> acumulado = new ArrayList<>();
+    if (eventos != null && !eventos.isEmpty()) {
+        for (Evento eve : eventos.values()) {
+            if (nombreEvento.equals(eve.getNombre())) {
+                Map<String, EdicionEvento> ediciones = eve.getEdiciones();
+                if (ediciones == null || ediciones.isEmpty()) continue;
+
+                for (EdicionEvento edi : ediciones.values()) {
+                    if ("RECHAZADA".equals(edi.getEstadoString())) {
+                        acumulado.add(new DataEdicion(
+                            edi.getNombre(),
+                            edi.getFechaIni(),
+                            edi.getFechaFin(),
+                            edi.getCiudad(),
+                            edi.getPais(),
+                            edi.getSigla(),
+                            edi.getFechaAltaEnPlataforma(),
+                            edi.getOrganizadorDTO(),
+                            edi.getTiposRegistroDTO(),
+                            edi.getPatrociniosDTO(),
+                            edi.getImagen(),
+                            edi.getEstadoString()
+                        ));
+                    }
+                }
+            }
+        }
+    }
+    if (acumulado.isEmpty()) {
+        throw new EdicionNoExisteException("No existen ediciones con estado RECHAZADA");
+    }
+    acumulado.sort(Comparator.comparing(DataEdicion::getNombre));
+    return acumulado.toArray(new DataEdicion[0]);
+}
+
+
 }
 

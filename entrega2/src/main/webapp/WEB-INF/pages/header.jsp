@@ -24,59 +24,45 @@
       <!-- Sesión -->
       <div class="col-12 col-md-3 mobile-col-center">
         <div class="navbar_sesion">
-          <%
-            Object usuarioObj = session.getAttribute("usuario");
-            boolean logueado = (usuarioObj != null);
-            String nickname = "";
-            String imagen = "PerfilSinFoto.jpg";
-            
-            if (usuarioObj != null) {
-              try {
-                // Acceso por reflexión a los getters del objeto usuario
-                Class<?> usuarioClass = usuarioObj.getClass();
-                java.lang.reflect.Method getNickname = usuarioClass.getMethod("getNickname");
-                java.lang.reflect.Method getImagen = usuarioClass.getMethod("getImagen");
-                
-                Object nicknameObj = getNickname.invoke(usuarioObj);
-                Object imagenObj = getImagen.invoke(usuarioObj);
-                
-                nickname = (nicknameObj != null) ? String.valueOf(nicknameObj) : "";
-                imagen = (imagenObj != null && !String.valueOf(imagenObj).isEmpty()) ? 
-                        String.valueOf(imagenObj) : "PerfilSinFoto.jpg";
-              } catch (Exception e) {
-                // Si falla la reflexión, usar valores por defecto
-                nickname = "Usuario";
-                imagen = "PerfilSinFoto.jpg";
-              }
-            }
-          %>
-          <%
-            if (logueado) {
-          %>
-            <a href="<%= request.getContextPath() %>/logout" class="navbar_sesion_link">
-              Cerrar Sesión
-            </a>
-            <div class="navbar_sesion_perfil">
-              <a href="<%= request.getContextPath() %>/mi-perfil">
-                <p class="navbar_username"><%= nickname %></p>
-                <img class="perfil_image" 
-                     src="<%= request.getContextPath() %>/img/<%= imagen %>" 
-                     alt="foto perfil" />
-              </a>
-            </div>
-          <%
-            } else {
-          %>
-            <a href="<%= request.getContextPath() %>/iniciarSesion" class="navbar_sesion_link">
-              Iniciar Sesión
-            </a>
-            <p>/</p>
-            <a href="<%= request.getContextPath() %>/UsuarioServlet?op=alta" class="navbar_sesion_link">
-              Registrarse
-            </a>
-          <%
-            }
-          %>
+        
+       <%
+	  // Obtener datos de sesión
+	  String nickname = (String) session.getAttribute("usuario");
+	  String imagen = (String) session.getAttribute("imagen");
+	
+	  boolean logueado = (nickname != null);
+	
+	  // Si no hay imagen guardada, usar una por defecto
+	  if (imagen == null || imagen.isEmpty()) {
+	      imagen = "PerfilSinFoto.jpg";
+	  }
+		%>
+		
+		
+<% if (logueado) { %>
+  <!-- Usuario logueado -->
+  <a href="<%= request.getContextPath() %>/LogoutServlet" class="navbar_sesion_link">
+    Cerrar Sesión
+  </a>
+  <div class="navbar_sesion_perfil">
+    <a href="<%= request.getContextPath() %>/mi-perfil">
+      <p class="navbar_username"><%= nickname %></p>
+      <img class="perfil_image" 
+           src="<%= request.getContextPath() %>/img/<%= imagen %>"
+           alt="foto perfil" />
+    </a>
+  </div>
+<% } else { %>
+  <!-- Usuario no logueado -->
+  <a href="<%= request.getContextPath() %>/LoginServlet" class="navbar_sesion_link">
+    Iniciar Sesión
+  </a>
+  <p>/</p>
+  <a href="<%= request.getContextPath() %>/UsuarioServlet?op=alta" class="navbar_sesion_link">
+    Registrarse
+  </a>
+<% } %>
+
         </div>
       </div>
     </div>

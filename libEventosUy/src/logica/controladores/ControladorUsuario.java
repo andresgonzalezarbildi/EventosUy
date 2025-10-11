@@ -160,22 +160,19 @@ public class ControladorUsuario implements IControladorUsuario {
     }
     
     @Override
-    public Usuario login(String ident, String password) throws UsuarioNoExisteException, PasswordIncorrectaException {
-
+    public DataUsuario login(String ident, String password) throws UsuarioNoExisteException, PasswordIncorrectaException {
         if (ident == null || ident.isBlank())
             throw new UsuarioNoExisteException("Identificador vacío: ingrese nickname o correo");
         if (password == null)
             throw new PasswordIncorrectaException("Contraseña inválida (null)");
-
         Usuario u = manejador.obtenerPorIdentificador(ident);
         if (u == null) {
             throw new UsuarioNoExisteException("No existe usuario con nickname/correo: " + ident.trim());
         }
-
         if (!u.verificarPassword(password)) {
             throw new PasswordIncorrectaException("Credenciales inválidas");
         }
-        return u; // puede ser Asistente u Organizador
+        return aDataUsuario(u);
     }
     
     public void limpar() {

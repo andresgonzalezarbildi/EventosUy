@@ -5,6 +5,11 @@
 <%@ page import="java.util.List" %>
 <%
 	String path = request.getContextPath();
+
+	String nickname = (String) session.getAttribute("usuario");
+	String rol = (String) session.getAttribute("rol");
+	boolean logueado = (nickname != null);
+	
 	DataEvento evento = (DataEvento) request.getAttribute("evento");
 	DataEdicion[] ediciones = (DataEdicion[]) request.getAttribute("ediciones");
 
@@ -70,6 +75,9 @@
                   <p><%= evento.getFechaAlta() %></p>
                 </div>
               </div>
+              <% if ("organizador".equalsIgnoreCase(rol)){ %>
+              	<button class="btn" onclick="window.location.href='<%=path%>/edicion'">Crear Edicion</button>
+              <%} %>
             </section>
             <aside class="col-12 col-md-5 content-ediciones">
               <div class="seccion-titulo-edicion">
