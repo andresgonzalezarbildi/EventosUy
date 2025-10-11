@@ -41,24 +41,6 @@
         <main class="col-12 col-md-9">
           <div class="contenido-principal">
 
-            <!-- Mensajes de feedback -->
-            <%
-              String mensaje = (String) request.getAttribute("mensaje");
-              String tipoMensaje = (String) request.getAttribute("tipoMensaje");
-              if (mensaje != null && !mensaje.isEmpty()) {
-                boolean ok = "success".equalsIgnoreCase(tipoMensaje);
-            %>
-              <div class="alert"
-                   style="padding:1rem;margin-bottom:1rem;border-radius:4px;
-                          background-color:<%= ok ? "#d4edda" : "#f8d7da" %>;
-                          color:<%= ok ? "#155724" : "#721c24" %>;
-                          border:1px solid <%= ok ? "#c3e6cb" : "#f5c6cb" %>;">
-                <%= mensaje %>
-              </div>
-            <%
-              }
-            %>
-
             <%
               if (eventos == null || eventos.isEmpty()) {
             %>
@@ -75,7 +57,7 @@
                   try { if (e.getDescripcion() != null) descripcion = e.getDescripcion(); } catch (Exception ignore) {}
                   try { if (e.getImagen() != null) imagen = e.getImagen(); } catch (Exception ignore) {}
 
-                  String detalleUrl = ctx + "/evento/"
+                  String detalleUrl = ctx + "/evento"
                                     + "?id=" + e.getNombre();
             %>
 

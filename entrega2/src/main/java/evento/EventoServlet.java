@@ -6,8 +6,11 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import logica.Fabrica;
+import logica.datatypes.DataEvento;
+import logica.datatypes.DataEdicion;
 import logica.interfaces.IControladorEvento;
 
+import excepciones.EdicionNoExisteException;
 import java.io.IOException;
 
 /**
@@ -17,21 +20,34 @@ import java.io.IOException;
 public class EventoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private Fabrica fabrica = Fabrica.getInstance();
-    private IControladorEvento cotroladorEventos = fabrica.getControladorEvento();
+    private IControladorEvento controladorEventos = fabrica.getControladorEvento();
        
     public EventoServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
-
+    
+    @Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		String nombreEvento = (req.getParameter("id")!= null) ? req.getParameter("id").toLowerCase() : "";
-		
+		String nombreEvento = (req.getParameter("id")!= null) ? req.getParameter("id").trim() : "";
+		if(nombreEvento != "") {
+			DataEvento dataDelEvento = controladorEventos.getUnEventoDTO(nombreEvento);
+			req.setAttribute("evento", dataDelEvento);
+			if (dataDelEvento != null) {
+				try {
+					DataEdicion[] dataEdicionesDelEvento = controladorEventos.listarEdicionesAceptadasEvento(nombreEvento);
+					System.out.println(dataEdicionesDelEvento);
+					req.setAttribute("ediciones", dataEdicionesDelEvento);
+				}catch(EdicionNoExisteException error) {
+					System.out.println(error);
+				}
+			}
+			
+			req.getRequestDispatcher("/WEB-INF/pages/consultaEvento.jsp").forward(req, res);
+		}
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
