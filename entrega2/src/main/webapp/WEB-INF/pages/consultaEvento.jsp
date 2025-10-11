@@ -93,7 +93,7 @@
                     try { if (edicion.getImagen() != null) imagen = edicion.getImagen(); } catch (Exception ignore) {}
 
                     String detalleUrl = path + "/edicion"
-                                      + "?id=" + edicion.getNombre();
+                            + "?op=consultar&id=" + edicion.getNombre();
                %>
               <div class="ediciones"
                 onclick="window.location.href='<%= detalleUrl %>'">
