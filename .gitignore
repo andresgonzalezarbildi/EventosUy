@@ -1,9 +1,11 @@
 /bin/
 bin/
+target/
 *.class
-.classpath
-entrega2web/
-*.md
-*.xml
-*.pmd
-.checkstyle
+*.war
+*.jar
+!src/main/webapp/WEB-INF/lib/logicaEventosUy.jar
+.settings/
+.metadata/
+
+
