@@ -206,7 +206,7 @@
 			        }
 			    %>
 			 </div>
-				  <a href="<%= request.getContextPath() %>/eventos">Volver a eventos</a>
+<%-- 				  <a href="<%= request.getContextPath() %>/eventos">Volver a eventos</a> --%>
   
 
 </div>
