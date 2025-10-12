@@ -1,6 +1,9 @@
 package src.test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import java.time.LocalDate;
 
@@ -8,7 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import excepciones.UsuarioNoExisteException;
-import logica.CargaDatos.CargaDatos;
+import logica.cargadatos.CargaDatos;
 import logica.controladores.ControladorEvento;
 import logica.controladores.ControladorUsuario;
 import logica.datatypes.DataEdicion;
@@ -32,7 +35,7 @@ class CargaDatosTest {
 		ce.limpiar();
 
 		carga = new CargaDatos(cu, ce);
-		carga.CargarDatosIniciales();
+		carga.cargarDatosIniciales();
 	}
 
 	@Test
@@ -76,7 +79,7 @@ class CargaDatosTest {
 	@Test
 	void testCargaIdempotente() {
 		int eventosAntes = ce.getEventosDTO().length;
-		assertDoesNotThrow(() -> carga.CargarDatosIniciales());
+		assertDoesNotThrow(() -> carga.cargarDatosIniciales());
 		int eventosDespues = ce.getEventosDTO().length;
 		assertEquals(eventosAntes, eventosDespues);
 	}

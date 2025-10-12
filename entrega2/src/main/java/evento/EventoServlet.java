@@ -38,12 +38,10 @@ public class EventoServlet extends HttpServlet {
 				req.setAttribute("evento", dataDelEvento);
 				if (dataDelEvento != null) {
 					try {
-						System.out.println(nombreEvento);
 						DataEdicion[] dataEdicionesDelEvento = controladorEventos.listarEdicionesAceptadasEvento(nombreEvento);
-						System.out.println(dataEdicionesDelEvento);
 						req.setAttribute("ediciones", dataEdicionesDelEvento);
 					}catch(EdicionNoExisteException error) {
-						System.out.println(error);
+						
 					}
 			}
 		}catch(EventoNoExisteException error) {

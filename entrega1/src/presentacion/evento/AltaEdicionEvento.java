@@ -18,6 +18,8 @@ import javax.swing.JTextField;
 
 import com.toedter.calendar.JDateChooser;
 
+import excepciones.UsuarioNoExisteException;
+import logica.Fabrica;
 import logica.datatypes.DataEvento;
 import logica.datatypes.DataUsuario;
 import logica.interfaces.IControladorEvento;
@@ -25,10 +27,12 @@ import logica.interfaces.IControladorUsuario;
 
 
 public class AltaEdicionEvento extends JInternalFrame {
+  private static final long serialVersionUID = 1L;
+  private Fabrica fabrica = Fabrica.getInstance();
+  private IControladorEvento controlEvento = fabrica.getControladorEvento();
+  private IControladorUsuario IUS = fabrica.getControladorUsuario();
 	private JComboBox<String> cbListaEventos;
 	private JComboBox<String> cbOrganizadores;
-	private IControladorEvento controlEvento;
-	private IControladorUsuario IUS;
     private JTextField textFieldNombre;
     private JTextField textFieldSigla;
     private JTextField textFieldPais;
@@ -334,10 +338,15 @@ public class AltaEdicionEvento extends JInternalFrame {
 
 	private void cargarOrganizadores() {
 	    cbOrganizadores.removeAllItems();
-	    for (DataUsuario org : IUS.getOrganizadores()) {
+	    try {
+	      DataUsuario[] organizadores = IUS.getOrganizadores();
+	    for (DataUsuario org : organizadores) {
 	        if (org != null) {
 	            cbOrganizadores.addItem(org.getNickname());
 	        }
+	    }
+	    }catch( UsuarioNoExisteException error){
+	      
 	    }
 	    cbOrganizadores.setSelectedIndex(-1);
 	}

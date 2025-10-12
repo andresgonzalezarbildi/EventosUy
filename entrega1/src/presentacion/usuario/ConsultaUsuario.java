@@ -11,7 +11,6 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ItemEvent;
-import java.util.HashMap;
 
 
 import javax.swing.BorderFactory;
@@ -70,7 +69,7 @@ public class ConsultaUsuario extends JInternalFrame {
     private JScrollPane scrollDesc;
     private JTextField txtTipo;
 
-    private JComboBox<EdicionEvento> comboEdiciones;
+    private JComboBox<DataEdicion> comboEdiciones;
     private JLabel lblEdiciones;
     private boolean cargandoEdiciones = false;
 
@@ -139,7 +138,7 @@ public class ConsultaUsuario extends JInternalFrame {
             public Component getListCellRendererComponent(JList<?> list, Object value,
                                                           int index, boolean isSelected, boolean cellHasFocus) {
                 JLabel label = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-                if (value instanceof EdicionEvento ed) {
+                if (value instanceof DataEdicion ed) {
                     label.setText(ed.getNombre() + " (" + ed.getFechaIni() + ")");
                 }
                 return label;
@@ -148,7 +147,7 @@ public class ConsultaUsuario extends JInternalFrame {
 
         comboEdiciones.addItemListener(e -> {
             if (!cargandoEdiciones && e.getStateChange() == ItemEvent.SELECTED) {
-                EdicionEvento seleccionada = (EdicionEvento) e.getItem();
+                DataEdicion seleccionada = (DataEdicion) e.getItem();
                 if (seleccionada != null) {
                     ConsultaEdicionEvento ce = new ConsultaEdicionEvento(IEV);
                     getDesktopPane().add(ce);
@@ -156,7 +155,7 @@ public class ConsultaUsuario extends JInternalFrame {
 
                     DataEvento eventoDTO = null;
                     for (DataEvento ev : IEV.getEventosDTO()) {
-                        if (ev.getNombre().equals(seleccionada.getEvento().getNombre())) {
+                        if (ev.getNombre().equals(seleccionada.getEvento())) {
                             eventoDTO = ev;
                             break;
                         }
@@ -405,9 +404,9 @@ public class ConsultaUsuario extends JInternalFrame {
             cargandoEdiciones = true;
             comboEdiciones.removeAllItems();
             try {
-                Organizador org = ICU.getOrganizador(u.getNickname());
-                HashMap<String, EdicionEvento> eds = org.getEdicionesOrganizadas();
-                for (EdicionEvento e : eds.values()) comboEdiciones.addItem(e);
+                DataUsuario org = ICU.getOrganizador(u.getNickname());
+                DataEdicion[] eds = IEV.listarEdicionesOrganizador(org.getNickname());
+                for (DataEdicion e : eds) comboEdiciones.addItem(e);
                 comboEdiciones.setSelectedIndex(-1);
                 setVis(lblEdiciones, comboEdiciones, true);
             } catch (Exception ex) {
