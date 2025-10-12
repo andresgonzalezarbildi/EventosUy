@@ -33,7 +33,7 @@ public class DataEvento {
     public void setNombre(String nombre) { this.nombre = nombre; }
     public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
     public void setSigla(String sigla) { this.sigla = sigla; }
-    public void setimagen(String imagen) {this.imagen = imagen;}
+    public void setimagen(String imagen) {this.imagen = imagen; }
     public void setFechaAlta(LocalDate fechaAlta) { this.fechaAlta = fechaAlta; }
 
     

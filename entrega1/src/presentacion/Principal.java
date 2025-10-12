@@ -176,7 +176,7 @@ public class Principal {
         JMenu menuSistema = new JMenu("Sistema");
         JMenuItem menuCarga = new JMenuItem("Carga de Datos");
         menuCarga.addActionListener(e -> {
-        	fabrica.getCargaDatos().CargarDatosIniciales();
+        	fabrica.getCargaDatos().cargarDatosIniciales();
         });
         JMenuItem menuSalir = new JMenuItem("Salir");
         menuSalir.addActionListener(e -> {
@@ -382,7 +382,9 @@ public class Principal {
         	if (AceptarRechazarEdicionInternalFrame == null || AceptarRechazarEdicionInternalFrame.isClosed()) {
         		AceptarRechazarEdicionInternalFrame = new AceptarRechazarEdicion(IEV);
         	    desktop.add(AceptarRechazarEdicionInternalFrame);
-      	} 
+      	} else {
+      	  AceptarRechazarEdicionInternalFrame.resetearVentana();
+      	}
         	AceptarRechazarEdicionInternalFrame.setVisible(true);
         	AceptarRechazarEdicionInternalFrame.toFront(); 
             ensureSize(AceptarRechazarEdicionInternalFrame, 600, 400);

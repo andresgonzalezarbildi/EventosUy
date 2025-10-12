@@ -13,6 +13,7 @@ public class DataEdicion {
     private LocalDate fechaAltaEnPlataforma;
     private String imagen;
     private String estado;
+    private String evento;
     
     private String organizador;
     private List<DataTipoRegistro> tiposRegistro;
@@ -20,7 +21,7 @@ public class DataEdicion {
 
     public DataEdicion(String nombre, LocalDate fechaIni, LocalDate fechaFin,
                        String ciudad, String pais, String sigla, LocalDate fechaAltaEnPlataforma,
-                       String organizador, List<DataTipoRegistro> tiposRegistro, List<DataPatrocinio> patrocinios, String imagen, String estado) {
+                       String organizador, List<DataTipoRegistro> tiposRegistro, List<DataPatrocinio> patrocinios, String imagen, String estado, String evento) {
         this.nombre = nombre;
         this.fechaIni = fechaIni;
         this.fechaFin = fechaFin;
@@ -33,6 +34,7 @@ public class DataEdicion {
         this.patrocinios = patrocinios;
         this.imagen = imagen;
         this.estado = estado;
+        this.evento = evento;
     }
 
     // Getters
@@ -48,6 +50,7 @@ public class DataEdicion {
     public List<DataTipoRegistro> getTiposRegistro() { return tiposRegistro; }
     public List<DataPatrocinio> getPatrocinios() { return patrocinios; }
     public String getEstado() { return estado; }
+    public String getEvento() { return evento; }
     @Override
     public String toString() {
         return nombre;

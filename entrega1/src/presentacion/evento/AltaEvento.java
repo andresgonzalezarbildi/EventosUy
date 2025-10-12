@@ -29,15 +29,16 @@ import javax.swing.border.EmptyBorder;
 
 import com.toedter.calendar.JDateChooser;
 
-import logica.clases.Categoria;
+import excepciones.EventoRepetidoException;
 import logica.interfaces.IControladorEvento;
-import logica.manejadores.ManejadorEvento;
+import logica.Fabrica;
 import presentacion.UIUtils;
 
 @SuppressWarnings("serial")
 public class AltaEvento extends JInternalFrame {
 
-    private IControladorEvento controlEvento;
+    private Fabrica fabrica = Fabrica.getInstance();
+    private IControladorEvento controlEvento = fabrica.getControladorEvento();
     private JTextField tfNombre;
     private JTextArea tfDescripcion;
     private JTextField tfSigla;
@@ -150,11 +151,10 @@ public class AltaEvento extends JInternalFrame {
         modeloSeleccionadas = new DefaultListModel<>();
 
      // Pedir categorías y armar lista de Strings
-        ManejadorEvento manejador = ManejadorEvento.getInstance();
         List<String> nombres = new ArrayList<>();
-        for (Categoria c : manejador.getCategorias()) {
-            if (c != null && c.getNombre() != null) {
-                nombres.add(c.getNombre());
+        for (String c : controlEvento.listarCategorias()) {
+            if (c != null) {
+                nombres.add(c);
             }
         }
 
@@ -258,9 +258,9 @@ public class AltaEvento extends JInternalFrame {
 
         // Volver a cargar categorías en una lista temporal
         List<String> nombres = new ArrayList<>();
-        for (Categoria c : ManejadorEvento.getInstance().getCategorias()) {
-            if (c != null && c.getNombre() != null && !modeloSeleccionadas.contains(c.getNombre())) {
-                nombres.add(c.getNombre());
+        for (String c : controlEvento.listarCategorias()) {
+            if (c != null && !modeloSeleccionadas.contains(c)) {
+                nombres.add(c);
             }
         }
 
@@ -308,8 +308,8 @@ public class AltaEvento extends JInternalFrame {
             JOptionPane.showMessageDialog(this, "Evento guardado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
             limpiarFormulario();
             setVisible(false);
-        } catch (IllegalArgumentException ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage(), "Datos inválidos", JOptionPane.ERROR_MESSAGE);
+        } catch ( EventoRepetidoException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Datos inválidos o Usuario ya existente", JOptionPane.ERROR_MESSAGE);
         }
     }
 
