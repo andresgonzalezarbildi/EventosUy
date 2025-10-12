@@ -141,7 +141,7 @@ public class EdicionServlet extends HttpServlet {
     private void altaEdicion(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
 
-        // --- 1. Datos de sesión ---
+        
         HttpSession sesion = req.getSession(false);
         String rol = "visitante";
         String nickname = null;
@@ -154,7 +154,7 @@ public class EdicionServlet extends HttpServlet {
         req.setAttribute("rol", rol);
         req.setAttribute("nickname", nickname);
 
-        // --- 2. Parámetros del formulario ---
+    
         final String nombreEdicion = req.getParameter("nombre");
         final String sigla = req.getParameter("sigla");
         final String ciudad = req.getParameter("ciudad");
@@ -163,7 +163,7 @@ public class EdicionServlet extends HttpServlet {
         final String fechaInicioStr = req.getParameter("fechaInicio");
         final String fechaFinStr = req.getParameter("fechaFin");
 
-        // Validación mínima
+       
         if (nombreEdicion == null || nombreEdicion.isEmpty() ||
             sigla == null || sigla.isEmpty() ||
             nombreEvento == null || nombreEvento.isEmpty()) {
@@ -173,7 +173,7 @@ public class EdicionServlet extends HttpServlet {
             return;
         }
 
-        // --- 3. Parseo de fechas ---
+    
         LocalDate fechaInicio = null;
         LocalDate fechaFin = null;
         try {
@@ -185,7 +185,7 @@ public class EdicionServlet extends HttpServlet {
             return;
         }
 
-        // --- 4. Subida de imagen ---
+      //IMAGENNNNNNNNNNNNN
         String nombreImagenGuardada = null;
         try {
             Part filePart = req.getPart("imagen");
@@ -194,7 +194,7 @@ public class EdicionServlet extends HttpServlet {
                 String contentType = filePart.getContentType();
                 if (contentType != null && contentType.startsWith("image/")) {
 
-                    // Obtener extensión
+                    
                     String submitted = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
                     String ext = "";
                     int dot = submitted.lastIndexOf('.');
@@ -202,10 +202,10 @@ public class EdicionServlet extends HttpServlet {
                         ext = submitted.substring(dot).toLowerCase();
                     }
 
-                    // Crear nombre único
+                    
                     String nuevoNombre = UUID.randomUUID().toString().replace("-", "") + ext;
 
-                    // Ruta a /img dentro del proyecto desplegado
+                    
                     String imgDirPath = getServletContext().getRealPath("/img");
                     if (imgDirPath != null) {
                         Path imgDir = Paths.get(imgDirPath);
@@ -227,7 +227,7 @@ public class EdicionServlet extends HttpServlet {
             return;
         }
 
-        // --- 5. Alta de edición ---
+       
         try {
             controladorEventos.altaEdicionEvento(
                     nombreEvento,
@@ -240,9 +240,7 @@ public class EdicionServlet extends HttpServlet {
                     LocalDate.now(),  
                     nickname,         
                     nombreImagenGuardada
-            );
-
-            // --- 6. Redirección exitosa ---
+            );   
             res.sendRedirect(req.getContextPath() + "/evento?op=consultar&id=" + nombreEvento);
 
         } catch (UsuarioNoExisteException e) {
