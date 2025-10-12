@@ -1,15 +1,17 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page import="java.time.LocalDate" %>
+
 
 
 <%
-String fechaIni   = (String) request.getAttribute("fechaIni");
-String fechaFin   = (String) request.getAttribute("fechaFin");
+LocalDate fechaIni   = (LocalDate) request.getAttribute("fechaIni");
+LocalDate fechaFin   = (LocalDate) request.getAttribute("fechaFin");
 String ciudad     = (String) request.getAttribute("ciudad");
 String pais       = (String) request.getAttribute("pais");
 String nomEvento  = (String) request.getAttribute("nomEvento");
 String nomTipoReg = (String) request.getAttribute("nomTipoReg");
 String nomEdicion = (String) request.getAttribute("nomEdicion");
-String costo      = (String) request.getAttribute("costo");
+Integer costo      = (Integer) request.getAttribute("costo");
 %>
 
 
@@ -36,14 +38,16 @@ String costo      = (String) request.getAttribute("costo");
       <main class="col-12 col-md-9 py-4">
         <div class="row justify-content-center">
           <div class="col-12 col-md-11">
-		           <form class="p-4 p-md-5 rounded-4 shadow-sm bg-white"
-		      action="<%=request.getContextPath()%>/registroEd"
-		      method="post"> <!-- do post  -->
+		          
+		      <form class="p-4 p-md-5 rounded-4 shadow-sm bg-white"
+				      action="<%=request.getContextPath()%>/registroEd"
+				      method="post">
+		      
 
-			<input type="hidden" name="opt" value="alta">
-			<input type="hidden" name="id" value="<%= nomEvento %>">
-			<input type="hidden" name="nombre" value="<%= nomEdicion %>">
-
+			<input type="hidden" name="opt" value="alta"> 
+			<input type="hidden" name="id" value="<%= nomTipoReg %>"> 
+			<input type="hidden" name="idEdicion" value="<%= nomEdicion %>"> 
+			<input type="hidden" name="nickname" value="<%= (String)session.getAttribute("usuario") %>"> 
 
               <div class="row gy-2 mb-3">
                 <p class="col-12 col-md-6"><span class="negrita">Nombre Evento:</span><%= nomEvento %></p>
