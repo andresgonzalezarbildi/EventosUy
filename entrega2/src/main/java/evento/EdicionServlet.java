@@ -92,20 +92,15 @@ public class EdicionServlet extends HttpServlet {
         	        	 DataRegistro registroAsistente = controladorEventos.listarUnRegistroDeUsuario(nombreEdicion,nickname);
         	        	 req.setAttribute("registroAsistente", registroAsistente);
         	        }     	                              
-        	            DataEvento[] eventosArray = null;
-        	            List<DataEvento> eventosRelacionados = Collections.emptyList();
+        	            String nombreEvento = controladorEventos.getEventoDeUnaEdicion(nombreEdicion);
+                        DataEvento dataEvento = controladorEventos.getUnEventoDTO(nombreEvento);
+                        req.setAttribute("evento", dataEvento);
 
-        	            try {
-        	                eventosArray = controladorEventos.listarEventoExistentes();
-        	                if (eventosArray != null) {
-        	                	eventosRelacionados = Arrays.asList(eventosArray);
-        	                }
-        	            } catch (EventoNoExisteException e) {}
-        	            req.setAttribute("eventosRelacionados", eventosRelacionados);    
-                    DataEdicion dataEd = controladorEventos.getInfoEdicion(nombreEdicion);
-                    DataRegistro[] registrosEd = controladorEventos.listarRegistrosDeEdicion(nombreEdicion);  
-                    req.setAttribute("registrosEd", registrosEd);
-                    req.setAttribute("edicion", dataEd);
+                        DataEdicion dataEd = controladorEventos.getInfoEdicion(nombreEdicion);
+                        DataRegistro[] registrosEd = controladorEventos.listarRegistrosDeEdicion(nombreEdicion);
+                        req.setAttribute("registrosEd", registrosEd);
+                        req.setAttribute("edicion", dataEd);
+
                     req.getRequestDispatcher("/WEB-INF/pages/consultaEdicion.jsp").forward(req, res);
                     break;
                 	default:

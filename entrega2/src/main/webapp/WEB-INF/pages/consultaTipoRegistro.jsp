@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="logica.datatypes.DataTipoRegistro" %>
 <%@ page import="logica.datatypes.DataEdicion" %>
+<%@ page import="logica.datatypes.DataRegistro" %>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -33,30 +34,37 @@
 		    DataTipoRegistro tipo = (DataTipoRegistro) request.getAttribute("tipoRegistro");
 		    String evento = (String) request.getAttribute("evento");
 		    String nombreEdicion = (String) request.getAttribute("nombreEdicion");
+		    String rol = (String) request.getAttribute("rol");
+		    String nickname = (String) request.getAttribute("nickname");
+		    DataRegistro registroAsistente = (DataRegistro) request.getAttribute("registroAsistente");
 		  %>
 		
 		  <% if (tipo != null) { %>
-		<dl>
-			<dt><strong>Nombre:</strong> </dt>
-		    <dd><%=tipo.getNombre()%></dd>
-		    <dt><strong>Evento:</strong> </dt>
-		    <dd><%=evento%></dd>
-		    <dt><strong>Edición:</strong></dt> 
-		    <dd><%=nombreEdicion%></dd>
-		    <dt><strong>Descripción:</strong> </dt>
-		    <dd><%=tipo.getDescripcion()%></dd>
-		    <dt><strong>Costo:</strong> </dt>
-		    <dd><%=tipo.getCosto()%></dd>
-		    <dt><strong>Cupos:</strong> </dt>
-		    <dd><%=tipo.getCupo()%></dd>
-		
-		    <a href="<%=request.getContextPath()%>/TipoRegistroServlet?op=listar&evento=<%=evento%>&edicion=<%=nombreEdicion%>" class="btn btn-secondary mt-3">
-		      Registrarse
-		    </a>
-		  
-		  <% } else { %>
-		    <p>No se encontró el tipo de registro.</p>
-		  <% } %>
+  <dl>
+    <dt><strong>Nombre:</strong> </dt>
+    <dd><%=tipo.getNombre()%></dd>
+    <dt><strong>Evento:</strong> </dt>
+    <dd><%=evento%></dd>
+    <dt><strong>Edición:</strong></dt> 
+    <dd><%=nombreEdicion%></dd>
+    <dt><strong>Descripción:</strong> </dt>
+    <dd><%=tipo.getDescripcion()%></dd>
+    <dt><strong>Costo:</strong> </dt>
+    <dd><%=tipo.getCosto()%></dd>
+    <dt><strong>Cupos:</strong> </dt>
+    <dd><%=tipo.getCupo()%></dd>
+  </dl>
+
+  <% if ("asistente".equalsIgnoreCase(rol) && (registroAsistente == null)) { %>
+      <a href="<%=request.getContextPath()%>/TipoRegistroServlet?op=listar&evento=<%=evento%>&edicion=<%=nombreEdicion%>" class="btn btn-secondary mt-3">
+        Registrarse
+      </a>
+  <% } else { %>
+      
+  <% } %>
+
+<% } %>
+
 
 		</dl> 	
 		</main>

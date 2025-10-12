@@ -220,7 +220,7 @@
 				</div>
 
 
-				<a href="<%= request.getContextPath() %>/eventos">Volver a eventos</a>
+				
 
   
 

@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import logica.Fabrica;
 import logica.datatypes.DataEdicion;
+import logica.datatypes.DataRegistro;
 import logica.datatypes.DataTipoRegistro;
 import logica.interfaces.IControladorEvento;
 
@@ -155,8 +156,29 @@ public class TipoRegistroServlet extends HttpServlet {
 
     private void mostrarConsulta(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException, EdicionNoExisteException {
-
-        String nombreEdicion = req.getParameter("idEdicion");
+    	String nombreEdicion = req.getParameter("idEdicion");
+    		String rol = null;
+    		String nickname = null;
+    		HttpSession sesion = req.getSession(false);
+	        if (sesion != null) {
+	            rol = (String) sesion.getAttribute("rol");
+	            nickname = (String) sesion.getAttribute("usuario");
+	            req.setAttribute("rol", rol);
+	            req.setAttribute("nickname", nickname);
+	        } else {
+	        	
+	            req.setAttribute("rol", "visitante");
+	            
+	        }
+	        
+	        if ("asistente".equalsIgnoreCase(rol)){
+	        DataRegistro registroAsistente = ce.listarUnRegistroDeUsuario(nombreEdicion,nickname);
+       	 	req.setAttribute("registroAsistente", registroAsistente);
+	        } else { DataRegistro registroAsistente = null;
+	        req.setAttribute("registroAsistente", registroAsistente);}
+	        
+	        
+        
         String evento =  ce.getEventoDeUnaEdicion(nombreEdicion);;
         String nombre = req.getParameter("id");
         DataEdicion edicion = ce.getInfoEdicion(nombreEdicion);
