@@ -20,6 +20,7 @@
 
 <%
     DataEdicion ed = (DataEdicion) request.getAttribute("edicion");
+	DataEvento evento = (DataEvento) request.getAttribute("evento");
 	DataRegistro registroAsistente = (DataRegistro) request.getAttribute("registroAsistente");
     String rol = (String) request.getAttribute("rol");
     String nickname = (String) request.getAttribute("nickname");
@@ -83,7 +84,7 @@
 		            if (tipos != null && !tipos.isEmpty()) {
 		                for (DataTipoRegistro tipo : tipos) {
 		        %>
-		                    <a href="<%= request.getContextPath() %>/tipoDeRegistro?nombre=<%= tipo.getNombre() %>"
+		                    <a href="<%= request.getContextPath() %>/TipoRegistroServlet?op=consulta&id=<%= tipo.getNombre() %>&idEdicion=<%= ed.getNombre() %>"
 		                       style="display:inline-block; background:#f0f0f0; padding:0.4rem 0.8rem;
 		                              border-radius:12px; text-decoration:none; color:inherit;">
 		                        <%= tipo.getNombre() %>
@@ -96,7 +97,16 @@
 		        <%
 		            }
 		        %>
+		        		  
 		    </div>
+		     <% if ("organizador".equalsIgnoreCase(rol) 
+		       && nickname != null 
+		       && ed.getOrganizador() != null 
+		       && ed.getOrganizador().equalsIgnoreCase(nickname)) { %>
+		    <button onclick="window.location.href='<%= request.getContextPath() %>/TipoRegistroServlet?op=alta&idEdicion=<%= ed.getNombre() %>'">
+		        Agregar Tipo de Registro
+		    </button>
+			<% } %>
 		</section>
 
           <!-- Organizador -->
@@ -147,6 +157,9 @@
 		    <%
 		    }
 		    %>
+
+
+				    
 		  </div>
 			</section>
 				<%
@@ -175,38 +188,40 @@
 				} // TERMINA ASISTENTEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
 				%>
 				 </div>
-				 <!-- ACA SE LISTAN A LA DERECHA, EN UNA COLUMNA, LOS EVENTOS PARA QUE SE PUEDA NAVEGAR COMO ELLOS QUERIAN -->	
-			<div style="display:flex; flex-direction:column; align-items:center;">
-			    <%
-			        List<DataEvento> eventos = (List<DataEvento>) request.getAttribute("eventosRelacionados");
-			        if (eventos != null) {
-			            for (DataEvento ev : eventos) {
-			                String nombreEvento = ev.getNombre();
-			                String imagenEvento = (ev.getImagen() != null && !ev.getImagen().isEmpty()) 
-			                                      ? ev.getImagen() 
-			                                      : "EventoSinFoto.png"; 
-			    %>
-			        <div style="margin-bottom:12px; text-align:center;">
-			            <a href="<%= request.getContextPath() %>/evento?op=consultar&id=<%= nombreEvento %>">
-			                <img src="<%= request.getContextPath() %>/img/<%= imagenEvento %>" 
-			                     alt="Consultar Evento"
-			                     style="max-width:150px; width:100%; cursor:pointer; border-radius:8px; 
-			                            box-shadow:0 2px 6px rgba(0,0,0,0.2);">
-			            </a>
-			            <div style="margin-top:4px; font-size:0.9rem; color:#555;">
-			                <%= ev.getNombre() %>
-			            </div>
-			        </div>			
-			    <%
-			            } // termina el for
-			        } else {
-			    %>
-			        <p style="text-align:center; color:#777;">No hay eventos disponibles.</p>
-			    <%
-			        }
-			    %>
-			 </div>
-<%-- 				  <a href="<%= request.getContextPath() %>/eventos">Volver a eventos</a> --%>
+				 
+				 
+				<div style="display:flex; flex-direction:column; align-items:center;">
+				<%
+				    DataEvento ev = (DataEvento) request.getAttribute("evento");
+				    if (ev != null) {
+				        String nombreEvento = ev.getNombre();
+				        String imagenEvento = (ev.getImagen() != null && !ev.getImagen().isEmpty())
+				                              ? ev.getImagen()
+				                              : "EventoSinFoto.png";
+				%>
+				    <div style="margin-bottom:12px; text-align:center;">
+				        <a href="<%= request.getContextPath() %>/evento?op=consultar&id=<%= nombreEvento %>">
+				            <img src="<%= request.getContextPath() %>/img/<%= imagenEvento %>" 
+				                 alt="Consultar Evento"
+				                 style="max-width:150px; width:100%; cursor:pointer; border-radius:8px; 
+				                        box-shadow:0 2px 6px rgba(0,0,0,0.2);">
+				        </a>
+				        <div style="margin-top:4px; font-size:0.9rem; color:#555;">
+				            <%= ev.getNombre() %>
+				        </div>
+				    </div>
+				<%
+				    } else {
+				%>
+				    <p style="text-align:center; color:#777;">No hay evento disponible.</p>
+				<%
+				    }
+				%>
+				</div>
+
+
+				<a href="<%= request.getContextPath() %>/eventos">Volver a eventos</a>
+
   
 
 </div>

@@ -1,6 +1,7 @@
 package tiporegistro;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 
 import excepciones.EdicionNoExisteException;
 import excepciones.TipoRegistroRepetidoException;
@@ -9,6 +10,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import logica.Fabrica;
 import logica.datatypes.DataEdicion;
 import logica.datatypes.DataTipoRegistro;
@@ -40,7 +42,12 @@ public class TipoRegistroServlet extends HttpServlet {
 		        listarTiposRegistro(req, res);
 		        break;
 		    case "consulta":
-		        mostrarConsulta(req, res);
+			try {
+				mostrarConsulta(req, res);
+			} catch (ServletException | IOException | EdicionNoExisteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		        break;
 		    default:
 		        res.sendError(HttpServletResponse.SC_NOT_FOUND, "Operación no disponible");
@@ -70,20 +77,27 @@ public class TipoRegistroServlet extends HttpServlet {
     private void mostrarFormularioAlta(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
 
-        String nicknameLogueado = (String) req.getSession().getAttribute("usuario");
-        String nombreEvento = req.getParameter("idEvento");
         String nombreEdicion = req.getParameter("idEdicion");
+        String nombreEvento = ce.getEventoDeUnaEdicion(nombreEdicion);
 
         DataEdicion ed = null;
         if (nombreEdicion != null && !nombreEdicion.isEmpty()) {
             try {
                 ed = ce.getInfoEdicion(nombreEdicion);
             } catch (EdicionNoExisteException e) {
+                ed = null;
             }
         }
 
+        if (ed == null) {
+            res.sendError(HttpServletResponse.SC_BAD_REQUEST, "Edición no encontrada");
+            return;
+        }
+
         req.setAttribute("evento", nombreEvento);
-        req.setAttribute("edicionSeleccionada", ed); 
+        req.setAttribute("edicion", ed);
+        req.setAttribute("nombreEdicion", nombreEdicion);
+
         req.getRequestDispatcher("/WEB-INF/pages/altaTipoRegistro.jsp").forward(req, res);
     }
 
@@ -103,8 +117,8 @@ public class TipoRegistroServlet extends HttpServlet {
 
         try {
             ce.altaTipoRegistro(evento, edicion, nombre, descripcion, costo, cupo);
-            res.sendRedirect(req.getContextPath() + "/TipoRegistroServlet?op=consulta&evento=" 
-                + evento + "&edicion=" + edicion + "&nombre=" + nombre);
+            res.sendRedirect(req.getContextPath() + "/edicion?op=consultar&id=" 
+                    + URLEncoder.encode(edicion, "UTF-8"));
         } catch (TipoRegistroRepetidoException e) {
             req.setAttribute("error", "Ya existe un tipo de registro con ese nombre para esta edición.");
             req.setAttribute("evento", evento);
@@ -116,6 +130,7 @@ public class TipoRegistroServlet extends HttpServlet {
             req.getRequestDispatcher("/WEB-INF/pages/altaTipoRegistro.jsp").forward(req, res);
         }
     }
+
 
     private void listarTiposRegistro(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
@@ -139,22 +154,25 @@ public class TipoRegistroServlet extends HttpServlet {
     }
 
     private void mostrarConsulta(HttpServletRequest req, HttpServletResponse res)
-            throws ServletException, IOException {
+            throws ServletException, IOException, EdicionNoExisteException {
 
-        String edicion = req.getParameter("idEdicion");
-        String evento =  ce.getEventoDeUnaEdicion(edicion);;
+        String nombreEdicion = req.getParameter("idEdicion");
+        String evento =  ce.getEventoDeUnaEdicion(nombreEdicion);;
         String nombre = req.getParameter("id");
+        DataEdicion edicion = ce.getInfoEdicion(nombreEdicion);
 
         if (evento == null || edicion == null || nombre == null) {
             res.sendError(HttpServletResponse.SC_BAD_REQUEST, "Faltan parámetros");
             return;
         }
 
-        DataTipoRegistro tipoRegistro = ce.getTipoRegistro(evento, edicion, nombre);
+        DataTipoRegistro tipoRegistro = ce.getTipoRegistro(evento, nombreEdicion, nombre);
+		req.setAttribute("edicion", edicion);
 		req.setAttribute("tipoRegistro", tipoRegistro);
 		req.setAttribute("evento", evento);
-		req.setAttribute("edicion", edicion);
+		req.setAttribute("nombreEdicion", nombreEdicion);
 		req.getRequestDispatcher("/WEB-INF/pages/consultaTipoRegistro.jsp").forward(req, res);
     }
 
 }
+

@@ -21,8 +21,7 @@ import logica.datatypes.DataEdicion;
 import logica.datatypes.DataUsuario;
 import logica.Fabrica;
 
-//import logica.clases.Asistente;
-//import logica.clases.Organizador;
+
 
 
 @WebServlet(name="UsuarioServlet", urlPatterns={"/UsuarioServlet"})
