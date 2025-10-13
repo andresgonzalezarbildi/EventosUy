@@ -45,7 +45,7 @@
               if (eventos == null || eventos.isEmpty()) {
             %>
               <!-- Sin eventos: placeholder -->
-              <h1>No hay Eventos :(</h1>
+              <h1>No hay Eventos</h1>
             <%
               } else {
                 for (DataEvento e : eventos) {

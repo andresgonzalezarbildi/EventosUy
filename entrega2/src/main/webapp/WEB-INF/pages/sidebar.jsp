@@ -29,7 +29,7 @@
         <div class="content-bar-seccion-list-options" onclick="location.href='<%= request.getContextPath() %>/UsuarioServlet?op=listar'">
           <span>Usuarios</span>
         </div>
-        <div class="content-bar-seccion-list-options" onclick="window.location.href='<%= request.getContextPath() %>/instituciones'">
+        <div class="content-bar-seccion-list-options" onclick="window.location.href='<%= request.getContextPath() %>/'">
           <span>Instituciónes</span>
         </div>
       </div>

@@ -79,11 +79,11 @@
 
       <div class="d-flex justify-content-between mt-3">
         <button type="submit" class="btn btn-primary">Iniciar sesión</button>
-        <button type="reset" class="btn btn-secondary" onclick="window.location.href='../index.jsp'">Cancelar</button>
+        <button type="reset" class="btn btn-secondary" onclick="window.location.href='../entrega2'">Cancelar</button>
       </div>
     </form>
   </div>
 
-  <jsp:include page="footer.jsp" />
+  <jsp:include page="footer.jsp" />	
 </body>
 </html>

@@ -31,6 +31,8 @@ public class EventoServlet extends HttpServlet {
     
     @Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+    	req.setCharacterEncoding("UTF-8");
+    	res.setCharacterEncoding("UTF-8");
 		String nombreEvento = (req.getParameter("id")!= null) ? req.getParameter("id").trim() : "";
 		if(nombreEvento != "") {
 			try {
@@ -54,6 +56,8 @@ public class EventoServlet extends HttpServlet {
 
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}

@@ -3,6 +3,7 @@
 <%
     String nomEv = (String) request.getAttribute("nomEv");
     String path = request.getContextPath();
+    String error = (String) request.getAttribute("error");
 %>	
 
 <!DOCTYPE html>
@@ -16,7 +17,6 @@
   <link rel="stylesheet" href="<%=path%>/estilos/base.css">
 </head>
 
-
 <body>
   <jsp:include page="header.jsp"/>
 
@@ -28,15 +28,18 @@
         <main style="max-width:600px;margin:2rem auto;padding:1rem;background:#fff;border:1px solid var(--color-border);border-radius:var(--radius);">
           <h2 style="margin-bottom:1rem;color:var(--color-primary);">Alta de Edición de Evento</h2>
 
+          <% if (error != null && !error.isEmpty()) { %>
+            <div style="color: red; margin-bottom: 1rem;">
+              <%= error %>
+            </div>
+          <% } %>
+
           <form id="formEdicionEvento"
                 action="<%=path%>/edicion"
                 method="post"
                 enctype="multipart/form-data">
 
-            <!-- Campo oculto para el tipo de operación -->
             <input type="hidden" name="opt" value="alta">
-
-            <!-- Campo oculto con el ID del evento -->
             <input type="hidden" name="id" value="<%= nomEv %>">
 
             <label>Evento:</label>
@@ -76,4 +79,3 @@
   <jsp:include page="footer.jsp"/>
 </body>
 </html>
-
