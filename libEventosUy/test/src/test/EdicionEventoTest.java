@@ -1,6 +1,6 @@
 package src.test;
 
-import static org.junit.jupiter.api.Assertions.*;
+// import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import logica.clases.EdicionEvento;
@@ -12,9 +12,15 @@ import logica.clases.Registro;
 import logica.clases.Nivel;
 import logica.datatypes.DataTipoRegistro;
 import logica.datatypes.DataPatrocinio;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
 
 public class EdicionEventoTest {
     
@@ -130,7 +136,7 @@ public class EdicionEventoTest {
     void testGetOrganizador() {
         assertNull(edicion.getOrganizador());
         
-        Organizador org = new Organizador("testOrg", "Test Organizador", "test@example.com", "Test Description", "http://test.com");
+        Organizador org = new Organizador("testOrg", "Test Organizador", "test@example.com", "PerfilSinFoto.png", "password", "Test Description", "http://test.com");
         edicion.setOrganizador(org);
         
         assertEquals(org, edicion.getOrganizador());
@@ -156,7 +162,7 @@ public class EdicionEventoTest {
     void testGetOrganizadorDTO() {
         assertEquals("", edicion.getOrganizadorDTO());
         
-        Organizador org = new Organizador("testOrg", "Test Organizador", "test@example.com", "Test Description", "http://test.com");
+        Organizador org = new Organizador("testOrg", "Test Organizador", "test@example.com", "PerfilSinFoto.png", "password", "Test Description", "http://test.com");
         edicion.setOrganizador(org);
         
         assertEquals("testOrg", edicion.getOrganizadorDTO());
@@ -189,7 +195,7 @@ public class EdicionEventoTest {
     
     @Test
     void testSetOrganizador() {
-        Organizador org = new Organizador("testOrg", "Test Organizador", "test@example.com", "Test Description", "http://test.com");
+        Organizador org = new Organizador("testOrg", "Test Organizador", "test@example.com", "PerfilSinFoto.png", "password", "Test Description", "http://test.com");
         edicion.setOrganizador(org);
         
         assertEquals(org, edicion.getOrganizador());
@@ -203,8 +209,8 @@ public class EdicionEventoTest {
         assertTrue(edicion.hayCupo(tipo));
         
         // Agregar 2 registros para llenar el cupo
-        Asistente asis1 = new Asistente("asis1", "Asistente 1", "asis1@test.com", "Apellido 1", LocalDate.of(1990, 1, 1));
-        Asistente asis2 = new Asistente("asis2", "Asistente 2", "asis2@test.com", "Apellido 2", LocalDate.of(1990, 1, 1));
+        Asistente asis1 = new Asistente("asis1", "Asistente 1", "asis1@test.com", "PerfilSinFoto.png", "password", "Apellido 1", LocalDate.of(1990, 1, 1));
+        Asistente asis2 = new Asistente("asis2", "Asistente 2", "asis2@test.com", "PerfilSinFoto.png", "password", "Apellido 2", LocalDate.of(1990, 1, 1));
         
         Registro reg1 = new Registro(LocalDate.now(), 100, tipo, edicion, asis1);
         Registro reg2 = new Registro(LocalDate.now(), 100, tipo, edicion, asis2);
@@ -217,7 +223,7 @@ public class EdicionEventoTest {
     
     @Test
     void testEstaRegistrado() {
-        Asistente asis = new Asistente("testAsis", "Test Asistente", "test@test.com", "Test Apellido", LocalDate.of(1990, 1, 1));
+        Asistente asis = new Asistente("testAsis", "Test Asistente", "test@test.com", "PerfilSinFoto.png", "password", "Test Apellido", LocalDate.of(1990, 1, 1));
         assertFalse(edicion.estaRegistrado(asis));
         
         TipoRegistro tipo = new TipoRegistro("Test Tipo", "Test Description", 100, 50);
@@ -231,7 +237,7 @@ public class EdicionEventoTest {
     
     @Test
     void testAgregarRegistro() {
-        Asistente asis = new Asistente("testAsis", "Test Asistente", "test@test.com", "Test Apellido", LocalDate.of(1990, 1, 1));
+        Asistente asis = new Asistente("testAsis", "Test Asistente", "test@test.com", "PerfilSinFoto.png", "password", "Test Apellido", LocalDate.of(1990, 1, 1));
         TipoRegistro tipo = new TipoRegistro("Test Tipo", "Test Description", 100, 50);
         edicion.agregarTipoDeRegistro("Test Tipo", tipo);
         
@@ -246,7 +252,7 @@ public class EdicionEventoTest {
     void testGetRegistros() {
         assertTrue(edicion.getRegistros().isEmpty());
         
-        Asistente asis = new Asistente("testAsis", "Test Asistente", "test@test.com", "Test Apellido", LocalDate.of(1990, 1, 1));
+        Asistente asis = new Asistente("testAsis", "Test Asistente", "test@test.com", "PerfilSinFoto.png", "password", "Test Apellido", LocalDate.of(1990, 1, 1));
         TipoRegistro tipo = new TipoRegistro("Test Tipo", "Test Description", 100, 50);
         edicion.agregarTipoDeRegistro("Test Tipo", tipo);
         

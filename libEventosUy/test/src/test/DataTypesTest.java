@@ -1,7 +1,5 @@
 package src.test;
 
-import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import logica.datatypes.DataUsuario;
 import logica.datatypes.DataEvento;
@@ -10,6 +8,12 @@ import logica.datatypes.DataEdicion;
 import logica.datatypes.DataTipoRegistro;
 import logica.datatypes.DataPatrocinio;
 import logica.datatypes.DataRegistro;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +23,7 @@ public class DataTypesTest {
     @Test
     void testDataUsuario() {
         LocalDate fechaNac = LocalDate.of(1990, 1, 1);
-        DataUsuario dataUsuario = new DataUsuario("testUser", "Test User", "test@example.com", "Asistente");
+        DataUsuario dataUsuario = new DataUsuario("testUser", "Test User", "test@example.com", "PerfilSinFoto.png", "Asistente");
         
         assertEquals("testUser", dataUsuario.getNickname());
         assertEquals("Test User", dataUsuario.getNombre());
@@ -40,7 +44,7 @@ public class DataTypesTest {
     
     @Test
     void testDataUsuarioOrganizador() {
-        DataUsuario dataUsuario = new DataUsuario("testOrg", "Test Organizador", "test@example.com", "Organizador");
+        DataUsuario dataUsuario = new DataUsuario("testOrg", "Test Organizador", "test@example.com", "PerfilSinFoto.png", "Organizador");
         
         assertEquals("Organizador", dataUsuario.getTipo());
         dataUsuario.setDescripcion("Test Description");
@@ -56,7 +60,7 @@ public class DataTypesTest {
         categorias.add("Test Category");
         LocalDate fecha = LocalDate.now();
         
-        DataEvento dataEvento = new DataEvento("Test Event", "Test Description", "TE", fecha, categorias);
+        DataEvento dataEvento = new DataEvento("Test Event", "Test Description", "TE", fecha, categorias, "EventoSinFoto.png");
         
         assertEquals("Test Event", dataEvento.getNombre());
         assertEquals("Test Description", dataEvento.getDescripcion());
@@ -70,7 +74,7 @@ public class DataTypesTest {
         List<String> categorias = new ArrayList<>();
         LocalDate fecha = LocalDate.now();
         
-        DataEvento dataEvento = new DataEvento("Test Event", "Test Description", "TE", fecha, categorias);
+        DataEvento dataEvento = new DataEvento("Test Event", "Test Description", "TE", fecha, categorias, "EventoSinFoto.png");
         
         assertNotNull(dataEvento.getCategorias());
         assertTrue(dataEvento.getCategorias().isEmpty());
@@ -82,7 +86,7 @@ public class DataTypesTest {
         categorias.add("Test Category");
         LocalDate fecha = LocalDate.now();
         
-        DataEvento dataEvento = new DataEvento("Test Event", "Test Description", "TE", fecha, categorias);
+        DataEvento dataEvento = new DataEvento("Test Event", "Test Description", "TE", fecha, categorias, "EventoSinFoto.png");
         
         assertEquals("Test Event", dataEvento.toString());
     }
@@ -93,7 +97,7 @@ public class DataTypesTest {
         categorias.add("Test Category");
         LocalDate fecha = LocalDate.now();
         
-        DataEvento dataEvento = new DataEvento("Test Event", "Test Description", "TE", fecha, categorias);
+        DataEvento dataEvento = new DataEvento("Test Event", "Test Description", "TE", fecha, categorias, "EventoSinFoto.png");
         
         dataEvento.setNombre("New Name");
         dataEvento.setDescripcion("New Description");
@@ -115,7 +119,7 @@ public class DataTypesTest {
         List<DataPatrocinio> patrocinios = new ArrayList<>();
         
         DataEdicion dataEdicion = new DataEdicion("Test Edition", fechaIni, fechaFin, "Test City", 
-                                                 "Test Country", "TE", fechaAlta, "testOrg", tiposRegistro, patrocinios);
+                                                 "Test Country", "TE", fechaAlta, "testOrg", tiposRegistro, patrocinios, "EdicionSinFoto.png", "ABIERTA", "Test Event");
         
         assertEquals("Test Edition", dataEdicion.getNombre());
         assertEquals(fechaIni, dataEdicion.getFechaIni());
@@ -208,7 +212,7 @@ public class DataTypesTest {
     
     @Test
     void testDataTypesNullValues() {
-        DataUsuario dataUsuario = new DataUsuario(null, null, null, null);
+        DataUsuario dataUsuario = new DataUsuario(null, null, null, null, null);
         
         assertNull(dataUsuario.getNickname());
         assertNull(dataUsuario.getNombre());
@@ -218,7 +222,7 @@ public class DataTypesTest {
     
     @Test
     void testDataTypesEmptyStrings() {
-        DataUsuario dataUsuario = new DataUsuario("", "", "", "");
+        DataUsuario dataUsuario = new DataUsuario("", "", "", "", "");
         
         assertEquals("", dataUsuario.getNickname());
         assertEquals("", dataUsuario.getNombre());
@@ -231,9 +235,11 @@ public class DataTypesTest {
         DataOrganizador org = new DataOrganizador(
                 "nickOrg", 
                 "Nombre Org", 
-                "org@example.com", 
+                "org@example.com",
+                "PerfilSinFoto.png", 
                 "Descripción inicial", 
-                "http://test.com"
+                "http://test.com",
+                "Organizador"
         );
 
         // Verificar valores heredados
@@ -251,9 +257,11 @@ public class DataTypesTest {
         DataOrganizador org = new DataOrganizador(
                 "nickOrg", 
                 "Nombre Org", 
-                "org@example.com", 
+                "org@example.com",
+                "PerfilSinFoto.png", 
                 "Descripción inicial", 
-                "http://test.com"
+                "http://test.com",
+                "Organizador"
         );
 
         org.setDescripcionGeneral("Nueva descripción");
@@ -265,7 +273,7 @@ public class DataTypesTest {
 
     @Test
     void testNullValues() {
-        DataOrganizador org = new DataOrganizador("nick", "nombre", "correo", null, null);
+        DataOrganizador org = new DataOrganizador("nick", "nombre", "correo", "PerfilSinFoto.png", null, null, "Organizador");
 
         assertNull(org.getDescripcionGeneral());
         assertNull(org.getLinkSitioWeb());

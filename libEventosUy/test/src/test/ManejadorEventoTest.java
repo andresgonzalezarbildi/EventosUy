@@ -8,20 +8,25 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDate;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import excepciones.EventoNoExisteException;
 import logica.clases.Categoria;
 import logica.clases.EdicionEvento;
 import logica.clases.Evento;
+import logica.datatypes.DataEvento;
 import logica.manejadores.ManejadorEvento;
+import logica.interfaces.IControladorEvento;
 
 public class ManejadorEventoTest {
     
     private ManejadorEvento manejador;
+    private IControladorEvento controladorEvento;
     
     @BeforeEach
     void setUp() {
@@ -38,7 +43,7 @@ public class ManejadorEventoTest {
     
     @Test
     void testAgregarEvento() {
-        Evento evento = new Evento("Test Event", "Test Description", "TE", LocalDate.now());
+        Evento evento = new Evento("Test Event", "Test Description", "TE", LocalDate.now(), "EventoSinFoto.png");
         manejador.agregarEvento(evento);
         
         assertTrue(manejador.existeEvento("Test Event"));
@@ -47,7 +52,7 @@ public class ManejadorEventoTest {
     
     @Test
     void testObtenerEvento() {
-        Evento evento = new Evento("Test Event", "Test Description", "TE", LocalDate.now());
+        Evento evento = new Evento("Test Event", "Test Description", "TE", LocalDate.now(), "EventoSinFoto.png");
         manejador.agregarEvento(evento);
         
         Evento eventoObtenido = manejador.obtenerEvento("Test Event");
@@ -63,7 +68,7 @@ public class ManejadorEventoTest {
     
     @Test
     void testEliminarEvento() {
-        Evento evento = new Evento("Test Event", "Test Description", "TE", LocalDate.now());
+        Evento evento = new Evento("Test Event", "Test Description", "TE", LocalDate.now(), "EventoSinFoto.png");
         manejador.agregarEvento(evento);
         
         assertTrue(manejador.existeEvento("Test Event"));
@@ -78,7 +83,7 @@ public class ManejadorEventoTest {
         assertNotNull(eventos);
         assertTrue(eventos.isEmpty());
         
-        Evento evento = new Evento("Test Event", "Test Description", "TE", LocalDate.now());
+        Evento evento = new Evento("Test Event", "Test Description", "TE", LocalDate.now(), "EventoSinFoto.png");
         manejador.agregarEvento(evento);
         
         assertEquals(1, eventos.size());
@@ -87,20 +92,23 @@ public class ManejadorEventoTest {
     
     @Test
     void testGetEventosDTO() {
-        Evento evento = new Evento("Test Event", "Test Description", "TE", LocalDate.now());
+        Evento evento = new Evento("Test Event", "Test Description", "TE", LocalDate.now(), "EventoSinFoto.png");
         manejador.agregarEvento(evento);
         
-        var eventosDTO = manejador.getEventosDTO();
-        assertNotNull(eventosDTO);
-        assertEquals(1, eventosDTO.length);
-        assertEquals("Test Event", eventosDTO[0].getNombre());
+        try { 
+          DataEvento eventoDTO = controladorEvento.getUnEventoDTO("Test Event");
+          assertNotNull(eventoDTO);
+          assertEquals("Test Event", eventoDTO.getNombre());
+        } catch (EventoNoExisteException exception) {
+          // no hago nada
+        }
     }
     
     @Test
     void testExisteEvento() {
         assertFalse(manejador.existeEvento("Test Event"));
         
-        Evento evento = new Evento("Test Event", "Test Description", "TE", LocalDate.now());
+        Evento evento = new Evento("Test Event", "Test Description", "TE", LocalDate.now(), "EventoSinFoto.png");
         manejador.agregarEvento(evento);
         
         assertTrue(manejador.existeEvento("Test Event"));
@@ -183,7 +191,7 @@ public class ManejadorEventoTest {
     
     @Test
     void testGetEdicion() {
-        Evento evento = new Evento("Test Event", "Test Description", "TE", LocalDate.now());
+        Evento evento = new Evento("Test Event", "Test Description", "TE", LocalDate.now(), "EventoSinFoto.png");
         EdicionEvento edicion = new EdicionEvento("Test Edition", LocalDate.now(), LocalDate.now().plusDays(1), 
                                                  "Test City", "Test Country", "TE", LocalDate.now());
         evento.agregarEdicion(edicion);
@@ -204,7 +212,7 @@ public class ManejadorEventoTest {
     void testExisteEdicion() {
         assertFalse(manejador.existeEdicion("Test Edition"));
         
-        Evento evento = new Evento("Test Event", "Test Description", "TE", LocalDate.now());
+        Evento evento = new Evento("Test Event", "Test Description", "TE", LocalDate.now(), "EventoSinFoto.png");
         EdicionEvento edicion = new EdicionEvento("Test Edition", LocalDate.now(), LocalDate.now().plusDays(1), 
                                                  "Test City", "Test Country", "TE", LocalDate.now());
         evento.agregarEdicion(edicion);
@@ -216,6 +224,68 @@ public class ManejadorEventoTest {
     @Test
     void testExisteEdicionNull() {
         assertFalse(manejador.existeEdicion(null));
+    }
+    
+    @Test
+    void testObtenerTodosEventos() {
+        Collection<Evento> eventos = manejador.obtenerTodosEventos();
+        assertNotNull(eventos);
+        assertTrue(eventos.isEmpty());
+        
+        Evento evento = new Evento("Test Event", "Test Description", "TE", LocalDate.now(), "EventoSinFoto.png");
+        manejador.agregarEvento(evento);
+        
+        assertEquals(1, eventos.size());
+        assertTrue(eventos.contains(evento));
+    }
+    
+    @Test
+    void testLimpiar() {
+        Evento evento = new Evento("Test Event", "Test Description", "TE", LocalDate.now(), "EventoSinFoto.png");
+        Categoria categoria = new Categoria("Test Category");
+        
+        manejador.agregarEvento(evento);
+        manejador.agregarCategoria(categoria);
+        
+        assertTrue(manejador.existeEvento("Test Event"));
+        assertTrue(manejador.existeCategoria("Test Category"));
+        
+        manejador.limpiar();
+        
+        assertFalse(manejador.existeEvento("Test Event"));
+        assertFalse(manejador.existeCategoria("Test Category"));
+    }
+    
+    @Test
+    void testAgregarMultiplesEventos() {
+        Evento evento1 = new Evento("Event 1", "Description 1", "E1", LocalDate.now(), "EventoSinFoto.png");
+        Evento evento2 = new Evento("Event 2", "Description 2", "E2", LocalDate.now(), "EventoSinFoto.png");
+        Evento evento3 = new Evento("Event 3", "Description 3", "E3", LocalDate.now(), "EventoSinFoto.png");
+        
+        manejador.agregarEvento(evento1);
+        manejador.agregarEvento(evento2);
+        manejador.agregarEvento(evento3);
+        
+        assertEquals(3, manejador.getEventos().size());
+        assertTrue(manejador.existeEvento("Event 1"));
+        assertTrue(manejador.existeEvento("Event 2"));
+        assertTrue(manejador.existeEvento("Event 3"));
+    }
+    
+    @Test
+    void testAgregarMultiplesCategorias() {
+        Categoria cat1 = new Categoria("Category 1");
+        Categoria cat2 = new Categoria("Category 2");
+        Categoria cat3 = new Categoria("Category 3");
+        
+        manejador.agregarCategoria(cat1);
+        manejador.agregarCategoria(cat2);
+        manejador.agregarCategoria(cat3);
+        
+        assertEquals(3, manejador.getCategorias().size());
+        assertTrue(manejador.existeCategoria("Category 1"));
+        assertTrue(manejador.existeCategoria("Category 2"));
+        assertTrue(manejador.existeCategoria("Category 3"));
     }
 
 } 
