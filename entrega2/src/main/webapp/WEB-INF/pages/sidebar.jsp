@@ -8,18 +8,6 @@
 
 <aside class="col-12 col-md-3">
 
-  <!-- Categorías -->
-  <div class="content-bar">
-    <div class="content-bar-seccion">
-      <div class="seccion-titulo"><h3>Categorías</h3></div>
-      <div class="content-bar-seccion-list">
-        <div class="content-bar-seccion-list-options" onclick="window.location.href='<%= request.getContextPath() %>'"><span>Tecnología</span></div>
-        <div class="content-bar-seccion-list-options" onclick="window.location.href='<%= request.getContextPath() %>'"><span>Innovación</span></div>
-        <div class="content-bar-seccion-list-options" onclick="window.location.href='<%= request.getContextPath() %>'"><span>Deporte</span></div>
-        <div class="content-bar-seccion-list-options" onclick="window.location.href='<%= request.getContextPath() %>'"><span>Salud</span></div>
-      </div>
-    </div>
-  </div>
 
   <!-- Acciones -->
   <div class="content-bar">
@@ -61,17 +49,36 @@
           <span>Alta Evento</span>
         </div>
         <div class="content-bar-seccion-list-options"
-             onclick="window.location.href='<%= request.getContextPath() %>/evento/mis-eventos'">
-          <span>Mis Eventos</span>
-        </div>
-        <div class="content-bar-seccion-list-options"
-             onclick="window.location.href='<%= request.getContextPath() %>/alta-institucion'">
+             onclick="window.location.href='<%= request.getContextPath() %>/'">
           <span>Alta Institución</span>
         </div>
       </div>
     </div>
   </div>
 <% } %>
+
+
+  <!-- Categorías -->
+  <div class="content-bar">
+    <div class="content-bar-seccion">
+      <div class="seccion-titulo"><h3>Categorías</h3></div>
+      <div class="content-bar-seccion-list">
+<div class="content-bar-seccion-list-options" onclick="window.location.href='<%= request.getContextPath() %>'"><span>Agro</span></div>
+<div class="content-bar-seccion-list-options" onclick="window.location.href='<%= request.getContextPath() %>'"><span>Cultura</span></div>
+<div class="content-bar-seccion-list-options" onclick="window.location.href='<%= request.getContextPath() %>'"><span>Deporte</span></div>
+<div class="content-bar-seccion-list-options" onclick="window.location.href='<%= request.getContextPath() %>'"><span>Entretenimiento</span></div>
+<div class="content-bar-seccion-list-options" onclick="window.location.href='<%= request.getContextPath() %>'"><span>Innovación</span></div>
+<div class="content-bar-seccion-list-options" onclick="window.location.href='<%= request.getContextPath() %>'"><span>Investigación</span></div>
+<div class="content-bar-seccion-list-options" onclick="window.location.href='<%= request.getContextPath() %>'"><span>Literatura</span></div>
+<div class="content-bar-seccion-list-options" onclick="window.location.href='<%= request.getContextPath() %>'"><span>Moda</span></div>
+<div class="content-bar-seccion-list-options" onclick="window.location.href='<%= request.getContextPath() %>'"><span>Música</span></div>
+<div class="content-bar-seccion-list-options" onclick="window.location.href='<%= request.getContextPath() %>'"><span>Negocios</span></div>
+<div class="content-bar-seccion-list-options" onclick="window.location.href='<%= request.getContextPath() %>'"><span>Salud</span></div>
+<div class="content-bar-seccion-list-options" onclick="window.location.href='<%= request.getContextPath() %>'"><span>Tecnología</span></div>
+
+      </div>
+    </div>
+  </div>
 
 
 </aside>

@@ -34,12 +34,12 @@
         <main style="max-width:600px;margin:2rem auto;padding:1rem;background:#fff;border:1px solid var(--color-border);border-radius:var(--radius);">
           <h2 style="margin-bottom:1rem;color:var(--color-primary);">Alta de Evento</h2>
 
-          <% if (err != null && !err.isEmpty()) { %>
-            <div style="color:red;margin-bottom:1rem;"><%= err %></div>
-          <% } %>
-          <% if (msg != null && !msg.isEmpty()) { %>
-            <div style="color:green;margin-bottom:1rem;"><%= msg %></div>
-          <% } %>
+          <% if ((err != null && !err.isEmpty()) || (msg != null && !msg.isEmpty())) { %>
+		  <div style="color:red;margin-bottom:1rem;">
+		    <%= err != null ? err : "" %>
+		    <%= msg != null ? msg : "" %>
+		  </div>
+		<% } %>
 
           <form action="<%= ctx %>/evento/alta" method="POST" enctype="multipart/form-data" style="display:flex; flex-direction:column; gap:1rem;">
             <label for="nombre">Nombre:</label>
