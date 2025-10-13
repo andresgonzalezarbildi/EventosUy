@@ -56,6 +56,11 @@
           <!-- Formulario a la izquierda -->
           <div class="flex-grow-1">
             <h2 class="mb-3">Modificar Usuario</h2>
+			<% if (request.getAttribute("errorPassword") != null) { %>
+			  <div class="alert alert-danger" role="alert">
+			    <%= request.getAttribute("errorPassword") %>
+			  </div>
+			<% } %>
 
             <% if ("Organizador".equalsIgnoreCase(usuario.getTipo())) { %>
               <form action="<%= ctx %>/UsuarioServlet?op=modificar" method="post" enctype="multipart/form-data">
@@ -74,6 +79,9 @@
                 <input type="password" name="newPassword" class="form-control mb-2">
                 <label>Confirmar contraseña:</label>
                 <input type="password" name="confirmPassword" class="form-control mb-2">
+                <span class="errorPass" style="color: red; display: none;">
+				  Las contraseñas no coinciden
+				</span>
                 <div class="mt-3 d-flex gap-2">
                   <button type="submit" class="btn btn-primary">Guardar cambios</button>
                   <button type="reset" class="btn btn-secondary">Cancelar</button>
@@ -96,25 +104,58 @@
                 <input type="password" name="newPassword" class="form-control mb-2">
                 <label>Confirmar contraseña:</label>
                 <input type="password" name="confirmPassword" class="form-control mb-2">
+                <span class="errorPass" style="color: red; display: none;">
+				  Las contraseñas no coinciden
+				</span>
                 <div class="mt-3 d-flex gap-2">
                   <button type="submit" class="btn btn-primary">Guardar cambios</button>
                   <button type="reset" class="btn btn-secondary">Cancelar</button>
                 </div>
+                
               </form>
             <% } %>
+           
+			
+			<script>
+			  const forms = document.querySelectorAll('form');
+			  forms.forEach(form => {
+			    const pass1 = form.querySelector('input[name="newPassword"]');
+			    const pass2 = form.querySelector('input[name="confirmPassword"]');
+			    const error = form.querySelector('.errorPass');
+
+			
+			    if (pass1 && pass2) {
+			      form.addEventListener('submit', (e) => {
+			        if (pass1.value !== pass2.value) {
+			          e.preventDefault();
+			          error.style.display = 'inline';
+			          pass2.focus();
+			        } else {
+			          error.style.display = 'none';
+			        }
+			      });
+			    }
+			  });
+			</script>
+			            
           </div>
 
           <!-- Imagen a la derecha -->
-          <div class="user-image ms-4">
-            <img src="<%= request.getContextPath() + "/img/" + (usuario.getImagen() != null ? usuario.getImagen() : "PerfilSinFoto.jpg") %>" 
-                     alt="Foto Usuario" style="width:150px; height:150px; border-radius:8px; object-fit:cover; margin-bottom:0.5rem;">
-            <h4><%= usuario.getNickname() %></h4>
-          </div>
+         <div class="user-image ms-4 text-center">
+		  <a href="<%= ctx %>/UsuarioServlet?op=consultar&nick=<%= usuario.getNickname() %>">
+		    <img src="<%= request.getContextPath() + "/img/" + (usuario.getImagen() != null ? usuario.getImagen() : "PerfilSinFoto.jpg") %>" 
+		         alt="Foto Usuario" style="width:150px; height:150px; border-radius:8px; object-fit:cover; margin-bottom:0.5rem;">
+		  </a>
+		  <h4><%= usuario.getNickname() %></h4>
+		</div>
+
         </div>
       </div>
     </div>
   </section>
 
+
   <jsp:include page="footer.jsp" />
+ 
 </body>
 </html>
