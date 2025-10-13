@@ -79,7 +79,16 @@ public class registroServlet extends HttpServlet {
 					req.setAttribute("nomEdicion", nombreEdicion);
 					req.setAttribute("costo", costo);
 
-                    // 👇 Podés redirigir a una JSP si querés mostrar la info:
+					String flashOk  = (String) req.getSession().getAttribute("flash_ok");
+					String flashErr = (String) req.getSession().getAttribute("flash_error");
+					if (flashOk != null) {
+					    req.setAttribute("flash_ok", flashOk);
+					    req.getSession().removeAttribute("flash_ok");
+					}
+					if (flashErr != null) {
+					    req.setAttribute("flash_error", flashErr);
+					    req.getSession().removeAttribute("flash_error");
+					}
                     req.getRequestDispatcher("/WEB-INF/pages/registroaEdicion.jsp").forward(req, res);
                     break;
                 }
@@ -209,27 +218,22 @@ public class registroServlet extends HttpServlet {
         	    return;
         	}
         
-        System.out.println("🚀 Pasé el if de validación, voy a llamar altaRegistro()");
+  
         try {
-            ctrlEv.altaRegistro(
-            		nomEvento,
-                    nombreEdicion,
-                    nombreTipoRegistro,
-                    nombreAsistente,
-                    LocalDate.now()
-            );
-            //altaRegistro(String nombreEvento, String nombreEdicion, String nombreTipoRegistro, String nombreAsistente, LocalDate fecha)
-
-            // esto si hay exito redirige
+            ctrlEv.altaRegistro(nomEvento, nombreEdicion, nombreTipoRegistro, nickname, LocalDate.now());
+            req.getSession().setAttribute("flash_ok", "Registro realizado correctamente.");
             res.sendRedirect(req.getContextPath() + "/eventos");
-
-        } catch (UsuarioNoExisteException e) {
-            req.setAttribute("error", "El organizador no existe o no tiene permisos.");
-            req.getRequestDispatcher("/WEB-INF/pages/registroaEdicion.jsp").forward(req, res);
-        } catch (Exception e) {
-            e.printStackTrace();
-            req.setAttribute("error", "Error al registrar la edición.");
-            req.getRequestDispatcher("/WEB-INF/pages/registroaEdicion.jsp").forward(req, res);
+            return;
+        } catch (IllegalStateException ex) { 
+            req.getSession().setAttribute("flash_error", ex.getMessage());
+            res.sendRedirect(req.getContextPath()
+                + "/registroEd?op=alta&idEdicion=" + nombreEdicion + "&id=" + nombreTipoRegistro);
+            return;
+        } catch (UsuarioNoExisteException ex) {
+            req.getSession().setAttribute("flash_error", "El asistente no existe o no tiene permisos.");
+            res.sendRedirect(req.getContextPath()
+                + "/registroEd?op=alta&idEdicion=" + nombreEdicion + "&id=" + nombreTipoRegistro);
+            return;
         }
     }
 

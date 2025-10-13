@@ -50,6 +50,22 @@ Integer costo      = (Integer) request.getAttribute("costo");
 			<input type="hidden" name="nickname" value="<%= (String)session.getAttribute("usuario") %>"> 
 
               <div class="row gy-2 mb-3">
+              	
+				<%
+				String ok  = (String) request.getAttribute("flash_ok");
+				String err = (String) request.getAttribute("flash_error");
+				if (ok != null && !ok.isEmpty()) {
+				%>
+				<div class="alert alert-success" style="margin-bottom: 15px;"><%= ok %></div>
+				<%
+				}
+				if (err != null && !err.isEmpty()) {
+				%>
+				<div class="alert alert-danger" style="margin-bottom: 15px;"><%= err %></div>
+				<%
+				}
+				%>
+				
                 <p class="col-12 col-md-6"><span class="negrita">Nombre Evento:</span><%= nomEvento %></p>
                 <p class="col-12 col-md-6"><span class="negrita">Nombre Edición:</span> <%= nomEdicion %>
                 </p>

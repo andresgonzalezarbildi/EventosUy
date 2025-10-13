@@ -51,7 +51,7 @@
     <dd><%=tipo.getDescripcion()%></dd>
     <dt><strong>Costo:</strong> </dt>
     <dd><%=tipo.getCosto()%></dd>
-    <dt><strong>Cupos:</strong> </dt>
+    <dt><strong>Cupos Totales:</strong> </dt>
     <dd><%=tipo.getCupo()%></dd>
   </dl>
 
