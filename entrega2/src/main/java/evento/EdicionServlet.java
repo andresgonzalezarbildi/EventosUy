@@ -39,8 +39,8 @@ public class EdicionServlet extends HttpServlet {
         req.setCharacterEncoding("UTF-8");
         res.setCharacterEncoding("UTF-8");
 
-        String op = (req.getParameter("op") != null) ? req.getParameter("op").toLowerCase() : "";
-        String nombreEdicion = (req.getParameter("id") != null) ? req.getParameter("id") : "";
+        String op = req.getParameter("op") != null ? req.getParameter("op").toLowerCase() : "";
+        String nombreEdicion = req.getParameter("id") != null ? req.getParameter("id") : "";
         String nickname = null;
         String rol = "visitante";
 
@@ -52,11 +52,9 @@ public class EdicionServlet extends HttpServlet {
                         res.sendError(HttpServletResponse.SC_BAD_REQUEST, "Falta el parámetro 'id' del evento.");
                         return;
                     }
-
                     try {
                         DataEvento evento = controladorEventos.getUnEventoDTO(idEvento);
-                        String nomEv = evento.getNombre();
-                        req.setAttribute("nomEv", nomEv);
+                        req.setAttribute("nomEv", evento.getNombre());
                         req.getRequestDispatcher("/WEB-INF/pages/altaEdicion.jsp").forward(req, res);
                     } catch (EventoNoExisteException e) {
                         res.sendError(HttpServletResponse.SC_NOT_FOUND, "El evento no existe.");
@@ -78,7 +76,7 @@ public class EdicionServlet extends HttpServlet {
                         req.setAttribute("rol", "visitante");
                     }
 
-                    if (nombreEdicion == null || nombreEdicion.isEmpty()) {
+                    if (nombreEdicion.isEmpty()) {
                         res.sendError(HttpServletResponse.SC_BAD_REQUEST, "Falta el parámetro 'id' de la edición.");
                         return;
                     }
@@ -117,7 +115,7 @@ public class EdicionServlet extends HttpServlet {
         res.setCharacterEncoding("UTF-8");
 
         String opt = req.getParameter("opt");
-        if (opt != null && opt.equals("alta")) {
+        if ("alta".equalsIgnoreCase(opt)) {
             altaEdicion(req, res);
         } else {
             res.sendError(HttpServletResponse.SC_BAD_REQUEST, "Operación POST no válida.");
@@ -147,68 +145,55 @@ public class EdicionServlet extends HttpServlet {
         final String fechaInicioStr = req.getParameter("fechaInicio");
         final String fechaFinStr = req.getParameter("fechaFin");
 
+        // Validación de datos obligatorios
         if (nombreEdicion == null || nombreEdicion.isEmpty() ||
             sigla == null || sigla.isEmpty() ||
             nombreEvento == null || nombreEvento.isEmpty()) {
 
-            req.setAttribute("error", "Faltan datos obligatorios para crear la edición.");
-            req.setAttribute("nombre", nombreEdicion);
-            req.setAttribute("sigla", sigla);
-            req.setAttribute("ciudad", ciudad);
-            req.setAttribute("pais", pais);
-            req.setAttribute("fechaInicio", fechaInicioStr);
-            req.setAttribute("fechaFin", fechaFinStr);
-            req.setAttribute("nomEv", nombreEvento);
-            req.getRequestDispatcher("/WEB-INF/pages/altaEdicion.jsp").forward(req, res);
+            setErrorYReenviar(req, res, "Faltan datos obligatorios para crear la edición.",
+                    nombreEdicion, sigla, ciudad, pais, fechaInicioStr, fechaFinStr, nombreEvento);
             return;
         }
 
-        LocalDate fechaInicio = null;
-        LocalDate fechaFin = null;
-        
-        
+        LocalDate fechaInicio;
+        LocalDate fechaFin;
         try {
             fechaInicio = LocalDate.parse(fechaInicioStr);
             fechaFin = LocalDate.parse(fechaFinStr);
         } catch (Exception e) {
-            req.setAttribute("error", "Formato de fecha inválido.");
-            req.setAttribute("nombre", nombreEdicion);
-            req.setAttribute("sigla", sigla);
-            req.setAttribute("ciudad", ciudad);
-            req.setAttribute("pais", pais);
-            req.setAttribute("fechaInicio", fechaInicioStr);
-            req.setAttribute("fechaFin", fechaFinStr);
-            req.setAttribute("nomEv", nombreEvento);
-            req.getRequestDispatcher("/WEB-INF/pages/altaEdicion.jsp").forward(req, res);
+            setErrorYReenviar(req, res, "Formato de fecha inválido.",
+                    nombreEdicion, sigla, ciudad, pais, fechaInicioStr, fechaFinStr, nombreEvento);
             return;
         }
-        LocalDate hoy = LocalDate.now();
 
+        LocalDate hoy = LocalDate.now();
         if (fechaInicio.isBefore(hoy)) {
-            req.setAttribute("error", "La fecha de inicio no puede ser anterior a la fecha actual.");
-            req.setAttribute("nombre", nombreEdicion);
-            req.setAttribute("sigla", sigla);
-            req.setAttribute("ciudad", ciudad);
-            req.setAttribute("pais", pais);
-            req.setAttribute("fechaInicio", fechaInicioStr);
-            req.setAttribute("fechaFin", fechaFinStr);
-            req.setAttribute("nomEv", nombreEvento);
-            req.getRequestDispatcher("/WEB-INF/pages/altaEdicion.jsp").forward(req, res);
+            setErrorYReenviar(req, res, "La fecha de inicio no puede ser anterior a la fecha actual.",
+                    nombreEdicion, sigla, ciudad, pais, fechaInicioStr, fechaFinStr, nombreEvento);
             return;
         }
 
         if (fechaFin.isBefore(fechaInicio)) {
-            req.setAttribute("error", "La fecha de fin no puede ser anterior a la fecha de inicio.");
-            req.setAttribute("nombre", nombreEdicion);
-            req.setAttribute("sigla", sigla);
-            req.setAttribute("ciudad", ciudad);
-            req.setAttribute("pais", pais);
-            req.setAttribute("fechaInicio", fechaInicioStr);
-            req.setAttribute("fechaFin", fechaFinStr);
-            req.setAttribute("nomEv", nombreEvento);
-            req.getRequestDispatcher("/WEB-INF/pages/altaEdicion.jsp").forward(req, res);
+            setErrorYReenviar(req, res, "La fecha de fin no puede ser anterior a la fecha de inicio.",
+                    nombreEdicion, sigla, ciudad, pais, fechaInicioStr, fechaFinStr, nombreEvento);
             return;
         }
+
+        // Validar que la fecha de inicio de la edición no sea anterior a la del evento
+        DataEvento eventoDTO;
+        try {
+            eventoDTO = controladorEventos.getUnEventoDTO(nombreEvento);
+        } catch (EventoNoExisteException e) {
+            setErrorYReenviar(req, res, "El evento no existe.",
+                    nombreEdicion, sigla, ciudad, pais, fechaInicioStr, fechaFinStr, nombreEvento);
+            return;
+        }
+        if (fechaInicio.isBefore(eventoDTO.getFechaAlta())) {
+            setErrorYReenviar(req, res, "La fecha de inicio de la edición no puede ser anterior a la fecha de inicio del evento.",
+                    nombreEdicion, sigla, ciudad, pais, fechaInicioStr, fechaFinStr, nombreEvento);
+            return;
+        }
+
         // IMAGEN
         String nombreImagenGuardada = null;
         try {
@@ -233,15 +218,8 @@ public class EdicionServlet extends HttpServlet {
                 nombreImagenGuardada = nuevoNombre;
             }
         } catch (IllegalStateException ex) {
-            req.setAttribute("error", "Error al subir la imagen (tamaño excedido o inválido).");
-            req.setAttribute("nombre", nombreEdicion);
-            req.setAttribute("sigla", sigla);
-            req.setAttribute("ciudad", ciudad);
-            req.setAttribute("pais", pais);
-            req.setAttribute("fechaInicio", fechaInicioStr);
-            req.setAttribute("fechaFin", fechaFinStr);
-            req.setAttribute("nomEv", nombreEvento);
-            req.getRequestDispatcher("/WEB-INF/pages/altaEdicion.jsp").forward(req, res);
+            setErrorYReenviar(req, res, "Error al subir la imagen (tamaño excedido o inválido).",
+                    nombreEdicion, sigla, ciudad, pais, fechaInicioStr, fechaFinStr, nombreEvento);
             return;
         }
 
@@ -258,33 +236,32 @@ public class EdicionServlet extends HttpServlet {
                     nickname,
                     nombreImagenGuardada
             );
-
-            // ✅ Redirección codificando el nombre del evento para UTF-8
-            res.sendRedirect(req.getContextPath() + "/evento?op=consultar&id=" 
-                + URLEncoder.encode(nombreEvento, "UTF-8"));
-
+            res.sendRedirect(req.getContextPath() + "/evento?op=consultar&id=" +
+                    URLEncoder.encode(nombreEvento, "UTF-8"));
         } catch (UsuarioNoExisteException e) {
-            req.setAttribute("error", "El organizador no existe o no tiene permisos.");
-            req.setAttribute("nombre", nombreEdicion);
-            req.setAttribute("sigla", sigla);
-            req.setAttribute("ciudad", ciudad);
-            req.setAttribute("pais", pais);
-            req.setAttribute("fechaInicio", fechaInicioStr);
-            req.setAttribute("fechaFin", fechaFinStr);
-            req.setAttribute("nomEv", nombreEvento);
-            req.getRequestDispatcher("/WEB-INF/pages/altaEdicion.jsp").forward(req, res);
+            setErrorYReenviar(req, res, "El organizador no existe o no tiene permisos.",
+                    nombreEdicion, sigla, ciudad, pais, fechaInicioStr, fechaFinStr, nombreEvento);
         } catch (Exception e) {
             e.printStackTrace();
-            req.setAttribute("error", "Error al registrar la edición.");
-            req.setAttribute("nombre", nombreEdicion);
-            req.setAttribute("sigla", sigla);
-            req.setAttribute("ciudad", ciudad);
-            req.setAttribute("pais", pais);
-            req.setAttribute("fechaInicio", fechaInicioStr);
-            req.setAttribute("fechaFin", fechaFinStr);
-            req.setAttribute("nomEv", nombreEvento);
-            req.getRequestDispatcher("/WEB-INF/pages/altaEdicion.jsp").forward(req, res);
+            setErrorYReenviar(req, res, "Error al registrar la edición.",
+                    nombreEdicion, sigla, ciudad, pais, fechaInicioStr, fechaFinStr, nombreEvento);
         }
+    }
+
+    private void setErrorYReenviar(HttpServletRequest req, HttpServletResponse res,
+                                   String mensajeError, String nombreEdicion, String sigla,
+                                   String ciudad, String pais, String fechaInicioStr,
+                                   String fechaFinStr, String nombreEvento)
+            throws ServletException, IOException {
+        req.setAttribute("error", mensajeError);
+        req.setAttribute("nombre", nombreEdicion);
+        req.setAttribute("sigla", sigla);
+        req.setAttribute("ciudad", ciudad);
+        req.setAttribute("pais", pais);
+        req.setAttribute("fechaInicio", fechaInicioStr);
+        req.setAttribute("fechaFin", fechaFinStr);
+        req.setAttribute("nomEv", nombreEvento);
+        req.getRequestDispatcher("/WEB-INF/pages/altaEdicion.jsp").forward(req, res);
     }
 
     private void listarEdiciones(HttpServletRequest req, HttpServletResponse res)
@@ -294,7 +271,6 @@ public class EdicionServlet extends HttpServlet {
             res.sendError(HttpServletResponse.SC_BAD_REQUEST, "Falta el parámetro 'evento'.");
             return;
         }
-
         try {
             DataEdicion[] ediciones = controladorEventos.listarEdicionesAceptadasEvento(nombreEvento);
             req.setAttribute("evento", nombreEvento);
