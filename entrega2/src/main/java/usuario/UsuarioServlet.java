@@ -117,11 +117,11 @@
 	                    }
 	                }
 	            }
-	         // String newPassword = req.getParameter("newPassword");
-	         // String confirmPassword = req.getParameter("confirmPassword");
-	         // if (newPassword != null && !newPassword.isBlank() && newPassword.equals(confirmPassword)) {
-//	              cu.modificarContraseña(nick, newPassword);
-	         // }
+	            String newPassword = req.getParameter("newPassword");
+	            String confirmPassword = req.getParameter("confirmPassword");
+	         	if (newPassword != null && !newPassword.isBlank() && newPassword.equals(confirmPassword)) {
+		              cu.cambiarContrasenia(nick, newPassword);
+	          }
 
 	            if ("Organizador".equalsIgnoreCase(usuario.getTipo())) {
 	                String descParam = req.getParameter("descripcion");
