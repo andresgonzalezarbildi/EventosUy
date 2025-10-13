@@ -56,7 +56,7 @@
   </dl>
 
   <% if ("asistente".equalsIgnoreCase(rol) && (registroAsistente == null)) { %>
-      <a href="<%=request.getContextPath()%>/TipoRegistroServlet?op=listar&evento=<%=evento%>&edicion=<%=nombreEdicion%>" class="btn btn-secondary mt-3">
+      <a href="<%=request.getContextPath()%>/registroEd?op=alta&id=<%=tipo.getNombre()%>&idEdicion=<%=nombreEdicion%>" class="btn btn-secondary mt-3">
         Registrarse
       </a>
   <% } else { %>

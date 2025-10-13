@@ -144,7 +144,9 @@
 		        for (DataRegistro reg : registros) {
 		    %>
 		        <div style="background:#e3f2fd; padding:0.6rem 1rem; border-radius:12px;">
-		            <p><b>Asistente:</b> <%= reg.getAsistente() %></p>
+		        	<button onclick="window.location.href='<%= request.getContextPath() %>/registroEd?op=consultar&idEdicion=<%= ed.getNombre() %>&idAsistente=<%= reg.getAsistente() %>'">
+		        		<b>Asistente:</b> <%= reg.getAsistente() %>
+		    		</button>
 <%-- 		            <p><b>Tipo de Registro:</b> <%= reg.getTipoRegistro() %></p> --%>
 <%-- 		            <p><b>Fecha:</b> <%= reg.getFechaRegistro() %></p> --%>
 		        </div>    
