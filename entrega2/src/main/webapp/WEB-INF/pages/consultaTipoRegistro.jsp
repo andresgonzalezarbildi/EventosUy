@@ -55,13 +55,21 @@
     <dd><%=tipo.getCupo()%></dd>
   </dl>
 
-  <% if ("asistente".equalsIgnoreCase(rol) && (registroAsistente == null)) { %>
-      <a href="<%=request.getContextPath()%>/registroEd?op=alta&id=<%=tipo.getNombre()%>&idEdicion=<%=nombreEdicion%>" class="btn btn-secondary mt-3">
-        Registrarse
-      </a>
-  <% } else { %>
-      
-  <% } %>
+<%
+  DataEdicion edicion = (DataEdicion) request.getAttribute("edicion");
+  boolean edicionActiva = false;
+  if (edicion != null && edicion.getFechaFin() != null) {
+      edicionActiva = edicion.getFechaFin().isAfter(java.time.LocalDate.now());
+  }
+%>
+
+<% if ("asistente".equalsIgnoreCase(rol) && registroAsistente == null && edicionActiva) { %>
+    <a href="<%=request.getContextPath()%>/registroEd?op=alta&id=<%=tipo.getNombre()%>&idEdicion=<%=nombreEdicion%>" class="btn btn-secondary mt-3">
+      Registrarse
+    </a>
+<% } else if (!edicionActiva) { %>
+    <p class="text-danger mt-2">La edición ya finalizó. No se pueden registrar nuevos asistentes.</p>
+<% } %>
 
 <% } %>
 

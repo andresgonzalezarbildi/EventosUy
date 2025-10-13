@@ -238,11 +238,3 @@ public class registroServlet extends HttpServlet {
     }
     
     
-    
-    
-    
-    
-    
-    
-    
-    
