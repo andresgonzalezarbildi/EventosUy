@@ -15,8 +15,24 @@
     <form action="<%=request.getContextPath()%>/LoginServlet" method="post">
       <h2>Inicio de sesión</h2>
 
+      <%
+        // Mensajes y valores guardados
+        String registro = request.getParameter("registro");
+        String error = (String) request.getAttribute("error");
+        String usuarioIngresado = (String) request.getAttribute("usuarioIngresado");
+      %>
+
+      <% if ("ok".equals(registro)) { %>
+        <p style="color:green;">Registro exitoso. Ahora podés iniciar sesión.</p>
+      <% } %>
+
+      <% if (error != null) { %>
+        <p style="color:red;"><%= error %></p>
+      <% } %>
+
       <label for="usuario">Usuario o Correo:</label>
-      <input type="text" id="usuario" name="usuario" required>
+      <input type="text" id="usuario" name="usuario" required
+             value="<%= usuarioIngresado != null ? usuarioIngresado : "" %>">
 
       <label for="password">Contraseña:</label>
       <input type="password" id="password" name="password" required>
@@ -25,27 +41,8 @@
         <button type="submit">Iniciar sesión</button>
         <button type="reset" onclick="window.location.href='../index.jsp'">Cancelar</button>
       </div>
-		<%
-    String registro = request.getParameter("registro");
-    if ("ok".equals(registro)) {
-	%>
-    <p style="color:green;">Registro exitoso. Ahora podés iniciar sesión.</p>
-	<%
-    }
-	%>
-
-	<%
-    String error = request.getParameter("error");
-    if (error != null) {
-	%>
-    <p style="color:red;">Usuario o contraseña incorrectos</p>
-	<%
-    }
-	%>
     </form>
-      
   </div>
-    
 
   <footer class="uc-footer">
     <small>Eventos.uy — Grupo 42.</small>

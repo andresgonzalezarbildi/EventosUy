@@ -24,11 +24,9 @@ public class TipoRegistroServlet extends HttpServlet {
     private final Fabrica fabrica = Fabrica.getInstance();
     private final IControladorEvento ce = fabrica.getControladorEvento();
 
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
-
         String op = req.getParameter("op");
         if (op == null) {
             res.sendError(HttpServletResponse.SC_BAD_REQUEST, "Operación no especificada");
@@ -36,30 +34,27 @@ public class TipoRegistroServlet extends HttpServlet {
         }
 
         switch (op.toLowerCase()) {
-		    case "alta":
-		        mostrarFormularioAlta(req, res);
-		        break;
-		    case "listar":
-		        listarTiposRegistro(req, res);
-		        break;
-		    case "consulta":
-			try {
-				mostrarConsulta(req, res);
-			} catch (ServletException | IOException | EdicionNoExisteException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		        break;
-		    default:
-		        res.sendError(HttpServletResponse.SC_NOT_FOUND, "Operación no disponible");
-		}
+            case "alta":
+                mostrarFormularioAlta(req, res);
+                break;
+            case "listar":
+                listarTiposRegistro(req, res);
+                break;
+            case "consulta":
+                try {
+                    mostrarConsulta(req, res);
+                } catch (EdicionNoExisteException e) {
+                    res.sendError(HttpServletResponse.SC_BAD_REQUEST, "Edición no encontrada");
+                }
+                break;
+            default:
+                res.sendError(HttpServletResponse.SC_NOT_FOUND, "Operación no disponible");
+        }
     }
-
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
-
         String op = req.getParameter("op");
         if (op == null) {
             res.sendError(HttpServletResponse.SC_BAD_REQUEST, "Operación no especificada");
@@ -77,61 +72,80 @@ public class TipoRegistroServlet extends HttpServlet {
 
     private void mostrarFormularioAlta(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
-
         String nombreEdicion = req.getParameter("idEdicion");
-        String nombreEvento = ce.getEventoDeUnaEdicion(nombreEdicion);
-
-        DataEdicion ed = null;
-        if (nombreEdicion != null && !nombreEdicion.isEmpty()) {
-            try {
-                ed = ce.getInfoEdicion(nombreEdicion);
-            } catch (EdicionNoExisteException e) {
-                ed = null;
-            }
+        if (nombreEdicion == null || nombreEdicion.isEmpty()) {
+            res.sendError(HttpServletResponse.SC_BAD_REQUEST, "Edición no especificada");
+            return;
         }
 
-        if (ed == null) {
+        DataEdicion ed = null;
+        try {
+            ed = ce.getInfoEdicion(nombreEdicion);
+        } catch (EdicionNoExisteException e) {
             res.sendError(HttpServletResponse.SC_BAD_REQUEST, "Edición no encontrada");
             return;
         }
 
-        req.setAttribute("evento", nombreEvento);
+        String nombreEvento = ce.getEventoDeUnaEdicion(nombreEdicion);
+
         req.setAttribute("edicion", ed);
+        req.setAttribute("evento", nombreEvento);
         req.setAttribute("nombreEdicion", nombreEdicion);
 
         req.getRequestDispatcher("/WEB-INF/pages/altaTipoRegistro.jsp").forward(req, res);
     }
 
-
     private void procesarAlta(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
 
         String evento = req.getParameter("evento");
-        String edicion = req.getParameter("edicion");
+        String edicionNombre = req.getParameter("edicion");
         String nombre = req.getParameter("nombre");
         String descripcion = req.getParameter("descripcion");
         String costoStr = req.getParameter("costo");
         String cupoStr = req.getParameter("cupo");
 
-        int costo = Integer.parseInt(costoStr);
-        int cupo = Integer.parseInt(cupoStr);
+        int costo = 0;
+        int cupo = 0;
+        String error = null;
 
         try {
-            ce.altaTipoRegistro(evento, edicion, nombre, descripcion, costo, cupo);
-            res.sendRedirect(req.getContextPath() + "/edicion?op=consultar&id=" 
-                    + URLEncoder.encode(edicion, "UTF-8"));
-        } catch (TipoRegistroRepetidoException e) {
-            req.setAttribute("error", "Ya existe un tipo de registro con ese nombre para esta edición.");
-            req.setAttribute("evento", evento);
-            req.setAttribute("edicion", edicion);
-            req.setAttribute("nombre", nombre);
-            req.setAttribute("descripcion", descripcion);
-            req.setAttribute("costo", costo);
-            req.setAttribute("cupo", cupo);
-            req.getRequestDispatcher("/WEB-INF/pages/altaTipoRegistro.jsp").forward(req, res);
-        }
-    }
+            costo = Integer.parseInt(costoStr);
+            cupo = Integer.parseInt(cupoStr);
 
+            if (cupo <= 0) {
+                error = "El cupo debe ser mayor a 0.";
+            } else {
+                ce.altaTipoRegistro(evento, edicionNombre, nombre, descripcion, costo, cupo);
+                res.sendRedirect(req.getContextPath() + "/edicion?op=consultar&id="
+                        + URLEncoder.encode(edicionNombre, "UTF-8"));
+                return;
+            }
+        } catch (NumberFormatException e) {
+            error = "Cupo y costo deben ser números válidos.";
+        } catch (TipoRegistroRepetidoException e) {
+            error = "Ya existe un tipo de registro con ese nombre para esta edición.";
+        }
+
+        // Siempre obtener DataEdicion para no romper el JSP
+        DataEdicion edicionObj = null;
+        try {
+            edicionObj = ce.getInfoEdicion(edicionNombre);
+        } catch (EdicionNoExisteException e) {
+            // opcional: mostrar mensaje de error general
+        }
+
+        req.setAttribute("edicion", edicionObj); // <-- DataEdicion siempre
+        req.setAttribute("nombreEdicion", edicionNombre);
+        req.setAttribute("evento", evento);
+        req.setAttribute("nombre", nombre);
+        req.setAttribute("descripcion", descripcion);
+        req.setAttribute("costo", costo);
+        req.setAttribute("cupo", cupo);
+        req.setAttribute("error", error);
+
+        req.getRequestDispatcher("/WEB-INF/pages/altaTipoRegistro.jsp").forward(req, res);
+    }
 
     private void listarTiposRegistro(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
@@ -156,30 +170,26 @@ public class TipoRegistroServlet extends HttpServlet {
 
     private void mostrarConsulta(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException, EdicionNoExisteException {
-    	String nombreEdicion = req.getParameter("idEdicion");
-    		String rol = null;
-    		String nickname = null;
-    		HttpSession sesion = req.getSession(false);
-	        if (sesion != null) {
-	            rol = (String) sesion.getAttribute("rol");
-	            nickname = (String) sesion.getAttribute("usuario");
-	            req.setAttribute("rol", rol);
-	            req.setAttribute("nickname", nickname);
-	        } else {
-	        	
-	            req.setAttribute("rol", "visitante");
-	            
-	        }
-	        
-	        if ("asistente".equalsIgnoreCase(rol)){
-	        DataRegistro registroAsistente = ce.listarUnRegistroDeUsuario(nombreEdicion,nickname);
-       	 	req.setAttribute("registroAsistente", registroAsistente);
-	        } else { DataRegistro registroAsistente = null;
-	        req.setAttribute("registroAsistente", registroAsistente);}
-	        
-	        
-        
-        String evento =  ce.getEventoDeUnaEdicion(nombreEdicion);;
+        String nombreEdicion = req.getParameter("idEdicion");
+        String rol = null;
+        String nickname = null;
+        HttpSession sesion = req.getSession(false);
+        if (sesion != null) {
+            rol = (String) sesion.getAttribute("rol");
+            nickname = (String) sesion.getAttribute("usuario");
+        } else {
+            rol = "visitante";
+        }
+
+        DataRegistro registroAsistente = null;
+        if ("asistente".equalsIgnoreCase(rol)) {
+            registroAsistente = ce.listarUnRegistroDeUsuario(nombreEdicion, nickname);
+        }
+        req.setAttribute("rol", rol);
+        req.setAttribute("nickname", nickname);
+        req.setAttribute("registroAsistente", registroAsistente);
+
+        String evento = ce.getEventoDeUnaEdicion(nombreEdicion);
         String nombre = req.getParameter("id");
         DataEdicion edicion = ce.getInfoEdicion(nombreEdicion);
 
@@ -189,12 +199,10 @@ public class TipoRegistroServlet extends HttpServlet {
         }
 
         DataTipoRegistro tipoRegistro = ce.getTipoRegistro(evento, nombreEdicion, nombre);
-		req.setAttribute("edicion", edicion);
-		req.setAttribute("tipoRegistro", tipoRegistro);
-		req.setAttribute("evento", evento);
-		req.setAttribute("nombreEdicion", nombreEdicion);
-		req.getRequestDispatcher("/WEB-INF/pages/consultaTipoRegistro.jsp").forward(req, res);
+        req.setAttribute("edicion", edicion);
+        req.setAttribute("tipoRegistro", tipoRegistro);
+        req.setAttribute("evento", evento);
+        req.setAttribute("nombreEdicion", nombreEdicion);
+        req.getRequestDispatcher("/WEB-INF/pages/consultaTipoRegistro.jsp").forward(req, res);
     }
-
 }
-
