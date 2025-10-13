@@ -45,13 +45,12 @@
     Cerrar Sesión
   </a>
   <div class="navbar_sesion_perfil">
-    <a href="<%= request.getContextPath() %>/mi-perfil">
-      <p class="navbar_username"><%= nickname %></p>
-      <img class="perfil_image" 
-     src="<%= request.getContextPath() %>/img/<%= imagen %>?t=<%= System.currentTimeMillis() %>"
-     alt="foto perfil" />
-
-    </a>
+  <a href="<%= request.getContextPath() %>/UsuarioServlet?op=consultar&nick=<%= nickname %>">
+    <p class="navbar_username"><%= nickname %></p>
+    <img class="perfil_image" 
+         src="<%= request.getContextPath() %>/img/<%= imagen %>?t=<%= System.currentTimeMillis() %>"
+         alt="foto perfil" />
+  </a>
   </div>
 <% } else { %>
   <!-- Usuario no logueado -->
