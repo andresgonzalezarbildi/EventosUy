@@ -119,6 +119,12 @@ public class RegistrarUsuarioServlet extends HttpServlet {
         } else if ("Asistente".equalsIgnoreCase(tipo)) {
             apellido    = req.getParameter("apellido");
             fechaNac    = parseFecha(req.getParameter("fechaNacimiento"));
+            if ("Asistente".equalsIgnoreCase(tipo) && fechaNac == null) {
+                req.setAttribute("error", "La fecha de nacimiento es obligatoria para asistentes.");
+                volverAFormTipo(req, res, tipo);
+                return;
+            }
+
         } else {
             req.setAttribute("error", "Tipo de usuario inválido.");
             volverAFormTipo(req, res, tipo);

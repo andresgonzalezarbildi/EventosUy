@@ -55,7 +55,7 @@
       <input type="password" id="confirmPassword" name="confirmPassword" required>
 
         <label for="fechaNacimiento">Fecha de Nacimiento:</label>
-        <input type="date" id="fechaNacimiento" name="fechaNacimiento">
+        <input type="date" id="fechaNacimiento" required name="fechaNacimiento">
 
         <label for="institucion">Institución:</label>
         <select id="institucion" name="institucion">
