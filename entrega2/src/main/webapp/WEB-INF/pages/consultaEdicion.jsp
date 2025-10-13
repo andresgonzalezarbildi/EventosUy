@@ -4,6 +4,7 @@
 <%@ page import="logica.datatypes.DataRegistro" %>
 <%@ page import="java.util.List" %>
 <%@ page import="logica.datatypes.DataEvento" %>
+<%@ page import="java.net.URLEncoder" %>
 
 
 <!DOCTYPE html>
@@ -84,11 +85,11 @@
 		            if (tipos != null && !tipos.isEmpty()) {
 		                for (DataTipoRegistro tipo : tipos) {
 		        %>
-		                    <a href="<%= request.getContextPath() %>/TipoRegistroServlet?op=consulta&id=<%= tipo.getNombre() %>&idEdicion=<%= ed.getNombre() %>"
-		                       style="display:inline-block; background:#f0f0f0; padding:0.4rem 0.8rem;
-		                              border-radius:12px; text-decoration:none; color:inherit;">
-		                        <%= tipo.getNombre() %>
-		                    </a>
+		                    <a href="<%= request.getContextPath() %>/TipoRegistroServlet?op=consulta&id=<%= URLEncoder.encode(tipo.getNombre(), "UTF-8") %>&idEdicion=<%= URLEncoder.encode(ed.getNombre(), "UTF-8") %>"
+						   style="display:inline-block; background:#f0f0f0; padding:0.4rem 0.8rem;
+						          border-radius:12px; text-decoration:none; color:inherit;">
+						    <%= tipo.getNombre() %>
+</a>
 		        <%
 		                }
 		            } else {
@@ -103,7 +104,8 @@
 		       && nickname != null 
 		       && ed.getOrganizador() != null 
 		       && ed.getOrganizador().equalsIgnoreCase(nickname)) { %>
-		    <button onclick="window.location.href='<%= request.getContextPath() %>/TipoRegistroServlet?op=alta&idEdicion=<%= ed.getNombre() %>'">
+			<button onclick="window.location.href='<%= request.getContextPath() %>/TipoRegistroServlet?op=alta&idEdicion=<%= URLEncoder.encode(ed.getNombre(), "UTF-8") %>'">
+
 		        Agregar Tipo de Registro
 		    </button>
 			<% } %>

@@ -32,7 +32,7 @@
         <jsp:include page="sidebar.jsp" />
 
         <main style="max-width:600px;margin:2rem auto;padding:1rem;background:#fff;border:1px solid var(--color-border);border-radius:var(--radius);">
-          <h2 style="margin-bottom:1rem;color:var(--color-primary);">Alta de Usuario</h2>
+          <h2 style="margin-bottom:1rem;color:var(--color-primary);">Alta de Evento</h2>
 
           <% if (err != null && !err.isEmpty()) { %>
             <div style="color:red;margin-bottom:1rem;"><%= err %></div>

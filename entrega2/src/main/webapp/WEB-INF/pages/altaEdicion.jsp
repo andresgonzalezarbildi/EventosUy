@@ -1,81 +1,91 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page import="java.net.URLEncoder" %>
+<%@ page import="logica.datatypes.DataEvento" %>
+
 <%
-    String nomEv = (String) request.getAttribute("nomEv");
     String path = request.getContextPath();
+    String nombreEvento = (String) request.getAttribute("nomEv");
     String error = (String) request.getAttribute("error");
-%>	
+%>
 
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Alta Edición de Evento</title>
-  <link rel="stylesheet" href="<%=path%>/estilos/normalize.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap-grid.min.css">
-  <link rel="stylesheet" href="<%=path%>/estilos/main.css">
-  <link rel="stylesheet" href="<%=path%>/estilos/base.css">
+    <meta charset="UTF-8">
+    <title>Alta de Edición</title>
+    <link rel="stylesheet" href="<%= path %>/estilos/normalize.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap-grid.min.css">
+    <link rel="stylesheet" href="<%= path %>/estilos/base.css">
+    <style>
+        .formulario-wrapper {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            max-width: 600px;
+            margin: 2rem auto;
+        }
+        .error-msg {
+            color: red;
+            margin-bottom: 1rem;
+        }
+    </style>
 </head>
-
 <body>
-  <jsp:include page="header.jsp"/>
+<jsp:include page="header.jsp"/>
 
-  <section class="content">
-    <div class="container-fluid">
-      <div class="row">
+<main class="container-fluid">
+    <div class="row">
         <jsp:include page="sidebar.jsp"/>
+        <div class="col-12 col-md-9">
+            <section class="formulario-wrapper">
+                <h2>Alta de Edición para Evento: <%= nombreEvento != null ? nombreEvento : "" %></h2>
 
-        <main style="max-width:600px;margin:2rem auto;padding:1rem;background:#fff;border:1px solid var(--color-border);border-radius:var(--radius);">
-          <h2 style="margin-bottom:1rem;color:var(--color-primary);">Alta de Edición de Evento</h2>
+                <% if (error != null) { %>
+                    <p class="error-msg"><%= error %></p>
+                <% } %>
 
-          <% if (error != null && !error.isEmpty()) { %>
-            <div style="color: red; margin-bottom: 1rem;">
-              <%= error %>
-            </div>
-          <% } %>
+                <form action="<%= path %>/edicion" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="opt" value="alta">
+                    <input type="hidden" name="id" value="<%= nombreEvento != null ? nombreEvento : "" %>">
 
-          <form id="formEdicionEvento"
-                action="<%=path%>/edicion"
-                method="post"
-                enctype="multipart/form-data">
+                    <label for="nombre">Nombre de la Edición:</label>
+                    <input type="text" id="nombre" name="nombre" class="form-control mb-2"
+                           value="<%= request.getAttribute("nombre") != null ? request.getAttribute("nombre") : "" %>" required>
 
-            <input type="hidden" name="opt" value="alta">
-            <input type="hidden" name="id" value="<%= nomEv %>">
+                    <label for="sigla">Sigla:</label>
+                    <input type="text" id="sigla" name="sigla" class="form-control mb-2"
+                           value="<%= request.getAttribute("sigla") != null ? request.getAttribute("sigla") : "" %>" required>
 
-            <label>Evento:</label>
-            <input type="text" value="<%= nomEv %>" readonly>
+                    <label for="ciudad">Ciudad:</label>
+                    <input type="text" id="ciudad" name="ciudad" class="form-control mb-2"
+                           value="<%= request.getAttribute("ciudad") != null ? request.getAttribute("ciudad") : "" %>" required>
 
-            <label for="nombre">Nombre de la Edición:</label>
-            <input type="text" id="nombre" name="nombre" required>
+                    <label for="pais">País:</label>
+                    <input type="text" id="pais" name="pais" class="form-control mb-2"
+                           value="<%= request.getAttribute("pais") != null ? request.getAttribute("pais") : "" %>" required>
 
-            <label for="sigla">Sigla:</label>
-            <input type="text" id="sigla" name="sigla" required>
+                    <label for="fechaInicio">Fecha de Inicio:</label>
+                    <input type="date" id="fechaInicio" name="fechaInicio" class="form-control mb-2"
+                           value="<%= request.getAttribute("fechaInicio") != null ? request.getAttribute("fechaInicio") : "" %>" required>
 
-            <label for="ciudad">Ciudad:</label>
-            <input type="text" id="ciudad" name="ciudad" required>
+                    <label for="fechaFin">Fecha de Fin:</label>
+                    <input type="date" id="fechaFin" name="fechaFin" class="form-control mb-2"
+                           value="<%= request.getAttribute("fechaFin") != null ? request.getAttribute("fechaFin") : "" %>" required>
 
-            <label for="pais">País:</label>
-            <input type="text" id="pais" name="pais" required>
+                    <label for="imagen">Imagen (opcional):</label>
+                    <input type="file" id="imagen" name="imagen" class="form-control mb-3" accept="image/*">
 
-            <label for="fechaInicio">Fecha de Inicio:</label>
-            <input type="date" id="fechaInicio" name="fechaInicio" required>
-
-            <label for="fechaFin">Fecha de Fin:</label>
-            <input type="date" id="fechaFin" name="fechaFin" required>
-
-            <label for="imagen">Imagen (opcional):</label>
-            <input type="file" id="imagen" name="imagen" accept="image/*">
-
-            <div style="margin-top:1.5rem;display:flex;gap:1rem;">
-              <button type="submit">Aceptar</button>
-              <button type="reset">Cancelar</button>
-            </div>
-          </form>
-        </main>
-      </div>
+                    <div class="mt-3">
+                        <button type="submit" class="btn btn-primary">Aceptar</button>
+                        <button type="reset" class="btn btn-secondary">Cancelar</button>
+                    </div>
+                </form>
+            </section>
+        </div>
     </div>
-  </section>
+</main>
 
-  <jsp:include page="footer.jsp"/>
+<jsp:include page="footer.jsp"/>
 </body>
 </html>
