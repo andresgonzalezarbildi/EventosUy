@@ -88,6 +88,71 @@ public class registroServlet extends HttpServlet {
                     res.sendError(HttpServletResponse.SC_NOT_FOUND, "Operación no disponible en el GET.");
                     break;
                 }
+                
+                
+                case "consultar": {
+            	    HttpSession sesion = req.getSession(false);
+            	  if (sesion != null) {
+            	        rol = (String) sesion.getAttribute("rol");
+            	        nickname = (String) sesion.getAttribute("usuario");
+            	    }
+
+            	    if ("organizador".equalsIgnoreCase(rol)) {
+            	    	String idEdicion = req.getParameter("idEdicion");
+            	    	DataEdicion edicion = ctrlEv.getInfoEdicion(idEdicion);
+            	    	String imagen = edicion.getImagen();
+            	    	String asis = req.getParameter("idAsistente");
+            	    	DataRegistro registro = ctrlEv.listarUnRegistroDeUsuario(idEdicion, asis);
+            	    	LocalDate fechaRegistro = registro.getFecha();
+            	    	String nomTipoRegistro = registro.getTipoRegistro();
+            	    	
+        	            req.setAttribute("rol", rol);
+        	            req.setAttribute("idEdicion", idEdicion);
+        	            req.setAttribute("imagen", imagen);
+        	            req.setAttribute("nickname", asis);
+        	            req.setAttribute("fechaRegistro", fechaRegistro);
+        	            req.setAttribute("nomTipoRegistro", nomTipoRegistro);
+            	        req.getRequestDispatcher("/WEB-INF/pages/consultaRegistro.jsp").forward(req, res);
+            	        break;
+            	    }
+            	    // 2️⃣ ASISTENTE
+            	    if ("asistente".equalsIgnoreCase(rol)) {
+            	    	
+            	        String idEdicion = req.getParameter("edicion");
+            	        DataEdicion edicion = ctrlEv.getInfoEdicion(idEdicion);
+            	        String nomEvento = req.getParameter("evento");
+            	    	DataRegistro registro = ctrlEv.listarUnRegistroDeUsuario(idEdicion, nickname);
+            	    	LocalDate fechaRegistro = registro.getFecha();
+            	    	String nomTipoRegistro = registro.getTipoRegistro();
+            	    	String organizador = edicion.getOrganizador();
+            	    	LocalDate fechaIni = edicion.getFechaIni();
+            	    	LocalDate fechaFin = edicion.getFechaFin();
+            	    	String imagen = edicion.getImagen();
+            	    	String ciudad = edicion.getCiudad();
+            	    	String pais = edicion.getPais();
+            	    	Integer costo = registro.getCosto();
+            	    	
+        	            req.setAttribute("rol", rol);
+            	    	req.setAttribute("imagen", imagen);
+            	    	req.setAttribute("nickname", nickname);
+            	    	req.setAttribute("idEdicion", idEdicion);
+            	    	req.setAttribute("nomEvento", nomEvento);
+            	    	req.setAttribute("fechaRegistro", fechaRegistro);
+            	    	req.setAttribute("nomTipoRegistro", nomTipoRegistro);
+            	    	req.setAttribute("organizador", organizador);
+            	    	req.setAttribute("fechaIni", fechaIni);
+            	    	req.setAttribute("fechaFin", fechaFin);
+            	    	req.setAttribute("ciudad", ciudad);
+            	    	req.setAttribute("pais", pais);
+            	    	req.setAttribute("costo", costo);
+
+            	        req.getRequestDispatcher("/WEB-INF/pages/consultaRegistro.jsp").forward(req, res);
+            	    }
+            	
+            	    // 3️⃣ VISITANTE (sin login)
+            	    res.sendError(HttpServletResponse.SC_FORBIDDEN, "Debe iniciar sesión para consultar registros.");
+            	    break;
+            	    }
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -97,71 +162,9 @@ public class registroServlet extends HttpServlet {
 
 
              	
-//////////////////////////////////////////////////////ACA EMPIEZA LA QUE TENEMOS Q COMPARAR//////////////////////////////////////////////////////////////////////
-//
-//case "consultar": {
-//    HttpSession sesion = req.getSession(false);
-//    if (sesion != null) {
-//        rol = (String) sesion.getAttribute("rol");
-//        nickname = (String) sesion.getAttribute("usuario");
-//    }
-//
-//    // 1️⃣ ORGANIZADOR
-//    if ("organizador".equalsIgnoreCase(rol)) {
-//
-//        // Si no viene idEdicion → listar sus ediciones
-//        if (req.getParameter("idEdicion") == null) {
-//            DataEdicion[] edicionesOrg = ctrlEv.listarEdicionesDeOrganizador(nickname);
-//            req.setAttribute("ediciones", edicionesOrg);
-//            req.getRequestDispatcher("/WEB-INF/pages/listarEdicionesOrganizador.jsp").forward(req, res);
-//            break;
-//        }
-//
-//        String idEdicion = req.getParameter("idEdicion");
-//
-//        // Si no viene idUsuario → listar usuarios registrados en esa edición
-//        if (req.getParameter("idUsuario") == null) {
-//            DataRegistro[] registros = ctrlEv.listarRegistrosDeEdicion(idEdicion);
-//            req.setAttribute("registros", registros);
-//            req.setAttribute("idEdicion", idEdicion);
-//            req.getRequestDispatcher("/WEB-INF/pages/listarRegistrosEdicion.jsp").forward(req, res);
-//            break;
-//        }
-//
-//        // Si viene idUsuario → mostrar detalle del registro
-//        String idUsuario = req.getParameter("idUsuario");
-//        DataRegistro registro = ctrlEv.listarUnRegistroDeUsuario(idEdicion, idUsuario);
-//        req.setAttribute("registro", registro);
-//        req.getRequestDispatcher("/WEB-INF/pages/detalleRegistro.jsp").forward(req, res);
-//        break;
-//    }
-//
-//    // 2️⃣ ASISTENTE
-//    if ("asistente".equalsIgnoreCase(rol)) {
-//
-//        // Si no viene idEdicion → listar ediciones donde está registrado
-//        if (req.getParameter("idEdicion") == null) {
-//            DataEdicion[] ediciones = ctrlEv.listarEdicionesDeAsistente(nickname);
-//            req.setAttribute("ediciones", ediciones);
-//            req.getRequestDispatcher("/WEB-INF/pages/listarEdicionesAsistente.jsp").forward(req, res);
-//            break;
-//        }
-//
-//        // Si viene idEdicion → mostrar detalle de su propio registro
-//        String idEdicion = req.getParameter("idEdicion");
-//        DataRegistro registro = ctrlEv.listarUnRegistroDeUsuario(idEdicion, nickname);
-//        req.setAttribute("registro", registro);
-//        req.getRequestDispatcher("/WEB-INF/pages/detalleRegistro.jsp").forward(req, res);
-//        break;
-//    }
-//
-//    // 3️⃣ VISITANTE (sin login)
-//    res.sendError(HttpServletResponse.SC_FORBIDDEN, "Debe iniciar sesión para consultar registros.");
-//    break;
-//}
-////////////////////////////////////////////////////////ACA TERMINA LA QUE TENEMOS Q COMPARAR//////////////////////////////////////////////////////////////////////
-//    
-//    
+
+	
+
     
     
     
