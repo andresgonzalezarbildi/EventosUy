@@ -24,19 +24,27 @@
     </div>
   </div>
 
-  <!-- Administración -->
-  <div class="content-bar">
-    <div class="content-bar-seccion">
-      <div class="seccion-titulo"><h3>Administración</h3></div>
-      <div class="content-bar-seccion-list">
+  <%
+    Boolean datosCargados = (Boolean) session.getAttribute("datosCargados");
+    if (datosCargados == null) datosCargados = false;
+%>
+   <% if (!datosCargados) { %>
+<div class="content-bar">
+  <div class="content-bar-seccion">
+    <div class="seccion-titulo"><h3>Administración</h3></div>
+    <div class="content-bar-seccion-list">
+   
         <form action="<%= request.getContextPath() %>/cargarDatos" method="post" class="content-bar-seccion-list-options">
           <button style="background:none; border:none; color:inherit; padding:0; cursor:pointer;" type="submit">
             Cargar Datos
           </button>
         </form>
-      </div>
+    
     </div>
   </div>
+</div>
+  <% } %>
+
 
 
 <% if ("organizador".equalsIgnoreCase(rol)) { %>

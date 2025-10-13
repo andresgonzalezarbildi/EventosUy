@@ -2,16 +2,17 @@ package evento;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.UUID;
 
 import excepciones.EventoNoExisteException;
-import excepciones.EdicionNoExisteException;
 import excepciones.UsuarioNoExisteException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
@@ -24,151 +25,205 @@ import jakarta.servlet.http.Part;
 import logica.Fabrica;
 import logica.datatypes.DataEdicion;
 import logica.datatypes.DataEvento;
+import logica.datatypes.DataRegistro;
+import logica.datatypes.DataTipoRegistro;
 import logica.interfaces.IControladorEvento;
+import logica.interfaces.IControladorUsuario;
 
 @WebServlet("/edicion")
-@MultipartConfig
+@jakarta.servlet.annotation.MultipartConfig
+//@MultipartConfig
 public class EdicionServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
-    private final Fabrica fabrica = Fabrica.getInstance();
-    private final IControladorEvento controladorEventos = fabrica.getControladorEvento();
+    private Fabrica fabrica = Fabrica.getInstance();
+    private IControladorEvento controladorEventos = fabrica.getControladorEvento();
+   
+    
+   
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
-        req.setCharacterEncoding("UTF-8");
-        res.setCharacterEncoding("UTF-8");
+    	req.setCharacterEncoding("UTF-8");
+    	res.setCharacterEncoding("UTF-8");
 
-        String op = req.getParameter("op") != null ? req.getParameter("op").toLowerCase() : "";
+        String op = (req.getParameter("op") != null) ? req.getParameter("op").toLowerCase() : "";
+        String nombreEdicion = (req.getParameter("id") != null) ? req.getParameter("id") : "";
+        String nickname = null;
+        String rol = "visitante";
+        
 
         try {
             switch (op) {
-                case "alta":
-                    mostrarAlta(req, res);
-                    break;
+            case "alta":
+                String idEvento = req.getParameter("id");
+                if (idEvento == null || idEvento.isEmpty()) {
+                    res.sendError(HttpServletResponse.SC_BAD_REQUEST, "Falta el parámetro 'id' del evento.");
+                    return;
+                }
+
+                try {
+                    DataEvento evento = controladorEventos.getUnEventoDTO(idEvento);
+                    String nomEv = evento.getNombre();
+                    req.setAttribute("nomEv", nomEv);
+                    req.getRequestDispatcher("/WEB-INF/pages/altaEdicion.jsp").forward(req, res);
+                } catch (EventoNoExisteException e) {
+                    res.sendError(HttpServletResponse.SC_NOT_FOUND, "El evento no existe.");
+                }
+                break;
                 case "listar":
                     listarEdiciones(req, res);
                     break;
                 case "consultar":
-                    consultarEdicion(req, res);
+        	        HttpSession sesion = req.getSession(false);
+        	        if (sesion != null) {
+        	             rol = (String) sesion.getAttribute("rol");
+        	            nickname = (String) sesion.getAttribute("usuario");
+        	            req.setAttribute("rol", rol);
+        	            req.setAttribute("nickname", nickname);
+        	        } else {
+        	            req.setAttribute("rol", "visitante");
+        	        }
+        	        if (nombreEdicion == null || nombreEdicion.isEmpty()) {
+        	            res.sendError(HttpServletResponse.SC_BAD_REQUEST, "Falta el parámetro 'id' de la edición.");
+        	            return;
+        	        }
+        	            if (nickname != null && "asistente".equalsIgnoreCase(rol)) {        	            
+        	        	 DataRegistro registroAsistente = controladorEventos.listarUnRegistroDeUsuario(nombreEdicion,nickname);
+        	        	 req.setAttribute("registroAsistente", registroAsistente);
+        	        }     	                              
+        	            String nombreEvento = controladorEventos.getEventoDeUnaEdicion(nombreEdicion);
+                        DataEvento dataEvento = controladorEventos.getUnEventoDTO(nombreEvento);
+                        req.setAttribute("evento", dataEvento);
+
+                        DataEdicion dataEd = controladorEventos.getInfoEdicion(nombreEdicion);
+                        DataRegistro[] registrosEd = controladorEventos.listarRegistrosDeEdicion(nombreEdicion);
+                        req.setAttribute("registrosEd", registrosEd);
+                        req.setAttribute("edicion", dataEd);
+
+                    req.getRequestDispatcher("/WEB-INF/pages/consultaEdicion.jsp").forward(req, res);
                     break;
-                default:
-                    res.sendError(HttpServletResponse.SC_NOT_FOUND, "Operación no disponible en GET.");
+                	default:
+                    res.sendError(HttpServletResponse.SC_NOT_FOUND, "Operación no disponible en el GET.");
+                    break;
             }
         } catch (Exception e) {
             e.printStackTrace();
-            res.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error en EdicionServlet");
+            res.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error en el servlet de Edición.");
         }
     }
-
+    
+    
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
-        req.setCharacterEncoding("UTF-8");
-        res.setCharacterEncoding("UTF-8");
+    	req.setCharacterEncoding("UTF-8");
+    	res.setCharacterEncoding("UTF-8");
 
+    	System.out.println("Valor de opt: " + req.getParameter("opt"));
+    	System.out.println("Nombre evento: " + req.getParameter("id"));
         String opt = req.getParameter("opt");
-        if ("alta".equalsIgnoreCase(opt)) {
+        if (opt != null && opt.equals("alta")) {
             altaEdicion(req, res);
         } else {
             res.sendError(HttpServletResponse.SC_BAD_REQUEST, "Operación POST no válida.");
         }
     }
 
-    private void mostrarAlta(HttpServletRequest req, HttpServletResponse res)
-            throws ServletException, IOException {
-        String idEvento = req.getParameter("id");
-        if (idEvento == null || idEvento.isEmpty()) {
-            res.sendError(HttpServletResponse.SC_BAD_REQUEST, "Falta el parámetro 'id' del evento.");
-            return;
-        }
-        try {
-            DataEvento evento = controladorEventos.getUnEventoDTO(idEvento);
-            req.setAttribute("nomEv", evento.getNombre());
-            req.getRequestDispatcher("/WEB-INF/pages/altaEdicion.jsp").forward(req, res);
-        } catch (EventoNoExisteException e) {
-            res.sendError(HttpServletResponse.SC_NOT_FOUND, "El evento no existe.");
-        }
-    }
 
+	
+	
     private void altaEdicion(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
 
+        
         HttpSession sesion = req.getSession(false);
-        String nickname = (sesion != null) ? (String) sesion.getAttribute("usuario") : null;
+        String rol = "visitante";
+        String nickname = null;
 
-        String nombreEdicion = req.getParameter("nombre");
-        String sigla = req.getParameter("sigla");
-        String ciudad = req.getParameter("ciudad");
-        String pais = req.getParameter("pais");
-        String nombreEvento = req.getParameter("id");
-        String fechaInicioStr = req.getParameter("fechaInicio");
-        String fechaFinStr = req.getParameter("fechaFin");
+        if (sesion != null) {
+            rol = (String) sesion.getAttribute("rol");
+            nickname = (String) sesion.getAttribute("usuario");
+        }
 
+        req.setAttribute("rol", rol);
+        req.setAttribute("nickname", nickname);
+
+    
+        final String nombreEdicion = req.getParameter("nombre");
+        final String sigla = req.getParameter("sigla");
+        final String ciudad = req.getParameter("ciudad");
+        final String pais = req.getParameter("pais");
+        final String nombreEvento = req.getParameter("id");
+        final String fechaInicioStr = req.getParameter("fechaInicio");
+        final String fechaFinStr = req.getParameter("fechaFin");
+
+       
         if (nombreEdicion == null || nombreEdicion.isEmpty() ||
             sigla == null || sigla.isEmpty() ||
             nombreEvento == null || nombreEvento.isEmpty()) {
 
             req.setAttribute("error", "Faltan datos obligatorios para crear la edición.");
-            req.setAttribute("nomEv", nombreEvento);
             req.getRequestDispatcher("/WEB-INF/pages/altaEdicion.jsp").forward(req, res);
             return;
         }
 
-        LocalDate fechaInicio;
-        LocalDate fechaFin;
+    
+        LocalDate fechaInicio = null;
+        LocalDate fechaFin = null;
         try {
             fechaInicio = LocalDate.parse(fechaInicioStr);
             fechaFin = LocalDate.parse(fechaFinStr);
         } catch (Exception e) {
             req.setAttribute("error", "Formato de fecha inválido.");
-            req.setAttribute("nomEv", nombreEvento);
             req.getRequestDispatcher("/WEB-INF/pages/altaEdicion.jsp").forward(req, res);
             return;
         }
 
-        // IMAGEN
+      //IMAGENNNNNNNNNNNNN
         String nombreImagenGuardada = null;
         try {
             Part filePart = req.getPart("imagen");
-            if (filePart != null && filePart.getSize() > 0 && filePart.getContentType().startsWith("image/")) {
-                String ext = "";
-                String submitted = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
-                int dot = submitted.lastIndexOf('.');
-                if (dot >= 0) ext = submitted.substring(dot).toLowerCase();
 
-                String nuevoNombre = UUID.randomUUID().toString().replace("-", "") + ext;
+            if (filePart != null && filePart.getSize() > 0) {
+                String contentType = filePart.getContentType();
+                if (contentType != null && contentType.startsWith("image/")) {
 
-                Path imgDir = Paths.get(getServletContext().getRealPath("/img"));
-                Files.createDirectories(imgDir);
+                    
+                    String submitted = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
+                    String ext = "";
+                    int dot = submitted.lastIndexOf('.');
+                    if (dot >= 0 && dot < submitted.length() - 1) {
+                        ext = submitted.substring(dot).toLowerCase();
+                    }
 
-                Path destino = imgDir.resolve(nuevoNombre);
-                try (InputStream in = filePart.getInputStream()) {
-                    Files.copy(in, destino, StandardCopyOption.REPLACE_EXISTING);
+                    
+                    String nuevoNombre = UUID.randomUUID().toString().replace("-", "") + ext;
+
+                    
+                    String imgDirPath = getServletContext().getRealPath("/img");
+                    if (imgDirPath != null) {
+                        Path imgDir = Paths.get(imgDirPath);
+                        Files.createDirectories(imgDir);
+
+                        Path destino = imgDir.resolve(nuevoNombre);
+                        try (InputStream in = filePart.getInputStream()) {
+                            Files.copy(in, destino, StandardCopyOption.REPLACE_EXISTING);
+                        }
+
+                        nombreImagenGuardada = nuevoNombre;
+                    }
                 }
-
-                nombreImagenGuardada = nuevoNombre;
             }
+
         } catch (IllegalStateException ex) {
-            req.setAttribute("error", "Error al subir la imagen.");
-            req.setAttribute("nomEv", nombreEvento);
+            req.setAttribute("error", "Error al subir la imagen (tamaño excedido o inválido).");
             req.getRequestDispatcher("/WEB-INF/pages/altaEdicion.jsp").forward(req, res);
             return;
         }
 
-        // ALTA
+       
         try {
-            // Chequeo duplicado
-            DataEdicion[] ediciones = controladorEventos.listarEdiciones(nombreEvento);
-            for (DataEdicion ed : ediciones) {
-                if (ed.getNombre().equalsIgnoreCase(nombreEdicion)) {
-                    req.setAttribute("error", "Ya existe una edición con ese nombre para este evento.");
-                    req.setAttribute("nomEv", nombreEvento);
-                    req.getRequestDispatcher("/WEB-INF/pages/altaEdicion.jsp").forward(req, res);
-                    return;
-                }
-            }
-
             controladorEventos.altaEdicionEvento(
                     nombreEvento,
                     nombreEdicion,
@@ -177,25 +232,26 @@ public class EdicionServlet extends HttpServlet {
                     pais,
                     fechaInicio,
                     fechaFin,
-                    LocalDate.now(),
-                    nickname,
+                    LocalDate.now(),  
+                    nickname,         
                     nombreImagenGuardada
-            );
-
-            res.sendRedirect(req.getContextPath() + "/evento?op=consultar&id=" + URLEncoder.encode(nombreEvento, "UTF-8"));
+            );   
+            res.sendRedirect(req.getContextPath() + "/evento?op=consultar&id=" + nombreEvento);
 
         } catch (UsuarioNoExisteException e) {
             req.setAttribute("error", "El organizador no existe o no tiene permisos.");
-            req.setAttribute("nomEv", nombreEvento);
             req.getRequestDispatcher("/WEB-INF/pages/altaEdicion.jsp").forward(req, res);
         } catch (Exception e) {
             e.printStackTrace();
             req.setAttribute("error", "Error al registrar la edición.");
-            req.setAttribute("nomEv", nombreEvento);
             req.getRequestDispatcher("/WEB-INF/pages/altaEdicion.jsp").forward(req, res);
         }
     }
 
+    
+    
+    
+    
     private void listarEdiciones(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
         String nombreEvento = req.getParameter("evento");
@@ -213,23 +269,5 @@ public class EdicionServlet extends HttpServlet {
             e.printStackTrace();
             res.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error al listar las ediciones.");
         }
-    }
-
-    private void consultarEdicion(HttpServletRequest req, HttpServletResponse res)
-            throws ServletException, IOException, EventoNoExisteException, EdicionNoExisteException {
-        req.setCharacterEncoding("UTF-8");
-        String nombreEdicion = req.getParameter("id");
-        if (nombreEdicion == null || nombreEdicion.isEmpty()) {
-            res.sendError(HttpServletResponse.SC_BAD_REQUEST, "Falta el parámetro 'id'.");
-            return;
-        }
-
-        DataEdicion ed = controladorEventos.getInfoEdicion(nombreEdicion);
-        String nombreEvento = controladorEventos.getEventoDeUnaEdicion(nombreEdicion);
-
-        req.setAttribute("edicion", ed);
-        req.setAttribute("evento", nombreEvento);
-
-        req.getRequestDispatcher("/WEB-INF/pages/consultaEdicion.jsp").forward(req, res);
     }
 }

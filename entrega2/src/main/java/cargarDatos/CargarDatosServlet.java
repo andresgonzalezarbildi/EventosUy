@@ -24,11 +24,18 @@ public class CargarDatosServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        carga.cargarDatosIniciales();
-        
+
+        HttpSession session = request.getSession();
+        Boolean cargado = (Boolean) session.getAttribute("datosCargados");
+
+        if (cargado == null || !cargado) {
+            carga.cargarDatosIniciales();
+            session.setAttribute("datosCargados", true); 
+        }
+
         response.sendRedirect(request.getContextPath() + "/eventos");
     }
+
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
