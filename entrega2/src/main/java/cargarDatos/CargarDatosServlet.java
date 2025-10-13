@@ -1,5 +1,6 @@
 package cargarDatos;
 
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
@@ -25,16 +26,17 @@ public class CargarDatosServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        HttpSession session = request.getSession();
-        Boolean cargado = (Boolean) session.getAttribute("datosCargados");
+        ServletContext context = getServletContext();
+        Boolean cargado = (Boolean) context.getAttribute("datosCargados");
 
         if (cargado == null || !cargado) {
             carga.cargarDatosIniciales();
-            session.setAttribute("datosCargados", true); 
+            context.setAttribute("datosCargados", true); 
         }
 
         response.sendRedirect(request.getContextPath() + "/eventos");
     }
+
 
 
     @Override
