@@ -110,7 +110,7 @@
 		            for (DataRegistro r : registros) {
 		    %>
 		        <li>
-		            <a href="<%= request.getContextPath() %>/RegistroServlet?op=consultar&evento=<%= r.getEvento() %>&edicion=<%= r.getEdicion() %>">
+		            <a href="<%= request.getContextPath() %>/registroEd?op=consultar&evento=<%= r.getEvento() %>&edicion=<%= r.getEdicion() %>">
 		                Registro en <%= r.getEdicion() %> (<%= r.getEvento() %>) — Tipo: <%= r.getTipoRegistro() %>, Costo: $<%= r.getCosto() %>
 		            </a>
 		        </li>
