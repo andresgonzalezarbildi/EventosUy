@@ -48,8 +48,9 @@
     <a href="<%= request.getContextPath() %>/mi-perfil">
       <p class="navbar_username"><%= nickname %></p>
       <img class="perfil_image" 
-           src="<%= request.getContextPath() %>/img/<%= imagen %>"
-           alt="foto perfil" />
+     src="<%= request.getContextPath() %>/img/<%= imagen %>?t=<%= System.currentTimeMillis() %>"
+     alt="foto perfil" />
+
     </a>
   </div>
 <% } else { %>

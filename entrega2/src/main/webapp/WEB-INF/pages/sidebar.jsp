@@ -51,23 +51,27 @@
   </div>
 
 
-  <% if ("organizador".equalsIgnoreCase(rol)) { %>
-      <div class="content-bar">
-        <div class="content-bar-seccion">
-          <div class="seccion-titulo"><h3>Mi Perfil</h3></div>
-          <div class="content-bar-seccion-list">
-            <div class="content-bar-seccion-list-options" onclick="window.location.href='<%= request.getContextPath() %>/alta-evento'">
-              <span>Alta Evento</span>
-            </div>
-            <div class="content-bar-seccion-list-options" onclick="window.location.href='<%= request.getContextPath() %>/eventos-organizador'">
-              <span>Mis Eventos</span>
-            </div>
-            <div class="content-bar-seccion-list-options" onclick="window.location.href='<%= request.getContextPath() %>/alta-institucion'">
-              <span>Alta Institución</span>
-            </div>
-          </div>
+<% if ("organizador".equalsIgnoreCase(rol)) { %>
+  <div class="content-bar">
+    <div class="content-bar-seccion">
+      <div class="seccion-titulo"><h3>Mi Perfil</h3></div>
+      <div class="content-bar-seccion-list">
+        <div class="content-bar-seccion-list-options"
+             onclick="window.location.href='<%= request.getContextPath() %>/evento/alta'">
+          <span>Alta Evento</span>
+        </div>
+        <div class="content-bar-seccion-list-options"
+             onclick="window.location.href='<%= request.getContextPath() %>/evento/mis-eventos'">
+          <span>Mis Eventos</span>
+        </div>
+        <div class="content-bar-seccion-list-options"
+             onclick="window.location.href='<%= request.getContextPath() %>/alta-institucion'">
+          <span>Alta Institución</span>
         </div>
       </div>
-  <% } %>
+    </div>
+  </div>
+<% } %>
+
 
 </aside>
