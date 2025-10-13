@@ -107,5 +107,7 @@ public interface IControladorUsuario {
    */
   public DataUsuario login(String ident, String password) 
       throws UsuarioNoExisteException, PasswordIncorrectaException;
+  
+  public void cambiarContrasenia(String nickname, String nuevaPass);
     
 }

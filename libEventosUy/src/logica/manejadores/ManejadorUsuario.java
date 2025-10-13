@@ -91,14 +91,22 @@ public class ManejadorUsuario {
   }
   
   public Usuario obtenerPorCorreo(String correo) {
-    Usuario usuario = organizadores.get(correo);
-    if (usuario != null) {
-      return usuario;
+    if (correo == null || correo.isBlank()) return null;
+    for (Organizador org : organizadores.values()) {
+        if (correo.equalsIgnoreCase(org.getCorreo())) {
+            return org;
+        }
     }
-    return asistentes.get(correo);
-  }
+    for (Asistente asis : asistentes.values()) {
+        if (correo.equalsIgnoreCase(asis.getCorreo())) {
+            return asis;
+        }
+    }
+    return null;
+}
+
   
-  public Usuario obtenerPorIdentificador(String ident) {
+  public Usuario obtenerPorIdentificador(String ident) { 
     Usuario res = obtenerPorCorreo(ident);
     if (res == null) {
       res = obtenerPorNickname(ident);
@@ -141,13 +149,11 @@ public class ManejadorUsuario {
   }
   
   public boolean existeNombre(String nombre) {
-    // Recorrer organizadores
     for (Organizador org : organizadores.values()) {
       if (org.getNombre().equalsIgnoreCase(nombre)) {
         return true;
       }
     }
-    // Recorrer asistentes
     for (Asistente asis : asistentes.values()) {
       if (asis.getNombre().equalsIgnoreCase(nombre)) {
         return true;

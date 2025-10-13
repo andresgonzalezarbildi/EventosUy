@@ -33,7 +33,7 @@ public class CargaDatos implements ICargaDatos {
       IControladorEvento controladorEvento) {
     this.controladorUsuario = controladorUsuario;
     this.controladorEvento = controladorEvento;
-  }
+  } 
 
   /**
    * Funcion que inicializa los controladores de usuario y evento

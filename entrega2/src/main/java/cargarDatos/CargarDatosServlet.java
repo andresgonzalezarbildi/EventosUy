@@ -6,14 +6,11 @@ import jakarta.servlet.http.*;
 import java.io.IOException;
 
 import logica.Fabrica;
-import logica.interfaces.ICargaDatos;            // en el JAR
+import logica.interfaces.ICargaDatos;           
 
 @WebServlet(name = "SvCargarDatos", urlPatterns = {"/cargarDatos"})
 public class CargarDatosServlet extends HttpServlet {
 
-    /**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private ICargaDatos carga;
 	private Fabrica fabrica;
@@ -28,12 +25,8 @@ public class CargarDatosServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        try {
-            carga.cargarDatosIniciales(); // método de la interfaz del JAR 
-        } catch (Exception e) {
-        }
+        carga.cargarDatosIniciales();
         
-        // Reenviar a la página principal
         response.sendRedirect(request.getContextPath() + "/eventos");
     }
 
