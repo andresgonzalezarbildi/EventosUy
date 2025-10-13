@@ -47,7 +47,7 @@
       <input type="password" id="confirmPassword" name="confirmPassword" required>
 
       <label for="descripcion">Descripción:</label>
-      <textarea id="descripcion" name="descripcion"><%= desc %></textarea>
+      <textarea id="descripcion" name="descripcion" required><%= desc %></textarea>
 
       <label for="link">Link (opcional):</label>
       <input type="url" id="link" name="link" value="<%= link %>">
