@@ -20,7 +20,7 @@ public interface IControladorEvento {
 	public void altaEdicionEvento(String nombreEvento, String nombreEdicion, String sigla, String ciudad, String pais, LocalDate fechaInicio, LocalDate fechaFin, LocalDate fechaAltaEnPlataforma, String organizadorNick, String imagen) throws UsuarioNoExisteException;
 
 	public void altaTipoRegistro(String nombreEvento, String nombreEdicion, String nombreTipoRegistro, String descripcion, Integer costo,  Integer cupos) throws TipoRegistroRepetidoException ;
-	void altaRegistro(String nombreEvento, String nombreEdicion, String nombreTipoRegistro, String nombreAsistente, LocalDate fecha) throws UsuarioNoExisteException;
+	public void altaRegistro(String nombreEvento, String nombreEdicion, String nombreTipoRegistro, String nombreAsistente, LocalDate fecha) throws UsuarioNoExisteException;
     public void altaCategoria(String nombre) throws CategoriaRepetidaException;
     
     public DataEvento[] getEventosDTO() ;
@@ -32,7 +32,7 @@ public interface IControladorEvento {
 	
 
     public DataRegistro[] listarRegistrosDeEdicion(String nombreEdicion);
-    public DataRegistro[] listarRegistrosDeUsuario(String nickname) ;
+    public DataRegistro[] listarRegistrosDeUsuario(String nickname);
     public DataRegistro listarUnRegistroDeUsuario(String nombreEdicion, String nickname) ;
     
 

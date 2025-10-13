@@ -545,7 +545,7 @@ public class CargaDatos implements ICargaDatos {
       // si existe ignoro
     } catch (TipoRegistroRepetidoException ignored) {
       // si existe ignoro
-    }
+    } 
     
     try {
       controladorEvento.altaTipoRegistro("Maratón de Montevideo", "Maratón de Montevideo 2022", 
@@ -714,6 +714,53 @@ public class CargaDatos implements ICargaDatos {
       // si existe ignoro
     } catch (TipoRegistroRepetidoException ignored) {
       // si existe ignoro
+    }
+    
+    // Carga registros a ediciones de eventos
+    try {
+        controladorEvento.altaRegistro("Montevideo Rock", "Montevideo Rock 2025", "VIP", "sofirod",
+            LocalDate.of(2025, 5, 14));
+
+        controladorEvento.altaRegistro("Maratón de Montevideo", "Maratón de Montevideo 2024", "Corredor 21K", "sofirod",
+            LocalDate.of(2024, 7, 30));
+
+        controladorEvento.altaRegistro("Conferencia de Tecnología", "Web Summit 2026", "Estudiante", "andrearod",
+            LocalDate.of(2025, 8, 21));
+
+        controladorEvento.altaRegistro("Maratón de Montevideo", "Maratón de Montevideo 2025", "Corredor 42K", "sofirod",
+            LocalDate.of(2025, 3, 3));
+
+        controladorEvento.altaRegistro("Conferencia de Tecnología", "Mobile World Congress 2025", "Full", "vale23",
+            LocalDate.of(2025, 8, 22));
+
+        controladorEvento.altaRegistro("Maratón de Montevideo", "Maratón de Montevideo 2025", "Corredor 10K", "AnaG",
+            LocalDate.of(2025, 4, 9));
+
+        controladorEvento.altaRegistro("Maratón de Montevideo", "Maratón de Montevideo 2025", "Corredor 21K", "JaviL",
+            LocalDate.of(2025, 4, 10));
+
+        controladorEvento.altaRegistro("Montevideo Comics", "Montevideo Comics 2025", "Cosplayer", "MariR",
+            LocalDate.of(2025, 8, 3));
+
+        controladorEvento.altaRegistro("Montevideo Comics", "Montevideo Comics 2024", "General", "SofiM",
+            LocalDate.of(2024, 7, 16));
+        
+        
+        controladorEvento.altaRegistro("Conferencia de Tecnología", "Tecnología Punta del Este 2026", "Estudiante", "msilva",
+                LocalDate.of(2025, 10, 1));
+        controladorEvento.setCostoRegistro("msilva", "Tecnología Punta del Este 2026", "Estudiante", 0);
+        
+        controladorEvento.altaRegistro("Conferencia de Tecnología", "Tecnología Punta del Este 2026", "General", "andrearod",
+                LocalDate.of(2025, 10, 6));
+        controladorEvento.setCostoRegistro("msilva" , "Tecnología Punta del Este 2026" , "General", 0);
+        
+        controladorEvento.altaRegistro("Conferencia de Tecnología", "Tecnología Punta del Este 2026", "General", "MariR",
+                LocalDate.of(2025, 10, 10));
+        
+    } catch (IllegalArgumentException ignored) {
+      // No hago nada
+    } catch (UsuarioNoExisteException ignored) {
+      // No hago nada
     }
 
   }

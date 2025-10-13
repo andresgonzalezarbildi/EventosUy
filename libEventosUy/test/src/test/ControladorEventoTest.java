@@ -514,6 +514,10 @@ public class ControladorEventoTest {
                 "testAsis2", "Asistente Nombre", "asis2@test.com", "PerfilSinFoto.png", "contraseniaAsis",
                 "Asistente", null, null, "Apellido", LocalDate.of(1990, 1, 1)
             );
+            controladorUsuario.altaUsuario(
+                "testAsis3", "Asistente Nombre", "asis3@test.com", "PerfilSinFoto.png", "contraseniaAsis",
+                "Asistente", null, null, "Apellido", LocalDate.of(1990, 1, 1)
+            );
         } catch (UsuarioRepetidoException e) {
             // No hacer nada
         }
@@ -540,6 +544,7 @@ public class ControladorEventoTest {
         
         LocalDate fechaRegistro = fechaAltaEdi.plusDays(1);
         controlador.altaRegistro("Test Event2", "Test Edition2", "Test Tipo", "testAsis2", fechaRegistro);
+        controlador.altaRegistro("Test Event2", "Test Edition2", "Test Tipo", "testAsis3", fechaRegistro);
         
         DataRegistro[] registros = controlador.listarRegistrosDeUsuario("testAsis2");
         assertNotNull(registros);
