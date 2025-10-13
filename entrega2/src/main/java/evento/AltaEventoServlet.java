@@ -39,7 +39,7 @@ public class AltaEventoServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
     	try {
-            List<String> categorias = controladorEventos.ListarCategorias();
+            List<String> categorias = controladorEventos.listarCategorias();
             req.setAttribute("categorias", categorias);
         } catch (Exception e) {
             req.setAttribute("categorias", java.util.Collections.emptyList());
@@ -102,17 +102,33 @@ public class AltaEventoServlet extends HttpServlet {
         }
         
         LocalDate fechaAltaEnPlataforma = LocalDate.now();
+        boolean exito = false;
         String mensaje;
         try {
-            controladorEventos.altaEvento(nombre,descripcion,sigla,nombresCategorias,fechaAltaEnPlataforma,nombreImagenGuardada);
-            mensaje = "El evento '" + nombre + "'fue creado correctamente.";
+            controladorEventos.altaEvento(nombre, descripcion, sigla, nombresCategorias, fechaAltaEnPlataforma, nombreImagenGuardada);
+            mensaje = "El evento '" + nombre + "' fue creado correctamente.";
+            exito = true; // marcar que se creó correctamente
         } catch (EventoRepetidoException e) {
             mensaje = "Ya existe un evento con ese nombre.";
         } catch (Exception e) {
             mensaje = "Error al crear el evento: " + e.getMessage();
         }
-        req.setAttribute("mensaje", mensaje);
-        req.getRequestDispatcher("/WEB-INF/pages/altaEvento.jsp").forward(req, res);
+
+        if (exito) {
+            // redirigir al menú principal
+            res.sendRedirect(req.getContextPath() + "/"); // o la ruta que corresponda al menú principal
+        } else {
+            // seguir mostrando el formulario con el mensaje
+            req.setAttribute("mensaje", mensaje);
+            try {
+                List<String> categorias = controladorEventos.listarCategorias();
+                req.setAttribute("categorias", categorias);
+            } catch (Exception e) {
+                req.setAttribute("categorias", java.util.Collections.emptyList());
+            }
+            req.getRequestDispatcher("/WEB-INF/pages/altaEvento.jsp").forward(req, res);
+        }
+
     }
     private void repoblar(HttpServletRequest req, String nombre, String descripcion, String sigla, List<String> nombresCategorias) {
 		req.setAttribute("form_nombre", nombre);
@@ -123,7 +139,7 @@ public class AltaEventoServlet extends HttpServlet {
     private void repoblarYVolver(HttpServletRequest req, HttpServletResponse res, String nombre, String descripcion, String sigla, List<String> nombresCategorias) throws ServletException, IOException {
 		repoblar(req, nombre, descripcion, sigla, nombresCategorias);
 		try {
-		List<String> categorias = controladorEventos.ListarCategorias();
+		List<String> categorias = controladorEventos.listarCategorias();
 		req.setAttribute("categorias", categorias);
 		} catch (Exception e) {
 		req.setAttribute("categorias", java.util.Collections.emptyList());
