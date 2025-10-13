@@ -124,6 +124,11 @@ public class RegistrarUsuarioServlet extends HttpServlet {
                 volverAFormTipo(req, res, tipo);
                 return;
             }
+            if (fechaNac.isAfter(LocalDate.now())) {
+                req.setAttribute("error", "La fecha de nacimiento no puede ser futura.");
+                volverAFormTipo(req, res, tipo);
+                return;
+            }
 
         } else {
             req.setAttribute("error", "Tipo de usuario inválido.");
