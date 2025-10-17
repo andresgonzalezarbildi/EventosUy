@@ -3,7 +3,6 @@ package presentacion.evento;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-
 import excepciones.EventoNoExisteException;
 
 import java.awt.*;
@@ -231,7 +230,7 @@ public class ConsultaEvento extends JInternalFrame {
             if (ediciones != null && ediciones.length > 0) {
                 cbEdiciones.addItem("Seleccione...");
                 for (DataEdicion ed : ediciones) {
-                    cbEdiciones.addItem(ed.getNombre());
+                    cbEdiciones.addItem(ed.getNombre()+" ("+ ed.getEstado()+ ")");
                 }
                 cbEdiciones.setSelectedIndex(0);
             } else {
