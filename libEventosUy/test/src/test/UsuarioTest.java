@@ -1,6 +1,14 @@
 package src.test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+// import static org.junit.jupiter.api.Assertions.*;
 
 import java.lang.reflect.Field;
 import java.time.LocalDate;
@@ -23,7 +31,7 @@ public class UsuarioTest {
     
     @BeforeEach
     void setUp() {
-        usuario = new Usuario("testUser", "Test User", "test@example.com");
+        usuario = new Usuario("testUser", "Test User", "test@example.com", "PerfilSinFoto.png", "password");
         manejador = ManejadorUsuario.getInstance();
         // Limpiar el estado del singleton para cada test
         limpiarManejador();
@@ -130,7 +138,7 @@ public class UsuarioTest {
     void testExisteNickname() {
         assertFalse(manejador.existeNickname("testUser"));
         
-        Organizador org = new Organizador("testUser", "Test User", "test@example.com", "Test Description", "http://test.com");
+        Organizador org = new Organizador("testUser", "Test User", "test@example.com", "PerfilSinFoto.png", "password", "Test Description", "http://test.com");
         manejador.agregarOrganizador(org);
         
         assertTrue(manejador.existeNickname("testUser"));
@@ -140,7 +148,7 @@ public class UsuarioTest {
     void testExisteCorreo() {
         assertFalse(manejador.existeCorreo("test@example.com"));
         
-        Organizador org = new Organizador("testUser", "Test User", "test@example.com", "Test Description", "http://test.com");
+        Organizador org = new Organizador("testUser", "Test User", "test@example.com", "PerfilSinFoto.png", "password", "Test Description", "http://test.com");
         manejador.agregarOrganizador(org);
         
         assertTrue(manejador.existeCorreo("test@example.com"));
@@ -149,7 +157,7 @@ public class UsuarioTest {
     
     @Test
     void testAgregarOrganizador() {
-        Organizador org = new Organizador("testUser", "Test User", "test@example.com", "Test Description", "http://test.com");
+        Organizador org = new Organizador("testUser", "Test User", "test@example.com", "PerfilSinFoto.png", "password", "Test Description", "http://test.com");
         manejador.agregarOrganizador(org);
         
         assertTrue(manejador.existeNickname("testUser"));
@@ -158,7 +166,7 @@ public class UsuarioTest {
     
     @Test
     void testAgregarAsistente() {
-        Asistente asis = new Asistente("testUser", "Test User", "test@example.com", "Test Apellido", LocalDate.of(1990, 1, 1));
+        Asistente asis = new Asistente("testUser", "Test User", "test@example.com", "PerfilSinFoto.png", "password", "Test Apellido", LocalDate.of(1990, 1, 1));
         manejador.agregarAsistente(asis);
         
         assertTrue(manejador.existeNickname("testUser"));
@@ -167,7 +175,7 @@ public class UsuarioTest {
     
     @Test
     void testObtenerPorNickname() {
-        Organizador org = new Organizador("testUser", "Test User", "test@example.com", "Test Description", "http://test.com");
+        Organizador org = new Organizador("testUser", "Test User", "test@example.com", "PerfilSinFoto.png", "password", "Test Description", "http://test.com");
         manejador.agregarOrganizador(org);
         
         assertNotNull(manejador.obtenerPorNickname("testUser"));
@@ -176,7 +184,7 @@ public class UsuarioTest {
     
     @Test
     void testGetOrganizador() throws UsuarioNoExisteException {
-        Organizador org = new Organizador("testUser", "Test User", "test@example.com", "Test Description", "http://test.com");
+        Organizador org = new Organizador("testUser", "Test User", "test@example.com", "PerfilSinFoto.png", "password", "Test Description", "http://test.com");
         manejador.agregarOrganizador(org);
         
         Organizador orgObtenido = manejador.getOrganizador("testUser");
@@ -193,7 +201,7 @@ public class UsuarioTest {
     
     @Test
     void testGetAsistente() throws UsuarioNoExisteException {
-        Asistente asis = new Asistente("testUser", "Test User", "test@example.com", "Test Apellido", LocalDate.of(1990, 1, 1));
+        Asistente asis = new Asistente("testUser", "Test User", "test@example.com", "PerfilSinFoto.png", "password", "Test Apellido", LocalDate.of(1990, 1, 1));
         manejador.agregarAsistente(asis);
         
         Asistente asisObtenido = manejador.getAsistente("testUser");
@@ -212,8 +220,8 @@ public class UsuarioTest {
     void testObtenerTodosOrganizadores() {
         assertTrue(manejador.obtenerTodosOrganizadores().isEmpty());
         
-        Organizador org1 = new Organizador("user1", "User 1", "user1@example.com", "Desc 1", "http://1.com");
-        Organizador org2 = new Organizador("user2", "User 2", "user2@example.com", "Desc 2", "http://2.com");
+        Organizador org1 = new Organizador("user1", "User 1", "user1@example.com", "PerfilSinFoto.png", "password", "Desc 1", "http://1.com");
+        Organizador org2 = new Organizador("user2", "User 2", "user2@example.com", "PerfilSinFoto.png", "password", "Desc 2", "http://2.com");
         
         manejador.agregarOrganizador(org1);
         manejador.agregarOrganizador(org2);
@@ -225,8 +233,8 @@ public class UsuarioTest {
     void testObtenerTodosAsistentes() {
         assertTrue(manejador.obtenerTodosAsistentes().isEmpty());
         
-        Asistente asis1 = new Asistente("user1", "User 1", "user1@example.com", "Apellido 1", LocalDate.of(1990, 1, 1));
-        Asistente asis2 = new Asistente("user2", "User 2", "user2@example.com", "Apellido 2", LocalDate.of(1990, 1, 1));
+        Asistente asis1 = new Asistente("user1", "User 1", "user1@example.com", "PerfilSinFoto.png", "password", "Apellido 1", LocalDate.of(1990, 1, 1));
+        Asistente asis2 = new Asistente("user2", "User 2", "user2@example.com", "PerfilSinFoto.png", "password", "Apellido 2", LocalDate.of(1990, 1, 1));
         
         manejador.agregarAsistente(asis1);
         manejador.agregarAsistente(asis2);

@@ -15,14 +15,6 @@ public class Usuario {
         setImagen(imagen);
         this.password = password;
     }
-    
-    public Usuario(String nickname, String nombre, String correo, String password) {
-        this.nickname = nickname;
-        this.nombre = nombre;
-        this.correo = correo;
-        setImagen(null);
-        this.password = password;
-    }
 
     public String getNickname() {
         return nickname;
@@ -63,5 +55,9 @@ public class Usuario {
 	
 	public void setImagen(String imagen) {
 	    this.imagen = (imagen == null || imagen.isBlank()) ? "PerfilSinFoto.png" : imagen;
+	}
+	
+	public void setPassword(String nuevaPass){
+	  this.password = nuevaPass;
 	}
 }

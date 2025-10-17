@@ -1,14 +1,21 @@
 package src.test;
 
-import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+// import static org.junit.jupiter.api.Assertions.*;
 import logica.clases.Evento;
 import logica.clases.Categoria;
 import logica.clases.EdicionEvento;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
+
+import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
 
 public class EventoTest {
     
@@ -18,7 +25,7 @@ public class EventoTest {
     
     @BeforeEach
     void setUp() {
-        evento = new Evento("Test Event", "Test Description", "TE", LocalDate.now());
+        evento = new Evento("Test Event", "Test Description", "TE", LocalDate.now(), "EventoSinFoto.png");
         categoria = new Categoria("Test Category");
         edicion = new EdicionEvento("Test Edition", LocalDate.now(), LocalDate.now().plusDays(1), 
                                    "Test City", "Test Country", "TE", LocalDate.now());
@@ -116,7 +123,7 @@ public class EventoTest {
     
     @Test
     void testConstructorWithNullValues() {
-        Evento eventoNull = new Evento(null, null, null, null);
+        Evento eventoNull = new Evento(null, null, null, null, null);
         assertNull(eventoNull.getNombre());
         assertNull(eventoNull.getDescripcionEvento());
         assertNull(eventoNull.getSigla());

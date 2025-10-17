@@ -311,7 +311,7 @@ public class ControladorEvento implements IControladorEvento {
         	throw new IllegalArgumentException("La fecha de Registro no puede ser anterior al de Alta de la edición.");
         LocalDate FechaFinEdi = edicion.getFechaFin();
         if (FechaFinEdi.isBefore(fecha))
-        	throw new IllegalArgumentException("La fecha de Registro no puede ser poserior al fin de la edición.");
+        	throw new IllegalArgumentException("La fecha de Registro no puede ser poserior al fin de la edición."); 
   
           
   

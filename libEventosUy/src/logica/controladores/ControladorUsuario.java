@@ -299,6 +299,11 @@ public class ControladorUsuario implements IControladorUsuario {
    * Limpia todos los datos del manejador de usuarios.
    */
   public void limpar() {
-    manejador.limpiar();
+    manejador.limpiar(); 
+  }
+  
+  public void cambiarContrasenia(String nickname, String nuevaPass) {
+    Usuario usuario = manejador.obtenerPorNickname(nickname);
+    usuario.setPassword(nuevaPass);
   }
 }

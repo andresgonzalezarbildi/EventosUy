@@ -8,9 +8,9 @@ public class DataRegistro {
     private final String tipoRegistro;
     private final Integer costo;    
     private final LocalDate fecha;   
-    private final String asistente; 
+    private final String asistente;
 
-    public DataRegistro(String evento, String edicion, String tipoRegistro,
+    public DataRegistro(String evento, String edicion, String tipoRegistro, 
                         Integer costo, LocalDate fecha, String asistente) {
         this.evento = evento;
         this.edicion = edicion;
