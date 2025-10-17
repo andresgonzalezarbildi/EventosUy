@@ -2,7 +2,7 @@
 bin/
 target/
 *.class
-
+.bat
 *.war
 !entrega2/src/main/webapp/WEB-INF/lib/logicaEventosUy.jar
 !lib/*.jar
