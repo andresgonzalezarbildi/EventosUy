@@ -343,11 +343,12 @@ public class CargaDatos implements ICargaDatos {
       controladorEvento.altaEdicionEvento("Maratón de Montevideo", "Maratón de Montevideo 2025",
           "MARATON25", "Montevideo", "Uruguay", LocalDate.of(2025, 9, 14),
           LocalDate.of(2025, 9, 14), LocalDate.of(2025, 2, 5), "imm", "IMG-EDEV02.png");
+      
+      controladorEvento.aceptarEdicion("Maratón de Montevideo 2025", true);
          
-    } catch (UsuarioNoExisteException ignored) {
+    } catch (UsuarioNoExisteException | EdicionNoExisteException | TransicionEstadoInvalidaException  ignored) {
       // si existe ignoro
-    }
-    
+    } 
     try {
       controladorEvento.altaEdicionEvento("Maratón de Montevideo", "Maratón de Montevideo 2024", 
           "MARATON24", "Montevideo", "Uruguay", LocalDate.of(2024, 9, 14),
