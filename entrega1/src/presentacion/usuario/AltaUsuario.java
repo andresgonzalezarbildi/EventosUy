@@ -15,16 +15,15 @@ import javax.swing.JFrame;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.DefaultListCellRenderer;
+import javax.swing.JPasswordField;
 
 import com.toedter.calendar.JDateChooser;
 import java.time.ZoneId;
 import java.util.Date;
-import java.time.LocalDate;   // <-- AGREGAR
+import java.time.LocalDate;
 
-//Descripcion sera un JTextArea
 import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
-
 
 import excepciones.UsuarioRepetidoException;
 import logica.interfaces.IControladorUsuario;
@@ -33,10 +32,12 @@ import logica.interfaces.IControladorUsuario;
 public class AltaUsuario extends JInternalFrame {
 
     private IControladorUsuario controlUsr;
-    
+
     private JComboBox<String> comboTipoUsuario;
-    private JTextField textFieldNickname, textFieldNombre, textFieldCorreo, textFieldImagen, textFieldPassword ;
-    private JLabel lblIngreseNickname, lblIngreseNombre, lblIngreseCorreo, lblIngreseImagen, lblIngresePassword ;
+    private JTextField textFieldNickname, textFieldNombre, textFieldCorreo;
+    private JPasswordField pfPassword, pfPasswordRepeat;
+    private JLabel lblIngreseNickname, lblIngreseNombre, lblIngreseCorreo,
+                   lblIngresePassword, lblRepetirPassword;
     private JButton btnAceptar, btnCancelar;
     private JLabel lblInstitucion;
     private JComboBox<String> comboInstitucion;
@@ -64,12 +65,11 @@ public class AltaUsuario extends JInternalFrame {
 
         GridBagLayout gridBagLayout = new GridBagLayout();
         gridBagLayout.columnWidths = new int[] { 100, 120, 120, 0 };
-        gridBagLayout.rowHeights = new int[] { 30, 30, 30, 0, 0 };
+        gridBagLayout.rowHeights = new int[] { 30, 30, 30, 0, 0, 0, 0, 0, 0, 0, 0 };
         gridBagLayout.columnWeights = new double[] { 0.0, 0.0, 0.0, Double.MIN_VALUE };
-        gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
+        gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
         getContentPane().setLayout(gridBagLayout);
 
-        // Tipo de Usuario
         JLabel lblTipo = new JLabel("Tipo:");
         GridBagConstraints gbc_lblTipo = new GridBagConstraints();
         gbc_lblTipo.gridx = 0;
@@ -102,7 +102,6 @@ public class AltaUsuario extends JInternalFrame {
                 boolean isAsistente = "Asistente".equals(seleccionado);
 
                 lblDescripcion.setVisible(isOrganizador);
-                lblDescripcion.setVisible(isOrganizador);
                 scrollDescripcion.setVisible(isOrganizador);
                 lblLink.setVisible(isOrganizador);
                 textFieldLink.setVisible(isOrganizador);
@@ -110,7 +109,7 @@ public class AltaUsuario extends JInternalFrame {
                 lblApellido.setVisible(isAsistente);
                 textFieldApellido.setVisible(isAsistente);
                 lblFechaNacimiento.setVisible(isAsistente);
-             dateChooserFechaNac.setVisible(isAsistente);
+                dateChooserFechaNac.setVisible(isAsistente);
 
                 getContentPane().revalidate();
                 getContentPane().repaint();
@@ -118,7 +117,6 @@ public class AltaUsuario extends JInternalFrame {
             }
         });
 
-        // Campos comunes
         lblIngreseNickname = new JLabel("Nickname:");
         lblIngreseNickname.setHorizontalAlignment(SwingConstants.RIGHT);
         GridBagConstraints gbc_lblIngreseNickname = new GridBagConstraints();
@@ -176,26 +174,6 @@ public class AltaUsuario extends JInternalFrame {
         gbc_textFieldCorreo.gridx = 1;
         gbc_textFieldCorreo.gridy = 3;
         getContentPane().add(textFieldCorreo, gbc_textFieldCorreo);
-        
-        lblIngreseImagen = new JLabel("Imagen:");
-        lblIngreseImagen.setHorizontalAlignment(SwingConstants.RIGHT);
-        GridBagConstraints gbc_lblIngreseImagen = new GridBagConstraints();
-        gbc_lblIngreseImagen.fill = GridBagConstraints.BOTH;
-        gbc_lblIngreseImagen.insets = new Insets(0, 0, 5, 5);
-        gbc_lblIngreseImagen.gridx = 0;
-        gbc_lblIngreseImagen.gridy = 4;
-        getContentPane().add(lblIngreseImagen, gbc_lblIngreseImagen);
-
-        textFieldImagen = new JTextField();
-        textFieldImagen.setToolTipText("Ingrese una Imagen valida");
-        textFieldImagen.setColumns(10);
-        GridBagConstraints gbc_textFieldImagen = new GridBagConstraints();
-        gbc_textFieldImagen.gridwidth = 2;
-        gbc_textFieldImagen.fill = GridBagConstraints.BOTH;
-        gbc_textFieldImagen.insets = new Insets(0, 0, 5, 0);
-        gbc_textFieldImagen.gridx = 1;
-        gbc_textFieldImagen.gridy = 4;
-        getContentPane().add(textFieldImagen, gbc_textFieldImagen);
 
         lblIngresePassword = new JLabel("Contraseña:");
         lblIngresePassword.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -203,22 +181,38 @@ public class AltaUsuario extends JInternalFrame {
         gbc_lblIngresePassword.fill = GridBagConstraints.BOTH;
         gbc_lblIngresePassword.insets = new Insets(0, 0, 5, 5);
         gbc_lblIngresePassword.gridx = 0;
-        gbc_lblIngresePassword.gridy = 5;
+        gbc_lblIngresePassword.gridy = 4;
         getContentPane().add(lblIngresePassword, gbc_lblIngresePassword);
 
-        textFieldPassword = new JTextField();
-        textFieldPassword.setToolTipText("Ingrese una Contraseña valida");
-        textFieldPassword.setColumns(10);
-        GridBagConstraints gbc_textFieldPassword = new GridBagConstraints();
-        gbc_textFieldPassword.gridwidth = 2;
-        gbc_textFieldPassword.fill = GridBagConstraints.BOTH;
-        gbc_textFieldPassword.insets = new Insets(0, 0, 5, 0);
-        gbc_textFieldPassword.gridx = 1;
-        gbc_textFieldPassword.gridy = 5;
-        getContentPane().add(textFieldPassword, gbc_textFieldPassword);
-        
+        pfPassword = new JPasswordField();
+        pfPassword.setToolTipText("Ingrese una contraseña válida");
+        GridBagConstraints gbc_pfPassword = new GridBagConstraints();
+        gbc_pfPassword.gridwidth = 2;
+        gbc_pfPassword.fill = GridBagConstraints.BOTH;
+        gbc_pfPassword.insets = new Insets(0, 0, 5, 0);
+        gbc_pfPassword.gridx = 1;
+        gbc_pfPassword.gridy = 4;
+        getContentPane().add(pfPassword, gbc_pfPassword);
 
-        // Campos adicionales
+        lblRepetirPassword = new JLabel("Repetir contraseña:");
+        lblRepetirPassword.setHorizontalAlignment(SwingConstants.RIGHT);
+        GridBagConstraints gbc_lblRepetirPassword = new GridBagConstraints();
+        gbc_lblRepetirPassword.fill = GridBagConstraints.BOTH;
+        gbc_lblRepetirPassword.insets = new Insets(0, 0, 5, 5);
+        gbc_lblRepetirPassword.gridx = 0;
+        gbc_lblRepetirPassword.gridy = 5;
+        getContentPane().add(lblRepetirPassword, gbc_lblRepetirPassword);
+
+        pfPasswordRepeat = new JPasswordField();
+        pfPasswordRepeat.setToolTipText("Reingrese la contraseña");
+        GridBagConstraints gbc_pfPasswordRepeat = new GridBagConstraints();
+        gbc_pfPasswordRepeat.gridwidth = 2;
+        gbc_pfPasswordRepeat.fill = GridBagConstraints.BOTH;
+        gbc_pfPasswordRepeat.insets = new Insets(0, 0, 5, 0);
+        gbc_pfPasswordRepeat.gridx = 1;
+        gbc_pfPasswordRepeat.gridy = 5;
+        getContentPane().add(pfPasswordRepeat, gbc_pfPasswordRepeat);
+
         lblDescripcion = new JLabel("Descripción:");
         lblDescripcion.setHorizontalAlignment(SwingConstants.RIGHT);
         GridBagConstraints gbc_lblDescripcion = new GridBagConstraints();
@@ -229,11 +223,10 @@ public class AltaUsuario extends JInternalFrame {
         getContentPane().add(lblDescripcion, gbc_lblDescripcion);
         lblDescripcion.setVisible(false);
 
-        // JTextArea + Scroll
         textAreaDescripcion = new JTextArea();
         textAreaDescripcion.setLineWrap(true);
         textAreaDescripcion.setWrapStyleWord(true);
-        textAreaDescripcion.setRows(4); // alto inicial (podés ajustar)
+        textAreaDescripcion.setRows(4);
 
         scrollDescripcion = new JScrollPane(textAreaDescripcion);
         GridBagConstraints gbc_scrollDescripcion = new GridBagConstraints();
@@ -295,7 +288,6 @@ public class AltaUsuario extends JInternalFrame {
         getContentPane().add(lblFechaNacimiento, gbc_lblFechaNacimiento);
         lblFechaNacimiento.setVisible(false);
 
-        // JDateChooser en vez de JTextField
         dateChooserFechaNac = new JDateChooser();
         dateChooserFechaNac.setDateFormatString("yyyy-MM-dd");
         ((JTextField) dateChooserFechaNac.getDateEditor().getUiComponent()).setEditable(true);
@@ -308,20 +300,17 @@ public class AltaUsuario extends JInternalFrame {
         getContentPane().add(dateChooserFechaNac, gbc_dateChooserFechaNac);
         dateChooserFechaNac.setVisible(false);
 
-     // Institución 
         lblInstitucion = new JLabel("Institución:");
         lblInstitucion.setHorizontalAlignment(SwingConstants.RIGHT);
         GridBagConstraints gbc_lblInstitucion = new GridBagConstraints();
         gbc_lblInstitucion.fill = GridBagConstraints.BOTH;
         gbc_lblInstitucion.insets = new Insets(0, 0, 5, 5);
         gbc_lblInstitucion.gridx = 0;
-        gbc_lblInstitucion.gridy = 8;           // fila libre
+        gbc_lblInstitucion.gridy = 8;
         getContentPane().add(lblInstitucion, gbc_lblInstitucion);
 
-        // Combo de Instituciones 
         comboInstitucion = new JComboBox<>();
-        comboInstitucion.setEditable(false);     // solo selección
-        // Ítems de ejemplo para que se vea en el diseñador (borralos luego):
+        comboInstitucion.setEditable(false);
         comboInstitucion.addItem("");
         comboInstitucion.addItem("FING");
         comboInstitucion.addItem("ORT");
@@ -332,10 +321,9 @@ public class AltaUsuario extends JInternalFrame {
         gbc_comboInstitucion.fill = GridBagConstraints.BOTH;
         gbc_comboInstitucion.insets = new Insets(0, 0, 5, 0);
         gbc_comboInstitucion.gridx = 1;
-        gbc_comboInstitucion.gridy = 8;          // misma fila, columna derecha
+        gbc_comboInstitucion.gridy = 8;
         getContentPane().add(comboInstitucion, gbc_comboInstitucion);
 
-        // Botones
         btnAceptar = new JButton("Aceptar");
         btnAceptar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
@@ -364,116 +352,132 @@ public class AltaUsuario extends JInternalFrame {
     }
 
     protected void cmdRegistroUsuarioActionPerformed(ActionEvent arg0) {
-    String nicknameU = textFieldNickname.getText().trim();
-    String nombreU = textFieldNombre.getText().trim();
-    String correoU = textFieldCorreo.getText().trim();
-    String imagenU = textFieldImagen.getText().trim();
-    String passwordU = textFieldPassword.getText().trim();
-    String tipoU = (String) comboTipoUsuario.getSelectedItem();
+        String nicknameU = textFieldNickname.getText().trim();
+        String nombreU = textFieldNombre.getText().trim();
+        String correoU = textFieldCorreo.getText().trim();
+        String tipoU = (String) comboTipoUsuario.getSelectedItem();
 
-    String descripcionU = textAreaDescripcion.getText().trim();
-    String linkU = textFieldLink.getText().trim();
-    String apellidoU = textFieldApellido.getText().trim();
+        String passwordU = new String(pfPassword.getPassword());
+        String passwordURepeat = new String(pfPasswordRepeat.getPassword());
 
-    // obtener LocalDate (si aplica)
-    LocalDate fechaNacLD = null;
-    if ("Asistente".equals(tipoU) && dateChooserFechaNac.getDate() != null) {
-        fechaNacLD = dateChooserFechaNac.getDate().toInstant()
-                .atZone(ZoneId.systemDefault())
-                .toLocalDate();
-    }
+        String descripcionU = textAreaDescripcion.getText().trim();
+        String linkU = textFieldLink.getText().trim();
+        String apellidoU = textFieldApellido.getText().trim();
 
-    if (checkFormulario()) {
-        try {
-            if ("Organizador".equals(tipoU)) {
-                controlUsr.altaUsuario(nicknameU, nombreU, correoU, imagenU, passwordU, "Organizador",
-                        descripcionU, linkU, null, null);
-            } else if ("Asistente".equals(tipoU)) {
-                controlUsr.altaUsuario(nicknameU, nombreU, correoU, imagenU, passwordU, "Asistente",
-                        null, null, apellidoU, fechaNacLD);
-            }
-
-            JOptionPane.showMessageDialog(this, "El Usuario se ha creado con éxito",
-                    "Alta Usuario", JOptionPane.INFORMATION_MESSAGE);
-            limpiarFormulario();
-            setVisible(false);
-
-        } catch (UsuarioRepetidoException e) {
-            JOptionPane.showMessageDialog(this, e.getMessage(),
-                    "Alta Usuario", JOptionPane.ERROR_MESSAGE);
+        LocalDate fechaNacLD = null;
+        if ("Asistente".equals(tipoU) && dateChooserFechaNac.getDate() != null) {
+            fechaNacLD = dateChooserFechaNac.getDate().toInstant()
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDate();
         }
+
+        if (checkFormulario()) {
+            try {
+                if ("Organizador".equals(tipoU)) {
+                    controlUsr.altaUsuario(nicknameU, nombreU, correoU, null, passwordU, "Organizador",
+                            descripcionU, linkU, null, null);
+                } else if ("Asistente".equals(tipoU)) {
+                    controlUsr.altaUsuario(nicknameU, nombreU, correoU, null, passwordU, "Asistente",
+                            null, null, apellidoU, fechaNacLD);
+                }
+
+                JOptionPane.showMessageDialog(this, "El Usuario se ha creado con éxito",
+                        "Alta Usuario", JOptionPane.INFORMATION_MESSAGE);
+                limpiarFormulario();
+                setVisible(false);
+
+            } catch (UsuarioRepetidoException e) {
+                JOptionPane.showMessageDialog(this, e.getMessage(),
+                        "Alta Usuario", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+
+        java.util.Arrays.fill(passwordU.toCharArray(), '\0');
+        java.util.Arrays.fill(passwordURepeat.toCharArray(), '\0');
     }
-}
 
-	private boolean checkFormulario() {
-	    String tipo = (String) comboTipoUsuario.getSelectedItem();
-	    String nicknameU = textFieldNickname.getText().trim();
-	    String nombreU = textFieldNombre.getText().trim();
-	    String correoU = textFieldCorreo.getText().trim();
-	    String descripcionU = textAreaDescripcion.getText().trim();
-	    String apellidoU = textFieldApellido.getText().trim();
-	    Date utilDate = dateChooserFechaNac.getDate(); // <-- ahora viene del JDateChooser
-	
-	    if (nicknameU.isEmpty() || nombreU.isEmpty() || correoU.isEmpty() || tipo == null || tipo.isEmpty()) {
-	        JOptionPane.showMessageDialog(this, "Los campos comunes no pueden estar vacíos",
-	                "Registrar Usuario", JOptionPane.ERROR_MESSAGE);
-	        return false;
-	    }
-	
-	    if ("Organizador".equals(tipo) && descripcionU.isEmpty()) {
-	        JOptionPane.showMessageDialog(this, "La descripción es obligatoria para un Organizador",
-	                "Registrar Usuario", JOptionPane.ERROR_MESSAGE);
-	        return false;
-	    }
-	
-	    if ("Asistente".equals(tipo)) {
-	        if (apellidoU.isEmpty() || utilDate == null) {
-	            JOptionPane.showMessageDialog(this, "Apellido y fecha de nacimiento son obligatorios para un Asistente",
-	                    "Registrar Usuario", JOptionPane.ERROR_MESSAGE);
-	            return false;
-	        }
-	        // (opcional) validar que no sea fecha futura
-	        LocalDate fnac = utilDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-	        if (fnac.isAfter(LocalDate.now())) {
-	            JOptionPane.showMessageDialog(this, "La fecha de nacimiento no puede ser futura",
-	                    "Registrar Usuario", JOptionPane.ERROR_MESSAGE);
-	            return false;
-	        }
-	    }
-	
-	    return true;
-	}
+    private boolean checkFormulario() {
+        String tipo = (String) comboTipoUsuario.getSelectedItem();
+        String nicknameU = textFieldNickname.getText().trim();
+        String nombreU = textFieldNombre.getText().trim();
+        String correoU = textFieldCorreo.getText().trim();
 
+        String descripcionU = textAreaDescripcion.getText().trim();
+        String apellidoU = textFieldApellido.getText().trim();
+        Date utilDate = dateChooserFechaNac.getDate();
+
+        String pass1 = new String(pfPassword.getPassword());
+        String pass2 = new String(pfPasswordRepeat.getPassword());
+
+        if (nicknameU.isEmpty() || nombreU.isEmpty() || correoU.isEmpty() || tipo == null || tipo.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Los campos comunes no pueden estar vacíos",
+                    "Registrar Usuario", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        if (pass1.isEmpty() || pass2.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Debes ingresar y repetir la contraseña",
+                    "Registrar Usuario", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        if (!pass1.equals(pass2)) {
+            JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden",
+                    "Registrar Usuario", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        if ("Organizador".equals(tipo) && descripcionU.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "La descripción es obligatoria para un Organizador",
+                    "Registrar Usuario", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        if ("Asistente".equals(tipo)) {
+            if (apellidoU.isEmpty() || utilDate == null) {
+                JOptionPane.showMessageDialog(this, "Apellido y fecha de nacimiento son obligatorios para un Asistente",
+                        "Registrar Usuario", JOptionPane.ERROR_MESSAGE);
+                return false;
+            }
+            LocalDate fnac = utilDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            if (fnac.isAfter(LocalDate.now())) {
+                JOptionPane.showMessageDialog(this, "La fecha de nacimiento no puede ser futura",
+                        "Registrar Usuario", JOptionPane.ERROR_MESSAGE);
+                return false;
+            }
+        }
+
+        return true;
+    }
 
     private void limpiarFormulario() {
-    textFieldNickname.setText("");
-    textFieldNombre.setText("");
-    textFieldCorreo.setText("");
+        textFieldNickname.setText("");
+        textFieldNombre.setText("");
+        textFieldCorreo.setText("");
 
-    comboTipoUsuario.setSelectedIndex(0);
+        comboTipoUsuario.setSelectedIndex(0);
 
-    lblDescripcion.setVisible(false);
-    scrollDescripcion.setVisible(false);
-    textAreaDescripcion.setText("");
+        pfPassword.setText("");
+        pfPasswordRepeat.setText("");
 
-    lblLink.setVisible(false);
-    textFieldLink.setVisible(false);
-    textFieldLink.setText("");
+        lblDescripcion.setVisible(false);
+        scrollDescripcion.setVisible(false);
+        textAreaDescripcion.setText("");
 
-    lblApellido.setVisible(false);
-    textFieldApellido.setVisible(false);
-    textFieldApellido.setText("");
+        lblLink.setVisible(false);
+        textFieldLink.setVisible(false);
+        textFieldLink.setText("");
 
-    lblFechaNacimiento.setVisible(false);
-    // textFieldFechaNacimiento.setVisible(false);
-    // textFieldFechaNacimiento.setText("");
-    dateChooserFechaNac.setVisible(false);
-    dateChooserFechaNac.setDate(null);
+        lblApellido.setVisible(false);
+        textFieldApellido.setVisible(false);
+        textFieldApellido.setText("");
 
-    getContentPane().revalidate();
-    getContentPane().repaint();
+        lblFechaNacimiento.setVisible(false);
+        dateChooserFechaNac.setVisible(false);
+        dateChooserFechaNac.setDate(null);
+
+        getContentPane().revalidate();
+        getContentPane().repaint();
     }
-    
 
     public void setVisible(boolean aFlag) {
         if (aFlag) {
@@ -481,5 +485,4 @@ public class AltaUsuario extends JInternalFrame {
         }
         super.setVisible(aFlag);
     }
-
 }

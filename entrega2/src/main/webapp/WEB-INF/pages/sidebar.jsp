@@ -1,9 +1,11 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page import="java.util.List" %>
 
 <%
     String nickname = (String) session.getAttribute("usuario");
     String rol = (String) session.getAttribute("rol");
     boolean logueado = (nickname != null);
+    List<String> categorias = (List<String>) request.getAttribute("categorias");
 %>
 
 <aside class="col-12 col-md-3">
@@ -20,6 +22,29 @@
         <div class="content-bar-seccion-list-options" onclick="window.location.href='<%= request.getContextPath() %>/'">
           <span>Instituciónes</span>
         </div>
+      </div>
+    </div>
+  </div>
+  
+    <!-- Categorías -->
+  <div class="content-bar">
+    <div class="content-bar-seccion">
+      <div class="seccion-titulo"><h3>Categorías</h3></div>
+      <div class="content-bar-seccion-list">
+<%
+      if (categorias != null && !categorias.isEmpty()) {
+        for (String nombreCat : categorias) {
+    %>
+    	<div class="content-bar-seccion-list-options" onclick="window.location.href='<%= request.getContextPath() %>'"><span><%= nombreCat %></span></div>
+     <%
+        }
+      } else {
+    %>
+      <div class="content-bar-seccion-list-options"><span>No Hay Categorias</span></div>
+    <%
+      }
+    %>
+
       </div>
     </div>
   </div>
@@ -63,29 +88,5 @@
     </div>
   </div>
 <% } %>
-
-
-  <!-- Categorías -->
-  <div class="content-bar">
-    <div class="content-bar-seccion">
-      <div class="seccion-titulo"><h3>Categorías</h3></div>
-      <div class="content-bar-seccion-list">
-<div class="content-bar-seccion-list-options" onclick="window.location.href='<%= request.getContextPath() %>'"><span>Agro</span></div>
-<div class="content-bar-seccion-list-options" onclick="window.location.href='<%= request.getContextPath() %>'"><span>Cultura</span></div>
-<div class="content-bar-seccion-list-options" onclick="window.location.href='<%= request.getContextPath() %>'"><span>Deporte</span></div>
-<div class="content-bar-seccion-list-options" onclick="window.location.href='<%= request.getContextPath() %>'"><span>Entretenimiento</span></div>
-<div class="content-bar-seccion-list-options" onclick="window.location.href='<%= request.getContextPath() %>'"><span>Innovación</span></div>
-<div class="content-bar-seccion-list-options" onclick="window.location.href='<%= request.getContextPath() %>'"><span>Investigación</span></div>
-<div class="content-bar-seccion-list-options" onclick="window.location.href='<%= request.getContextPath() %>'"><span>Literatura</span></div>
-<div class="content-bar-seccion-list-options" onclick="window.location.href='<%= request.getContextPath() %>'"><span>Moda</span></div>
-<div class="content-bar-seccion-list-options" onclick="window.location.href='<%= request.getContextPath() %>'"><span>Música</span></div>
-<div class="content-bar-seccion-list-options" onclick="window.location.href='<%= request.getContextPath() %>'"><span>Negocios</span></div>
-<div class="content-bar-seccion-list-options" onclick="window.location.href='<%= request.getContextPath() %>'"><span>Salud</span></div>
-<div class="content-bar-seccion-list-options" onclick="window.location.href='<%= request.getContextPath() %>'"><span>Tecnología</span></div>
-
-      </div>
-    </div>
-  </div>
-
 
 </aside>

@@ -1,6 +1,5 @@
 package src.test;
 
-// import static org.junit.jupiter.api.Assertions.*;
 import logica.clases.Evento;
 import logica.clases.Categoria;
 import logica.clases.EdicionEvento;
@@ -14,7 +13,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 
 public class EventoTest {

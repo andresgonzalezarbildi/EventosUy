@@ -33,8 +33,16 @@ import logica.manejadores.ManejadorUsuario;
 
 
 public class ControladorEvento implements IControladorEvento {
+  private static ControladorEvento instancia;
   private ManejadorEvento manejadorEvento;
 	
+  public static ControladorEvento getInstance() {
+    if (instancia == null) {
+      instancia = new ControladorEvento();
+    }
+    return instancia;
+  }
+  
   public  ControladorEvento() { 
     manejadorEvento = ManejadorEvento.getInstance();  
   } 
@@ -51,17 +59,18 @@ public class ControladorEvento implements IControladorEvento {
     if (manejadorEvento.existeEvento(nombre)) {
       throw new EventoRepetidoException("Ya existe un evento con nombre: " + nombre);
     }
+    if (nombresCategorias == null || nombresCategorias.isEmpty()) {
+      throw new IllegalArgumentException("El evento debe tener al menos una categoría asociada.");
+  }
     
     List<Categoria> cats = new ArrayList<>();
-    if (nombresCategorias != null) {
-      for (String nc : nombresCategorias) {
-        Categoria categoria = manejadorEvento.obtenerCategoria(nc);
-        if (categoria == null) {
+    for (String nc : nombresCategorias) {
+      Categoria categoria = manejadorEvento.obtenerCategoria(nc);
+      if (categoria == null) {
           throw new IllegalArgumentException("Categoría inexistente: " + nc);
-        }
-        cats.add(categoria);
       }
-    }
+      cats.add(categoria);
+  }
     if (cats.isEmpty()) {
       throw new IllegalArgumentException("El evento debe tener al menos una categoría asociada.");
     }	

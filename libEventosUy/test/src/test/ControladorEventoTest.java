@@ -32,14 +32,14 @@ public class ControladorEventoTest {
     
     @BeforeEach
     void setUp() {
-    	controlador = new ControladorEvento();
-    	controladorUsuario = new ControladorUsuario();
-        controlador.limpiar();
+    	controlador = ControladorEvento.getInstance();
+    	controladorUsuario = ControladorUsuario.getInstance(); 
+      controlador.limpiar();
     	
     	try {
 	        controladorUsuario.altaUsuario(
-	            "testOrg", "Org Nombre", "org@test.com", "PerfilSinFoto.png", "contraseniaOrg",
-	            "Organizador", "desc", "http://link", null, LocalDate.now()
+	            "testOrg", "Nombre", "org@test.com", "PerfilSinFoto.png", "contrasenia",
+	            "Organizador", "descripcion", "http://hola.com", null, LocalDate.now()
 	        );
         } catch (UsuarioRepetidoException e) {
             // No hacer anda
@@ -49,71 +49,71 @@ public class ControladorEventoTest {
     @Test
     void testAltaEvento() {
     	try {  
-    	    controlador.altaCategoria("Test Category");
+    	    controlador.altaCategoria("Test Categoria");
     	} catch (CategoriaRepetidaException e) {
     	  // No hago nada
     	}
         List<String> categorias = new ArrayList<>();
-        categorias.add("Test Category");
+        categorias.add("Test Categoria");
         
         try {
-            controlador.altaEvento("Test Event", "Test Description", "TE", categorias, LocalDate.now(), "EventoSinFoto.png");
+            controlador.altaEvento("evento", "descripcion", "TE", categorias, LocalDate.now(), "EventoSinFoto.png");
         } catch (EventoRepetidoException e) {
-            fail("No debería lanzar excepción");
+            fail();
         }
         
         DataEvento[] eventos = controlador.getEventosDTO();
         assertNotNull(eventos);
         assertEquals(1, eventos.length);
-        assertEquals("Test Event", eventos[0].getNombre());
+        assertEquals("evento", eventos[0].getNombre());
     }
     
     @Test
     void testAltaEventoNombreVacio() {
     	try {  
-    	    controlador.altaCategoria("Test Category");
+    	    controlador.altaCategoria("Test Categoria");
     	} catch (CategoriaRepetidaException e) {
     	    // No hacer nada
     	}
         List<String> categorias = new ArrayList<>();
-        categorias.add("Test Category");
+        categorias.add("Test Categoria");
         
         assertThrows(IllegalArgumentException.class, () -> {
-            controlador.altaEvento("", "Test Description", "TE", categorias, LocalDate.now(), "EventoSinFoto.png");
+            controlador.altaEvento("", "Descripcion", "TE", categorias, LocalDate.now(), "EventoSinFoto.png");
         });
     }
     
     @Test
     void testAltaEventoSiglaVacia() {
     	try {  
-    	    controlador.altaCategoria("Test Category");
+    	    controlador.altaCategoria("Test Categoria");
     	} catch (CategoriaRepetidaException e) {
     	    // No hacer nada
     	}
         List<String> categorias = new ArrayList<>();
-        categorias.add("Test Category");
+        categorias.add("Test Categoria");
         
         assertThrows(IllegalArgumentException.class, () -> {
-            controlador.altaEvento("Test Event", "Test Description", "", categorias, LocalDate.now(), "EventoSinFoto.png");
+            controlador.altaEvento("Evento", "Descripcion", "", categorias, LocalDate.now(), "EventoSinFoto.png");
         });
     }
     
     @Test
     void testAltaEventoSinCategorias() {
         assertThrows(IllegalArgumentException.class, () -> {
-            controlador.altaEvento("Test Event", "Test Description", "TE", new ArrayList<>(), LocalDate.now(), "EventoSinFoto.png");
+            controlador.altaEvento("evento", "descripcion", "TE", new ArrayList<>(), LocalDate.now(), "EventoSinFoto.png");
         });
     }
     
     @Test
     void testAltaCategoria() throws CategoriaRepetidaException {
-        controlador.altaCategoria("Test Category");
+        controlador.altaCategoria("Test Categoria");
         
         // Verificar que se puede crear un evento con esa categoría
         List<String> categorias = new ArrayList<>();
-        categorias.add("Test Category");
+        categorias.add("Test Categoria");
         try {
-          controlador.altaEvento("Test Event", "Test Description", "TE", categorias, LocalDate.now(), "EventoSinFoto.png");
+          controlador.altaEvento("evento", "descripcion", "TE", categorias, LocalDate.now(), "EventoSinFoto.png");
         } catch (EventoRepetidoException e) {
           // No hacer nada
         }
@@ -131,26 +131,26 @@ public class ControladorEventoTest {
     
     @Test
     void testAltaCategoriaRepetida() throws CategoriaRepetidaException {
-        controlador.altaCategoria("Test Category");
+        controlador.altaCategoria("Test Categoria");
         
         assertThrows(CategoriaRepetidaException.class, () -> {
-            controlador.altaCategoria("Test Category");
+            controlador.altaCategoria("Test Categoria");
         });
     }
     
     @Test
     void testGetEventosDTO() {
     	try {  
-    	    controlador.altaCategoria("Test Category");
+    	    controlador.altaCategoria("Test Categoria");
     	} catch (CategoriaRepetidaException e) {
     	    // No Hace nada
     	}
         List<String> categorias = new ArrayList<>();
-        categorias.add("Test Category");
+        categorias.add("Test Categoria");
         
         try {
-            controlador.altaEvento("Test Event 1", "Test Description 1", "TE1", categorias, LocalDate.now(), "EventoSinFoto.png");
-            controlador.altaEvento("Test Event 2", "Test Description 2", "TE2", categorias, LocalDate.now(), "EventoSinFoto.png");
+            controlador.altaEvento("evento1", "Test Description 1", "TE1", categorias, LocalDate.now(), "EventoSinFoto.png");
+            controlador.altaEvento("evento2", "Test Description 2", "TE2", categorias, LocalDate.now(), "EventoSinFoto.png");
         } catch (EventoRepetidoException e) {
             fail("No debería lanzar excepción");
         }

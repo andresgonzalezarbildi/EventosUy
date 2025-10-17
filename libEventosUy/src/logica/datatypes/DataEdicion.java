@@ -51,7 +51,6 @@ public class DataEdicion {
     public List<DataPatrocinio> getPatrocinios() { return patrocinios; }
     public String getEstado() { return estado; }
     public String getEvento() { return evento; }
-    @Override
     public String toString() {
         return nombre;
     }

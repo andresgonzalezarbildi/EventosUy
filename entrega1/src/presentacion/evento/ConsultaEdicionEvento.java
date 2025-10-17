@@ -13,7 +13,7 @@ import excepciones.EventoNoExisteException;
 import presentacion.registros.ConsultaDeTipoDeRegistro;
 
 public class ConsultaEdicionEvento extends JInternalFrame {
-    private JTextField textOrganizador, textNombre, textFechaIni, textFechaFin, textCiudad, textPais, textSigla, textAlta;
+    private JTextField textEstado,textOrganizador, textNombre, textFechaIni, textFechaFin, textCiudad, textPais, textSigla, textAlta;
     private IControladorEvento controlEvento;
 
     private JComboBox<DataEvento> comboBoxEvento;
@@ -100,6 +100,7 @@ public class ConsultaEdicionEvento extends JInternalFrame {
         textSigla = addTextField(panelCampos, "Sigla:", 5);
         textAlta = addTextField(panelCampos, "Fecha alta:", 6);
         textOrganizador = addTextField(panelCampos, "Organizador:", 7);
+        textEstado = addTextField(panelCampos, "Estado:", 8);
 
         modeloTipos = new DefaultListModel<>();
         listaTipos = new JList<>(modeloTipos);
@@ -124,7 +125,7 @@ public class ConsultaEdicionEvento extends JInternalFrame {
 
         GridBagConstraints gbc_scrollTipos = new GridBagConstraints();
         gbc_scrollTipos.gridx = 0;
-        gbc_scrollTipos.gridy = 8;
+        gbc_scrollTipos.gridy = 9;
         gbc_scrollTipos.weightx = 0.5;
         gbc_scrollTipos.weighty = 1.0;
         gbc_scrollTipos.fill = GridBagConstraints.BOTH;
@@ -132,7 +133,7 @@ public class ConsultaEdicionEvento extends JInternalFrame {
 
         GridBagConstraints gbc_scrollPatrocinios = new GridBagConstraints();
         gbc_scrollPatrocinios.gridx = 1;
-        gbc_scrollPatrocinios.gridy = 8;
+        gbc_scrollPatrocinios.gridy = 9;
         gbc_scrollPatrocinios.weightx = 0.5;
         gbc_scrollPatrocinios.weighty = 1.0;
         gbc_scrollPatrocinios.fill = GridBagConstraints.BOTH;
@@ -228,12 +229,13 @@ public class ConsultaEdicionEvento extends JInternalFrame {
                 "Info", JOptionPane.INFORMATION_MESSAGE);
         }
 
-        // 🔑 Importante: dejar combo sin selección
+        //Dejar combo sin selección
         comboBoxEdiciones.setSelectedIndex(-1);
 
-        // 🔑 Limpiar campos de detalle
+        //Limpiar campos de detalle
         limpiarCamposDetalle();
     }
+    
     private void limpiarCamposDetalle() {
         textNombre.setText("");
         textFechaIni.setText("");
@@ -243,6 +245,7 @@ public class ConsultaEdicionEvento extends JInternalFrame {
         textSigla.setText("");
         textAlta.setText("");
         textOrganizador.setText("");
+        textEstado.setText("");
 
         modeloTipos.clear();
         modeloPatrocinios.clear();
@@ -259,6 +262,7 @@ public class ConsultaEdicionEvento extends JInternalFrame {
         textSigla.setText(de.getSigla());
         textAlta.setText(de.getFechaAltaEnPlataforma().toString());
         textOrganizador.setText(de.getOrganizador());
+        textEstado.setText(de.getEstado());
 
         modeloTipos.clear();
         if (de.getTiposRegistro() != null) for (DataTipoRegistro tr : de.getTiposRegistro()) modeloTipos.addElement(tr);
@@ -308,6 +312,7 @@ public class ConsultaEdicionEvento extends JInternalFrame {
         textSigla.setText("");
         textAlta.setText("");
         textOrganizador.setText("");
+        textEstado.setText("");
         
         modeloTipos.clear();
         modeloPatrocinios.clear();
