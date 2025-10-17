@@ -70,7 +70,7 @@ public class ControladorEvento implements IControladorEvento {
           throw new IllegalArgumentException("Categoría inexistente: " + nc);
       }
       cats.add(categoria);
-  }
+    }
     if (cats.isEmpty()) {
       throw new IllegalArgumentException("El evento debe tener al menos una categoría asociada.");
     }	
