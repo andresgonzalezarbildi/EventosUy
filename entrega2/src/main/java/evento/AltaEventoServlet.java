@@ -110,8 +110,10 @@ public class AltaEventoServlet extends HttpServlet {
             exito = true; // marcar que se creó correctamente
         } catch (EventoRepetidoException e) {
             mensaje = "Ya existe un evento con ese nombre.";
+            repoblar(req, nombre, descripcion, sigla, nombresCategorias);
         } catch (Exception e) {
             mensaje = "Error al crear el evento: " + e.getMessage();
+            repoblar(req, nombre, descripcion, sigla, nombresCategorias);
         }
 
         if (exito) {
