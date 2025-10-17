@@ -23,25 +23,24 @@ public class CargarDatosServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
-
-        ServletContext context = getServletContext();
-        Boolean cargado = (Boolean) context.getAttribute("datosCargados");
-
-        if (cargado == null || !cargado) {
-            carga.cargarDatosIniciales();
-            context.setAttribute("datosCargados", true); 
-        }
-
-        response.sendRedirect(request.getContextPath() + "/eventos");
+        doGet(req, res);
     }
 
 
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+    protected void doGet(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
-        doPost(req, resp);
+      ServletContext context = getServletContext();
+      Boolean cargado = (Boolean) context.getAttribute("datosCargados");
+
+      if (cargado == null || !cargado) {
+          carga.cargarDatosIniciales();
+          context.setAttribute("datosCargados", true); 
+      }
+
+      res.sendRedirect(req.getContextPath() + "/eventos");
     }
 }

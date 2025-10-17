@@ -52,21 +52,19 @@
   <%
     Boolean datosCargados = (Boolean) getServletContext().getAttribute("datosCargados");
     if (datosCargados == null) datosCargados = false;
-%>
-<% if (!datosCargados) { %>
-<div class="content-bar">
-  <div class="content-bar-seccion">
-    <div class="seccion-titulo"><h3>Administración</h3></div>
-    <div class="content-bar-seccion-list">
-      <form action="<%= request.getContextPath() %>/cargarDatos" method="post" class="content-bar-seccion-list-options">
-        <button style="background:none; border:none; color:inherit; padding:0; cursor:pointer;" type="submit">
-          Cargar Datos
-        </button>
-      </form>
-    </div>
-  </div>
-</div>
-<% } %>
+  %>
+	<% if (!datosCargados) { %>
+	<div class="content-bar">
+	  <div class="content-bar-seccion">
+	    <div class="seccion-titulo"><h3>Administración</h3></div>
+	    <div class="content-bar-seccion-list">
+	    	<div class="content-bar-seccion-list-options" onclick="window.location.href='<%= request.getContextPath() %>/cargarDatos'">
+	    		<span>Cargar Datos</span>
+	    	</div>
+	    </div>
+	  </div>
+	</div>
+	<% } %>
 
 
 

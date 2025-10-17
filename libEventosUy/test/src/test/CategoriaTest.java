@@ -14,33 +14,29 @@ public class CategoriaTest {
     
     @BeforeEach
     void setUp() {
-        categoria = new Categoria("Test Category");
+        categoria = new Categoria("Test Categoria");
     }
     
     @Test
     void testConstructor() {
         assertNotNull(categoria);
-        assertEquals("Test Category", categoria.getNombre());
+        assertEquals("Test Categoria", categoria.getNombre());
     }
     
     @Test
     void testGetNombre() {
-        assertEquals("Test Category", categoria.getNombre());
+        assertEquals("Test Categoria", categoria.getNombre());
     }
     
-    @Test
-    void testToString() {
-        assertEquals("Test Category", categoria.toString());
-    }
     
     @Test
-    void testConstructorWithEmptyString() {
+    void testConstructorConEmptyString() {
         Categoria cat = new Categoria("");
         assertEquals("", cat.getNombre());
     }
     
     @Test
-    void testConstructorWithNull() {
+    void testConstructorConNull() {
         Categoria cat = new Categoria(null);
         assertNull(cat.getNombre());
     }

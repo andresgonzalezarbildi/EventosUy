@@ -9,13 +9,7 @@ public class Categoria {
 		nombre = nom;
 	}
 	
-    public String getNombre() {
-    		return nombre;
-    }
-
-
-@Override
-public String toString() {
-    return nombre; // así JList muestra el nombre en lugar de "Categoria@hashcode"
-}
+  public String getNombre() {
+  		return nombre;
+  }
 }

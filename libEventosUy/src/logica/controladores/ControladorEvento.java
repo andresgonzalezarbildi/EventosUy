@@ -38,7 +38,7 @@ public class ControladorEvento implements IControladorEvento {
 	
   public static ControladorEvento getInstance() {
     if (instancia == null) {
-      instancia = new ControladorEvento();
+      instancia = new ControladorEvento(); 
     }
     return instancia;
   }
@@ -472,34 +472,38 @@ public class ControladorEvento implements IControladorEvento {
   //listar edciones:
   public DataEdicion[] listarEdiciones(String nombreEvento) throws EventoNoExisteException {
   	Evento eve = manejadorEvento.obtenerEvento(nombreEvento);
-  
+  	
+  	if (eve!= null) {
   	Map<String, EdicionEvento> ediciones = eve.getEdiciones();
-  	if (ediciones != null) {
-  		DataEdicion[] dEdi = new DataEdicion[ediciones.size()];
-  		int indice = 0;
-  		for (EdicionEvento edi : ediciones.values()) {
-  			dEdi[indice++] = new DataEdicion(
-  				    edi.getNombre(),
-  				    edi.getFechaIni(),
-  				    edi.getFechaFin(),
-  				    edi.getCiudad(),
-  				    edi.getPais(),
-  				    edi.getSigla(),
-  				    edi.getFechaAltaEnPlataforma(),
-  				    edi.getOrganizadorDTO(),   
-  				    edi.getTiposRegistroDTO(),  
-  				    edi.getPatrociniosDTO(),
-  				    edi.getImagen(),
-  				    edi.getEstado().name().toLowerCase(),
-  				    edi.getEvento().getNombre()
-  				);
-  
-  		}
-  		Arrays.sort(dEdi, Comparator.comparing(DataEdicion::getNombre));
-  		return dEdi;
-  
+    	if (ediciones != null) {
+    		DataEdicion[] dEdi = new DataEdicion[ediciones.size()];
+    		int indice = 0;
+    		for (EdicionEvento edi : ediciones.values()) {
+    			dEdi[indice++] = new DataEdicion(
+    				    edi.getNombre(),
+    				    edi.getFechaIni(),
+    				    edi.getFechaFin(),
+    				    edi.getCiudad(),
+    				    edi.getPais(),
+    				    edi.getSigla(),
+    				    edi.getFechaAltaEnPlataforma(),
+    				    edi.getOrganizadorDTO(),   
+    				    edi.getTiposRegistroDTO(),  
+    				    edi.getPatrociniosDTO(),
+    				    edi.getImagen(),
+    				    edi.getEstado().name().toLowerCase(),
+    				    edi.getEvento().getNombre()
+    				);
+    
+    		}
+    		Arrays.sort(dEdi, Comparator.comparing(DataEdicion::getNombre));
+    		return dEdi;
+    
+    	}else {
+    		throw new EventoNoExisteException("No existen ediciones registradas del Evento");
+    	}
   	}else {
-  		throw new EventoNoExisteException("No existen ediciones registradas del Evento");
+  	  throw new EventoNoExisteException("Evento No existe");
   	}
   }
   

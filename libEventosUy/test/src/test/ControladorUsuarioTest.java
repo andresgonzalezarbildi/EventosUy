@@ -36,13 +36,13 @@ public class ControladorUsuarioTest {
     
     @Test
     void testAltaUsuarioOrganizador() throws UsuarioRepetidoException, UsuarioNoExisteException {
-        controlador.altaUsuario("testOrg", "Test Organizador", "test@example.com", "PerfilSinFoto.png", "password",
-                               "Organizador", "Test Description", "http://test.com", null, LocalDate.now());
+        controlador.altaUsuario("testOrg", "Roberto García", "test@example.com", "PerfilSinFoto.png", "password",
+                               "Organizador", "Organizador de eventos deportivos", "http://ejemplo.com", null, LocalDate.now());
         
         DataUsuario usuario = controlador.verInfoUsuario("testOrg");
         assertNotNull(usuario);
         assertEquals("testOrg", usuario.getNickname());
-        assertEquals("Test Organizador", usuario.getNombre());
+        assertEquals("Roberto García", usuario.getNombre());
         assertEquals("test@example.com", usuario.getCorreo());
         assertEquals("Organizador", usuario.getTipo());
     }
@@ -50,13 +50,13 @@ public class ControladorUsuarioTest {
     @Test
     void testAltaUsuarioAsistente() throws UsuarioRepetidoException, UsuarioNoExisteException {
         LocalDate fechaNac = LocalDate.of(1990, 1, 1);
-        controlador.altaUsuario("testAsis", "Test Asistente", "test@example.com", "PerfilSinFoto.png", "password",
-                               "Asistente", null, null, "Test Apellido", fechaNac);
+        controlador.altaUsuario("testAsis", "María López", "test@example.com", "PerfilSinFoto.png", "password",
+                               "Asistente", null, null, "Fernández", fechaNac);
         
         DataUsuario usuario = controlador.verInfoUsuario("testAsis");
         assertNotNull(usuario);
         assertEquals("testAsis", usuario.getNickname());
-        assertEquals("Test Asistente", usuario.getNombre());
+        assertEquals("María López", usuario.getNombre());
         assertEquals("test@example.com", usuario.getCorreo());
         assertEquals("Asistente", usuario.getTipo());
     }
@@ -64,16 +64,16 @@ public class ControladorUsuarioTest {
     @Test
     void testAltaUsuarioNicknameVacio() {
         assertThrows(IllegalArgumentException.class, () -> {
-            controlador.altaUsuario("", "Test User", "test@example.com", "PerfilSinFoto.png", "password",
-                                   "Organizador", "Test Description", "http://test.com", null, null);
+            controlador.altaUsuario("", "Pedro Gómez", "test@example.com", "PerfilSinFoto.png", "password",
+                                   "Organizador", "Descripción del organizador", "http://ejemplo.com", null, null);
         });
     }
     
     @Test
     void testAltaUsuarioNicknameSinTexto() {
         assertThrows(IllegalArgumentException.class, () -> {
-            controlador.altaUsuario(null, "Test User", "test@example.com", "PerfilSinFoto.png", "password",
-                                   "Organizador", "Test Description", "http://test.com", null, null);
+            controlador.altaUsuario(null, "Pedro Gómez", "test@example.com", "PerfilSinFoto.png", "password",
+                                   "Organizador", "Descripción del organizador", "http://ejemplo.com", null, null);
         });
     }
     
@@ -81,52 +81,52 @@ public class ControladorUsuarioTest {
     void testAltaUsuarioNombreVacio() {
         assertThrows(IllegalArgumentException.class, () -> {
             controlador.altaUsuario("testUser", "", "test@example.com", "PerfilSinFoto.png", "password",
-                                   "Organizador", "Test Description", "http://test.com", null, null);
+                                   "Organizador", "Descripción del organizador", "http://ejemplo.com", null, null);
         });
     }
     
     @Test
     void testAltaUsuarioCorreoVacio() {
         assertThrows(IllegalArgumentException.class, () -> {
-            controlador.altaUsuario("testUser", "Test User", "", "PerfilSinFoto.png", "password",
-                                   "Organizador", "Test Description", "http://test.com", null, null);
+            controlador.altaUsuario("testUser", "Pedro Gómez", "", "PerfilSinFoto.png", "password",
+                                   "Organizador", "Descripción del organizador", "http://ejemplo.com", null, null);
         });
     }
     
     @Test
     void testAltaUsuarioTipoInvalido() {
         assertThrows(IllegalArgumentException.class, () -> {
-            controlador.altaUsuario("testUser", "Test User", "test@example.com", "PerfilSinFoto.png", "password",
-                                   "TipoInvalido", "Test Description", "http://test.com", null, null);
+            controlador.altaUsuario("testUser", "Pedro Gómez", "test@example.com", "PerfilSinFoto.png", "password",
+                                   "TipoInvalido", "Descripción del usuario", "http://ejemplo.com", null, null);
         });
     }
     
     @Test
     void testAltaUsuarioRepetido() throws UsuarioRepetidoException {
-        controlador.altaUsuario("testUser", "Test User", "test@example.com", "PerfilSinFoto.png", "password",
-                               "Organizador", "Test Description", "http://test.com", null, null);
+        controlador.altaUsuario("testUser", "Carlos Martínez", "test@example.com", "PerfilSinFoto.png", "password",
+                               "Organizador", "Organizador de conferencias", "http://ejemplo.com", null, null);
         
         assertThrows(UsuarioRepetidoException.class, () -> {
-            controlador.altaUsuario("testUser", "Test User 2", "test2@example.com", "PerfilSinFoto.png", "password",
-                                   "Asistente", null, null, "Test Apellido", LocalDate.of(1990, 1, 1));
+            controlador.altaUsuario("testUser", "Ana Rodríguez", "test2@example.com", "PerfilSinFoto.png", "password",
+                                   "Asistente", null, null, "Pérez", LocalDate.of(1990, 1, 1));
         });
     }
     
     @Test
     void testAltaUsuarioCorreoRepetido() throws UsuarioRepetidoException {
-        controlador.altaUsuario("testUser1", "Test User 1", "test@example.com", "PerfilSinFoto.png", "password",
-                               "Organizador", "Test Description", "http://test.com", null, null);
+        controlador.altaUsuario("testUser1", "Juan Sánchez", "test@example.com", "PerfilSinFoto.png", "password",
+                               "Organizador", "Organizador de eventos", "http://ejemplo.com", null, null);
         
         assertThrows(UsuarioRepetidoException.class, () -> {
-            controlador.altaUsuario("testUser2", "Test User 2", "test@example.com", "PerfilSinFoto.png", "password",
-                                   "Asistente", null, null, "Test Apellido", LocalDate.of(1990, 1, 1));
+            controlador.altaUsuario("testUser2", "Laura Díaz", "test@example.com", "PerfilSinFoto.png", "password",
+                                   "Asistente", null, null, "González", LocalDate.of(1990, 1, 1));
         });
     }
     
     @Test
     void testVerInfoUsuario() throws UsuarioRepetidoException, UsuarioNoExisteException {
-        controlador.altaUsuario("testUser", "Test User", "test@example.com", "PerfilSinFoto.png", "password",
-                               "Organizador", "Test Description", "http://test.com", null, null);
+        controlador.altaUsuario("testUser", "Diego Ramírez", "test@example.com", "PerfilSinFoto.png", "password",
+                               "Organizador", "Organizador profesional", "http://ejemplo.com", null, null);
         
         DataUsuario usuario = controlador.verInfoUsuario("testUser");
         assertNotNull(usuario);
@@ -142,26 +142,26 @@ public class ControladorUsuarioTest {
     
     @Test
     void testModificarUsuario() throws UsuarioRepetidoException, UsuarioNoExisteException {
-        controlador.altaUsuario("testUser", "Test User", "test@example.com", "PerfilSinFoto.png", "password",
-                               "Organizador", "Test Description", "http://test.com", null, null);
+        controlador.altaUsuario("testUser", "Miguel Torres", "test@example.com", "PerfilSinFoto.png", "password",
+                               "Organizador", "Organizador de eventos", "http://ejemplo.com", null, null);
         
-        controlador.modificarUsuario("testUser", "New Name", "New Description", "PerfilSinFoto.png", "http://new.com", null, null);
+        controlador.modificarUsuario("testUser", "Miguel Ángel Torres", "Organizador de eventos internacionales", "PerfilSinFoto.png", "http://nuevo.com", null, null);
         
         DataUsuario usuario = controlador.verInfoUsuario("testUser");
-        assertEquals("New Name", usuario.getNombre());
+        assertEquals("Miguel Ángel Torres", usuario.getNombre());
     }
     
     @Test
     void testModificarUsuarioInexistente() {
         assertThrows(UsuarioNoExisteException.class, () -> {
-            controlador.modificarUsuario("inexistente", "New Name", null, null, null, null, null);
+            controlador.modificarUsuario("inexistente", "Nuevo Nombre", null, null, null, null, null);
         });
     }
     
     @Test
     void testGetOrganizador() throws UsuarioRepetidoException, UsuarioNoExisteException {
-        controlador.altaUsuario("testOrg", "Test Organizador", "test@example.com", "PerfilSinFoto.png", "password",
-                               "Organizador", "Test Description", "http://test.com", null, null);
+        controlador.altaUsuario("testOrg", "Fernando Silva", "test@example.com", "PerfilSinFoto.png", "password",
+                               "Organizador", "Organizador de eventos culturales", "http://ejemplo.com", null, null);
         
         DataUsuario organizador = controlador.getOrganizador("testOrg");
         assertNotNull(organizador);
@@ -170,10 +170,10 @@ public class ControladorUsuarioTest {
     
     @Test
     void testGetUsuarios() throws UsuarioRepetidoException, UsuarioNoExisteException {
-        controlador.altaUsuario("testOrg", "Test Organizador", "test@example.com", "PerfilSinFoto.png", "password",
-                               "Organizador", "Test Description", "http://test.com", null, null);
-        controlador.altaUsuario("testAsis", "Test Asistente", "test2@example.com", "PerfilSinFoto.png", "password",
-                               "Asistente", null, null, "Test Apellido", LocalDate.of(1990, 1, 1));
+        controlador.altaUsuario("testOrg", "Patricia Morales", "test@example.com", "PerfilSinFoto.png", "password",
+                               "Organizador", "Organizadora de congresos", "http://ejemplo.com", null, null);
+        controlador.altaUsuario("testAsis", "Sofía Vega", "test2@example.com", "PerfilSinFoto.png", "password",
+                               "Asistente", null, null, "Hernández", LocalDate.of(1990, 1, 1));
         
         DataUsuario[] usuarios = controlador.getUsuarios();
         assertNotNull(usuarios);
@@ -189,8 +189,8 @@ public class ControladorUsuarioTest {
     
     @Test
     void testGetOrganizadores() throws UsuarioRepetidoException {
-        controlador.altaUsuario("testOrg", "Test Organizador", "test@example.com", "PerfilSinFoto.png", "password",
-                               "Organizador", "Test Description", "http://test.com", null, null);
+        controlador.altaUsuario("testOrg", "Ricardo Mendoza", "test@example.com", "PerfilSinFoto.png", "password",
+                               "Organizador", "Organizador de eventos empresariales", "http://ejemplo.com", null, null);
         
         try {
           DataUsuario[] organizadores = controlador.getOrganizadores();
@@ -204,8 +204,8 @@ public class ControladorUsuarioTest {
     
     @Test
     void testGetAsistentes() throws UsuarioRepetidoException {
-        controlador.altaUsuario("testAsis", "Test Asistente", "test@example.com", "PerfilSinFoto.png", "password",
-                               "Asistente", null, null, "Test Apellido", LocalDate.of(1990, 1, 1));
+        controlador.altaUsuario("testAsis", "Valentina Castro", "test@example.com", "PerfilSinFoto.png", "password",
+                               "Asistente", null, null, "Ruiz", LocalDate.of(1990, 1, 1));
         
         try {
           DataUsuario[] asistentes = controlador.getAsistentes();
@@ -219,8 +219,8 @@ public class ControladorUsuarioTest {
     
     @Test
     void testGetAsistente() throws UsuarioRepetidoException, UsuarioNoExisteException {
-        controlador.altaUsuario("testAsistente", "Test Asistente", "asistente@example.com", "PerfilSinFoto.png", "password",
-                               "Asistente", null, null, "Test Apellido", LocalDate.of(1990, 1, 1));
+        controlador.altaUsuario("testAsistente", "Andrés Ortiz", "asistente@example.com", "PerfilSinFoto.png", "password",
+                               "Asistente", null, null, "Jiménez", LocalDate.of(1990, 1, 1));
         
         DataUsuario asistente = controlador.getAsistente("testAsistente");
         assertNotNull(asistente);
@@ -237,8 +237,8 @@ public class ControladorUsuarioTest {
     
     @Test
     void testLoginExitoso() throws UsuarioRepetidoException, UsuarioNoExisteException, PasswordIncorrectaException {
-        controlador.altaUsuario("testLogin", "Test Usuario", "login@example.com", "PerfilSinFoto.png", "password123",
-                               "Organizador", "Test Description", "http://test.com", null, null);
+        controlador.altaUsuario("testLogin", "Martín Flores", "login@example.com", "PerfilSinFoto.png", "password123",
+                               "Organizador", "Organizador de eventos académicos", "http://ejemplo.com", null, null);
         
         DataUsuario usuario = controlador.login("testLogin", "password123");
         assertNotNull(usuario);
@@ -247,8 +247,8 @@ public class ControladorUsuarioTest {
     
     @Test
     void testLoginConCorreo() throws UsuarioRepetidoException, UsuarioNoExisteException, PasswordIncorrectaException {
-        controlador.altaUsuario("testLogin2", "Test Usuario", "login2@example.com", "PerfilSinFoto.png", "password123",
-                               "Organizador", "Test Description", "http://test.com", null, null);
+        controlador.altaUsuario("testLogin2", "Gabriela Romero", "login2@example.com", "PerfilSinFoto.png", "password123",
+                               "Organizador", "Organizadora de ferias", "http://ejemplo.com", null, null);
         
         DataUsuario usuario = controlador.login("login2@example.com", "password123");
         assertNotNull(usuario);
@@ -257,8 +257,8 @@ public class ControladorUsuarioTest {
     
     @Test
     void testLoginPasswordIncorrecta() throws UsuarioRepetidoException {
-        controlador.altaUsuario("testLogin3", "Test Usuario", "login3@example.com", "PerfilSinFoto.png", "password123",
-                               "Organizador", "Test Description", "http://test.com", null, null);
+        controlador.altaUsuario("testLogin3", "Daniel Vargas", "login3@example.com", "PerfilSinFoto.png", "password123",
+                               "Organizador", "Organizador de seminarios", "http://ejemplo.com", null, null);
         
         assertThrows(PasswordIncorrectaException.class, () -> {
             controlador.login("testLogin3", "wrongPassword");
@@ -281,8 +281,8 @@ public class ControladorUsuarioTest {
     
     @Test
     void testLoginPasswordNull() throws UsuarioRepetidoException {
-        controlador.altaUsuario("testLogin4", "Test Usuario", "login4@example.com", "PerfilSinFoto.png", "password123",
-                               "Organizador", "Test Description", "http://test.com", null, null);
+        controlador.altaUsuario("testLogin4", "Carolina Navarro", "login4@example.com", "PerfilSinFoto.png", "password123",
+                               "Organizador", "Organizadora de talleres", "http://ejemplo.com", null, null);
         
         assertThrows(PasswordIncorrectaException.class, () -> {
             controlador.login("testLogin4", null);
@@ -291,25 +291,25 @@ public class ControladorUsuarioTest {
     
     @Test
     void testModificarUsuarioAsistente() throws UsuarioRepetidoException, UsuarioNoExisteException {
-        controlador.altaUsuario("testModAsis", "Test Asistente", "modasis@example.com", "PerfilSinFoto.png", "password",
-                               "Asistente", null, null, "Test Apellido", LocalDate.of(1990, 1, 1));
+        controlador.altaUsuario("testModAsis", "Lucía Medina", "modasis@example.com", "PerfilSinFoto.png", "password",
+                               "Asistente", null, null, "Cordero", LocalDate.of(1990, 1, 1));
         
-        controlador.modificarUsuario("testModAsis", "New Name", null, "new.png", null, "New Apellido", LocalDate.of(1991, 2, 2));
+        controlador.modificarUsuario("testModAsis", "Lucía María Medina", null, "new.png", null, "Cordero Suárez", LocalDate.of(1991, 2, 2));
         
         DataUsuario usuario = controlador.verInfoUsuario("testModAsis");
-        assertEquals("New Name", usuario.getNombre());
-        assertEquals("New Apellido", usuario.getApellido());
+        assertEquals("Lucía María Medina", usuario.getNombre());
+        assertEquals("Cordero Suárez", usuario.getApellido());
         assertEquals(LocalDate.of(1991, 2, 2), usuario.getFechaNacimiento());
     }
     
     @Test
     void testCambiarContrasenia() {
       try {
-        controlador.altaUsuario("nickname", "nombre", "user@example.com", "PerfilSinFoto.png", "password",
-          "Asistente", null, null, "Test Apellido", LocalDate.of(1990, 1, 1));
-        controlador.cambiarContrasenia("nickname", "juan");
+        controlador.altaUsuario("nickname", "Javier Ramos", "user@example.com", "PerfilSinFoto.png", "password",
+          "Asistente", null, null, "Molina", LocalDate.of(1990, 1, 1));
+        controlador.cambiarContrasenia("nickname", "nuevaPass123");
         Usuario usuario = ManejadorUsuario.getInstance().obtenerPorNickname("nickname");
-        assertEquals(usuario.getPassword(), "juan");
+        assertEquals(usuario.getPassword(), "nuevaPass123");
         } catch (UsuarioRepetidoException excepcion) {
           fail();
         }
