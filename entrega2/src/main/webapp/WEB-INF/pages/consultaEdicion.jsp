@@ -53,10 +53,6 @@
 			<% if (ed.getImagen() != null && !ed.getImagen().isEmpty()) { %>
 			  <img src="<%= request.getContextPath() %>/img/<%= ed.getImagen() %>" 
 			       alt="Imagen de la edición" style="max-width:300px;border-radius:8px;">
-			<% } %>
-			<% } else { %>
-		  <p style="text-align:center; color:red;">No se encontró la edición solicitada.</p>
-			<% } %>
           <dl
             style="display:grid; grid-template-columns: 150px 1fr; row-gap:0.5rem; column-gap:1rem; margin-bottom:2rem;">
             <dt><strong>Nombre:</strong></dt>
@@ -221,12 +217,11 @@
 				<%
 				    }
 				%>
+				<% } 
+				} else { %>
+			  	<p style="text-align:center; color:red;">No se encontró la edición solicitada.</p>
+				<% } %>
 				</div>
-
-
-				
-
-  
 
 </div>
 </div>

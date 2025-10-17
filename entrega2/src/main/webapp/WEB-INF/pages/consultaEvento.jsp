@@ -113,7 +113,11 @@
               %>
               
             </aside>
-            <% } %>
+            <% } else{
+             %>
+             <h1>El evento No Existe</h1>
+            <%
+            }%>
           </div>
       </div>
 

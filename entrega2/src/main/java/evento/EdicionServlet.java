@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.util.UUID;
 import java.net.URLEncoder;
 
+import excepciones.EdicionNoExisteException;
 import excepciones.EventoNoExisteException;
 import excepciones.UsuarioNoExisteException;
 import jakarta.servlet.ServletException;
@@ -77,29 +78,35 @@ public class EdicionServlet extends HttpServlet {
                     }
 
                     if (nombreEdicion.isEmpty()) {
-                        res.sendError(HttpServletResponse.SC_BAD_REQUEST, "Falta el parámetro 'id' de la edición.");
+                      req.getRequestDispatcher("/WEB-INF/pages/consultaEdicion.jsp").forward(req, res);
                         return;
                     }
 
                     if (nickname != null && "asistente".equalsIgnoreCase(rol)) {
+                      try {
                         DataRegistro registroAsistente = controladorEventos.listarUnRegistroDeUsuario(nombreEdicion, nickname);
                         req.setAttribute("registroAsistente", registroAsistente);
+                      } catch (Exception e) {
+                        req.getRequestDispatcher("/WEB-INF/pages/consultaEdicion.jsp").forward(req, res);
+                      }
                     }
-
-                    String nombreEvento = controladorEventos.getEventoDeUnaEdicion(nombreEdicion);
-                    DataEvento dataEvento = controladorEventos.getUnEventoDTO(nombreEvento);
-                    req.setAttribute("evento", dataEvento);
-
-                    DataEdicion dataEd = controladorEventos.getInfoEdicion(nombreEdicion);
-                    DataRegistro[] registrosEd = controladorEventos.listarRegistrosDeEdicion(nombreEdicion);
-                    req.setAttribute("registrosEd", registrosEd);
-                    req.setAttribute("edicion", dataEd);
-
+                    
+                    try {
+                      DataEdicion dataEd = controladorEventos.getInfoEdicion(nombreEdicion);
+                      DataRegistro[] registrosEd = controladorEventos.listarRegistrosDeEdicion(nombreEdicion);
+                      req.setAttribute("registrosEd", registrosEd);
+                      req.setAttribute("edicion", dataEd);
+                      String nombreEvento = controladorEventos.getEventoDeUnaEdicion(nombreEdicion);
+                      DataEvento dataEvento = controladorEventos.getUnEventoDTO(nombreEvento);
+                      req.setAttribute("evento", dataEvento);
+                    }catch (EdicionNoExisteException | EventoNoExisteException  ignored) {
+                      
+                    }
                     req.getRequestDispatcher("/WEB-INF/pages/consultaEdicion.jsp").forward(req, res);
                     break;
 
                 default:
-                    res.sendError(HttpServletResponse.SC_NOT_FOUND, "Operación no disponible en el GET.");
+                    req.getRequestDispatcher("/eventos").forward(req, res);
                     break;
             }
         } catch (Exception e) {
