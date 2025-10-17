@@ -41,7 +41,7 @@ public class RegistrarUsuarioServlet extends HttpServlet {
                 req.getRequestDispatcher("/WEB-INF/pages/altaUsuarioAsistente.jsp").forward(req, res);
                 break;
             default:
-              req.getRequestDispatcher("/eventos").forward(req, res);
+              res.sendRedirect(req.getContextPath()+"/eventos");
         }
     }
 

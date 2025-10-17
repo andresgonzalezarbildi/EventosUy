@@ -62,7 +62,7 @@
 	                modificarUsuario(req, res);
 	                break;
 	            default:
-	              req.getRequestDispatcher("/eventos").forward(req, res);
+	              res.sendRedirect(req.getContextPath()+"/eventos");
 	        }
 	    }
 	
