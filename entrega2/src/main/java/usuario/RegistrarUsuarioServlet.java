@@ -41,7 +41,7 @@ public class RegistrarUsuarioServlet extends HttpServlet {
                 req.getRequestDispatcher("/WEB-INF/pages/altaUsuarioAsistente.jsp").forward(req, res);
                 break;
             default:
-                res.sendError(HttpServletResponse.SC_NOT_FOUND, "El tipo Elegido no es valido.");
+              req.getRequestDispatcher("/eventos").forward(req, res);
         }
     }
 

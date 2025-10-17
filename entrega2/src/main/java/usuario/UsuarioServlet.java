@@ -62,7 +62,7 @@
 	                modificarUsuario(req, res);
 	                break;
 	            default:
-	                res.sendError(HttpServletResponse.SC_NOT_FOUND, "Operación no disponible en el GET.");
+	              req.getRequestDispatcher("/eventos").forward(req, res);
 	        }
 	    }
 	
