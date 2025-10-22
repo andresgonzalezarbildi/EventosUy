@@ -9,9 +9,7 @@ import java.awt.*;
 
 import logica.datatypes.DataEdicion;
 import logica.datatypes.DataEvento;
-import logica.clases.Evento;
 import logica.interfaces.IControladorEvento;
-import logica.interfaces.IControladorUsuario;
 
 import java.util.List;
 

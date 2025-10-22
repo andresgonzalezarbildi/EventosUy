@@ -50,15 +50,16 @@ public class EdicionServlet extends HttpServlet {
                 case "alta":
                     String idEvento = req.getParameter("id");
                     if (idEvento == null || idEvento.isEmpty()) {
-                        res.sendError(HttpServletResponse.SC_BAD_REQUEST, "Falta el parámetro 'id' del evento.");
-                        return;
+                        req.getRequestDispatcher("/WEB-INF/pages/errorPage.jsp").forward(req, res);
                     }
                     try {
                         DataEvento evento = controladorEventos.getUnEventoDTO(idEvento);
                         req.setAttribute("nomEv", evento.getNombre());
                         req.getRequestDispatcher("/WEB-INF/pages/altaEdicion.jsp").forward(req, res);
                     } catch (EventoNoExisteException e) {
-                        res.sendError(HttpServletResponse.SC_NOT_FOUND, "El evento no existe.");
+                        req.setAttribute("mensajeError", "El evento no existe.");
+                        req.setAttribute("javax.servlet.error.status_code", 500);
+                        req.getRequestDispatcher("/WEB-INF/pages/errorPage.jsp").forward(req, res);
                     }
                     break;
 
@@ -106,8 +107,10 @@ public class EdicionServlet extends HttpServlet {
                     break;
 
                 default:
-                    req.getRequestDispatcher("/eventos").forward(req, res);
-                    break;
+                  req.setAttribute("mensajeError", "No se encontro la pagina " );
+                  req.setAttribute("javax.servlet.error.status_code", 404);
+                  req.getRequestDispatcher("/WEB-INF/pages/error.jsp").forward(req, res);
+                  break;
             }
         } catch (Exception e) {
             e.printStackTrace();

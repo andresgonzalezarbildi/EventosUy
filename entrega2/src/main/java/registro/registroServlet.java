@@ -62,40 +62,48 @@ public class registroServlet extends HttpServlet {
                     }
 
                     String nomEvento = ctrlEv.getEventoDeUnaEdicion(nombreEdicion);
-					DataEdicion edicion = ctrlEv.getInfoEdicion(nombreEdicion);
-					LocalDate fechaIni = edicion.getFechaIni();
-					LocalDate fechaFin = edicion.getFechaFin();
-					String ciudad = edicion.getCiudad();
-					String pais = edicion.getPais();
-					DataTipoRegistro tiporeg = ctrlEv.getTipoRegistro(nomEvento, nombreEdicion, idTipoReg);
-					Integer costo = tiporeg.getCosto();
-
-					req.setAttribute("fechaIni", fechaIni);
-					req.setAttribute("fechaFin", fechaFin);
-					req.setAttribute("ciudad", ciudad);
-					req.setAttribute("pais", pais);
-					req.setAttribute("nomEvento", nomEvento);
-					req.setAttribute("nomTipoReg", idTipoReg);
-					req.setAttribute("nomEdicion", nombreEdicion);
-					req.setAttribute("costo", costo);
-
-					String flashOk  = (String) req.getSession().getAttribute("flash_ok");
-					String flashErr = (String) req.getSession().getAttribute("flash_error");
-					if (flashOk != null) {
-					    req.setAttribute("flash_ok", flashOk);
-					    req.getSession().removeAttribute("flash_ok");
-					}
-					if (flashErr != null) {
-					    req.setAttribute("flash_error", flashErr);
-					    req.getSession().removeAttribute("flash_error");
-					}
-                    req.getRequestDispatcher("/WEB-INF/pages/registroaEdicion.jsp").forward(req, res);
-                    break;
-                }
+          					DataEdicion edicion = ctrlEv.getInfoEdicion(nombreEdicion);
+          					LocalDate fechaIni = edicion.getFechaIni();
+          					LocalDate fechaFin = edicion.getFechaFin();
+          					if(fechaFin.isBefore(LocalDate.now())) {
+                      req.setAttribute("mensajeError", "La edicion " + edicion.getNombre() + " ya termino, no puede registrarse");
+                      req.setAttribute("javax.servlet.error.status_code", 409);
+                      req.getRequestDispatcher("/WEB-INF/pages/error.jsp").forward(req, res);
+                      break;
+          					}
+          					String ciudad = edicion.getCiudad();
+          					String pais = edicion.getPais();
+          					DataTipoRegistro tiporeg = ctrlEv.getTipoRegistro(nomEvento, nombreEdicion, idTipoReg);
+          					Integer costo = tiporeg.getCosto();
+          
+          					req.setAttribute("fechaIni", fechaIni);
+          					req.setAttribute("fechaFin", fechaFin);
+          					req.setAttribute("ciudad", ciudad);
+          					req.setAttribute("pais", pais);
+          					req.setAttribute("nomEvento", nomEvento);
+          					req.setAttribute("nomTipoReg", idTipoReg);
+          					req.setAttribute("nomEdicion", nombreEdicion);
+          					req.setAttribute("costo", costo);
+          
+          					String flashOk  = (String) req.getSession().getAttribute("flash_ok");
+          					String flashErr = (String) req.getSession().getAttribute("flash_error");
+          					if (flashOk != null) {
+          					    req.setAttribute("flash_ok", flashOk);
+          					    req.getSession().removeAttribute("flash_ok");
+          					}
+          					if (flashErr != null) {
+          					    req.setAttribute("flash_error", flashErr);
+          					    req.getSession().removeAttribute("flash_error");
+          					}
+                        req.getRequestDispatcher("/WEB-INF/pages/registroaEdicion.jsp").forward(req, res);
+                        break;
+                    }
 
                 default: {
-                    res.sendError(HttpServletResponse.SC_NOT_FOUND, "Operación no disponible en el GET.");
-                    break;
+                  req.setAttribute("mensajeError", "No se encontro la pagina " );
+                  req.setAttribute("javax.servlet.error.status_code", 404);
+                  req.getRequestDispatcher("/WEB-INF/pages/error.jsp").forward(req, res);
+                  break;
                 }
                 
                 
@@ -127,9 +135,9 @@ public class registroServlet extends HttpServlet {
             	    // 2️⃣ ASISTENTE
             	    if ("asistente".equalsIgnoreCase(rol)) {
             	    	
-            	        String idEdicion = req.getParameter("edicion");
-            	        DataEdicion edicion = ctrlEv.getInfoEdicion(idEdicion);
-            	        String nomEvento = req.getParameter("evento");
+          	        String idEdicion = req.getParameter("edicion");
+          	        DataEdicion edicion = ctrlEv.getInfoEdicion(idEdicion);
+          	        String nomEvento = req.getParameter("evento");
             	    	DataRegistro registro = ctrlEv.listarUnRegistroDeUsuario(idEdicion, nickname);
             	    	LocalDate fechaRegistro = registro.getFecha();
             	    	String nomTipoRegistro = registro.getTipoRegistro();
@@ -141,7 +149,7 @@ public class registroServlet extends HttpServlet {
             	    	String pais = edicion.getPais();
             	    	Integer costo = registro.getCosto();
             	    	
-        	            req.setAttribute("rol", rol);
+      	            req.setAttribute("rol", rol);
             	    	req.setAttribute("imagen", imagen);
             	    	req.setAttribute("nickname", nickname);
             	    	req.setAttribute("idEdicion", idEdicion);
@@ -188,7 +196,9 @@ public class registroServlet extends HttpServlet {
         if (opt != null && opt.equals("alta")) {
             altaRegistro(req, res);
         } else {
-            res.sendError(HttpServletResponse.SC_BAD_REQUEST, "Operación POST no válida.");
+          req.setAttribute("mensajeError", "No se encontro la pagina " );
+          req.setAttribute("javax.servlet.error.status_code", 404);
+          req.getRequestDispatcher("/WEB-INF/pages/error.jsp").forward(req, res);
         }
     }
     
@@ -209,12 +219,12 @@ public class registroServlet extends HttpServlet {
         String nombreEdicion = (req.getParameter("idEdicion") != null) ? req.getParameter("idEdicion") : "";
         final String nomEvento = ctrlEv.getEventoDeUnaEdicion(nombreEdicion);
         final String nombreTipoRegistro = req.getParameter("id");
-        final String nombreAsistente = req.getParameter("nickname");
        
         if (nombreEdicion == null || nombreEdicion.isEmpty() ||
         	    nomEvento == null || nomEvento.isEmpty()) {
-        	    req.setAttribute("error", "Faltan datos obligatorios para crear el registro.");
-        	    req.getRequestDispatcher("/WEB-INF/pages/registroaEdicion.jsp").forward(req, res);
+              req.setAttribute("mensajeError", "Faltan datos obligatorios para crear el registro." );
+              req.setAttribute("javax.servlet.error.status_code", 500);
+              req.getRequestDispatcher("/WEB-INF/pages/error.jsp").forward(req, res);
         	    return;
         	}
         

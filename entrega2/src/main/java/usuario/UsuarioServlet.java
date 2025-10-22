@@ -62,7 +62,9 @@
 	                modificarUsuario(req, res);
 	                break;
 	            default:
-	              res.sendRedirect(req.getContextPath()+"/eventos");
+	              req.setAttribute("mensajeError", "Le erraste de camino");
+                req.setAttribute("javax.servlet.error.status_code", 404);
+                req.getRequestDispatcher("/WEB-INF/pages/error.jsp").forward(req, res);
 	        }
 	    }
 	

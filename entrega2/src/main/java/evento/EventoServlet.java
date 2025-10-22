@@ -43,7 +43,7 @@ public class EventoServlet extends HttpServlet {
 						DataEdicion[] dataEdicionesDelEvento = controladorEventos.listarEdicionesAceptadasEvento(nombreEvento);
 						req.setAttribute("ediciones", dataEdicionesDelEvento);
 					}catch(EdicionNoExisteException error) {
-						
+					
 					}
 			}
 		}catch(EventoNoExisteException error) {
@@ -51,6 +51,8 @@ public class EventoServlet extends HttpServlet {
 		}
 			
 			req.getRequestDispatcher("/WEB-INF/pages/consultaEvento.jsp").forward(req, res);
+		}else {
+		  res.sendRedirect(req.getContextPath()+"/eventos");
 		}
 	}
 

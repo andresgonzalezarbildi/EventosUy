@@ -33,8 +33,6 @@ import javax.swing.border.TitledBorder;
 
 import excepciones.EdicionNoExisteException;
 import excepciones.UsuarioNoExisteException;
-import logica.clases.EdicionEvento;
-import logica.clases.Organizador;
 import logica.datatypes.DataUsuario;
 import logica.datatypes.DataEdicion;
 import logica.datatypes.DataEvento;
