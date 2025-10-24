@@ -179,6 +179,12 @@ h1{
   margin-bottom: 1rem;
 }
 
+.btn:hover {
+  width: 100%;
+  color: white;
+	filter: brightness(80%);
+}
+
 .seccion-titulo {
   background-color: var(--color-secondary);
   border-bottom: 2px solid var(--color-border);

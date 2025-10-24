@@ -1,31 +1,25 @@
-
-/* =========================
-   MAIN CONTENT
-========================= */
-
-/* ===== Mobile (pantallas chicas) ===== */
 @media (max-width: 767.98px) {
   .contenido-principal-card {
-    flex-direction: column;   /* apila imagen y texto */
-    text-align: center;       /* centra el texto */
-    align-items: center;      /* centra la imagen */
+    flex-direction: column;   
+    text-align: center;       
+    align-items: center;      
   }
 
   .contenido-principal-card-imagen {
     width: 100%;
-    margin-bottom: 1rem;      /* espacio entre imagen y texto */
-    flex-direction: column;   /* apila imagen y texto */
-    text-align: center;       /* centra el texto */
+    margin-bottom: 1rem;     
+    flex-direction: column;   
+    text-align: center;       
     align-items: center;
   }
 
   .contenido-principal-card-imagen img {
-    margin-bottom: 1rem;      /* espacio entre imagen y texto */
-    max-width: 160px;           /* que no ocupe todo el ancho */
+    margin-bottom: 1rem;     
+    max-width: 160px;           
     max-height: 160px;
   }
 
   .contenido-principal-card-informacion {
-    text-align: center;       /* centra títulos y descripción */
+    text-align: center;      
   }
 }

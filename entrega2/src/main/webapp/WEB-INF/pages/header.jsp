@@ -48,7 +48,7 @@
   <a href="<%= request.getContextPath() %>/UsuarioServlet?op=consultar&nick=<%= nickname %>">
     <p class="navbar_username"><%= nickname %></p>
     <img class="perfil_image" 
-         src="<%= request.getContextPath() %>/img/<%= imagen %>?t=<%= System.currentTimeMillis() %>"
+         src="<%= request.getContextPath() %>/img/<%= imagen %>"
          alt="foto perfil" />
   </a>
   </div>

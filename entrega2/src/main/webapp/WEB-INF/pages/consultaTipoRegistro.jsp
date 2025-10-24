@@ -64,7 +64,7 @@
 %>
 
 <% if ("asistente".equalsIgnoreCase(rol) && registroAsistente == null && edicionActiva) { %>
-    <a href="<%=request.getContextPath()%>/registroEd?op=alta&id=<%=tipo.getNombre()%>&idEdicion=<%=nombreEdicion%>" class="btn btn-secondary mt-3">
+    <a style="padding: 0.4rem;" href="<%=request.getContextPath()%>/registroEd?op=alta&id=<%=tipo.getNombre()%>&idEdicion=<%=nombreEdicion%>" class="btn">
       Registrarse
     </a>
 <% } else if (!edicionActiva) { %>

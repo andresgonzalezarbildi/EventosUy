@@ -32,19 +32,14 @@
  <jsp:include page="header.jsp" />
 
   <!-- Main + Sidebar -->
-  <section class="content">
+  <section class="content" style="margin-bottom: 1rem">
     <div class="container-fluid">
       <div class="row">
-      
-      <jsp:include page="sidebar.jsp" />
-
-        
-        
-         <div class="col-12 col-md-8 d-flex">
+      	<jsp:include page="sidebar.jsp" />
+        <div class="col-12 col-md-8 d-flex" style="max-width: 100%; padding: 1.5rem; background: #fff; border: 1px solid var(--color-border); border-radius: var(--radius); box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
       <!-- Columna izquierda: imagen y datos -->
       <div class="flex-grow-1 d-flex flex-column align-items-center">
-        <main
-          style="max-width: 700px; margin: 2rem auto; padding: 1.5rem; background: #fff; border: 1px solid var(--color-border); border-radius: var(--radius); box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+        <main >
           <h2 style="margin-bottom: 1rem; color: var(--color-primary); text-align:center;">Detalle de Edición
           </h2>
 		
@@ -119,6 +114,7 @@
             <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
               <span style="background:#e3f2fd; padding:0.4rem 0.8rem; border-radius:12px;"><%= ed.getPatrocinios() %></span> <!-- PATROCINIOS VAN HARCODEADOS! -->
             </div>
+           </section>
          
          
 			
@@ -187,6 +183,7 @@
 				<%
 				} // TERMINA ASISTENTEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
 				%>
+					</main>
 				 </div>
 				 
 				 
