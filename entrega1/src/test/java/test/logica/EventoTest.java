@@ -1,4 +1,4 @@
-package src.test;
+package test.logica;
 
 import logica.clases.Evento;
 import logica.clases.Categoria;

@@ -1,4 +1,4 @@
-package src.test;
+package test.logica;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertSame;

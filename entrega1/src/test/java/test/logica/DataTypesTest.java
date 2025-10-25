@@ -1,4 +1,4 @@
-package src.test;
+package test.logica;
 
 import org.junit.jupiter.api.Test;
 import logica.datatypes.DataUsuario;

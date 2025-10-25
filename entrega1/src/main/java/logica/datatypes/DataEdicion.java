@@ -1,27 +1,49 @@
 package logica.datatypes;
 
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlType;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.time.LocalDate;
 import java.util.List;
 
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "dataEdicion", propOrder = {
+    "nombre", "fechaIni", "fechaFin", "ciudad", "pais", "sigla",
+    "fechaAltaEnPlataforma", "imagen", "estado", "evento",
+    "organizador", "tiposRegistro", "patrocinios"
+})
 public class DataEdicion {
+
     private String nombre;
+
+    @XmlJavaTypeAdapter(FormateoFecha.class)
     private LocalDate fechaIni;
+
+    @XmlJavaTypeAdapter(FormateoFecha.class)
     private LocalDate fechaFin;
+
     private String ciudad;
     private String pais;
     private String sigla;
+
+    @XmlJavaTypeAdapter(FormateoFecha.class)
     private LocalDate fechaAltaEnPlataforma;
+
     private String imagen;
     private String estado;
     private String evento;
-    
     private String organizador;
+
     private List<DataTipoRegistro> tiposRegistro;
     private List<DataPatrocinio> patrocinios;
 
+    public DataEdicion() {}
+
     public DataEdicion(String nombre, LocalDate fechaIni, LocalDate fechaFin,
                        String ciudad, String pais, String sigla, LocalDate fechaAltaEnPlataforma,
-                       String organizador, List<DataTipoRegistro> tiposRegistro, List<DataPatrocinio> patrocinios, String imagen, String estado, String evento) {
+                       String organizador, List<DataTipoRegistro> tiposRegistro,
+                       List<DataPatrocinio> patrocinios, String imagen, String estado, String evento) {
         this.nombre = nombre;
         this.fechaIni = fechaIni;
         this.fechaFin = fechaFin;
@@ -51,7 +73,23 @@ public class DataEdicion {
     public List<DataPatrocinio> getPatrocinios() { return patrocinios; }
     public String getEstado() { return estado; }
     public String getEvento() { return evento; }
+    
+    // Setters
+    public void setNombre(String nombre) { this.nombre = nombre; }
+    public void setFechaIni(LocalDate fechaIni) { this.fechaIni = fechaIni; }
+    public void setFechaFin(LocalDate fechaFin) { this.fechaFin = fechaFin; }
+    public void setCiudad(String ciudad) { this.ciudad = ciudad; }
+    public void setPais(String pais) { this.pais = pais; }
+    public void setSigla(String sigla) { this.sigla = sigla; }
+    public void setImagen(String imagen) { this.imagen = imagen; }
+    public void setFechaAltaEnPlataforma(LocalDate fecha) { this.fechaAltaEnPlataforma = fecha; }
+    public void setOrganizador(String organizador) { this.organizador = organizador; }
+    public void setTiposRegistro(List<DataTipoRegistro> tiposRegistro) { this.tiposRegistro = tiposRegistro; }
+    public void setPatrocinios(List<DataPatrocinio> patrocinios) { this.patrocinios = patrocinios; }
+    public void setEstado(String estado) { this.estado = estado; }
+    public void setEvento(String evento) { this.evento = evento; }
+    
     public String toString() {
-        return nombre;
-    }
+      return nombre;
+  }
 }

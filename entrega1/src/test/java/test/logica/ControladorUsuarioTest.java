@@ -1,4 +1,4 @@
-package src.test;
+package test.logica;
 
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.junit.jupiter.api.Assertions.assertSame;
