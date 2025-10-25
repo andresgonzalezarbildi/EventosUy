@@ -4,6 +4,7 @@ import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -29,8 +30,8 @@ public class DataEdicion {
     private String evento;
     private String organizador;
 
-    private List<DataTipoRegistro> tiposRegistro;
-    private List<DataPatrocinio> patrocinios;
+    private List<DataTipoRegistro> tiposRegistro = new ArrayList<DataTipoRegistro>();
+    private List<DataPatrocinio> patrocinios = new ArrayList<DataPatrocinio>();
 
     public DataEdicion() {}
 

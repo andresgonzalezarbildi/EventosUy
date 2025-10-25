@@ -1,12 +1,18 @@
 package logica.datatypes;
 
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+
+@XmlAccessorType(XmlAccessType.FIELD)
 public class DataTipoRegistro {
+
     private String nombre;
     private String descripcion;
     private Integer costo;
     private Integer cupo;
 
-    // Constructor
+    public DataTipoRegistro() {}
+
     public DataTipoRegistro(String nombre, String descripcion, Integer costo, Integer cupo) {
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -14,24 +20,18 @@ public class DataTipoRegistro {
         this.cupo = cupo;
     }
 
-    // Getters
-    public String getNombre() {
-        return nombre;
-    }
+    public String getNombre() { return nombre; }
+    public void setNombre(String nombre) { this.nombre = nombre; }
 
-    public String getDescripcion() {
-        return descripcion;
-    }
+    public String getDescripcion() { return descripcion; }
+    public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
 
-    public Integer getCosto() {
-        return costo;
-    }
+    public Integer getCosto() { return costo; }
+    public void setCosto(Integer costo) { this.costo = costo; }
 
-    public Integer getCupo() {
-        return cupo;
-    }
+    public Integer getCupo() { return cupo; }
+    public void setCupo(Integer cupo) { this.cupo = cupo; }
 
-    // toString (opcional, útil para debug o para mostrar en listas)
     @Override
     public String toString() {
         return nombre + " (costo: " + costo + ", cupo: " + cupo + ")";

@@ -4,6 +4,7 @@ import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -17,7 +18,7 @@ public class DataEvento {
     private LocalDate fechaAlta;
 
     private String imagen;
-    private List<String> categorias;
+    private List<String> categorias = new ArrayList<String>();
 
     public DataEvento() {}
 
