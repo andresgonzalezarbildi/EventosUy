@@ -2,17 +2,11 @@ package logica.datatypes;
 
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
-import jakarta.xml.bind.annotation.XmlType;
 import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.time.LocalDate;
 import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "dataEdicion", propOrder = {
-    "nombre", "fechaIni", "fechaFin", "ciudad", "pais", "sigla",
-    "fechaAltaEnPlataforma", "imagen", "estado", "evento",
-    "organizador", "tiposRegistro", "patrocinios"
-})
 public class DataEdicion {
 
     private String nombre;
