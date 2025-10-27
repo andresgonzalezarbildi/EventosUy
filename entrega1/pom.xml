@@ -51,7 +51,7 @@
           <finalName>servidor</finalName>
           <archive>
             <manifest>
-              <mainClass>servidor.BootServidorCentral</mainClass>
+              <mainClass>wz.Main</mainClass>
             </manifest>
           </archive>
         </configuration>

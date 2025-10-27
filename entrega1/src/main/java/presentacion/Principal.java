@@ -443,4 +443,18 @@ private void abrirConsultaEdicionCon(DataEvento evento, DataEdicion edicion) {
     showInternal(consultaEdicionInternalFrame);
     consultaEdicionInternalFrame.setContext(evento, edicion);
 }
+
+/**
+ * Centra la ventana en la pantalla.
+ */
+public void setLocationRelativeTo(java.awt.Component c) {
+    frmGestion.setLocationRelativeTo(c);
+}
+
+/**
+ * Establece la visibilidad de la ventana principal.
+ */
+public void setVisible(boolean visible) {
+    frmGestion.setVisible(visible);
+}
 }
