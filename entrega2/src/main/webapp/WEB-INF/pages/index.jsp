@@ -71,15 +71,13 @@
 
             <%   } // fin for
                } // fin else %>
+               
 
           </div>
         </main>
       </div>
     </div>
   </section>
-
-  <jsp:include page="footer.jsp" />
-  
   <script>
 console.log("Eventos recibidos:");
 <%

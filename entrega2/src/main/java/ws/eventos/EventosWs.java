@@ -28,6 +28,18 @@ public interface EventosWs {
     /**
      * 
      * @return
+     *     returns java.util.List<java.lang.String>
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "listarCategorias", targetNamespace = "http://publicar.wz/", className = "ws.eventos.ListarCategorias")
+    @ResponseWrapper(localName = "listarCategoriasResponse", targetNamespace = "http://publicar.wz/", className = "ws.eventos.ListarCategoriasResponse")
+    @Action(input = "http://publicar.wz/EventosWs/listarCategoriasRequest", output = "http://publicar.wz/EventosWs/listarCategoriasResponse")
+    public List<String> listarCategorias();
+
+    /**
+     * 
+     * @return
      *     returns java.util.List<ws.eventos.DataEvento>
      * @throws EventoNoExisteFault_Exception
      */

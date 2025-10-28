@@ -25,6 +25,8 @@ import jakarta.xml.bind.annotation.XmlRegistry;
 public class ObjectFactory {
 
     private final static QName _EventoNoExisteFault_QNAME = new QName("http://publicar.wz/", "EventoNoExisteFault");
+    private final static QName _ListarCategorias_QNAME = new QName("http://publicar.wz/", "listarCategorias");
+    private final static QName _ListarCategoriasResponse_QNAME = new QName("http://publicar.wz/", "listarCategoriasResponse");
     private final static QName _ListarEventoExistentes_QNAME = new QName("http://publicar.wz/", "listarEventoExistentes");
     private final static QName _ListarEventoExistentesResponse_QNAME = new QName("http://publicar.wz/", "listarEventoExistentesResponse");
 
@@ -43,6 +45,26 @@ public class ObjectFactory {
      */
     public EventoNoExisteFault createEventoNoExisteFault() {
         return new EventoNoExisteFault();
+    }
+
+    /**
+     * Create an instance of {@link ListarCategorias }
+     * 
+     * @return
+     *     the new instance of {@link ListarCategorias }
+     */
+    public ListarCategorias createListarCategorias() {
+        return new ListarCategorias();
+    }
+
+    /**
+     * Create an instance of {@link ListarCategoriasResponse }
+     * 
+     * @return
+     *     the new instance of {@link ListarCategoriasResponse }
+     */
+    public ListarCategoriasResponse createListarCategoriasResponse() {
+        return new ListarCategoriasResponse();
     }
 
     /**
@@ -86,6 +108,32 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://publicar.wz/", name = "EventoNoExisteFault")
     public JAXBElement<EventoNoExisteFault> createEventoNoExisteFault(EventoNoExisteFault value) {
         return new JAXBElement<>(_EventoNoExisteFault_QNAME, EventoNoExisteFault.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ListarCategorias }{@code >}
+     * 
+     * @param value
+     *     Java instance representing xml element's value.
+     * @return
+     *     the new instance of {@link JAXBElement }{@code <}{@link ListarCategorias }{@code >}
+     */
+    @XmlElementDecl(namespace = "http://publicar.wz/", name = "listarCategorias")
+    public JAXBElement<ListarCategorias> createListarCategorias(ListarCategorias value) {
+        return new JAXBElement<>(_ListarCategorias_QNAME, ListarCategorias.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ListarCategoriasResponse }{@code >}
+     * 
+     * @param value
+     *     Java instance representing xml element's value.
+     * @return
+     *     the new instance of {@link JAXBElement }{@code <}{@link ListarCategoriasResponse }{@code >}
+     */
+    @XmlElementDecl(namespace = "http://publicar.wz/", name = "listarCategoriasResponse")
+    public JAXBElement<ListarCategoriasResponse> createListarCategoriasResponse(ListarCategoriasResponse value) {
+        return new JAXBElement<>(_ListarCategoriasResponse_QNAME, ListarCategoriasResponse.class, null, value);
     }
 
     /**

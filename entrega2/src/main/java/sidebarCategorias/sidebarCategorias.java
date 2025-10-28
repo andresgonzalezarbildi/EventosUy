@@ -11,6 +11,8 @@ import jakarta.servlet.http.HttpFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import logica.Fabrica;
 import logica.interfaces.IControladorEvento;
+import ws.eventos.EventosService;
+import ws.eventos.EventosWs;
 
 import java.io.IOException;
 import java.util.List;
@@ -23,8 +25,8 @@ public class sidebarCategorias extends HttpFilter implements Filter {
   
 
   private static final long serialVersionUID = 1L;
-  private Fabrica fabrica = Fabrica.getInstance();
-  private IControladorEvento controladorEvento = fabrica.getControladorEvento();
+  private EventosService service = new EventosService();
+  private EventosWs controladorEvento = service.getEventosPort();
  
   public sidebarCategorias() {
       super();

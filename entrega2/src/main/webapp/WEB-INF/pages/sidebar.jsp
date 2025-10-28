@@ -49,25 +49,6 @@
     </div>
   </div>
 
-  <%
-    Boolean datosCargados = (Boolean) getServletContext().getAttribute("datosCargados");
-    if (datosCargados == null) datosCargados = false;
-  %>
-	<% if (!datosCargados) { %>
-	<div class="content-bar">
-	  <div class="content-bar-seccion">
-	    <div class="seccion-titulo"><h3>Administración</h3></div>
-	    <div class="content-bar-seccion-list">
-	    	<div class="content-bar-seccion-list-options" onclick="window.location.href='<%= request.getContextPath() %>/cargarDatos'">
-	    		<span>Cargar Datos</span>
-	    	</div>
-	    </div>
-	  </div>
-	</div>
-	<% } %>
-
-
-
 
 <% if ("organizador".equalsIgnoreCase(rol)) { %>
   <div class="content-bar">

@@ -13,6 +13,7 @@ import ws.eventos.DataEvento;
 import ws.eventos.EventoNoExisteFault_Exception;
 import ws.eventos.EventosService;
 import ws.eventos.EventosWs;
+
 //import excepciones.EventoNoExisteException;
 //import logica.interfaces.IControladorEvento;
 //import logica.Fabrica;
@@ -23,23 +24,16 @@ public class ListarEventosServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 //    private Fabrica fabrica = Fabrica.getInstance();
 //    private IControladorEvento ce = fabrica.getControladorEvento();
+    private EventosService service = new EventosService();
+    private EventosWs port = service.getEventosPort();
     
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
-        EventosService service = new EventosService();
-        EventosWs port = service.getEventosPort();
+
         
         try {
           List<DataEvento> eventos = port.listarEventoExistentes();
-          if(eventos == null) {
-            System.out.println("devolvio null");
-          }else {
-            System.out.println("cantidad de eventos: " + eventos.size());
-            for(DataEvento e: eventos) {
-              System.out.println("-"+ e.getNombre() + "|" + e.getDescripcion());
-            }
-          }
           req.setAttribute("eventos", eventos);
           req.setAttribute("eventosCount", eventos.size());
         }catch(EventoNoExisteFault_Exception error) {
