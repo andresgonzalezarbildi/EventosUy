@@ -162,23 +162,30 @@ public class ControladorEvento implements IControladorEvento {
       
      
   public DataEvento[] listarEventoExistentes() throws EventoNoExisteException {
-      	 Map<String, Evento> eventos = manejadorEvento.getEventos();
-  
-      	 if (eventos != null) {
-      		 DataEvento[] dataEvento = new DataEvento[eventos.size()];
-      		 int indice = 0;
-      		 for (Evento eve : eventos.values()) {
-      			 if (eve.getFinalizado() == false) {
-      				 dataEvento[indice++] = new DataEvento(eve.getNombre(), eve.getDescripcionEvento(), eve.getSigla(), eve.getFecha(), eve.getCategoriasLista(), eve.getImagen(), eve.getFinalizado());
-      			 }
-      		 }
-      		Arrays.sort(dataEvento, Comparator.comparing(DataEvento::getNombre));
-  
-      		 return dataEvento;
-      	 } else {
-      		 throw new EventoNoExisteException("No existen eventos registrados");
-      	 }
-  }
+    Map<String, Evento> eventos = manejadorEvento.getEventos();
+    if (eventos == null || eventos.isEmpty()) {
+        throw new EventoNoExisteException("No existen eventos registrados");
+    }
+
+    List<DataEvento> lista = new ArrayList<>();
+    for (Evento e : eventos.values()) {
+        if (!e.getFinalizado()) {
+            lista.add(new DataEvento(
+                e.getNombre(), e.getDescripcionEvento(), e.getSigla(),
+                e.getFecha(), e.getCategoriasLista(), e.getImagen(), e.getFinalizado()
+            ));
+        }
+    }
+    if (lista.isEmpty()) {
+        throw new EventoNoExisteException("No hay eventos vigentes");
+    }
+
+    lista.sort(Comparator.comparing(
+        DataEvento::getNombre,
+        Comparator.nullsLast(String.CASE_INSENSITIVE_ORDER)
+    ));
+    return lista.toArray(new DataEvento[0]);
+}
         
       
   public void altaEdicionEvento(
