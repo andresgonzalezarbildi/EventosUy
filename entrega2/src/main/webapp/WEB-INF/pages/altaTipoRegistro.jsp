@@ -50,7 +50,7 @@
                     <h2>Alta de Tipo de Registro</h2>
 
                     <% if (error != null) { %>
-                        <p class="error-msg"><%= error %></p>
+                        <p class="alerta-error"><%= error %></p>
                     <% } %>
 
                     <form action="<%= path %>/TipoRegistroServlet" method="post">

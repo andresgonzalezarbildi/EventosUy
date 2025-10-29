@@ -6,6 +6,8 @@
     String rol = (String) session.getAttribute("rol");
     boolean logueado = (nickname != null);
     List<String> categorias = (List<String>) request.getAttribute("categorias");
+    if (categorias == null) categorias = List.of();
+    
 %>
 
 <aside class="col-12 col-md-3">
@@ -32,7 +34,7 @@
       <div class="seccion-titulo"><h3>Categorías</h3></div>
       <div class="content-bar-seccion-list">
 <%
-      if (categorias != null && !categorias.isEmpty()) {
+      if ( !categorias.isEmpty()) {
         for (String nombreCat : categorias) {
     %>
     	<div class="content-bar-seccion-list-options" onclick="window.location.href='<%= request.getContextPath() %>'"><span><%= nombreCat %></span></div>

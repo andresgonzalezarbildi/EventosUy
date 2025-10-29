@@ -1,19 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" isErrorPage="true" %>
+    pageEncoding="UTF-8" isErrorPage="true"
+    import="java.util.List, java.util.Collections" %>
 <%
     String path = request.getContextPath();
 
-    // Atributos estándar que setea el contenedor al ocurrir un error
+
     Integer status = (Integer) request.getAttribute("javax.servlet.error.status_code");
     String message = (String) request.getAttribute("javax.servlet.error.message");
     Throwable excepcion = (Throwable) request.getAttribute("javax.servlet.error.exception");
     String uri = (String) request.getAttribute("javax.servlet.error.request_uri");
     if (uri == null) uri = request.getRequestURI();
 
-    // Mensaje personalizado desde el servlet (si lo pasas)
+
     String customMsg = (String) request.getAttribute("mensajeError");
 
-    // Variables finales para mostrar
+
     String titulo = "";
     String descripcion = "";
 
@@ -50,7 +51,7 @@
     }
 %>
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -61,15 +62,15 @@
     <link rel="stylesheet" href="<%= path %>/estilos/error.css">
 </head>
 <body>
-    <jsp:include page="header.jsp" />
-    
-    <!-- Main Content -->
+    <!-- Includes absolutos desde el contexto para evitar problemas de ruta -->
+    <jsp:include page="/WEB-INF/pages/header.jsp" />
+
     <section class="content">
         <div class="container-fluid">
             <div class="row">
-                <!-- Sidebar -->
-                <jsp:include page="sidebar.jsp" />
-                
+                <!-- Sidebar (seguro: categorias nunca es null) -->
+                <jsp:include page="/WEB-INF/pages/sidebar.jsp" />
+
                 <main class="col-12 col-md-9">
                     <div class="contenido-principal">
                         <section class="error-page" role="alert" aria-live="polite">
@@ -97,6 +98,6 @@
         </div>
     </section>
 
-    <jsp:include page="footer.jsp" />
+    <jsp:include page="/WEB-INF/pages/footer.jsp" />
 </body>
 </html>

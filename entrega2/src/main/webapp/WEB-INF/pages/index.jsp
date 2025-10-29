@@ -5,15 +5,16 @@
 
 <%
   String ctx = request.getContextPath();
-
+	String exito = (String) request.getAttribute("exito");
+	Boolean errorWs = (Boolean) request.getAttribute("errorWs");
   String error = (String) request.getAttribute("error");
   int largo = (int) request.getAttribute("eventosCount");
 
   List<DataEvento> eventos = null;
   try {
-      Object attr = request.getAttribute("eventos"); // setAttribute desde el servlet
+      Object attr = request.getAttribute("eventos");
       if (attr != null) {
-          eventos = (List<DataEvento>) attr; // el servlet devuelve una Lista
+          eventos = (List<DataEvento>) attr; 
       }
   } catch (Exception ignore) {}
 %>
@@ -38,13 +39,14 @@
 
         <main class="col-12 col-md-9">
           <div class="contenido-principal">
-
             <% if (error != null) { %>
-              <div class="alert alert-danger"><%= error %></div>
-            <% } %>
-
-            <% if (largo <= 0) { %>
-              <h1>No hay eventos</h1>
+              <div class="alerta-error"><%= error %></div>
+            <% } else if (exito != null){ %>
+              <div class="alerta-exito"><%= exito %></div>
+            <% } 
+            		if (largo <= 0 && !errorWs) { 
+            %>
+              <div class="no-eventos">No hay eventos</div>
             <% } else { 
                  for (DataEvento e : eventos) {
                    String nombre = "";
@@ -71,28 +73,10 @@
 
             <%   } // fin for
                } // fin else %>
-               
-
           </div>
         </main>
       </div>
     </div>
   </section>
-  <script>
-console.log("Eventos recibidos:");
-<%
-if (eventos != null) {
-    for (DataEvento e : eventos) {
-%>
-console.log("Nombre: <%= e.getNombre() %>, Descripción: <%= e.getDescripcion() %>");
-<%
-    }
-} else {
-%>
-console.log("No se recibieron eventos o lista es null");
-<%
-}
-%>
-</script>
 </body>
 </html>

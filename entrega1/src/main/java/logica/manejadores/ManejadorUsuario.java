@@ -24,7 +24,7 @@ public class ManejadorUsuario {
    * Inicializa las colecciones de organizadores y asistentes.
    */
   private ManejadorUsuario() {
-    this.organizadores = new HashMap<>();
+    this.organizadores = new HashMap<>(); 
     this.asistentes    = new HashMap<>();
   }
   

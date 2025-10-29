@@ -1,6 +1,5 @@
 package wz;
 
-import wz.publicar.CargarDatosWs;
 import wz.publicar.EventosWs;
 import wz.publicar.UsuarioWs;
 
@@ -14,11 +13,10 @@ public class Main {
     System.out.println("Iniciando Web Services...");
     EventosWs eventoWs = new EventosWs();
 //    UsuarioWs usuarioWs = new UsuarioWs();
-//    CargarDatosWs cargarDatosWs = new CargarDatosWs();
 
     eventoWs.publicar();
 //    usuarioWs.publicar();
-//    cargarDatosWs.publicar();
+
     
     System.out.println("Web Services publicados");
     System.out.println("  - EventosWS: http://localhost:9128/Servicios/EventosWS");

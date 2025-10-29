@@ -1,5 +1,7 @@
 package wz.publicar;
 
+import java.util.List;
+
 import excepciones.EventoNoExisteException;
 import jakarta.jws.WebMethod;
 import jakarta.jws.WebParam;
@@ -41,4 +43,9 @@ public class EventosWs {
       throw new EventoNoExisteFault( e.getMessage() );
     }
   } 
+  
+  @WebMethod
+  public List<String> listarCategorias() {
+    return ctrl.listarCategorias();
+  }
 }

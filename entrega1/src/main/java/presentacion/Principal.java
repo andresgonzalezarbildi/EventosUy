@@ -60,7 +60,7 @@ public class Principal {
                 window.frmGestion.setVisible(true);
             } catch (Exception e) {
                 e.printStackTrace();
-            }
+            } 
         });
     }
 
