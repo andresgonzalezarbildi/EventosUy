@@ -1,4 +1,4 @@
-package wz.exceptions;
+package ws.exceptions;
 
 import jakarta.xml.ws.WebFault; 
 

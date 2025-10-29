@@ -342,7 +342,9 @@ form textarea {
 }
 
 .alerta-error {
-  display: block;
+  display: flex;
+  display: flex;
+  flex-direction: row;
   padding: 12px 18px;
   margin-bottom: 1rem;
   border: 1px solid #f5c2c7;        

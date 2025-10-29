@@ -1,4 +1,4 @@
-package wz.publicar;
+package ws.publicar;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ import jakarta.jws.WebService;
 
 import logica.Fabrica;
 import logica.interfaces.IControladorEvento;
-import wz.exceptions.EventoNoExisteFault;
+import ws.exceptions.EventoNoExisteFault;
 import logica.datatypes.DataEvento;
 import jakarta.xml.ws.Endpoint;
 

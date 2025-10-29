@@ -1,4 +1,4 @@
-package wz.publicar;
+package ws.publicar;
 
 import jakarta.jws.WebMethod;
 import jakarta.jws.WebService;

@@ -1,7 +1,7 @@
-package wz;
+package ws;
 
-import wz.publicar.EventosWs;
-import wz.publicar.UsuarioWs;
+import ws.publicar.EventosWs;
+import ws.publicar.UsuarioWs;
 
 import javax.swing.SwingUtilities;
 
@@ -24,9 +24,6 @@ public class Main {
     System.out.println("  - CargarDatosWS: http://localhost:9128/Servicios/CargarDatosWS");
     System.out.println("app swing");
     
-    // Iniciar interfaz gráfica
-    // Los datos cargados desde Principal se reflejarán en los Web Services
-    // porque comparten la misma instancia de controladores (Singleton)
     SwingUtilities.invokeLater(()-> {
       Principal frame = new Principal();
       frame.setLocationRelativeTo(null);
