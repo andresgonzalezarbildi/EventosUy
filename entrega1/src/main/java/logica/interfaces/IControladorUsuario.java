@@ -37,7 +37,7 @@ public interface IControladorUsuario {
    * @return datos del usuario
    * @throws UsuarioNoExisteException si el usuario no existe
    */
-  DataUsuario verInfoUsuario(String nickname) throws UsuarioNoExisteException;
+   public DataUsuario verInfoUsuario(String nickname) throws UsuarioNoExisteException;
   
   /**
    * Obtiene todos los usuarios registrados.
@@ -45,7 +45,7 @@ public interface IControladorUsuario {
    * @return arreglo con los datos de los usuarios
    * @throws UsuarioNoExisteException si no hay usuarios registrados
    */
-  DataUsuario[] getUsuarios() throws UsuarioNoExisteException;
+  public DataUsuario[] getUsuarios() throws UsuarioNoExisteException;
   
   /**
    * Obtiene todos los organizadores registrados.
@@ -53,7 +53,7 @@ public interface IControladorUsuario {
    * @return arreglo con los datos de los organizadores
    * @throws UsuarioNoExisteException si no hay organizadores registrados
    */
-  DataUsuario[] getOrganizadores() throws UsuarioNoExisteException;
+  public DataUsuario[] getOrganizadores() throws UsuarioNoExisteException;
   
   /**
    * Obtiene todos los asistentes registrados.
