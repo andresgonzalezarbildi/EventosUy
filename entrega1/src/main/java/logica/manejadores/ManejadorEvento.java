@@ -96,7 +96,8 @@ public class ManejadorEvento {
           e.getSigla(),
           e.getFecha(),
           e.getCategoriasLista(),
-          e.getImagen()
+          e.getImagen(),
+          e.getFinalizado()
       ));
     }
     lista.sort(Comparator.comparing(DataEvento::getNombre));

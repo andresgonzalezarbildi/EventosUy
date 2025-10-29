@@ -22,6 +22,7 @@ import presentacion.evento.AltaEdicionEvento;
 import presentacion.evento.AltaEvento;
 import presentacion.evento.ConsultaEdicionEvento;
 import presentacion.evento.ConsultaEvento;
+import presentacion.evento.FinalizarEvento;
 import presentacion.registros.AltaDeTipoDeRegistro;
 import presentacion.registros.ConsultaDeRegistro;
 import presentacion.registros.ConsultaDeTipoDeRegistro;
@@ -49,6 +50,7 @@ public class Principal {
     private ConsultaDeTipoDeRegistro consultaDeTipoDeRegistroInternalFrame;
     private ConsultaDeRegistro consultaRegistroInternalFrame;
     private AceptarRechazarEdicion AceptarRechazarEdicionInternalFrame;
+    private FinalizarEvento FinalizarEventoInternalFrame;
 
 
     public static void main(String[] args) {
@@ -154,6 +156,13 @@ public class Principal {
         desktop.add(AceptarRechazarEdicionInternalFrame);
         AceptarRechazarEdicionInternalFrame.setVisible(false);
         AceptarRechazarEdicionInternalFrame.setDefaultCloseOperation(JInternalFrame.HIDE_ON_CLOSE);
+        
+        FinalizarEventoInternalFrame = new FinalizarEvento(IEV);
+        FinalizarEventoInternalFrame.setLocation(10, 23);
+        FinalizarEventoInternalFrame.setClosable(true);
+        desktop.add(FinalizarEventoInternalFrame);
+        FinalizarEventoInternalFrame.setVisible(false);
+        FinalizarEventoInternalFrame.setDefaultCloseOperation(JInternalFrame.HIDE_ON_CLOSE);
         
     }
 
@@ -391,6 +400,21 @@ public class Principal {
             showInternal(AceptarRechazarEdicionInternalFrame);
         });
         mnAdministrador.add(mntmAdminEdicion);
+        
+        JMenuItem mntmAdminEvento = new JMenuItem("Finalizar Evento");
+        mntmAdminEvento.addActionListener(e -> {
+        	if (FinalizarEventoInternalFrame == null || FinalizarEventoInternalFrame.isClosed()) {
+        		FinalizarEventoInternalFrame = new FinalizarEvento(IEV);
+        	    desktop.add(FinalizarEventoInternalFrame);
+      	} else {
+      	  FinalizarEventoInternalFrame.resetearVentana();
+      	}
+        	FinalizarEventoInternalFrame.setVisible(true);
+        	FinalizarEventoInternalFrame.toFront(); 
+            ensureSize(FinalizarEventoInternalFrame, 600, 400);
+            showInternal(FinalizarEventoInternalFrame);
+        });
+        mnAdministrador.add(mntmAdminEvento);
         
     }
 

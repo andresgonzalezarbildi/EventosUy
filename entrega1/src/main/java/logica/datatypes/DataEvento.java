@@ -19,17 +19,19 @@ public class DataEvento {
 
     private String imagen;
     private List<String> categorias = new ArrayList<String>();
+    private boolean finalizado;
 
     public DataEvento() {}
 
     public DataEvento(String nombre, String descripcion, String sigla,
-                      LocalDate fechaAlta, List<String> categorias, String imagen) {
+                      LocalDate fechaAlta, List<String> categorias, String imagen, boolean finalizado) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.sigla = sigla;
         this.fechaAlta = fechaAlta;
         this.imagen = imagen;
         this.categorias = categorias;
+        this.finalizado = finalizado;
     }
 
     public String getNombre() { return nombre; }
@@ -49,6 +51,9 @@ public class DataEvento {
 
     public List<String> getCategorias() { return categorias; }
     public void setCategorias(List<String> categorias) { this.categorias = categorias; }
+    
+    public boolean getFinalizado() { return finalizado; }
+    public void setfinalizado(boolean finalizado) { this.finalizado = finalizado; }
 
     @Override
     public String toString() { return nombre; }
