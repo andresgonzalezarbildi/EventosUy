@@ -1,12 +1,5 @@
 package logica.controladores;
 
-import excepciones.CategoriaRepetidaException;
-import excepciones.EdicionNoExisteException;
-import excepciones.EventoNoExisteException;
-import excepciones.EventoRepetidoException;
-import excepciones.TipoRegistroRepetidoException;
-import excepciones.TransicionEstadoInvalidaException;
-import excepciones.UsuarioNoExisteException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,6 +7,14 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+
+import excepciones.CategoriaRepetidaException;
+import excepciones.EdicionNoExisteException;
+import excepciones.EventoNoExisteException;
+import excepciones.EventoRepetidoException;
+import excepciones.TipoRegistroRepetidoException;
+import excepciones.TransicionEstadoInvalidaException;
+import excepciones.UsuarioNoExisteException;
 import logica.clases.Asistente;
 import logica.clases.Categoria;
 import logica.clases.EdicionEvento;
@@ -122,14 +123,17 @@ public class ControladorEvento implements IControladorEvento {
   
       List<DataEvento> lista = new ArrayList<>(evs.size());
       for (Evento e : evs) {
-          lista.add(new DataEvento(
-              e.getNombre(),
-              e.getDescripcionEvento(),
-              e.getSigla(),
-              e.getFecha(),
-              e.getCategoriasLista(),
-              e.getImagen()
-          ));
+    	  if (e.getFinalizado() == false) {
+	          lista.add(new DataEvento(
+	              e.getNombre(),
+	              e.getDescripcionEvento(),
+	              e.getSigla(),
+	              e.getFecha(),
+	              e.getCategoriasLista(),
+	              e.getImagen(),
+	              e.getFinalizado()
+	          ));
+    	  }
       }
   
       // Ordenamos por nombre, ignorando mayúsculas/minúsculas
@@ -148,7 +152,8 @@ public class ControladorEvento implements IControladorEvento {
                   e.getSigla(),
                   e.getFecha(),
                   e.getCategoriasLista(),
-                  e.getImagen()
+                  e.getImagen(),
+                  e.getFinalizado()
               );
           }
       }
@@ -163,12 +168,14 @@ public class ControladorEvento implements IControladorEvento {
       		 DataEvento[] dataEvento = new DataEvento[eventos.size()];
       		 int indice = 0;
       		 for (Evento eve : eventos.values()) {
-      			 dataEvento[indice++] = new DataEvento(eve.getNombre(), eve.getDescripcionEvento(), eve.getSigla(), eve.getFecha(), eve.getCategoriasLista(), eve.getImagen());
+      			 if (eve.getFinalizado() == false) {
+      				 dataEvento[indice++] = new DataEvento(eve.getNombre(), eve.getDescripcionEvento(), eve.getSigla(), eve.getFecha(), eve.getCategoriasLista(), eve.getImagen(), eve.getFinalizado());
+      			 }
       		 }
       		Arrays.sort(dataEvento, Comparator.comparing(DataEvento::getNombre));
   
       		 return dataEvento;
-      	 }else {
+      	 } else {
       		 throw new EventoNoExisteException("No existen eventos registrados");
       	 }
   }
@@ -198,6 +205,9 @@ public class ControladorEvento implements IControladorEvento {
         Evento evento = manejadorEvento.obtenerEvento(nombreEvento);
         if (evento == null) {
             throw new IllegalArgumentException("No existe el evento: " + nombreEvento);
+        }
+        if (evento.getFinalizado() == true) {
+            throw new IllegalArgumentException("Ya finalizo el evento: " + nombreEvento);
         }
         LocalDate FechaEvento = evento.getFecha();
         if (fechaAltaEnPlataforma.isBefore(FechaEvento))
@@ -246,6 +256,9 @@ public class ControladorEvento implements IControladorEvento {
         if (evento == null) {
             throw new IllegalArgumentException("No existe el evento: " + nombreEvento);
         }
+        if (evento.getFinalizado() == true) {
+            throw new IllegalArgumentException("Ya finalizo el evento: " + nombreEvento);
+        }
         LocalDate FechaEvento = evento.getFecha();
         if (fechaAltaEnPlataforma.isBefore(FechaEvento))
         	throw new IllegalArgumentException(
@@ -285,6 +298,9 @@ public class ControladorEvento implements IControladorEvento {
         if (evento == null) {
             throw new IllegalArgumentException("No existe el evento: " + nombreEvento);
         }
+        if (evento.getFinalizado() == true) {
+            throw new IllegalArgumentException("Ya finalizo el evento: " + nombreEvento);
+        }
         EdicionEvento edicion = evento.getEdicion(nombreEdicion);
         if (edicion == null) {
             throw new IllegalArgumentException("No existe la edicion del evento: " + nombreEvento);
@@ -299,6 +315,9 @@ public class ControladorEvento implements IControladorEvento {
   public void altaRegistro(String nombreEvento, String nombreEdicion, String nombreTipoRegistro, String nombreAsistente, LocalDate fecha) throws UsuarioNoExisteException {
           Evento evento = ManejadorEvento.getInstance().obtenerEvento(nombreEvento);
           if (evento == null) throw new IllegalArgumentException("No existe el evento: " + nombreEvento);
+          if (evento.getFinalizado() == true) {
+              throw new IllegalArgumentException("Ya finalizo el evento: " + nombreEvento);
+          }
   
         EdicionEvento edicion = evento.getEdicion(nombreEdicion);
         if (edicion == null) throw new IllegalArgumentException("No existe la edición: " + nombreEdicion);
@@ -410,11 +429,11 @@ public class ControladorEvento implements IControladorEvento {
     return out.toArray(new DataRegistro[0]);
 	}
   	
-  public DataRegistro listarUnRegistroDeUsuario(String nombreEdicion, String nickname){
+  public DataRegistro listarUnRegistroDeUsuario(String nombreEdicion, String nickname) {
     DataRegistro out = null;
     for (Evento e : manejadorEvento.getEventos().values()) {
       for (EdicionEvento ed : e.getEdiciones().values()) {
-        if (nombreEdicion.equals(ed.getNombre()) ){
+        if (nombreEdicion.equals(ed.getNombre()) ) {
           for (Registro r : ed.getRegistros()) {
             if (nickname.equals(r.getAsistente().getNickname())) {
                 out = new DataRegistro(
@@ -441,7 +460,7 @@ public class ControladorEvento implements IControladorEvento {
 	public Boolean nombreEdicionRepetido(String nombreEdicion) {
 		Collection<Evento> eventos = manejadorEvento.obtenerTodosEventos();
 		for (Evento eve : eventos) {
-			if (eve.getEdicion(nombreEdicion)!=null) {
+			if (eve.getEdicion(nombreEdicion) != null) {
 				return true;
 			}
 		}
@@ -473,7 +492,7 @@ public class ControladorEvento implements IControladorEvento {
   public DataEdicion[] listarEdiciones(String nombreEvento) throws EventoNoExisteException {
   	Evento eve = manejadorEvento.obtenerEvento(nombreEvento);
   	
-  	if (eve!= null) {
+  	if (eve !=  null) {
   	Map<String, EdicionEvento> ediciones = eve.getEdiciones();
     	if (ediciones != null) {
     		DataEdicion[] dEdi = new DataEdicion[ediciones.size()];
@@ -499,10 +518,10 @@ public class ControladorEvento implements IControladorEvento {
     		Arrays.sort(dEdi, Comparator.comparing(DataEdicion::getNombre));
     		return dEdi;
     
-    	}else {
+    	 } else {
     		throw new EventoNoExisteException("No existen ediciones registradas del Evento");
     	}
-  	}else {
+  	} else {
   	  throw new EventoNoExisteException("Evento No existe");
   	}
   }
@@ -616,7 +635,7 @@ public class ControladorEvento implements IControladorEvento {
     return acumulado.toArray(new DataEdicion[0]);
   }
   
-  public DataEdicion[] listarEdicionesOrganizadorAceptadas(String nombreOrganizador) throws EdicionNoExisteException{
+  public DataEdicion[] listarEdicionesOrganizadorAceptadas(String nombreOrganizador) throws EdicionNoExisteException {
     Map<String, Evento> eventos = manejadorEvento.getEventos();
     List<DataEdicion> acumulado = new ArrayList<>();
     if (eventos != null && !eventos.isEmpty()) {
@@ -663,7 +682,7 @@ public class ControladorEvento implements IControladorEvento {
             if (ediciones == null || ediciones.isEmpty()) continue;
   
             for (EdicionEvento edi : ediciones.values()) {
-                if (edi.getEstado()== EstadoEdicion.INGRESADA) {
+                if (edi.getEstado() ==  EstadoEdicion.INGRESADA) {
                   acumulado.add(new DataEdicion(
                       edi.getNombre(),
                       edi.getFechaIni(),
@@ -690,7 +709,7 @@ public class ControladorEvento implements IControladorEvento {
     return acumulado.toArray(new DataEdicion[0]);
   }
     
-  public DataEdicion[] listarEdicionesIngresadasEvento(String nombreEvento) throws EdicionNoExisteException{
+  public DataEdicion[] listarEdicionesIngresadasEvento(String nombreEvento) throws EdicionNoExisteException {
     Map<String, Evento> eventos = manejadorEvento.getEventos();
     List<DataEdicion> acumulado = new ArrayList<>();
     if (eventos != null && !eventos.isEmpty()) {
@@ -764,7 +783,7 @@ public class ControladorEvento implements IControladorEvento {
     return acumulado.toArray(new DataEdicion[0]);
   }
   
-  public DataEdicion[] listarEdicionesRechazadasEvento(String nombreEvento) throws EdicionNoExisteException{
+  public DataEdicion[] listarEdicionesRechazadasEvento(String nombreEvento) throws EdicionNoExisteException {
     Map<String, Evento> eventos = manejadorEvento.getEventos();
     List<DataEdicion> acumulado = new ArrayList<>();
     if (eventos != null && !eventos.isEmpty()) {
@@ -802,13 +821,17 @@ public class ControladorEvento implements IControladorEvento {
     return acumulado.toArray(new DataEdicion[0]);
   }
 
-  public List<String> listarCategorias(){
+  public List<String> listarCategorias() {
     return  manejadorEvento.getNombresCategorias();
   }
   
-  public String getEventoDeUnaEdicion(String nombreEdicion){
+  public String getEventoDeUnaEdicion(String nombreEdicion) {
     return  manejadorEvento.getEdicion(nombreEdicion).getEvento().getNombre();
   }
   
+  public void finalizarEvento(String nombreEvento) {
+	  Evento eve = manejadorEvento.obtenerEvento(nombreEvento);
+	  eve.setFinalizado(true);
+  }
 }
   

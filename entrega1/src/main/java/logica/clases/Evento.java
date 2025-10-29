@@ -14,6 +14,7 @@ public class Evento {
   private Map<String, Categoria> categoriasDeEvento;
   private Map<String, EdicionEvento> edicionesDeEvento;
   private String imagen;
+  private boolean finalizado;
     
   public Evento(String nom, String desc, String sigla, LocalDate fecha, String imagen) {
     this.descripcionEvento = desc;
@@ -23,6 +24,7 @@ public class Evento {
     this.categoriasDeEvento = new HashMap<>();
     this.edicionesDeEvento = new HashMap<>();
     this.imagen = (imagen == null || imagen.isBlank()) ? "EventoSinFoto.png" : imagen;
+    this.finalizado = false;
   }
         
   public LocalDate getFecha() {
@@ -78,6 +80,14 @@ public class Evento {
 
   public void setImagen(String imagen) {
     this.imagen = (imagen == null || imagen.isBlank()) ? "EventoSinFoto.png" : imagen;
+  }
+  
+  public boolean getFinalizado() {
+		return finalizado;
+  }
+  
+  public void setFinalizado(boolean estado) {
+	this.finalizado = estado;
   }
 }
     

@@ -50,6 +50,8 @@ public interface IControladorEvento {
 
     public void aceptarEdicion(String nombreEdicion, Boolean aceptada) throws EdicionNoExisteException, TransicionEstadoInvalidaException;
     public void  setCostoRegistro(String nickname, String edicion, String nombreTipo, int precio); 
+    
+    public void finalizarEvento(String nombreEvento);
 
     public List<String> listarCategorias();
     
