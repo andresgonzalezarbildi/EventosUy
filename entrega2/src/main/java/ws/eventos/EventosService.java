@@ -17,14 +17,14 @@ import jakarta.xml.ws.WebServiceFeature;
  * Generated source version: 3.0
  * 
  */
-@WebServiceClient(name = "EventosService", targetNamespace = "http://publicar.wz/", wsdlLocation = "http://localhost:9128/Servicios/EventosWS?wsdl")
+@WebServiceClient(name = "EventosService", targetNamespace = "http://publicar.ws/", wsdlLocation = "http://localhost:9128/Servicios/EventosWS?wsdl")
 public class EventosService
     extends Service
 {
 
     private final static URL EVENTOSSERVICE_WSDL_LOCATION;
     private final static WebServiceException EVENTOSSERVICE_EXCEPTION;
-    private final static QName EVENTOSSERVICE_QNAME = new QName("http://publicar.wz/", "EventosService");
+    private final static QName EVENTOSSERVICE_QNAME = new QName("http://publicar.ws/", "EventosService");
 
     static {
         URL url = null;
@@ -69,7 +69,7 @@ public class EventosService
      */
     @WebEndpoint(name = "EventosPort")
     public EventosWs getEventosPort() {
-        return super.getPort(new QName("http://publicar.wz/", "EventosPort"), EventosWs.class);
+        return super.getPort(new QName("http://publicar.ws/", "EventosPort"), EventosWs.class);
     }
 
     /**
@@ -81,7 +81,7 @@ public class EventosService
      */
     @WebEndpoint(name = "EventosPort")
     public EventosWs getEventosPort(WebServiceFeature... features) {
-        return super.getPort(new QName("http://publicar.wz/", "EventosPort"), EventosWs.class, features);
+        return super.getPort(new QName("http://publicar.ws/", "EventosPort"), EventosWs.class, features);
     }
 
     private static URL __getWsdlLocation() {

@@ -1,2 +1,2 @@
-@jakarta.xml.bind.annotation.XmlSchema(namespace = "http://publicar.wz/")
+@jakarta.xml.bind.annotation.XmlSchema(namespace = "http://publicar.ws/")
 package ws.eventos;

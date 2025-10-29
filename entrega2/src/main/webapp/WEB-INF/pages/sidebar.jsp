@@ -29,27 +29,28 @@
   </div>
   
     <!-- Categorías -->
-  <div class="content-bar">
-    <div class="content-bar-seccion">
-      <div class="seccion-titulo"><h3>Categorías</h3></div>
-      <div class="content-bar-seccion-list">
-<%
+		<%
       if ( !categorias.isEmpty()) {
-        for (String nombreCat : categorias) {
+     %>
+        <div class="content-bar">
+        <div class="content-bar-seccion">
+          <div class="seccion-titulo"><h3>Categorías</h3></div>
+          <div class="content-bar-seccion-list">
+      <%  
+      for (String nombreCat : categorias) {
     %>
     	<div class="content-bar-seccion-list-options" onclick="window.location.href='<%= request.getContextPath() %>'"><span><%= nombreCat %></span></div>
      <%
         }
-      } else {
-    %>
-      <div class="content-bar-seccion-list-options"><span>No Hay Categorias</span></div>
-    <%
+      %>
+        </div>
+        </div>
+      </div>
+      <%
       }
     %>
 
-      </div>
-    </div>
-  </div>
+
 
 
 <% if ("organizador".equalsIgnoreCase(rol)) { %>

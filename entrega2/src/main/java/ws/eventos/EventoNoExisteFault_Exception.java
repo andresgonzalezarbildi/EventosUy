@@ -10,7 +10,7 @@ import jakarta.xml.ws.WebFault;
  * Generated source version: 3.0
  * 
  */
-@WebFault(name = "EventoNoExisteFault", targetNamespace = "http://publicar.wz/")
+@WebFault(name = "EventoNoExisteFault", targetNamespace = "http://publicar.ws/")
 public class EventoNoExisteFault_Exception
     extends Exception
 {

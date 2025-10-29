@@ -9,19 +9,18 @@ import presentacion.Principal;
 
 public class Main {
   public static void main(String[] args) {
-    // Publicar Web Services primero
+
     System.out.println("Iniciando Web Services...");
     EventosWs eventoWs = new EventosWs();
-//    UsuarioWs usuarioWs = new UsuarioWs();
+    UsuarioWs usuarioWs = new UsuarioWs();
 
     eventoWs.publicar();
-//    usuarioWs.publicar();
+    usuarioWs.publicar();
 
     
     System.out.println("Web Services publicados");
     System.out.println("  - EventosWS: http://localhost:9128/Servicios/EventosWS");
     System.out.println("  - UsuariosWS: http://localhost:9128/Servicios/UsuariosWS");
-    System.out.println("  - CargarDatosWS: http://localhost:9128/Servicios/CargarDatosWS");
     System.out.println("app swing");
     
     SwingUtilities.invokeLater(()-> {

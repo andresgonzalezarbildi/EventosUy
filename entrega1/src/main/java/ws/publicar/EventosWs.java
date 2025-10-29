@@ -3,13 +3,18 @@ package ws.publicar;
 import java.time.LocalDate;
 import java.util.List;
 
-import excepciones.*;
+import excepciones.CategoriaRepetidaException;
+import excepciones.EdicionNoExisteException;
+import excepciones.EventoNoExisteException;
+import excepciones.EventoRepetidoException;
+import excepciones.TipoRegistroRepetidoException;
+import excepciones.TransicionEstadoInvalidaException;
+import excepciones.UsuarioNoExisteException;
 import jakarta.jws.WebMethod;
 import jakarta.jws.WebParam;
 import jakarta.jws.WebService;
 import jakarta.xml.ws.Endpoint;
 import logica.Fabrica;
-import logica.datatypes.*;
 import logica.interfaces.IControladorEvento;
 import ws.exceptions.CategoriaRepetidaFault;
 import ws.exceptions.EdicionNoExisteFault;
@@ -18,7 +23,10 @@ import ws.exceptions.EventoRepetidoFault;
 import ws.exceptions.TipoRegistroRepetidoFault;
 import ws.exceptions.TransicionEstadoInvalidaFault;
 import ws.exceptions.UsuarioNoExisteFault;
+import logica.datatypes.DataEdicion;
 import logica.datatypes.DataEvento;
+import logica.datatypes.DataRegistro;
+import logica.datatypes.DataTipoRegistro;
 
 @WebService(serviceName = "EventosService", portName = "EventosPort")
 public class EventosWs {

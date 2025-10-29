@@ -25,6 +25,7 @@ import jakarta.xml.bind.annotation.XmlType;
  *         <element name="fechaAlta" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         <element name="imagen" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         <element name="categorias" type="{http://www.w3.org/2001/XMLSchema}string" maxOccurs="unbounded" minOccurs="0"/>
+ *         <element name="finalizado" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
  *       </sequence>
  *     </restriction>
  *   </complexContent>
@@ -40,7 +41,8 @@ import jakarta.xml.bind.annotation.XmlType;
     "sigla",
     "fechaAlta",
     "imagen",
-    "categorias"
+    "categorias",
+    "finalizado"
 })
 public class DataEvento {
 
@@ -51,6 +53,7 @@ public class DataEvento {
     protected String imagen;
     @XmlElement(nillable = true)
     protected List<String> categorias;
+    protected boolean finalizado;
 
     /**
      * Obtiene el valor de la propiedad nombre.
@@ -201,6 +204,22 @@ public class DataEvento {
             categorias = new ArrayList<>();
         }
         return this.categorias;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad finalizado.
+     * 
+     */
+    public boolean isFinalizado() {
+        return finalizado;
+    }
+
+    /**
+     * Define el valor de la propiedad finalizado.
+     * 
+     */
+    public void setFinalizado(boolean value) {
+        this.finalizado = value;
     }
 
 }
