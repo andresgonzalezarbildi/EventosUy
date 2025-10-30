@@ -5,17 +5,9 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import logica.Fabrica;
-import logica.datatypes.DataEvento;
-import logica.datatypes.DataEdicion;
-import logica.interfaces.IControladorEvento;
 import ws.eventos.EventoNoExisteFault;
 import ws.eventos.EventosService;
 import ws.eventos.EventosWs;
-
-import excepciones.EdicionNoExisteException;
-import excepciones.EventoNoExisteException;
-
 import java.io.IOException;
 import java.util.List;
 

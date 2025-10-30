@@ -35,12 +35,32 @@ public interface UsuarioWs {
      */
     @WebMethod
     @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "getAsistente", targetNamespace = "http://publicar.ws/", className = "ws.usuario.GetAsistente")
-    @ResponseWrapper(localName = "getAsistenteResponse", targetNamespace = "http://publicar.ws/", className = "ws.usuario.GetAsistenteResponse")
-    @Action(input = "http://publicar.ws/UsuarioWs/getAsistenteRequest", output = "http://publicar.ws/UsuarioWs/getAsistenteResponse", fault = {
-        @FaultAction(className = UsuarioNoExisteFault_Exception.class, value = "http://publicar.ws/UsuarioWs/getAsistente/Fault/UsuarioNoExisteFault")
+    @RequestWrapper(localName = "verInfoUsuario", targetNamespace = "http://publicar.ws/", className = "ws.usuario.VerInfoUsuario")
+    @ResponseWrapper(localName = "verInfoUsuarioResponse", targetNamespace = "http://publicar.ws/", className = "ws.usuario.VerInfoUsuarioResponse")
+    @Action(input = "http://publicar.ws/UsuarioWs/verInfoUsuarioRequest", output = "http://publicar.ws/UsuarioWs/verInfoUsuarioResponse", fault = {
+        @FaultAction(className = UsuarioNoExisteFault_Exception.class, value = "http://publicar.ws/UsuarioWs/verInfoUsuario/Fault/UsuarioNoExisteFault")
     })
-    public DataUsuario getAsistente(
+    public DataUsuario verInfoUsuario(
+        @WebParam(name = "nickname", targetNamespace = "")
+        String nickname)
+        throws UsuarioNoExisteFault_Exception
+    ;
+
+    /**
+     * 
+     * @param nickname
+     * @return
+     *     returns ws.usuario.DataUsuario
+     * @throws UsuarioNoExisteFault_Exception
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "getOrganizador", targetNamespace = "http://publicar.ws/", className = "ws.usuario.GetOrganizador")
+    @ResponseWrapper(localName = "getOrganizadorResponse", targetNamespace = "http://publicar.ws/", className = "ws.usuario.GetOrganizadorResponse")
+    @Action(input = "http://publicar.ws/UsuarioWs/getOrganizadorRequest", output = "http://publicar.ws/UsuarioWs/getOrganizadorResponse", fault = {
+        @FaultAction(className = UsuarioNoExisteFault_Exception.class, value = "http://publicar.ws/UsuarioWs/getOrganizador/Fault/UsuarioNoExisteFault")
+    })
+    public DataUsuario getOrganizador(
         @WebParam(name = "nickname", targetNamespace = "")
         String nickname)
         throws UsuarioNoExisteFault_Exception
@@ -54,29 +74,32 @@ public interface UsuarioWs {
      */
     @WebMethod
     @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "getUsuarios", targetNamespace = "http://publicar.ws/", className = "ws.usuario.GetUsuarios")
-    @ResponseWrapper(localName = "getUsuariosResponse", targetNamespace = "http://publicar.ws/", className = "ws.usuario.GetUsuariosResponse")
-    @Action(input = "http://publicar.ws/UsuarioWs/getUsuariosRequest", output = "http://publicar.ws/UsuarioWs/getUsuariosResponse", fault = {
-        @FaultAction(className = UsuarioNoExisteFault_Exception.class, value = "http://publicar.ws/UsuarioWs/getUsuarios/Fault/UsuarioNoExisteFault")
+    @RequestWrapper(localName = "getAsistentes", targetNamespace = "http://publicar.ws/", className = "ws.usuario.GetAsistentes")
+    @ResponseWrapper(localName = "getAsistentesResponse", targetNamespace = "http://publicar.ws/", className = "ws.usuario.GetAsistentesResponse")
+    @Action(input = "http://publicar.ws/UsuarioWs/getAsistentesRequest", output = "http://publicar.ws/UsuarioWs/getAsistentesResponse", fault = {
+        @FaultAction(className = UsuarioNoExisteFault_Exception.class, value = "http://publicar.ws/UsuarioWs/getAsistentes/Fault/UsuarioNoExisteFault")
     })
-    public List<DataUsuario> getUsuarios()
+    public List<DataUsuario> getAsistentes()
         throws UsuarioNoExisteFault_Exception
     ;
 
     /**
      * 
+     * @param nickname
      * @return
-     *     returns java.util.List<ws.usuario.DataUsuario>
+     *     returns ws.usuario.DataUsuario
      * @throws UsuarioNoExisteFault_Exception
      */
     @WebMethod
     @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "getOrganizadores", targetNamespace = "http://publicar.ws/", className = "ws.usuario.GetOrganizadores")
-    @ResponseWrapper(localName = "getOrganizadoresResponse", targetNamespace = "http://publicar.ws/", className = "ws.usuario.GetOrganizadoresResponse")
-    @Action(input = "http://publicar.ws/UsuarioWs/getOrganizadoresRequest", output = "http://publicar.ws/UsuarioWs/getOrganizadoresResponse", fault = {
-        @FaultAction(className = UsuarioNoExisteFault_Exception.class, value = "http://publicar.ws/UsuarioWs/getOrganizadores/Fault/UsuarioNoExisteFault")
+    @RequestWrapper(localName = "getAsistente", targetNamespace = "http://publicar.ws/", className = "ws.usuario.GetAsistente")
+    @ResponseWrapper(localName = "getAsistenteResponse", targetNamespace = "http://publicar.ws/", className = "ws.usuario.GetAsistenteResponse")
+    @Action(input = "http://publicar.ws/UsuarioWs/getAsistenteRequest", output = "http://publicar.ws/UsuarioWs/getAsistenteResponse", fault = {
+        @FaultAction(className = UsuarioNoExisteFault_Exception.class, value = "http://publicar.ws/UsuarioWs/getAsistente/Fault/UsuarioNoExisteFault")
     })
-    public List<DataUsuario> getOrganizadores()
+    public DataUsuario getAsistente(
+        @WebParam(name = "nickname", targetNamespace = "")
+        String nickname)
         throws UsuarioNoExisteFault_Exception
     ;
 
@@ -114,6 +137,38 @@ public interface UsuarioWs {
         String fechaNac)
         throws UsuarioNoExisteFault_Exception
     ;
+
+    /**
+     * 
+     * @return
+     *     returns java.util.List<ws.usuario.DataUsuario>
+     * @throws UsuarioNoExisteFault_Exception
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "getUsuarios", targetNamespace = "http://publicar.ws/", className = "ws.usuario.GetUsuarios")
+    @ResponseWrapper(localName = "getUsuariosResponse", targetNamespace = "http://publicar.ws/", className = "ws.usuario.GetUsuariosResponse")
+    @Action(input = "http://publicar.ws/UsuarioWs/getUsuariosRequest", output = "http://publicar.ws/UsuarioWs/getUsuariosResponse", fault = {
+        @FaultAction(className = UsuarioNoExisteFault_Exception.class, value = "http://publicar.ws/UsuarioWs/getUsuarios/Fault/UsuarioNoExisteFault")
+    })
+    public List<DataUsuario> getUsuarios()
+        throws UsuarioNoExisteFault_Exception
+    ;
+
+    /**
+     * 
+     * @param nickname
+     * @param nuevaPass
+     */
+    @WebMethod
+    @RequestWrapper(localName = "cambiarContrasenia", targetNamespace = "http://publicar.ws/", className = "ws.usuario.CambiarContrasenia")
+    @ResponseWrapper(localName = "cambiarContraseniaResponse", targetNamespace = "http://publicar.ws/", className = "ws.usuario.CambiarContraseniaResponse")
+    @Action(input = "http://publicar.ws/UsuarioWs/cambiarContraseniaRequest", output = "http://publicar.ws/UsuarioWs/cambiarContraseniaResponse")
+    public void cambiarContrasenia(
+        @WebParam(name = "nickname", targetNamespace = "")
+        String nickname,
+        @WebParam(name = "nuevaPass", targetNamespace = "")
+        String nuevaPass);
 
     /**
      * 
@@ -155,43 +210,8 @@ public interface UsuarioWs {
         @WebParam(name = "apellido", targetNamespace = "")
         String apellido,
         @WebParam(name = "fechaNac", targetNamespace = "")
-        LocalDate fechaNac)
+        String fechaNac)
         throws UsuarioRepetidoFault_Exception
-    ;
-
-    /**
-     * 
-     * @param nickname
-     * @param nuevaPass
-     */
-    @WebMethod
-    @RequestWrapper(localName = "cambiarContrasenia", targetNamespace = "http://publicar.ws/", className = "ws.usuario.CambiarContrasenia")
-    @ResponseWrapper(localName = "cambiarContraseniaResponse", targetNamespace = "http://publicar.ws/", className = "ws.usuario.CambiarContraseniaResponse")
-    @Action(input = "http://publicar.ws/UsuarioWs/cambiarContraseniaRequest", output = "http://publicar.ws/UsuarioWs/cambiarContraseniaResponse")
-    public void cambiarContrasenia(
-        @WebParam(name = "nickname", targetNamespace = "")
-        String nickname,
-        @WebParam(name = "nuevaPass", targetNamespace = "")
-        String nuevaPass);
-
-    /**
-     * 
-     * @param nickname
-     * @return
-     *     returns ws.usuario.DataUsuario
-     * @throws UsuarioNoExisteFault_Exception
-     */
-    @WebMethod
-    @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "verInfoUsuario", targetNamespace = "http://publicar.ws/", className = "ws.usuario.VerInfoUsuario")
-    @ResponseWrapper(localName = "verInfoUsuarioResponse", targetNamespace = "http://publicar.ws/", className = "ws.usuario.VerInfoUsuarioResponse")
-    @Action(input = "http://publicar.ws/UsuarioWs/verInfoUsuarioRequest", output = "http://publicar.ws/UsuarioWs/verInfoUsuarioResponse", fault = {
-        @FaultAction(className = UsuarioNoExisteFault_Exception.class, value = "http://publicar.ws/UsuarioWs/verInfoUsuario/Fault/UsuarioNoExisteFault")
-    })
-    public DataUsuario verInfoUsuario(
-        @WebParam(name = "nickname", targetNamespace = "")
-        String nickname)
-        throws UsuarioNoExisteFault_Exception
     ;
 
     /**
@@ -202,32 +222,12 @@ public interface UsuarioWs {
      */
     @WebMethod
     @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "getAsistentes", targetNamespace = "http://publicar.ws/", className = "ws.usuario.GetAsistentes")
-    @ResponseWrapper(localName = "getAsistentesResponse", targetNamespace = "http://publicar.ws/", className = "ws.usuario.GetAsistentesResponse")
-    @Action(input = "http://publicar.ws/UsuarioWs/getAsistentesRequest", output = "http://publicar.ws/UsuarioWs/getAsistentesResponse", fault = {
-        @FaultAction(className = UsuarioNoExisteFault_Exception.class, value = "http://publicar.ws/UsuarioWs/getAsistentes/Fault/UsuarioNoExisteFault")
+    @RequestWrapper(localName = "getOrganizadores", targetNamespace = "http://publicar.ws/", className = "ws.usuario.GetOrganizadores")
+    @ResponseWrapper(localName = "getOrganizadoresResponse", targetNamespace = "http://publicar.ws/", className = "ws.usuario.GetOrganizadoresResponse")
+    @Action(input = "http://publicar.ws/UsuarioWs/getOrganizadoresRequest", output = "http://publicar.ws/UsuarioWs/getOrganizadoresResponse", fault = {
+        @FaultAction(className = UsuarioNoExisteFault_Exception.class, value = "http://publicar.ws/UsuarioWs/getOrganizadores/Fault/UsuarioNoExisteFault")
     })
-    public List<DataUsuario> getAsistentes()
-        throws UsuarioNoExisteFault_Exception
-    ;
-
-    /**
-     * 
-     * @param nickname
-     * @return
-     *     returns ws.usuario.DataUsuario
-     * @throws UsuarioNoExisteFault_Exception
-     */
-    @WebMethod
-    @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "getOrganizador", targetNamespace = "http://publicar.ws/", className = "ws.usuario.GetOrganizador")
-    @ResponseWrapper(localName = "getOrganizadorResponse", targetNamespace = "http://publicar.ws/", className = "ws.usuario.GetOrganizadorResponse")
-    @Action(input = "http://publicar.ws/UsuarioWs/getOrganizadorRequest", output = "http://publicar.ws/UsuarioWs/getOrganizadorResponse", fault = {
-        @FaultAction(className = UsuarioNoExisteFault_Exception.class, value = "http://publicar.ws/UsuarioWs/getOrganizador/Fault/UsuarioNoExisteFault")
-    })
-    public DataUsuario getOrganizador(
-        @WebParam(name = "nickname", targetNamespace = "")
-        String nickname)
+    public List<DataUsuario> getOrganizadores()
         throws UsuarioNoExisteFault_Exception
     ;
 

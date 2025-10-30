@@ -98,11 +98,13 @@
                   <h3 class="mt-3">Mis registros</h3>
                   <ul>
                   <%
-                      DataRegistro[] registros = (DataRegistro[]) request.getAttribute("registros");
-                      if (registros != null && registros.length > 0) {
-                          for (DataRegistro r : registros) {
-                  %>
-                      <li>
+					java.util.List<ws.eventos.DataRegistro> registros =
+					    (java.util.List<ws.eventos.DataRegistro>) request.getAttribute("registros");
+					
+					if (registros != null && !registros.isEmpty()) {
+					    for (ws.eventos.DataRegistro r : registros) {
+					%>
+					                      <li>
                           <a href="<%= request.getContextPath() %>/registroEd?op=consultar&evento=<%= r.getEvento() %>&edicion=<%= r.getEdicion() %>">
                         Registro en <%= r.getEdicion() %> (<%= r.getEvento() %>) — Tipo: <%= r.getTipoRegistro() %>, Costo: $<%= r.getCosto() %>
                     </a>

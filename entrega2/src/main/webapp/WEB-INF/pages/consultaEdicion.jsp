@@ -126,15 +126,14 @@
 		    && ed.getOrganizador().equalsIgnoreCase(nickname)) {
 			    boolean organiza = ed.getOrganizador().equalsIgnoreCase(nickname);
 			    if (organiza) {
-			        DataRegistro[] registros = (DataRegistro[]) request.getAttribute("registrosEd");
-			%>
+			    	List<DataRegistro> registros = (List<DataRegistro>) request.getAttribute("registrosEd");			%>
 		
 			<section style="margin-bottom:2rem;">
 		  <h3 style="margin-bottom:0.5rem; color: var(--color-primary);">Registros de la Edición</h3>
 		  <div style="display:flex; flex-direction:column; gap:0.5rem; flex-wrap:wrap;">
 		
 		    <%
-		    if (registros != null && registros.length > 0) {
+		    if (registros != null && !registros.isEmpty()) {
 		        for (DataRegistro reg : registros) {
 		    %>
 		        <div style="background:#e3f2fd; padding:0.6rem 1rem; border-radius:12px;">

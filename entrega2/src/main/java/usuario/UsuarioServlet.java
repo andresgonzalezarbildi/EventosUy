@@ -6,12 +6,10 @@
 	import java.nio.file.Path;
 	import java.nio.file.Paths;
 	import java.nio.file.StandardCopyOption;
-	import java.time.LocalDate;
-	import java.util.Arrays;
+	import java.util.ArrayList;	
 	import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
-	
+	import java.util.List;
+	import java.util.UUID;
 	import ws.eventos.EdicionNoExisteFault_Exception;
 	import jakarta.servlet.ServletException;
 	import jakarta.servlet.annotation.WebServlet;
@@ -22,10 +20,7 @@ import java.util.UUID;
 	import ws.usuario.UsuarioWs;
 	import ws.usuario.UsuarioNoExisteFault_Exception;
 	import ws.usuario.UsuarioService;
-	import logica.interfaces.IControladorEvento;
-	import ws.eventos.DataEdicion;
 	import ws.usuario.DataUsuario;
-	import logica.Fabrica;
 	
 	@WebServlet(name="UsuarioServlet", urlPatterns={"/UsuarioServlet"})
 	@MultipartConfig(
@@ -200,9 +195,9 @@ import java.util.UUID;
 	                        eds = ce.listarEdicionesOrganizadorAceptadas(nick);
 	                    }
 	                } catch (EdicionNoExisteFault_Exception e) {
-	                    eds = null;
+	                    eds = new ArrayList<>(); // 👈 no usar Collections.emptyList()
 	                }
-	                req.setAttribute("ediciones", Arrays.asList(eds));
+	                req.setAttribute("ediciones", eds);
 	
 	            } else if ("Asistente".equalsIgnoreCase(usuario.getTipo())
 	                       && nick.equalsIgnoreCase(nickLogueado)) {
