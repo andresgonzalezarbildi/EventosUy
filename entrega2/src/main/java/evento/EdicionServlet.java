@@ -7,12 +7,15 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 import java.net.URLEncoder;
-
-import excepciones.EdicionNoExisteException;
-import excepciones.EventoNoExisteException;
-import excepciones.UsuarioNoExisteException;
+import ws.eventos.EdicionNoExisteFault_Exception;
+import ws.eventos.EventoNoExisteFault;
+import ws.eventos.EventoNoExisteFault_Exception;
+import ws.eventos.EventosService;
+import ws.eventos.EventosWs;
+import ws.usuario.UsuarioNoExisteFault_Exception;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
@@ -21,18 +24,14 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
-import logica.Fabrica;
-import logica.datatypes.DataEdicion;
-import logica.datatypes.DataEvento;
-import logica.datatypes.DataRegistro;
-import logica.interfaces.IControladorEvento;
+import ws.eventos.DataEdicion;
 
 @WebServlet("/edicion")
 @MultipartConfig
 public class EdicionServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
-    private Fabrica fabrica = Fabrica.getInstance();
-    private IControladorEvento controladorEventos = fabrica.getControladorEvento();
+    private EventosService service = new EventosService();
+	 EventosWs controladorEventos = service.getEventosPort();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res)
@@ -53,10 +52,10 @@ public class EdicionServlet extends HttpServlet {
                         req.getRequestDispatcher("/WEB-INF/pages/errorPage.jsp").forward(req, res);
                     }
                     try {
-                        DataEvento evento = controladorEventos.getUnEventoDTO(idEvento);
+                    	ws.eventos.DataEvento evento = controladorEventos.getUnEventoDTO(idEvento);
                         req.setAttribute("nomEv", evento.getNombre());
                         req.getRequestDispatcher("/WEB-INF/pages/altaEdicion.jsp").forward(req, res);
-                    } catch (EventoNoExisteException e) {
+                    } catch (EventoNoExisteFault_Exception e) {
                         req.setAttribute("mensajeError", "El evento no existe.");
                         req.setAttribute("javax.servlet.error.status_code", 500);
                         req.getRequestDispatcher("/WEB-INF/pages/errorPage.jsp").forward(req, res);
@@ -85,7 +84,7 @@ public class EdicionServlet extends HttpServlet {
 
                     if (nickname != null && "asistente".equalsIgnoreCase(rol)) {
                       try {
-                        DataRegistro registroAsistente = controladorEventos.listarUnRegistroDeUsuario(nombreEdicion, nickname);
+                        ws.eventos.DataRegistro registroAsistente = controladorEventos.listarUnRegistroDeUsuario(nombreEdicion, nickname);
                         req.setAttribute("registroAsistente", registroAsistente);
                       } catch (Exception e) {
                         req.getRequestDispatcher("/WEB-INF/pages/consultaEdicion.jsp").forward(req, res);
@@ -93,14 +92,14 @@ public class EdicionServlet extends HttpServlet {
                     }
                     
                     try {
-                      DataEdicion dataEd = controladorEventos.getInfoEdicion(nombreEdicion);
-                      DataRegistro[] registrosEd = controladorEventos.listarRegistrosDeEdicion(nombreEdicion);
+                      ws.eventos.DataEdicion dataEd = controladorEventos.getInfoEdicion(nombreEdicion);
+                      List<ws.eventos.DataRegistro> registrosEd = controladorEventos.listarRegistrosDeEdicion(nombreEdicion);
                       req.setAttribute("registrosEd", registrosEd);
                       req.setAttribute("edicion", dataEd);
                       String nombreEvento = controladorEventos.getEventoDeUnaEdicion(nombreEdicion);
-                      DataEvento dataEvento = controladorEventos.getUnEventoDTO(nombreEvento);
+                      ws.eventos.DataEvento dataEvento = controladorEventos.getUnEventoDTO(nombreEvento);
                       req.setAttribute("evento", dataEvento);
-                    }catch (EdicionNoExisteException | EventoNoExisteException  ignored) {
+                    }catch (EdicionNoExisteFault_Exception | EventoNoExisteFault_Exception  ignored) {
                       
                     }
                     req.getRequestDispatcher("/WEB-INF/pages/consultaEdicion.jsp").forward(req, res);
@@ -165,42 +164,57 @@ public class EdicionServlet extends HttpServlet {
             return;
         }
 
-        LocalDate fechaInicio;
-        LocalDate fechaFin;
-        try {
-            fechaInicio = LocalDate.parse(fechaInicioStr);
-            fechaFin = LocalDate.parse(fechaFinStr);
-        } catch (Exception e) {
-            setErrorYReenviar(req, res, "Formato de fecha inválido.",
+        
+
+        // Validar formato básico (que no estén vacías y sigan el patrón ISO)
+        if (fechaInicioStr == null || fechaFinStr == null ||
+            fechaInicioStr.isBlank() || fechaFinStr.isBlank()) {
+            setErrorYReenviar(req, res, "Debe ingresar ambas fechas.",
                     nombreEdicion, sigla, ciudad, pais, fechaInicioStr, fechaFinStr, nombreEvento);
             return;
         }
 
-        LocalDate hoy = LocalDate.now();
-        if (fechaInicio.isBefore(hoy)) {
+        // Verificar formato correcto (opcional pero más robusto)
+        if (!fechaInicioStr.matches("\\d{4}-\\d{2}-\\d{2}") ||
+            !fechaFinStr.matches("\\d{4}-\\d{2}-\\d{2}")) {
+            setErrorYReenviar(req, res, "Formato de fecha inválido. Use YYYY-MM-DD.",
+                    nombreEdicion, sigla, ciudad, pais, fechaInicioStr, fechaFinStr, nombreEvento);
+            return;
+        }
+
+        // Validar relaciones entre fechas (sin usar LocalDate)
+        String hoy = java.time.LocalDate.now().toString();
+
+        // Comparar lexicográficamente porque las fechas ISO mantienen orden temporal
+        if (fechaInicioStr.compareTo(hoy) < 0) {
             setErrorYReenviar(req, res, "La fecha de inicio no puede ser anterior a la fecha actual.",
                     nombreEdicion, sigla, ciudad, pais, fechaInicioStr, fechaFinStr, nombreEvento);
             return;
         }
 
-        if (fechaFin.isBefore(fechaInicio)) {
+        if (fechaFinStr.compareTo(fechaInicioStr) < 0) {
             setErrorYReenviar(req, res, "La fecha de fin no puede ser anterior a la fecha de inicio.",
                     nombreEdicion, sigla, ciudad, pais, fechaInicioStr, fechaFinStr, nombreEvento);
             return;
         }
 
+        // Si llegás hasta acá, las fechas son válidas
+
+
         // Validar que la fecha de inicio de la edición no sea anterior a la del evento
-        DataEvento eventoDTO;
+        ws.eventos.DataEvento eventoDTO;
         try {
             eventoDTO = controladorEventos.getUnEventoDTO(nombreEvento);
-        } catch (EventoNoExisteException e) {
+        } catch (EventoNoExisteFault_Exception e) {
             setErrorYReenviar(req, res, "El evento no existe.",
                     nombreEdicion, sigla, ciudad, pais, fechaInicioStr, fechaFinStr, nombreEvento);
             return;
         }
-        if (fechaInicio.isBefore(eventoDTO.getFechaAlta())) {
-            setErrorYReenviar(req, res, "La fecha de inicio de la edición no puede ser anterior a la fecha de inicio del evento.",
-                    nombreEdicion, sigla, ciudad, pais, fechaInicioStr, fechaFinStr, nombreEvento);
+        String fechaAltaEvento = eventoDTO.getFechaAlta(); // ya viene como String del WS
+        if (fechaInicioStr.compareTo(fechaAltaEvento) < 0) {
+            setErrorYReenviar(req, res, 
+                "La fecha de inicio de la edición no puede ser anterior a la fecha de alta del evento.",
+                nombreEdicion, sigla, ciudad, pais, fechaInicioStr, fechaFinStr, nombreEvento);
             return;
         }
 
@@ -232,6 +246,8 @@ public class EdicionServlet extends HttpServlet {
                     nombreEdicion, sigla, ciudad, pais, fechaInicioStr, fechaFinStr, nombreEvento);
             return;
         }
+        String fechaAltaParam = LocalDate.now().toString();
+
 
         try {
             controladorEventos.altaEdicionEvento(
@@ -240,18 +256,20 @@ public class EdicionServlet extends HttpServlet {
                     sigla,
                     ciudad,
                     pais,
-                    fechaInicio,
-                    fechaFin,
-                    LocalDate.now(),
+                    fechaInicioStr,
+                    fechaFinStr,
+                    fechaAltaParam,
                     nickname,
                     nombreImagenGuardada
             );
             res.sendRedirect(req.getContextPath() + "/evento?op=consultar&id=" +
                     URLEncoder.encode(nombreEvento, "UTF-8"));
-        } catch (UsuarioNoExisteException e) {
-            setErrorYReenviar(req, res, "El organizador no existe o no tiene permisos.",
-                    nombreEdicion, sigla, ciudad, pais, fechaInicioStr, fechaFinStr, nombreEvento);
-        } catch (Exception e) {
+        } 
+//        catch (EventoNoExisteFault_Exception e) {
+//            setErrorYReenviar(req, res, "El organizador no existe o no tiene permisos.",
+//                    nombreEdicion, sigla, ciudad, pais, fechaInicioStr, fechaFinStr, nombreEvento);
+//        } 
+        catch (Exception e) {
             e.printStackTrace();
             setErrorYReenviar(req, res, "Error al registrar la edición.",
                     nombreEdicion, sigla, ciudad, pais, fechaInicioStr, fechaFinStr, nombreEvento);
@@ -282,7 +300,7 @@ public class EdicionServlet extends HttpServlet {
             return;
         }
         try {
-            DataEdicion[] ediciones = controladorEventos.listarEdicionesAceptadasEvento(nombreEvento);
+        	List<ws.eventos.DataEdicion> ediciones = controladorEventos.listarEdicionesAceptadasEvento(nombreEvento);
             req.setAttribute("evento", nombreEvento);
             req.setAttribute("ediciones", ediciones);
             req.getRequestDispatcher("/WEB-INF/pages/listarEdiciones.jsp").forward(req, res);

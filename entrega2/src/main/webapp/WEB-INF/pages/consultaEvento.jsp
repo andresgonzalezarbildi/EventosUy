@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="logica.datatypes.DataEvento" %>
-<%@ page import="logica.datatypes.DataEdicion" %>
-<%@ page import="java.util.List" %>
+<%@ page import="ws.eventos.DataEvento" %>
+<%@ page import="java.util.List, ws.eventos.DataEdicion" %>
+
 <%
 	String path = request.getContextPath();
 
@@ -11,7 +11,8 @@
 	boolean logueado = (nickname != null);
 	
 	DataEvento evento = (DataEvento) request.getAttribute("evento");
-	DataEdicion[] ediciones = (DataEdicion[]) request.getAttribute("ediciones");
+
+	List<DataEdicion> ediciones = (List<DataEdicion>) request.getAttribute("ediciones");
 
 %>
 <!DOCTYPE html>

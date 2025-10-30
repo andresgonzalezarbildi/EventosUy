@@ -5,15 +5,11 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import logica.Fabrica;
-import logica.datatypes.DataEvento;
-import logica.datatypes.DataEdicion;
-import logica.interfaces.IControladorEvento;
-
-import excepciones.EdicionNoExisteException;
-import excepciones.EventoNoExisteException;
-
+import ws.eventos.EventoNoExisteFault;
+import ws.eventos.EventosService;
+import ws.eventos.EventosWs;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Servlet implementation class EventoServlet
@@ -21,8 +17,8 @@ import java.io.IOException;
 @WebServlet("/evento")
 public class EventoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    private Fabrica fabrica = Fabrica.getInstance();
-    private IControladorEvento controladorEventos = fabrica.getControladorEvento();
+	private EventosService service = new EventosService();
+	 EventosWs controladorEventos = service.getEventosPort();
        
     public EventoServlet() {
         super();
@@ -36,17 +32,17 @@ public class EventoServlet extends HttpServlet {
 		String nombreEvento = (req.getParameter("id")!= null) ? req.getParameter("id").trim() : "";
 		if(nombreEvento != "") {
 			try {
-				DataEvento dataDelEvento = controladorEventos.getUnEventoDTO(nombreEvento);
+				ws.eventos.DataEvento dataDelEvento = controladorEventos.getUnEventoDTO(nombreEvento);
 				req.setAttribute("evento", dataDelEvento);
 				if (dataDelEvento != null) {
 					try {
-						DataEdicion[] dataEdicionesDelEvento = controladorEventos.listarEdicionesAceptadasEvento(nombreEvento);
+						List<ws.eventos.DataEdicion> dataEdicionesDelEvento = controladorEventos.listarEdicionesAceptadasEvento(nombreEvento);
 						req.setAttribute("ediciones", dataEdicionesDelEvento);
-					}catch(EdicionNoExisteException error) {
+					}catch(ws.eventos.EdicionNoExisteFault_Exception error) {
 					
 					}
 			}
-		}catch(EventoNoExisteException error) {
+		}catch(ws.eventos.EventoNoExisteFault_Exception error) {
 			
 		}
 			

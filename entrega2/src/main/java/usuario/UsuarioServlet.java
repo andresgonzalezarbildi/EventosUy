@@ -6,23 +6,21 @@
 	import java.nio.file.Path;
 	import java.nio.file.Paths;
 	import java.nio.file.StandardCopyOption;
-	import java.time.LocalDate;
-	import java.util.Arrays;
+	import java.util.ArrayList;	
 	import java.util.Collections;
+	import java.util.List;
 	import java.util.UUID;
-	
-	import excepciones.EdicionNoExisteException;
-	import excepciones.UsuarioNoExisteException;
-	import excepciones.UsuarioRepetidoException;
+	import ws.eventos.EdicionNoExisteFault_Exception;
 	import jakarta.servlet.ServletException;
 	import jakarta.servlet.annotation.WebServlet;
 	import jakarta.servlet.http.*;
 	import jakarta.servlet.annotation.MultipartConfig;
-	import logica.interfaces.IControladorUsuario;
-	import logica.interfaces.IControladorEvento;
-	import logica.datatypes.DataEdicion;
-	import logica.datatypes.DataUsuario;
-	import logica.Fabrica;
+	import ws.eventos.EventosService;
+	import ws.eventos.EventosWs;
+	import ws.usuario.UsuarioWs;
+	import ws.usuario.UsuarioNoExisteFault_Exception;
+	import ws.usuario.UsuarioService;
+	import ws.usuario.DataUsuario;
 	
 	@WebServlet(name="UsuarioServlet", urlPatterns={"/UsuarioServlet"})
 	@MultipartConfig(
@@ -33,10 +31,10 @@
 	public class UsuarioServlet extends HttpServlet {
 	    private static final long serialVersionUID = 1L;
 	
-	    private final Fabrica fabrica = Fabrica.getInstance();
-	    private final IControladorUsuario cu = fabrica.getControladorUsuario();
-	    private final IControladorEvento ce = fabrica.getControladorEvento();
-	
+	    private EventosService serviceEv = new EventosService();
+	    private UsuarioService serviceUs = new UsuarioService();
+		 EventosWs ce = serviceEv.getEventosPort();
+		 UsuarioWs cu = serviceUs.getUsuarioPort();
 	    @Override
 	    protected void doGet(HttpServletRequest req, HttpServletResponse res)
 	            throws ServletException, IOException {
@@ -88,7 +86,7 @@
 	        }
 
 	        try {
-	            DataUsuario usuario = cu.verInfoUsuario(nick);
+	            ws.usuario.DataUsuario usuario = cu.verInfoUsuario(nick);
 
 	            String nombre = req.getParameter("nombre");
 	            if (nombre == null || nombre.isBlank()) nombre = usuario.getNombre();
@@ -96,7 +94,7 @@
 	            String descripcion = usuario.getDescripcion();
 	            String link = usuario.getLink();
 	            String apellido = usuario.getApellido();
-	            LocalDate fechaNac = usuario.getFechaNacimiento();
+	            String fechaNac = usuario.getFechaNacimiento();
 
 	            // Imagen
 	            Part filePart = req.getPart("imagen");
@@ -138,18 +136,19 @@
 
 	                String fechaParam = req.getParameter("fechaNac");
 	                if (fechaParam != null && !fechaParam.isBlank()) {
-	                   fechaNac = LocalDate.parse(fechaParam);
+	                   fechaNac = fechaParam;
+	                   
 	            }}
 
 	            log("Modificando usuario: " + nick + ", nombre=" + nombre + ", imagen=" + imagen);
-
+	            
 	            cu.modificarUsuario(nick, nombre, descripcion, imagen, link, apellido, fechaNac);
 	         // Actualizar imagen en la sesión para que el header la muestre
 	            req.getSession().setAttribute("imagen", imagen);
 
 	            res.sendRedirect(req.getContextPath() + "/UsuarioServlet?op=consultar&nick=" + nick);
 
-	        } catch (UsuarioNoExisteException e) {
+	        } catch (UsuarioNoExisteFault_Exception e) {
 	            res.sendRedirect(req.getContextPath() + "/UsuarioServlet?op=listar");
 	        }
 	    }
@@ -160,18 +159,19 @@
 	
 	
 	
-	
 	    private void listarUsuarios(HttpServletRequest req, HttpServletResponse res)
 	            throws ServletException, IOException {
-	        DataUsuario[] usuariosArray = null;
+	        List<DataUsuario> usuariosArray = null;
 	        try {
 	            usuariosArray = cu.getUsuarios();
-	        } catch (UsuarioNoExisteException e) {
+	            System.out.println("Usuarios obtenidos: " + usuariosArray);
+	        } catch (UsuarioNoExisteFault_Exception e) {
 	            System.out.println("No hay usuarios cargados: " + e.getMessage());
 	        }
 	        req.setAttribute("usuarios", usuariosArray);
 	        req.getRequestDispatcher("/WEB-INF/pages/usuarios.jsp").forward(req, res);
-	    }  
+	    }
+
 	
 	    private void consultaUsuario(HttpServletRequest req, HttpServletResponse res)
 	            throws ServletException, IOException {
@@ -183,23 +183,21 @@
 	        }
 	
 	        try {
-	            DataUsuario usuario = cu.verInfoUsuario(nick);
+	            ws.usuario.DataUsuario usuario = cu.verInfoUsuario(nick);
 	            req.setAttribute("usuario", usuario);
-	
 	            String nickLogueado = (String) req.getSession().getAttribute("usuario");
-	
 	            if ("Organizador".equalsIgnoreCase(usuario.getTipo())) {
-	                DataEdicion[] eds;
+	            	List<ws.eventos.DataEdicion> eds;
 	                try {
 	                    if (nickLogueado != null && nick.equalsIgnoreCase(nickLogueado)) {
 	                        eds = ce.listarEdicionesOrganizador(nick);
 	                    } else {
 	                        eds = ce.listarEdicionesOrganizadorAceptadas(nick);
 	                    }
-	                } catch (EdicionNoExisteException e) {
-	                    eds = new DataEdicion[0];
+	                } catch (EdicionNoExisteFault_Exception e) {
+	                    eds = new ArrayList<>(); // 👈 no usar Collections.emptyList()
 	                }
-	                req.setAttribute("ediciones", Arrays.asList(eds));
+	                req.setAttribute("ediciones", eds);
 	
 	            } else if ("Asistente".equalsIgnoreCase(usuario.getTipo())
 	                       && nick.equalsIgnoreCase(nickLogueado)) {
@@ -212,7 +210,7 @@
 	
 	            req.getRequestDispatcher("/WEB-INF/pages/consultaUsuario.jsp").forward(req, res);
 	
-	        } catch (UsuarioNoExisteException e) {
+	        } catch (UsuarioNoExisteFault_Exception e) {
 	            res.sendRedirect(req.getContextPath() + "/UsuarioServlet?op=listar");
 	        }
 	    }
@@ -227,10 +225,10 @@
 	        }
 	
 	        try {
-	            DataUsuario usuario = cu.verInfoUsuario(nick);
+	            ws.usuario.DataUsuario usuario = cu.verInfoUsuario(nick);
 	            req.setAttribute("usuario", usuario);
 	            req.getRequestDispatcher("/WEB-INF/pages/modificarUsuario.jsp").forward(req, res);
-	        } catch (UsuarioNoExisteException e) {
+	        } catch (UsuarioNoExisteFault_Exception e) {
 	            res.sendRedirect(req.getContextPath() + "/UsuarioServlet?op=listar");
 	        }
 	    }

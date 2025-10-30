@@ -1,15 +1,15 @@
 	<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 	<%@ page import="java.util.*" %>
-	<%@ page import="logica.datatypes.DataUsuario" %>
+	<%@ page import="ws.usuario.DataUsuario" %>
 	<%
 	  String ctx = request.getContextPath();
 	
 	  String usuarioCreado = (String) request.getAttribute("usuarioCreado");
-	  DataUsuario[] usuarios = null;
+	  List<DataUsuario> usuarios = null;
 	  try {
 	      Object usrs = request.getAttribute("usuarios");
 	      if (usrs != null) {
-	          usuarios = (DataUsuario[]) usrs;
+	          usuarios = (List<DataUsuario>) usrs;
 	      }
 	  } catch (Exception ignore) { }
 	%>
@@ -45,7 +45,7 @@
 		        <% } %>
 		
 		        <%
-		          if (usuarios == null || usuarios.length == 0) {
+		          if (usuarios == null || usuarios.isEmpty()) {
 		        %>
 		          <h1>No hay Usuarios registrados</h1>
 		        <%

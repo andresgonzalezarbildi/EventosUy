@@ -109,10 +109,11 @@ public class UsuarioWs {
         @WebParam(name = "descripcion") String descripcion,
         @WebParam(name = "link") String link,
         @WebParam(name = "apellido") String apellido,
-        @WebParam(name = "fechaNac") LocalDate fechaNac
+        @WebParam(name = "fechaNac") String fechaNac
     ) throws UsuarioRepetidoFault {
         try {
-            ctrl.altaUsuario(nickname, nombre, correo, imagen, password, tipo, descripcion, link, apellido, fechaNac);
+        	LocalDate fechaNacii = LocalDate.parse(fechaNac);
+            ctrl.altaUsuario(nickname, nombre, correo, imagen, password, tipo, descripcion, link, apellido, fechaNacii);
         } catch (UsuarioRepetidoException e) {
             throw new UsuarioRepetidoFault(e.getMessage());
         }
@@ -126,10 +127,11 @@ public class UsuarioWs {
         @WebParam(name = "imagen") String imagen,
         @WebParam(name = "link") String link,
         @WebParam(name = "apellido") String apellido,
-        @WebParam(name = "fechaNac") LocalDate fechaNac
+        @WebParam(name = "fechaNac") String fechaNac
     ) throws UsuarioNoExisteFault {
         try {
-            ctrl.modificarUsuario(nickname, nombre, descripcion, imagen, link, apellido, fechaNac);
+        	 LocalDate fechaNacii = LocalDate.parse(fechaNac);
+            ctrl.modificarUsuario(nickname, nombre, descripcion, imagen, link, apellido, fechaNacii);
         } catch (UsuarioNoExisteException e) {
             throw new UsuarioNoExisteFault(e.getMessage());
         }
