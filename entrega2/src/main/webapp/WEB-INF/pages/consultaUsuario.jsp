@@ -1,8 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" session="true" %>
-<%@ page import="logica.datatypes.DataUsuario" %>
-<%@ page import="logica.datatypes.DataEdicion" %>
+<%@ page import="ws.usuario.DataUsuario" %>
+<%@ page import="ws.eventos.DataEdicion" %>
 <%@ page import="java.util.List" %>
-<%@ page import="logica.datatypes.DataRegistro" %>
+<%@ page import="ws.eventos.DataRegistro" %>
 
 <!DOCTYPE html>
 <html lang="es">

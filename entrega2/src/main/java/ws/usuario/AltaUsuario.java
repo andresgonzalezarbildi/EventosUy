@@ -25,7 +25,7 @@ import jakarta.xml.bind.annotation.XmlType;
  *         <element name="descripcion" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         <element name="link" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         <element name="apellido" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         <element name="fechaNac" type="{http://publicar.ws/}localDate" minOccurs="0"/>
+ *         <element name="fechaNac" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *       </sequence>
  *     </restriction>
  *   </complexContent>
@@ -58,7 +58,7 @@ public class AltaUsuario {
     protected String descripcion;
     protected String link;
     protected String apellido;
-    protected LocalDate fechaNac;
+    protected String fechaNac;
 
     /**
      * Obtiene el valor de la propiedad nickname.
@@ -281,10 +281,10 @@ public class AltaUsuario {
      * 
      * @return
      *     possible object is
-     *     {@link LocalDate }
+     *     {@link String }
      *     
      */
-    public LocalDate getFechaNac() {
+    public String getFechaNac() {
         return fechaNac;
     }
 
@@ -293,10 +293,10 @@ public class AltaUsuario {
      * 
      * @param value
      *     allowed object is
-     *     {@link LocalDate }
+     *     {@link String }
      *     
      */
-    public void setFechaNac(LocalDate value) {
+    public void setFechaNac(String value) {
         this.fechaNac = value;
     }
 

@@ -1,6 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="java.net.URLEncoder" %>
-<%@ page import="logica.datatypes.DataEvento" %>
+<%@ page import="ws.eventos.DataEvento" %>
 
 <%
     String path = request.getContextPath();

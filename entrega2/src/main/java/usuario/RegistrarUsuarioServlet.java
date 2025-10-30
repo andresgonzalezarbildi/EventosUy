@@ -19,14 +19,17 @@ import java.util.UUID;
 import excepciones.UsuarioRepetidoException;
 import logica.Fabrica;
 import logica.interfaces.IControladorUsuario;
+import ws.usuario.UsuarioRepetidoFault_Exception;
+import ws.usuario.UsuarioService;
+import ws.usuario.UsuarioWs;
 
 @WebServlet("/usuarios/registrar")
 @MultipartConfig
 public class RegistrarUsuarioServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     
-    private final Fabrica fabrica = Fabrica.getInstance();
-    private final IControladorUsuario cu = fabrica.getControladorUsuario();
+    private UsuarioService serviceUs = new UsuarioService();
+	 UsuarioWs cu = serviceUs.getUsuarioPort();
     
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res)
@@ -72,7 +75,7 @@ public class RegistrarUsuarioServlet extends HttpServlet {
                     req.getParameter("apellido"),
                     req.getParameter("descripcion"),
                     req.getParameter("link"),
-                    parseFecha(req.getParameter("fechaNacimiento")));
+                    req.getParameter("fechaNacimiento"));
             volverAFormTipo(req, res, tipo);
             return;
         }
@@ -88,7 +91,7 @@ public class RegistrarUsuarioServlet extends HttpServlet {
                     req.getParameter("apellido"),
                     req.getParameter("descripcion"),
                     req.getParameter("link"),
-                    parseFecha(req.getParameter("fechaNacimiento")));
+                    req.getParameter("fechaNacimiento"));
             volverAFormTipo(req, res, tipo);
             return;
         } catch (ServletException | IOException ex) {
@@ -120,26 +123,37 @@ public class RegistrarUsuarioServlet extends HttpServlet {
         String descripcion = null;
         String link        = null;
         String apellido    = null;
-        LocalDate fechaNac = null;
+        String fechaNac    = null;
 
         if ("Organizador".equalsIgnoreCase(tipo)) {
             descripcion = req.getParameter("descripcion");
             link        = req.getParameter("link");
         } else if ("Asistente".equalsIgnoreCase(tipo)) {
             apellido    = req.getParameter("apellido");
-            fechaNac    = parseFecha(req.getParameter("fechaNacimiento"));
+            fechaNac    = req.getParameter("fechaNacimiento");
             if (fechaNac == null) {
                 req.setAttribute("error", "La fecha de nacimiento es obligatoria para asistentes.");
                 repoblarFormulario(req, tipo, nombre, nick, correo, apellido, descripcion, link, fechaNac);
                 volverAFormTipo(req, res, tipo);
                 return;
             }
-            if (fechaNac.isAfter(LocalDate.now())) {
-                req.setAttribute("error", "La fecha de nacimiento no puede ser futura.");
-                repoblarFormulario(req, tipo, nombre, nick, correo, apellido, descripcion, link, fechaNac);
-                volverAFormTipo(req, res, tipo);
-                return;
+            if (fechaNac != null && !fechaNac.isBlank()) {
+                try {
+                    LocalDate f = LocalDate.parse(fechaNac); 
+                    if (f.isAfter(LocalDate.now())) {
+                        req.setAttribute("error", "La fecha de nacimiento no puede ser futura.");
+                        repoblarFormulario(req, tipo, nombre, nick, correo, apellido, descripcion, link, fechaNac);
+                        volverAFormTipo(req, res, tipo);
+                        return;
+                    }
+                } catch (Exception e) {
+                    req.setAttribute("error", "Formato de fecha inválido. Use AAAA-MM-DD.");
+                    repoblarFormulario(req, tipo, nombre, nick, correo, apellido, descripcion, link, fechaNac);
+                    volverAFormTipo(req, res, tipo);
+                    return;
+                }
             }
+
 
         } else {
             req.setAttribute("error", "Tipo de usuario inválido.");
@@ -156,7 +170,7 @@ public class RegistrarUsuarioServlet extends HttpServlet {
             req.getSession().setAttribute("usuarioCreado", "Usuario creado");
             res.sendRedirect(req.getContextPath() + "/UsuarioServlet?op=listar");
 
-        } catch (UsuarioRepetidoException e) {
+        } catch (UsuarioRepetidoFault_Exception e) {
             req.setAttribute("error", e.getMessage());
             repoblarFormulario(
                 req,
@@ -167,7 +181,7 @@ public class RegistrarUsuarioServlet extends HttpServlet {
                 req.getParameter("apellido"),
                 req.getParameter("descripcion"),
                 req.getParameter("link"),
-                parseFecha(req.getParameter("fechaNacimiento"))
+                req.getParameter("fechaNacimiento")
             );
             volverAFormTipo(req, res, tipo);
 
@@ -183,7 +197,7 @@ public class RegistrarUsuarioServlet extends HttpServlet {
                 req.getParameter("apellido"),
                 req.getParameter("descripcion"),
                 req.getParameter("link"),
-                parseFecha(req.getParameter("fechaNacimiento"))
+                req.getParameter("fechaNacimiento")
             );
             volverAFormTipo(req, res, tipo);
 
@@ -209,7 +223,7 @@ public class RegistrarUsuarioServlet extends HttpServlet {
 
     private void repoblarFormulario(HttpServletRequest req, String tipo, String nombre, String nick,
             String correo, String apellido, String descripcion,
-            String link, LocalDate fechaNac) {
+            String link, String fechaNac) {
         req.setAttribute("form_tipo", tipo);
         req.setAttribute("form_nombre", nombre);
         req.setAttribute("form_nick", nick);
@@ -217,6 +231,7 @@ public class RegistrarUsuarioServlet extends HttpServlet {
         req.setAttribute("form_apellido", apellido);
         req.setAttribute("form_descripcion", descripcion);
         req.setAttribute("form_link", link);
-        req.setAttribute("form_fechaNacimiento", fechaNac != null ? fechaNac.toString() : null);
+        req.setAttribute("form_fechaNacimiento", fechaNac);
     }
+
 }

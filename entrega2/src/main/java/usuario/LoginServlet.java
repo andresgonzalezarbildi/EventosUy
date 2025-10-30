@@ -13,6 +13,10 @@ import jakarta.servlet.http.HttpSession;
 import logica.Fabrica;
 import logica.datatypes.DataUsuario;
 import logica.interfaces.IControladorUsuario;
+import ws.eventos.UsuarioNoExisteFault_Exception;
+import ws.usuario.PasswordIncorrectaFault_Exception;
+import ws.usuario.UsuarioService;
+import ws.usuario.UsuarioWs;
 
 @WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {
@@ -33,11 +37,11 @@ public class LoginServlet extends HttpServlet {
 	    String ident = request.getParameter("usuario");
 	    String password = request.getParameter("password");
 
-	    Fabrica fabrica = Fabrica.getInstance();
-	    IControladorUsuario ctrlUsuario = fabrica.getControladorUsuario();
+	    UsuarioService serviceUs = new UsuarioService();
+	    UsuarioWs cu = serviceUs.getUsuarioPort();
 
 	    try {
-	        DataUsuario DataUsu = ctrlUsuario.login(ident, password);
+	        ws.usuario.DataUsuario DataUsu = cu.login(ident, password);
 
 	        HttpSession sesion = request.getSession(true);
 	        sesion.setAttribute("usuario", DataUsu.getNickname());
@@ -49,7 +53,8 @@ public class LoginServlet extends HttpServlet {
 
 	        response.sendRedirect(request.getContextPath() + "/eventos");
 
-	    } catch (UsuarioNoExisteException | PasswordIncorrectaException e) {
+//	    } catch (UsuarioNoExisteFault_Exception | PasswordIncorrectaFault_Exception e) {
+	    } catch (PasswordIncorrectaFault_Exception e) {
 	        request.setAttribute("error", "Usuario o contraseña incorrectos");
 	        request.setAttribute("usuarioIngresado", ident); // para rellenar el input
 	        request.getRequestDispatcher("/WEB-INF/pages/iniciarSesion.jsp").forward(request, response);

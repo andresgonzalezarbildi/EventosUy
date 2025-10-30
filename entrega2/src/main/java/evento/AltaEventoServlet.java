@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import excepciones.EventoRepetidoException;
+import ws.eventos.EventoRepetidoFault_Exception;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
@@ -21,14 +21,16 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
 import logica.Fabrica;
 import logica.interfaces.IControladorEvento;
+import ws.eventos.EventosService;
+import ws.eventos.EventosWs;
 
 
 @MultipartConfig
 @WebServlet("/evento/alta")
 public class AltaEventoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    private Fabrica fabrica = Fabrica.getInstance();
-    private IControladorEvento controladorEventos = fabrica.getControladorEvento();
+	private EventosService service = new EventosService();
+	 EventosWs controladorEventos = service.getEventosPort();
        
     public AltaEventoServlet() {
         super();
@@ -102,13 +104,14 @@ public class AltaEventoServlet extends HttpServlet {
         }
         
         LocalDate fechaAltaEnPlataforma = LocalDate.now();
+        String FechaAltaAstring = fechaAltaEnPlataforma.toString();
         boolean exito = false;
         String mensaje;
         try {
-            controladorEventos.altaEvento(nombre, descripcion, sigla, nombresCategorias, fechaAltaEnPlataforma, nombreImagenGuardada);
+            controladorEventos.altaEvento(nombre, descripcion, sigla, nombresCategorias, FechaAltaAstring, nombreImagenGuardada);
             mensaje = "El evento '" + nombre + "' fue creado correctamente.";
             exito = true; // marcar que se creó correctamente
-        } catch (EventoRepetidoException e) {
+        } catch (EventoRepetidoFault_Exception e) {
             mensaje = "Ya existe un evento con ese nombre.";
             repoblar(req, nombre, descripcion, sigla, nombresCategorias);
         } catch (Exception e) {

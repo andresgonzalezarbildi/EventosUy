@@ -26,17 +26,19 @@
         <div class="navbar_sesion">
         
        <%
-	  // Obtener datos de sesión
-	  String nickname = (String) session.getAttribute("usuario");
-	  String imagen = (String) session.getAttribute("imagen");
-	
-	  boolean logueado = (nickname != null);
-	
-	  // Si no hay imagen guardada, usar una por defecto
-	  if (imagen == null || imagen.isEmpty()) {
-	      imagen = "PerfilSinFoto.jpg";
-	  }
-		%>
+    // Obtener datos de sesión con seguridad
+    String nickname = (String) session.getAttribute("usuario");
+    String imagen = (String) session.getAttribute("imagen");
+    boolean logueado = (nickname != null);
+
+    // Imagen por defecto
+    if (imagen == null || imagen.trim().isEmpty()) {
+        imagen = "PerfilSinFoto.jpg";
+    }
+
+    // Evitar caracteres raros en la URL por si la imagen tiene espacios
+    imagen = java.net.URLEncoder.encode(imagen, "UTF-8");
+%>
 		
 		
 <% if (logueado) { %>
@@ -45,12 +47,13 @@
     Cerrar Sesión
   </a>
   <div class="navbar_sesion_perfil">
-  <a href="<%= request.getContextPath() %>/UsuarioServlet?op=consultar&nick=<%= nickname %>">
-    <p class="navbar_username"><%= nickname %></p>
-    <img class="perfil_image" 
-         src="<%= request.getContextPath() %>/img/<%= imagen %>"
-         alt="foto perfil" />
-  </a>
+    <a href="<%= request.getContextPath() %>/UsuarioServlet?op=consultar&nick=<%= nickname %>">
+      <p class="navbar_username"><%= nickname %></p>
+      <img class="perfil_image"
+           src="<%= request.getContextPath() %>/img/<%= imagen %>"
+           alt="foto perfil"
+           onerror="this.onerror=null; this.src='<%= request.getContextPath() %>/img/PerfilSinFoto.jpg';" />
+    </a>
   </div>
 <% } else { %>
   <!-- Usuario no logueado -->
