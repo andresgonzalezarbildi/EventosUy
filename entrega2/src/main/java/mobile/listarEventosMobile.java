@@ -1,26 +1,40 @@
-package evento;
+package mobile;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.*;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.xml.ws.WebServiceException;
-
-import java.io.IOException;
-import java.util.Collections;
-import java.util.List;
-
 import ws.eventos.DataEvento;
 import ws.eventos.EventoNoExisteFault_Exception;
 import ws.eventos.EventosService;
 import ws.eventos.EventosWs;
 
-@WebServlet("/eventos")
-public class ListarEventosServlet extends HttpServlet {
-    private static final long serialVersionUID = 1L;
-    private EventosService service = null;
+import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
 
+/**
+ * Servlet implementation class listarEventos
+ */
+@WebServlet("/listarEventosMobile")
+public class listarEventosMobile extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+	private EventosService service = null;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public listarEventosMobile() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
 
-    @Override
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	  @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
         req.setAttribute("errorWs", false);
@@ -38,7 +52,6 @@ public class ListarEventosServlet extends HttpServlet {
           req.setAttribute("eventosCount", eventos.size());
 
         } catch (EventoNoExisteFault_Exception e) {
-            req.setAttribute("error", e.getMessage());
             req.setAttribute("eventos", eventos);
             req.setAttribute("eventosCount", 0);
 
@@ -49,7 +62,15 @@ public class ListarEventosServlet extends HttpServlet {
             req.setAttribute("eventosCount", 0);
         }
 
-        req.getRequestDispatcher("/WEB-INF/pages/index.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/pages" + "/mobile" +"/eventosMobile.jsp").forward(req, resp);
     }
-}
 
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
+	}
+
+}

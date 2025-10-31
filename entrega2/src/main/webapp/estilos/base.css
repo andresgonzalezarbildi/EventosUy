@@ -251,6 +251,7 @@ form textarea {
 
 /* Clases para el contenido principal de la pagina, contenedor y cards */
 .contenido-principal {
+	display:flex;
   background-color: white;
   border: 1px solid var(--color-border);
   border-radius: 6px;

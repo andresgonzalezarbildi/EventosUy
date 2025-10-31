@@ -10,10 +10,9 @@
   margin: 1rem auto;
   max-width: 400px;
 }
-
 @media (max-width: 767.98px) {
   .contenido-principal-card {
-    flex-direction: column;   
+    flex-direction: row;   
     text-align: center;       
     align-items: center;      
   }

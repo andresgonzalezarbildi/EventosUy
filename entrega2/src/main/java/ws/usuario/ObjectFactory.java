@@ -24,29 +24,31 @@ import jakarta.xml.bind.annotation.XmlRegistry;
 @XmlRegistry
 public class ObjectFactory {
 
-    private static final QName _PasswordIncorrectaFault_QNAME = new QName("http://publicar.ws/", "PasswordIncorrectaFault");
-    private static final QName _UsuarioNoExisteFault_QNAME = new QName("http://publicar.ws/", "UsuarioNoExisteFault");
-    private static final QName _UsuarioRepetidoFault_QNAME = new QName("http://publicar.ws/", "UsuarioRepetidoFault");
-    private static final QName _AltaUsuario_QNAME = new QName("http://publicar.ws/", "altaUsuario");
-    private static final QName _AltaUsuarioResponse_QNAME = new QName("http://publicar.ws/", "altaUsuarioResponse");
-    private static final QName _CambiarContrasenia_QNAME = new QName("http://publicar.ws/", "cambiarContrasenia");
-    private static final QName _CambiarContraseniaResponse_QNAME = new QName("http://publicar.ws/", "cambiarContraseniaResponse");
-    private static final QName _GetAsistente_QNAME = new QName("http://publicar.ws/", "getAsistente");
-    private static final QName _GetAsistenteResponse_QNAME = new QName("http://publicar.ws/", "getAsistenteResponse");
-    private static final QName _GetAsistentes_QNAME = new QName("http://publicar.ws/", "getAsistentes");
-    private static final QName _GetAsistentesResponse_QNAME = new QName("http://publicar.ws/", "getAsistentesResponse");
-    private static final QName _GetOrganizador_QNAME = new QName("http://publicar.ws/", "getOrganizador");
-    private static final QName _GetOrganizadorResponse_QNAME = new QName("http://publicar.ws/", "getOrganizadorResponse");
-    private static final QName _GetOrganizadores_QNAME = new QName("http://publicar.ws/", "getOrganizadores");
-    private static final QName _GetOrganizadoresResponse_QNAME = new QName("http://publicar.ws/", "getOrganizadoresResponse");
-    private static final QName _GetUsuarios_QNAME = new QName("http://publicar.ws/", "getUsuarios");
-    private static final QName _GetUsuariosResponse_QNAME = new QName("http://publicar.ws/", "getUsuariosResponse");
-    private static final QName _Login_QNAME = new QName("http://publicar.ws/", "login");
-    private static final QName _LoginResponse_QNAME = new QName("http://publicar.ws/", "loginResponse");
-    private static final QName _ModificarUsuario_QNAME = new QName("http://publicar.ws/", "modificarUsuario");
-    private static final QName _ModificarUsuarioResponse_QNAME = new QName("http://publicar.ws/", "modificarUsuarioResponse");
-    private static final QName _VerInfoUsuario_QNAME = new QName("http://publicar.ws/", "verInfoUsuario");
-    private static final QName _VerInfoUsuarioResponse_QNAME = new QName("http://publicar.ws/", "verInfoUsuarioResponse");
+    private final static QName _PasswordIncorrectaFault_QNAME = new QName("http://publicar.ws/", "PasswordIncorrectaFault");
+    private final static QName _UsuarioNoExisteFault_QNAME = new QName("http://publicar.ws/", "UsuarioNoExisteFault");
+    private final static QName _UsuarioRepetidoFault_QNAME = new QName("http://publicar.ws/", "UsuarioRepetidoFault");
+    private final static QName _AltaUsuario_QNAME = new QName("http://publicar.ws/", "altaUsuario");
+    private final static QName _AltaUsuarioResponse_QNAME = new QName("http://publicar.ws/", "altaUsuarioResponse");
+    private final static QName _CambiarContrasenia_QNAME = new QName("http://publicar.ws/", "cambiarContrasenia");
+    private final static QName _CambiarContraseniaResponse_QNAME = new QName("http://publicar.ws/", "cambiarContraseniaResponse");
+    private final static QName _GetAsistente_QNAME = new QName("http://publicar.ws/", "getAsistente");
+    private final static QName _GetAsistenteResponse_QNAME = new QName("http://publicar.ws/", "getAsistenteResponse");
+    private final static QName _GetAsistentes_QNAME = new QName("http://publicar.ws/", "getAsistentes");
+    private final static QName _GetAsistentesResponse_QNAME = new QName("http://publicar.ws/", "getAsistentesResponse");
+    private final static QName _GetOrganizador_QNAME = new QName("http://publicar.ws/", "getOrganizador");
+    private final static QName _GetOrganizadorResponse_QNAME = new QName("http://publicar.ws/", "getOrganizadorResponse");
+    private final static QName _GetOrganizadores_QNAME = new QName("http://publicar.ws/", "getOrganizadores");
+    private final static QName _GetOrganizadoresResponse_QNAME = new QName("http://publicar.ws/", "getOrganizadoresResponse");
+    private final static QName _GetUsuarios_QNAME = new QName("http://publicar.ws/", "getUsuarios");
+    private final static QName _GetUsuariosResponse_QNAME = new QName("http://publicar.ws/", "getUsuariosResponse");
+    private final static QName _Login_QNAME = new QName("http://publicar.ws/", "login");
+    private final static QName _LoginMovil_QNAME = new QName("http://publicar.ws/", "loginMovil");
+    private final static QName _LoginMovilResponse_QNAME = new QName("http://publicar.ws/", "loginMovilResponse");
+    private final static QName _LoginResponse_QNAME = new QName("http://publicar.ws/", "loginResponse");
+    private final static QName _ModificarUsuario_QNAME = new QName("http://publicar.ws/", "modificarUsuario");
+    private final static QName _ModificarUsuarioResponse_QNAME = new QName("http://publicar.ws/", "modificarUsuarioResponse");
+    private final static QName _VerInfoUsuario_QNAME = new QName("http://publicar.ws/", "verInfoUsuario");
+    private final static QName _VerInfoUsuarioResponse_QNAME = new QName("http://publicar.ws/", "verInfoUsuarioResponse");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: ws.usuario
@@ -233,6 +235,26 @@ public class ObjectFactory {
      */
     public Login createLogin() {
         return new Login();
+    }
+
+    /**
+     * Create an instance of {@link LoginMovil }
+     * 
+     * @return
+     *     the new instance of {@link LoginMovil }
+     */
+    public LoginMovil createLoginMovil() {
+        return new LoginMovil();
+    }
+
+    /**
+     * Create an instance of {@link LoginMovilResponse }
+     * 
+     * @return
+     *     the new instance of {@link LoginMovilResponse }
+     */
+    public LoginMovilResponse createLoginMovilResponse() {
+        return new LoginMovilResponse();
     }
 
     /**
@@ -527,6 +549,32 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://publicar.ws/", name = "login")
     public JAXBElement<Login> createLogin(Login value) {
         return new JAXBElement<>(_Login_QNAME, Login.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link LoginMovil }{@code >}
+     * 
+     * @param value
+     *     Java instance representing xml element's value.
+     * @return
+     *     the new instance of {@link JAXBElement }{@code <}{@link LoginMovil }{@code >}
+     */
+    @XmlElementDecl(namespace = "http://publicar.ws/", name = "loginMovil")
+    public JAXBElement<LoginMovil> createLoginMovil(LoginMovil value) {
+        return new JAXBElement<>(_LoginMovil_QNAME, LoginMovil.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link LoginMovilResponse }{@code >}
+     * 
+     * @param value
+     *     Java instance representing xml element's value.
+     * @return
+     *     the new instance of {@link JAXBElement }{@code <}{@link LoginMovilResponse }{@code >}
+     */
+    @XmlElementDecl(namespace = "http://publicar.ws/", name = "loginMovilResponse")
+    public JAXBElement<LoginMovilResponse> createLoginMovilResponse(LoginMovilResponse value) {
+        return new JAXBElement<>(_LoginMovilResponse_QNAME, LoginMovilResponse.class, null, value);
     }
 
     /**

@@ -155,4 +155,18 @@ public class UsuarioWs {
     ) {
         ctrl.cambiarContrasenia(nickname, nuevaPass);
     }
+    
+    @WebMethod
+    public DataUsuario loginMovil(
+        @WebParam(name = "ident") String ident,
+        @WebParam(name = "password") String password
+    )throws UsuarioNoExisteFault, PasswordIncorrectaFault{
+      try {
+        return ctrl.login(ident, password);
+      } catch (UsuarioNoExisteException e) {
+        throw new UsuarioNoExisteFault(e.getMessage());
+      }catch (PasswordIncorrectaException e) {
+        throw new PasswordIncorrectaFault(e.getMessage());
+      }
+    }
 }

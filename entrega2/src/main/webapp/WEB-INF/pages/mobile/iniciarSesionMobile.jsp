@@ -55,14 +55,14 @@
 			      </div>
 						<form action="<%=request.getContextPath()%>/IniciarSesionMobile" method="post">
 						  <div class="form-group">
-						    <label for="email">Email</label>
+						    <label for="usuario">Usuario</label>
 						    <input 
-				    			type="email" 
+				    			type="text" 
 						    	class="form-control"
-				    	 		id="email" 
-					    		name="email"
+				    	 		id="usuario" 
+					    		name="usuario"
 					    	 	aria-describedby="emailHelp"
-					    	 	value="<%= usuarioIngresado %>"
+					    	 	value="<%= usuarioIngresado != null ? usuarioIngresado : "" %>"
 					    	 	required
 						    >
 						  </div>
