@@ -3,12 +3,13 @@ import java.time.LocalDate;
 import java.util.List;
 
 import excepciones.CategoriaRepetidaException;
+import excepciones.EdicionNoExisteException;
+import excepciones.EventoConEdicionesPedientesException;
 import excepciones.EventoNoExisteException;
+import excepciones.EventoRepetidoException;
+import excepciones.TipoRegistroRepetidoException;
 import excepciones.TransicionEstadoInvalidaException;
 import excepciones.UsuarioNoExisteException;
-import excepciones.EdicionNoExisteException;
-import excepciones.TipoRegistroRepetidoException;
-import excepciones.EventoRepetidoException;
 import logica.datatypes.DataEdicion;
 import logica.datatypes.DataEvento;
 import logica.datatypes.DataRegistro;
@@ -51,7 +52,8 @@ public interface IControladorEvento {
     public void aceptarEdicion(String nombreEdicion, Boolean aceptada) throws EdicionNoExisteException, TransicionEstadoInvalidaException;
     public void  setCostoRegistro(String nickname, String edicion, String nombreTipo, int precio); 
     
-    public void finalizarEvento(String nombreEvento);
+    public void confirmarAsistencia(String nombreEdicion, String nickname);
+    public void finalizarEvento(String nombreEvento) throws EventoConEdicionesPedientesException;
 
     public List<String> listarCategorias();
     

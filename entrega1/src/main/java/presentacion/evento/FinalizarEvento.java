@@ -3,6 +3,7 @@ package presentacion.evento;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JInternalFrame;
@@ -10,9 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import excepciones.EdicionNoExisteException;
-import excepciones.TransicionEstadoInvalidaException;
-import logica.datatypes.DataEdicion;
+import excepciones.EventoConEdicionesPedientesException;
 import logica.datatypes.DataEvento;
 import logica.interfaces.IControladorEvento;
 
@@ -89,9 +88,19 @@ public class FinalizarEvento extends JInternalFrame {
             JOptionPane.showMessageDialog(this, "Seleccione un evento.", "Aviso", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        controlEvento.finalizarEvento(ev.getNombre());
-        JOptionPane.showMessageDialog(this, "Evento finalizado.", "OK", JOptionPane.INFORMATION_MESSAGE);
-        resetearVentana();
+        try {
+            controlEvento.finalizarEvento(ev.getNombre());
+            JOptionPane.showMessageDialog(this, "Evento finalizado.", "OK", JOptionPane.INFORMATION_MESSAGE);
+            resetearVentana();
+
+        } catch (EventoConEdicionesPedientesException ex) {
+            JOptionPane.showMessageDialog(
+                this,
+                "No se puede finalizar el evento: " + ex.getMessage(),
+                "Error",
+                JOptionPane.ERROR_MESSAGE
+            );
+        }
     }
 
     private void cargarEventos() {

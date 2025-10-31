@@ -10,6 +10,7 @@ import java.util.Map;
 
 import excepciones.CategoriaRepetidaException;
 import excepciones.EdicionNoExisteException;
+import excepciones.EventoConEdicionesPedientesException;
 import excepciones.EventoNoExisteException;
 import excepciones.EventoRepetidoException;
 import excepciones.TipoRegistroRepetidoException;
@@ -406,7 +407,7 @@ public class ControladorEvento implements IControladorEvento {
     java.util.Collection<Registro> listaRegistros = edi.getRegistros();
     if (listaRegistros == null || listaRegistros.isEmpty()) return new DataRegistro[0];
     for (Registro r : listaRegistros) {
-        out.add(new DataRegistro(edi.getEvento().getNombre(), edi.getNombre(), r.getTipoRegistro().getNombre(), r.getCostoRegistro(), r.getFechaRegistro(), r.getAsistente().getNickname()));
+        out.add(new DataRegistro(edi.getEvento().getNombre(), edi.getNombre(), r.getTipoRegistro().getNombre(), r.getCostoRegistro(), r.getFechaRegistro(), r.getAsistente().getNickname(), r.getConfirmarAsistencia()));
     }
     return out.toArray(new DataRegistro[0]);
   }
@@ -423,7 +424,8 @@ public class ControladorEvento implements IControladorEvento {
                   r.getTipoRegistro().getNombre(),
                   r.getCostoRegistro(),
                   r.getFechaRegistro(),
-                  r.getAsistente().getNickname()
+                  r.getAsistente().getNickname(),
+                  r.getConfirmarAsistencia()
               ));
           }
         }
@@ -445,7 +447,8 @@ public class ControladorEvento implements IControladorEvento {
                     r.getTipoRegistro().getNombre(),
                     r.getCostoRegistro(),
                     r.getFechaRegistro(),
-                    r.getAsistente().getNickname()
+                    r.getAsistente().getNickname(),
+                    r.getConfirmarAsistencia()
                 );
             }
           }
@@ -832,9 +835,36 @@ public class ControladorEvento implements IControladorEvento {
     return  manejadorEvento.getEdicion(nombreEdicion).getEvento().getNombre();
   }
   
-  public void finalizarEvento(String nombreEvento) {
+  public void confirmarAsistencia(String nombreEdicion, String nickname) {
+	 for (Evento e : manejadorEvento.getEventos().values()) {
+	    for (EdicionEvento ed : e.getEdiciones().values()) {
+	       if (nombreEdicion.equals(ed.getNombre()) ) {
+	          for (Registro r : ed.getRegistros()) {
+	             if (nickname.equals(r.getAsistente().getNickname())) {
+	                r.setConfirmarAsistencia();
+	             }
+	          }
+	       }
+	    }
+	 }
+  }
+  
+  public void finalizarEvento(String nombreEvento) throws EventoConEdicionesPedientesException {
 	  Evento eve = manejadorEvento.obtenerEvento(nombreEvento);
+	  Map<String, EdicionEvento> ediciones = eve.getEdiciones();
+      if (ediciones == null || ediciones.isEmpty()) {
+    	  eve.setFinalizado(true);
+    	  return;
+      }
+      LocalDate hoy = LocalDate.now();
+      for (EdicionEvento edi : ediciones.values()) {
+    	  LocalDate fechaFin = edi.getFechaFin();
+          if (fechaFin != null && fechaFin.isAfter(hoy)) {
+              throw new EventoConEdicionesPedientesException("El evento aún posee ediciones que no han finalizado.");
+          }
+      }
 	  eve.setFinalizado(true);
   }
+  
 }
   

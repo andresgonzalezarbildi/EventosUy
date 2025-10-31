@@ -296,6 +296,34 @@ public class ControladorUsuario implements IControladorUsuario {
   }
   
   /**
+   * Inicia sesión con las credenciales dadas.
+   *
+   * @param ident identificador del asistente (nickname o correo)
+   * @param password contraseña del asistente
+   * @return datos del asistente autenticado
+   * @throws UsuarioNoExisteException si el asistente no existe
+   * @throws PasswordIncorrectaException si la contraseña es incorrecta
+   */
+  @Override
+  public DataUsuario loginMovil(String ident, String password)       
+		  throws UsuarioNoExisteException, PasswordIncorrectaException {
+    if (ident == null || ident.isBlank()) {
+      throw new UsuarioNoExisteException("Identificador vacío: ingrese nickname o correo");
+    }
+    if (password == null) {
+      throw new PasswordIncorrectaException("Contraseña inválida (null)");
+    }
+    Usuario usuario = manejador.obtenerAsistentePorIdentificador(ident);
+    if (usuario == null) {
+      throw new UsuarioNoExisteException("No existe usuario con nickname/correo: " + ident.trim());
+    }
+    if (!usuario.verificarPassword(password)) {
+      throw new PasswordIncorrectaException("Credenciales inválidas");
+    }
+    return convertirDataUsuario(usuario);
+  }
+  
+  /**
    * Limpia todos los datos del manejador de usuarios.
    */
   public void limpar() {

@@ -108,6 +108,18 @@ public interface IControladorUsuario {
   public DataUsuario login(String ident, String password) 
       throws UsuarioNoExisteException, PasswordIncorrectaException;
   
+  /**
+   * Inicia sesión con las credenciales dadas.
+   *
+   * @param ident    identificador del asistente (nickname o correo)
+   * @param password contraseña del asistente
+   * @return datos del asistente autenticado
+   * @throws UsuarioNoExisteException    si el asistente no existe
+   * @throws PasswordIncorrectaException si la contraseña es incorrecta
+   */
+  public DataUsuario loginMovil(String ident, String password) 
+      throws UsuarioNoExisteException, PasswordIncorrectaException;
+  
   public void cambiarContrasenia(String nickname, String nuevaPass);
     
 }

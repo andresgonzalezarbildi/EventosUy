@@ -9,6 +9,7 @@ public class Registro {
     private TipoRegistro tipoRegistro;
     private EdicionEvento edicionEvento;
     private Asistente asistente;
+    private boolean confirmarAsistentcia;
 
     public Registro(LocalDate fechaRegistro, Integer costoRegistro, TipoRegistro tipoRegistro, EdicionEvento edicionEvento, Asistente asistente) {
         this.fechaRegistro = fechaRegistro;
@@ -16,6 +17,7 @@ public class Registro {
         this.tipoRegistro = tipoRegistro;
         this.edicionEvento = edicionEvento;
         this.asistente = asistente;
+        this.confirmarAsistentcia = false;
     }
 
     public LocalDate getFechaRegistro() { 
@@ -33,7 +35,14 @@ public class Registro {
     public Asistente getAsistente() { 
     	return asistente; 
     }
+    public boolean getConfirmarAsistencia() { 
+    	return confirmarAsistentcia; 
+    }
     public void setCosto(int precio) { 
     	this.costoRegistro = precio;
     }
+    public void setConfirmarAsistencia() {
+    	this.confirmarAsistentcia = true;
     }
+    
+}

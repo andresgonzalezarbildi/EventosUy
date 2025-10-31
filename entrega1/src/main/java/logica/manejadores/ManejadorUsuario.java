@@ -103,8 +103,29 @@ public class ManejadorUsuario {
         }
     }
     return null;
-}
-
+ }
+  
+  public Usuario obtenerAsistentePorNickname(String nickname) {
+	    return asistentes.get(nickname);
+  }
+	  
+  public Usuario obtenerAsistentePorCorreo(String correo) {
+	    if (correo == null || correo.isBlank()) return null;
+	    for (Asistente asis : asistentes.values()) {
+	        if (correo.equalsIgnoreCase(asis.getCorreo())) {
+	            return asis;
+	        }
+	    }
+	    return null;
+  }
+  
+  public Usuario obtenerAsistentePorIdentificador(String ident) { 
+	    Usuario res = obtenerAsistentePorCorreo(ident);
+	    if (res == null) {
+	      res = obtenerAsistentePorNickname(ident);
+	    }
+	    return res;
+  }
   
   public Usuario obtenerPorIdentificador(String ident) { 
     Usuario res = obtenerPorCorreo(ident);
