@@ -163,9 +163,7 @@ public class ControladorEvento implements IControladorEvento {
      
   public DataEvento[] listarEventoExistentes() throws EventoNoExisteException {
     Map<String, Evento> eventos = manejadorEvento.getEventos();
-    if (eventos == null || eventos.isEmpty()) {
-        throw new EventoNoExisteException("No existen eventos registrados");
-    }
+
 
     List<DataEvento> lista = new ArrayList<>();
     for (Evento e : eventos.values()) {
@@ -176,9 +174,7 @@ public class ControladorEvento implements IControladorEvento {
             ));
         }
     }
-    if (lista.isEmpty()) {
-        throw new EventoNoExisteException("No hay eventos vigentes");
-    }
+ 
 
     lista.sort(Comparator.comparing(
         DataEvento::getNombre,

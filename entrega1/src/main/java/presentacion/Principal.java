@@ -11,6 +11,7 @@ import javax.swing.JInternalFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 
 import logica.Fabrica;
 import logica.datatypes.DataEdicion;
@@ -186,6 +187,7 @@ public class Principal {
         JMenuItem menuCarga = new JMenuItem("Carga de Datos");
         menuCarga.addActionListener(e -> {
         	fabrica.getCargaDatos().cargarDatosIniciales();
+        	JOptionPane.showMessageDialog(frmGestion, "Los datos se cargaron correctamente.");
         });
         JMenuItem menuSalir = new JMenuItem("Salir");
         menuSalir.addActionListener(e -> {
