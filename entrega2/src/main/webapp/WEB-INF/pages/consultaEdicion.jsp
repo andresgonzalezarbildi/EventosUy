@@ -108,13 +108,29 @@
             <p><%= ed.getOrganizador() %></p>
           </section>
 
-          <!-- Patrocinios -->
-          <section style="margin-bottom:2rem;">
-            <h3 style="margin-bottom:0.5rem; color: var(--color-primary);">Patrocinios</h3>
-            <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
-              <span style="background:#e3f2fd; padding:0.4rem 0.8rem; border-radius:12px;"><%= ed.getPatrocinios() %></span> <!-- PATROCINIOS VAN HARCODEADOS! -->
-            </div>
-           </section>
+         <section style="margin-bottom:2rem;">
+		  <h3 style="margin-bottom:0.5rem; color: var(--color-primary);">Patrocinios</h3>
+		  <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+		    <%
+		      java.util.List<ws.eventos.DataPatrocinio> patros = ed.getPatrocinios();
+		      if (patros != null && !patros.isEmpty()) {
+		          for (ws.eventos.DataPatrocinio p : patros) {
+		    %>
+		              <span style="background:#e3f2fd; padding:0.4rem 0.8rem; border-radius:12px;">
+		                <%= p.getCodigoDePatrocinio() %> (<%= p.getNivelDePatrocinio() %>)
+		              </span>
+		    <%
+		          }
+		      } else {
+		    %>
+		          <span style="color:#777;">No hay patrocinios registrados para esta edición.</span>
+		    <%
+		      }
+		    %>
+		  </div>
+		</section>
+
+
          
          
 			

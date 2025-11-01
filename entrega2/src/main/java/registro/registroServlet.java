@@ -11,8 +11,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import ws.eventos.EventosService;
 import ws.eventos.EventosWs;
-import ws.usuario.UsuarioNoExisteFault_Exception;
-
+import ws.eventos.UsuarioNoExisteFault_Exception;
 
 @WebServlet("/registroEd")
 @MultipartConfig
@@ -111,6 +110,7 @@ public class registroServlet extends HttpServlet {
         	            req.setAttribute("nomTipoRegistro", nomTipoRegistro);
             	        req.getRequestDispatcher("/WEB-INF/pages/consultaRegistro.jsp").forward(req, res);
             	        break;
+            	       
             	    }
             	    // 2️⃣ ASISTENTE
             	    if ("asistente".equalsIgnoreCase(rol)) {
@@ -129,7 +129,7 @@ public class registroServlet extends HttpServlet {
             	    	String pais = edicion.getPais();
             	    	Integer costo = registro.getCosto();
             	    	
-      	            req.setAttribute("rol", rol);
+            	    	req.setAttribute("rol", rol);
             	    	req.setAttribute("imagen", imagen);
             	    	req.setAttribute("nickname", nickname);
             	    	req.setAttribute("idEdicion", idEdicion);
@@ -144,6 +144,7 @@ public class registroServlet extends HttpServlet {
             	    	req.setAttribute("costo", costo);
 
             	        req.getRequestDispatcher("/WEB-INF/pages/consultaRegistro.jsp").forward(req, res);
+            	        return;
             	    }
             	
             	    // 3️⃣ VISITANTE (sin login)
