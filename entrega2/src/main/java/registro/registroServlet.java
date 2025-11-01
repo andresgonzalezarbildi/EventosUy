@@ -1,5 +1,7 @@
 package registro;
 
+import java.io.IOException;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
@@ -7,41 +9,17 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import jakarta.servlet.http.Part;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
-
-import excepciones.EventoNoExisteException;
-import excepciones.UsuarioNoExisteException;
-import excepciones.UsuarioRepetidoException;
-import logica.Fabrica;
-import logica.clases.EdicionEvento;
-import logica.datatypes.DataEdicion;
-import logica.datatypes.DataEvento;
-import logica.datatypes.DataRegistro;
-import logica.interfaces.IControladorEvento;
-import logica.interfaces.IControladorUsuario;
-
-import logica.datatypes.DataTipoRegistro;
-
+import ws.eventos.EventosService;
+import ws.eventos.EventosWs;
+import ws.eventos.UsuarioNoExisteFault_Exception;
 
 @WebServlet("/registroEd")
 @MultipartConfig
 public class registroServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     
-    private final Fabrica fabrica = Fabrica.getInstance();
-    private final IControladorEvento ctrlEv = fabrica.getControladorEvento();
+    private EventosService serviceEv = new EventosService();
+	 EventosWs ctrlEv = serviceEv.getEventosPort();
     
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res)
@@ -51,7 +29,7 @@ public class registroServlet extends HttpServlet {
         String nombreEdicion = (req.getParameter("idEdicion") != null) ? req.getParameter("idEdicion") : "";
         String nickname = null;
         String rol = "visitante";
-
+        
         try {
             switch (op) {
                 case "alta": {
@@ -62,10 +40,11 @@ public class registroServlet extends HttpServlet {
                     }
 
                     String nomEvento = ctrlEv.getEventoDeUnaEdicion(nombreEdicion);
-          					DataEdicion edicion = ctrlEv.getInfoEdicion(nombreEdicion);
-          					LocalDate fechaIni = edicion.getFechaIni();
-          					LocalDate fechaFin = edicion.getFechaFin();
-          					if(fechaFin.isBefore(LocalDate.now())) {
+          					ws.eventos.DataEdicion edicion = ctrlEv.getInfoEdicion(nombreEdicion);
+          					String fechaIni = edicion.getFechaIni();
+          					String fechaFin = edicion.getFechaFin();
+          					String hoy = java.time.LocalDate.now().toString();
+          					if(fechaFin.compareTo(hoy) < 0) {
                       req.setAttribute("mensajeError", "La edicion " + edicion.getNombre() + " ya termino, no puede registrarse");
                       req.setAttribute("javax.servlet.error.status_code", 409);
                       req.getRequestDispatcher("/WEB-INF/pages/error.jsp").forward(req, res);
@@ -73,7 +52,7 @@ public class registroServlet extends HttpServlet {
           					}
           					String ciudad = edicion.getCiudad();
           					String pais = edicion.getPais();
-          					DataTipoRegistro tiporeg = ctrlEv.getTipoRegistro(nomEvento, nombreEdicion, idTipoReg);
+          					ws.eventos.DataTipoRegistro tiporeg = ctrlEv.getTipoRegistro(nomEvento, nombreEdicion, idTipoReg);
           					Integer costo = tiporeg.getCosto();
           
           					req.setAttribute("fechaIni", fechaIni);
@@ -116,11 +95,11 @@ public class registroServlet extends HttpServlet {
 
             	    if ("organizador".equalsIgnoreCase(rol)) {
             	    	String idEdicion = req.getParameter("idEdicion");
-            	    	DataEdicion edicion = ctrlEv.getInfoEdicion(idEdicion);
+            	    	ws.eventos.DataEdicion edicion = ctrlEv.getInfoEdicion(idEdicion);
             	    	String imagen = edicion.getImagen();
             	    	String asis = req.getParameter("idAsistente");
-            	    	DataRegistro registro = ctrlEv.listarUnRegistroDeUsuario(idEdicion, asis);
-            	    	LocalDate fechaRegistro = registro.getFecha();
+            	    	ws.eventos.DataRegistro registro = ctrlEv.listarUnRegistroDeUsuario(idEdicion, asis);
+            	    	String fechaRegistro = registro.getFecha();
             	    	String nomTipoRegistro = registro.getTipoRegistro();
             	    	
         	            req.setAttribute("rol", rol);
@@ -131,25 +110,26 @@ public class registroServlet extends HttpServlet {
         	            req.setAttribute("nomTipoRegistro", nomTipoRegistro);
             	        req.getRequestDispatcher("/WEB-INF/pages/consultaRegistro.jsp").forward(req, res);
             	        break;
+            	       
             	    }
             	    // 2️⃣ ASISTENTE
             	    if ("asistente".equalsIgnoreCase(rol)) {
             	    	
           	        String idEdicion = req.getParameter("edicion");
-          	        DataEdicion edicion = ctrlEv.getInfoEdicion(idEdicion);
+          	        ws.eventos.DataEdicion edicion = ctrlEv.getInfoEdicion(idEdicion);
           	        String nomEvento = req.getParameter("evento");
-            	    	DataRegistro registro = ctrlEv.listarUnRegistroDeUsuario(idEdicion, nickname);
-            	    	LocalDate fechaRegistro = registro.getFecha();
+            	    	ws.eventos.DataRegistro registro = ctrlEv.listarUnRegistroDeUsuario(idEdicion, nickname);
+            	    	String fechaRegistro = registro.getFecha();
             	    	String nomTipoRegistro = registro.getTipoRegistro();
             	    	String organizador = edicion.getOrganizador();
-            	    	LocalDate fechaIni = edicion.getFechaIni();
-            	    	LocalDate fechaFin = edicion.getFechaFin();
+            	    	String fechaIni = edicion.getFechaIni();
+            	    	String fechaFin = edicion.getFechaFin();
             	    	String imagen = edicion.getImagen();
             	    	String ciudad = edicion.getCiudad();
             	    	String pais = edicion.getPais();
             	    	Integer costo = registro.getCosto();
             	    	
-      	            req.setAttribute("rol", rol);
+            	    	req.setAttribute("rol", rol);
             	    	req.setAttribute("imagen", imagen);
             	    	req.setAttribute("nickname", nickname);
             	    	req.setAttribute("idEdicion", idEdicion);
@@ -164,6 +144,7 @@ public class registroServlet extends HttpServlet {
             	    	req.setAttribute("costo", costo);
 
             	        req.getRequestDispatcher("/WEB-INF/pages/consultaRegistro.jsp").forward(req, res);
+            	        return;
             	    }
             	
             	    // 3️⃣ VISITANTE (sin login)
@@ -228,9 +209,9 @@ public class registroServlet extends HttpServlet {
         	    return;
         	}
         
-  
         try {
-            ctrlEv.altaRegistro(nomEvento, nombreEdicion, nombreTipoRegistro, nickname, LocalDate.now());
+        	String hoy = java.time.LocalDate.now().toString();
+            ctrlEv.altaRegistro(nomEvento, nombreEdicion, nombreTipoRegistro, nickname, hoy);
             req.getSession().setAttribute("flash_ok", "Registro realizado correctamente.");
             res.sendRedirect(req.getContextPath() + "/eventos");
             return;
@@ -239,12 +220,12 @@ public class registroServlet extends HttpServlet {
             res.sendRedirect(req.getContextPath()
                 + "/registroEd?op=alta&idEdicion=" + nombreEdicion + "&id=" + nombreTipoRegistro);
             return;
-        } catch (UsuarioNoExisteException ex) {
+        } catch (UsuarioNoExisteFault_Exception ex) {
             req.getSession().setAttribute("flash_error", "El asistente no existe o no tiene permisos.");
             res.sendRedirect(req.getContextPath()
                 + "/registroEd?op=alta&idEdicion=" + nombreEdicion + "&id=" + nombreTipoRegistro);
             return;
-        }
+       }
     }
 
     	

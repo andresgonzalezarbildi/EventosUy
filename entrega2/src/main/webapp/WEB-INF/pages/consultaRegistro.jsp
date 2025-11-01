@@ -1,17 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import= "java.time.LocalDate" %>
 
     
 <% String imagen = (String) request.getAttribute("imagen"); %>
 <% String nickname = (String) request.getAttribute("nickname"); %>
 <% String idEdicion = (String) request.getAttribute("idEdicion"); %>
 <% String nomEvento = (String) request.getAttribute("nomEvento"); %>
-<% LocalDate fechaRegistro = (LocalDate) request.getAttribute("fechaRegistro"); %>
+<% String fechaRegistro = (String) request.getAttribute("fechaRegistro"); %>
 <% String nomTipoRegistro = (String) request.getAttribute("nomTipoRegistro"); %>
 <% String organizador = (String) request.getAttribute("organizador"); %>
-<% LocalDate fechaIni = (LocalDate) request.getAttribute("fechaIni"); %>
-<% LocalDate fechaFin = (LocalDate) request.getAttribute("fechaFin"); %>
+<% String fechaIni = (String) request.getAttribute("fechaIni"); %>
+<% String fechaFin = (String) request.getAttribute("fechaFin"); %>
 <% String ciudad = (String) request.getAttribute("ciudad"); %>
 <% String pais = (String) request.getAttribute("pais"); %>
 <% Integer costo = (Integer) request.getAttribute("costo"); %>
