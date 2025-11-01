@@ -163,10 +163,14 @@ public class RegistrarUsuarioServlet extends HttpServlet {
         }
 
         try {
-        	String fechaNacWS = "Asistente".equalsIgnoreCase(tipo) ? fechaNac : "";  //SI NO ES ASISTENTE, PASA LAS COMILLAS PARA QUE NO SE ROMPA CON LO DEL AJAX DE TOMI
+        	if (fechaNac != null && fechaNac.isBlank()) fechaNac = null;
+        	if (descripcion != null && descripcion.isBlank()) descripcion = null;
+        	if (link != null && link.isBlank()) link = null;
+        	if (apellido != null && apellido.isBlank()) apellido = null;
+        	
             cu.altaUsuario(
                 nick, nombre, correo, nombreImagenGuardada, password,
-                tipo, descripcion, link, apellido, fechaNacWS
+                tipo, descripcion, link, apellido, fechaNac
             );
             req.getSession().setAttribute("usuarioCreado", "Usuario creado");
             res.sendRedirect(req.getContextPath() + "/UsuarioServlet?op=listar");

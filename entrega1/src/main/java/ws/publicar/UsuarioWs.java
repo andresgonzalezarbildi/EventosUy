@@ -111,13 +111,28 @@ public class UsuarioWs {
         @WebParam(name = "apellido") String apellido,
         @WebParam(name = "fechaNac") String fechaNac
     ) throws UsuarioRepetidoFault {
+
         try {
-        	LocalDate fechaNacii = LocalDate.parse(fechaNac);
-            ctrl.altaUsuario(nickname, nombre, correo, imagen, password, tipo, descripcion, link, apellido, fechaNacii);
+            LocalDate fechaNacii = null;
+            if (fechaNac != null && !fechaNac.isBlank()) {
+                fechaNacii = LocalDate.parse(fechaNac);
+            }
+            ctrl.altaUsuario(
+                nickname, nombre, correo, imagen, password,
+                tipo, descripcion, link, apellido, fechaNacii
+            );
+
         } catch (UsuarioRepetidoException e) {
             throw new UsuarioRepetidoFault(e.getMessage());
+        } catch (Exception e) {
+            // Capturar otros errores posibles y transformarlos en Fault
+            throw new UsuarioRepetidoFault("Error al registrar usuario: " + e.getMessage());
         }
     }
+
+    
+    
+    
 
     @WebMethod
     public void modificarUsuario(
@@ -129,10 +144,15 @@ public class UsuarioWs {
         @WebParam(name = "apellido") String apellido,
         @WebParam(name = "fechaNac") String fechaNac
     ) throws UsuarioNoExisteFault {
-        try {
-        	 LocalDate fechaNacii = LocalDate.parse(fechaNac);
-            ctrl.modificarUsuario(nickname, nombre, descripcion, imagen, link, apellido, fechaNacii);
-        } catch (UsuarioNoExisteException e) {
+    	 try {
+             LocalDate fechaNacii = null;
+             if (fechaNac != null && !fechaNac.isBlank()) {
+                 fechaNacii = LocalDate.parse(fechaNac);
+             }
+             ctrl.modificarUsuario(nickname, nombre, descripcion, imagen, link, apellido, fechaNacii);
+             
+
+         }  catch (UsuarioNoExisteException e) {
             throw new UsuarioNoExisteFault(e.getMessage());
         }
     }

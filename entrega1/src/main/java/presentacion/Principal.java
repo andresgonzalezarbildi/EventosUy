@@ -198,12 +198,12 @@ public class Principal {
                 JOptionPane.showMessageDialog(frmGestion, "Los datos se cargaron correctamente.");
             }
         });
-        JMenuItem menuSalir = new JMenuItem("Salir");
-        menuSalir.addActionListener(e -> {
-            frmGestion.setVisible(false);
-            frmGestion.dispose();
-        });
-        menuSistema.add(menuSalir);
+//        JMenuItem menuSalir = new JMenuItem("Salir");
+//        menuSalir.addActionListener(e -> {
+//            frmGestion.setVisible(false);
+//            frmGestion.dispose();
+//        });
+//        menuSistema.add(menuSalir);
         menuBar.add(menuSistema);
         menuSistema.add(menuCarga);
  
