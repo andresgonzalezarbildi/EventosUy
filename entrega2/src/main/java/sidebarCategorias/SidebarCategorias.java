@@ -38,7 +38,7 @@ public class SidebarCategorias extends HttpFilter implements Filter {
         String path = request.getRequestURI();
         System.out.println("[SidebarCategorias] pasando por: " + path);
 
-        // No interceptar recursos estáticos
+        
         if (path.endsWith("ValidarUsuarioServlet") ||
             path.contains("/img/") ||
             path.contains("/estilos/") ||
@@ -47,7 +47,7 @@ public class SidebarCategorias extends HttpFilter implements Filter {
             return;
         }
 
-        // 🧩 Detectar si el servidor central fue reiniciado
+      
         try {
             EstadoServidorService serviceEstado = new EstadoServidorService();
             EstadoServidor estadoWs = serviceEstado.getEstadoServidorPort();
@@ -57,16 +57,16 @@ public class SidebarCategorias extends HttpFilter implements Filter {
             if (ultimaFechaInicio == null) {
                 ultimaFechaInicio = fechaInicioActual;
             } else if (!ultimaFechaInicio.equals(fechaInicioActual)) {
-                // 🔥 Se detectó un reinicio del servidor central
+               
                 ultimaFechaInicio = fechaInicioActual;
 
-                // Invalidar sesión
+              
                 HttpSession sesion = request.getSession(false);
                 if (sesion != null) {
                     sesion.invalidate();
                 }
 
-                // Borrar cookie JSESSIONID
+             
                 Cookie cookie = new Cookie("JSESSIONID", "");
                 cookie.setMaxAge(0);
                 cookie.setPath(request.getContextPath());
@@ -78,11 +78,31 @@ public class SidebarCategorias extends HttpFilter implements Filter {
             }
 
         } catch (Exception e) {
-            System.out.println("[SidebarCategorias] ⚠️ No se pudo conectar al EstadoServidorWS: " + e.getMessage());
-            // Si querés, también podés invalidar sesión aquí
+            System.out.println("[SidebarCategorias] ❌ No se pudo conectar al EstadoServidorWS: " + e.getMessage());
+
+           
+            HttpSession sesion = request.getSession(false);
+            if (sesion != null) {
+                sesion.invalidate();
+            }
+
+           
+            Cookie cookie = new Cookie("JSESSIONID", "");
+            cookie.setMaxAge(0);
+            cookie.setPath(request.getContextPath());
+            response.addCookie(cookie);
+
+            request.setAttribute("javax.servlet.error.status_code", 503);
+            request.setAttribute("mensajeError", 
+                "El servidor central no se encuentra disponible en este momento. " +
+                "Por favor, intente nuevamente más tarde.");
+            request.setAttribute("javax.servlet.error.request_uri", request.getRequestURI());
+
+            request.getRequestDispatcher("/WEB-INF/pages/error.jsp").forward(request, response);
+            return;
         }
 
-        // 🧩 Cargar categorías normalmente
+  
         List<String> categorias = List.of();
         try {
             if (service == null) {
