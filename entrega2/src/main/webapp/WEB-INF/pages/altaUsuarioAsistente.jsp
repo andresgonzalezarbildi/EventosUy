@@ -85,16 +85,16 @@
   <jsp:include page="footer.jsp" />
  
  <script>
-		function verificarDisponibilidad(campo, valor) {
+		function verificarDisponibilidad(campo, valor) { //se fija si el campo esta vacio para no devolver ningun mensaje
 		  if (!valor || valor.trim() === "") {
 		    document.getElementById(campo + "-status").innerText = "";
 		    return;
 		  }
-		
-		  fetch("<%= request.getContextPath() %>/ValidarUsuarioServlet?" + campo + "=" + encodeURIComponent(valor))
+			//el fetch llama al servlet Validarusuarioservlet para mandar un GET
+		  fetch("<%= request.getContextPath() %>/ValidarUsuarioServlet?" + campo + "=" + encodeURIComponent(valor)) 
 		    .then(res => res.json())
 		    .then(data => {
-		      const span = document.getElementById(campo + "-status");
+		      const span = document.getElementById(campo + "-status"); //aca se busca el campo donde se escribira el mensaje de disponibilidad  o no en pantalla
 		      if (data.error) {
 		        span.style.color = "red";
 		        span.innerText = "Error de conexión";
