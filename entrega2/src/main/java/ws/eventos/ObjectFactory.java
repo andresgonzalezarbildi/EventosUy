@@ -24,67 +24,69 @@ import jakarta.xml.bind.annotation.XmlRegistry;
 @XmlRegistry
 public class ObjectFactory {
 
-    private final static QName _CategoriaRepetidaFault_QNAME = new QName("http://publicar.ws/", "CategoriaRepetidaFault");
-    private final static QName _EdicionNoExisteFault_QNAME = new QName("http://publicar.ws/", "EdicionNoExisteFault");
-    private final static QName _EventoNoExisteFault_QNAME = new QName("http://publicar.ws/", "EventoNoExisteFault");
-    private final static QName _EventoRepetidoFault_QNAME = new QName("http://publicar.ws/", "EventoRepetidoFault");
-    private final static QName _TipoRegistroRepetidoFault_QNAME = new QName("http://publicar.ws/", "TipoRegistroRepetidoFault");
-    private final static QName _TransicionEstadoInvalidaFault_QNAME = new QName("http://publicar.ws/", "TransicionEstadoInvalidaFault");
-    private final static QName _UsuarioNoExisteFault_QNAME = new QName("http://publicar.ws/", "UsuarioNoExisteFault");
-    private final static QName _AceptarEdicion_QNAME = new QName("http://publicar.ws/", "aceptarEdicion");
-    private final static QName _AceptarEdicionResponse_QNAME = new QName("http://publicar.ws/", "aceptarEdicionResponse");
-    private final static QName _AltaCategoria_QNAME = new QName("http://publicar.ws/", "altaCategoria");
-    private final static QName _AltaCategoriaResponse_QNAME = new QName("http://publicar.ws/", "altaCategoriaResponse");
-    private final static QName _AltaEdicionEvento_QNAME = new QName("http://publicar.ws/", "altaEdicionEvento");
-    private final static QName _AltaEdicionEventoResponse_QNAME = new QName("http://publicar.ws/", "altaEdicionEventoResponse");
-    private final static QName _AltaEvento_QNAME = new QName("http://publicar.ws/", "altaEvento");
-    private final static QName _AltaEventoResponse_QNAME = new QName("http://publicar.ws/", "altaEventoResponse");
-    private final static QName _AltaRegistro_QNAME = new QName("http://publicar.ws/", "altaRegistro");
-    private final static QName _AltaRegistroResponse_QNAME = new QName("http://publicar.ws/", "altaRegistroResponse");
-    private final static QName _AltaTipoRegistro_QNAME = new QName("http://publicar.ws/", "altaTipoRegistro");
-    private final static QName _AltaTipoRegistroResponse_QNAME = new QName("http://publicar.ws/", "altaTipoRegistroResponse");
-    private final static QName _GetEventoDeUnaEdicion_QNAME = new QName("http://publicar.ws/", "getEventoDeUnaEdicion");
-    private final static QName _GetEventoDeUnaEdicionResponse_QNAME = new QName("http://publicar.ws/", "getEventoDeUnaEdicionResponse");
-    private final static QName _GetEventosDTO_QNAME = new QName("http://publicar.ws/", "getEventosDTO");
-    private final static QName _GetEventosDTOResponse_QNAME = new QName("http://publicar.ws/", "getEventosDTOResponse");
-    private final static QName _GetInfoEdicion_QNAME = new QName("http://publicar.ws/", "getInfoEdicion");
-    private final static QName _GetInfoEdicionResponse_QNAME = new QName("http://publicar.ws/", "getInfoEdicionResponse");
-    private final static QName _GetTipoRegistro_QNAME = new QName("http://publicar.ws/", "getTipoRegistro");
-    private final static QName _GetTipoRegistroResponse_QNAME = new QName("http://publicar.ws/", "getTipoRegistroResponse");
-    private final static QName _GetUnEventoDTO_QNAME = new QName("http://publicar.ws/", "getUnEventoDTO");
-    private final static QName _GetUnEventoDTOResponse_QNAME = new QName("http://publicar.ws/", "getUnEventoDTOResponse");
-    private final static QName _ListarCategorias_QNAME = new QName("http://publicar.ws/", "listarCategorias");
-    private final static QName _ListarCategoriasResponse_QNAME = new QName("http://publicar.ws/", "listarCategoriasResponse");
-    private final static QName _ListarEdiciones_QNAME = new QName("http://publicar.ws/", "listarEdiciones");
-    private final static QName _ListarEdicionesAceptadas_QNAME = new QName("http://publicar.ws/", "listarEdicionesAceptadas");
-    private final static QName _ListarEdicionesAceptadasEvento_QNAME = new QName("http://publicar.ws/", "listarEdicionesAceptadasEvento");
-    private final static QName _ListarEdicionesAceptadasEventoResponse_QNAME = new QName("http://publicar.ws/", "listarEdicionesAceptadasEventoResponse");
-    private final static QName _ListarEdicionesAceptadasResponse_QNAME = new QName("http://publicar.ws/", "listarEdicionesAceptadasResponse");
-    private final static QName _ListarEdicionesIngresadas_QNAME = new QName("http://publicar.ws/", "listarEdicionesIngresadas");
-    private final static QName _ListarEdicionesIngresadasEvento_QNAME = new QName("http://publicar.ws/", "listarEdicionesIngresadasEvento");
-    private final static QName _ListarEdicionesIngresadasEventoResponse_QNAME = new QName("http://publicar.ws/", "listarEdicionesIngresadasEventoResponse");
-    private final static QName _ListarEdicionesIngresadasResponse_QNAME = new QName("http://publicar.ws/", "listarEdicionesIngresadasResponse");
-    private final static QName _ListarEdicionesOrganizador_QNAME = new QName("http://publicar.ws/", "listarEdicionesOrganizador");
-    private final static QName _ListarEdicionesOrganizadorAceptadas_QNAME = new QName("http://publicar.ws/", "listarEdicionesOrganizadorAceptadas");
-    private final static QName _ListarEdicionesOrganizadorAceptadasResponse_QNAME = new QName("http://publicar.ws/", "listarEdicionesOrganizadorAceptadasResponse");
-    private final static QName _ListarEdicionesOrganizadorResponse_QNAME = new QName("http://publicar.ws/", "listarEdicionesOrganizadorResponse");
-    private final static QName _ListarEdicionesRechazadas_QNAME = new QName("http://publicar.ws/", "listarEdicionesRechazadas");
-    private final static QName _ListarEdicionesRechazadasEvento_QNAME = new QName("http://publicar.ws/", "listarEdicionesRechazadasEvento");
-    private final static QName _ListarEdicionesRechazadasEventoResponse_QNAME = new QName("http://publicar.ws/", "listarEdicionesRechazadasEventoResponse");
-    private final static QName _ListarEdicionesRechazadasResponse_QNAME = new QName("http://publicar.ws/", "listarEdicionesRechazadasResponse");
-    private final static QName _ListarEdicionesResponse_QNAME = new QName("http://publicar.ws/", "listarEdicionesResponse");
-    private final static QName _ListarEventoExistentes_QNAME = new QName("http://publicar.ws/", "listarEventoExistentes");
-    private final static QName _ListarEventoExistentesResponse_QNAME = new QName("http://publicar.ws/", "listarEventoExistentesResponse");
-    private final static QName _ListarRegistrosDeEdicion_QNAME = new QName("http://publicar.ws/", "listarRegistrosDeEdicion");
-    private final static QName _ListarRegistrosDeEdicionResponse_QNAME = new QName("http://publicar.ws/", "listarRegistrosDeEdicionResponse");
-    private final static QName _ListarRegistrosDeUsuario_QNAME = new QName("http://publicar.ws/", "listarRegistrosDeUsuario");
-    private final static QName _ListarRegistrosDeUsuarioResponse_QNAME = new QName("http://publicar.ws/", "listarRegistrosDeUsuarioResponse");
-    private final static QName _ListarTiposRegistro_QNAME = new QName("http://publicar.ws/", "listarTiposRegistro");
-    private final static QName _ListarTiposRegistroResponse_QNAME = new QName("http://publicar.ws/", "listarTiposRegistroResponse");
-    private final static QName _ListarUnRegistroDeUsuario_QNAME = new QName("http://publicar.ws/", "listarUnRegistroDeUsuario");
-    private final static QName _ListarUnRegistroDeUsuarioResponse_QNAME = new QName("http://publicar.ws/", "listarUnRegistroDeUsuarioResponse");
-    private final static QName _SetCostoRegistro_QNAME = new QName("http://publicar.ws/", "setCostoRegistro");
-    private final static QName _SetCostoRegistroResponse_QNAME = new QName("http://publicar.ws/", "setCostoRegistroResponse");
+    private static final QName _CategoriaRepetidaFault_QNAME = new QName("http://publicar.ws/", "CategoriaRepetidaFault");
+    private static final QName _EdicionNoExisteFault_QNAME = new QName("http://publicar.ws/", "EdicionNoExisteFault");
+    private static final QName _EventoNoExisteFault_QNAME = new QName("http://publicar.ws/", "EventoNoExisteFault");
+    private static final QName _EventoRepetidoFault_QNAME = new QName("http://publicar.ws/", "EventoRepetidoFault");
+    private static final QName _TipoRegistroRepetidoFault_QNAME = new QName("http://publicar.ws/", "TipoRegistroRepetidoFault");
+    private static final QName _TransicionEstadoInvalidaFault_QNAME = new QName("http://publicar.ws/", "TransicionEstadoInvalidaFault");
+    private static final QName _UsuarioNoExisteFault_QNAME = new QName("http://publicar.ws/", "UsuarioNoExisteFault");
+    private static final QName _AceptarEdicion_QNAME = new QName("http://publicar.ws/", "aceptarEdicion");
+    private static final QName _AceptarEdicionResponse_QNAME = new QName("http://publicar.ws/", "aceptarEdicionResponse");
+    private static final QName _AltaCategoria_QNAME = new QName("http://publicar.ws/", "altaCategoria");
+    private static final QName _AltaCategoriaResponse_QNAME = new QName("http://publicar.ws/", "altaCategoriaResponse");
+    private static final QName _AltaEdicionEvento_QNAME = new QName("http://publicar.ws/", "altaEdicionEvento");
+    private static final QName _AltaEdicionEventoResponse_QNAME = new QName("http://publicar.ws/", "altaEdicionEventoResponse");
+    private static final QName _AltaEvento_QNAME = new QName("http://publicar.ws/", "altaEvento");
+    private static final QName _AltaEventoResponse_QNAME = new QName("http://publicar.ws/", "altaEventoResponse");
+    private static final QName _AltaRegistro_QNAME = new QName("http://publicar.ws/", "altaRegistro");
+    private static final QName _AltaRegistroResponse_QNAME = new QName("http://publicar.ws/", "altaRegistroResponse");
+    private static final QName _AltaTipoRegistro_QNAME = new QName("http://publicar.ws/", "altaTipoRegistro");
+    private static final QName _AltaTipoRegistroResponse_QNAME = new QName("http://publicar.ws/", "altaTipoRegistroResponse");
+    private static final QName _FinalizarEvento_QNAME = new QName("http://publicar.ws/", "finalizarEvento");
+    private static final QName _FinalizarEventoResponse_QNAME = new QName("http://publicar.ws/", "finalizarEventoResponse");
+    private static final QName _GetEventoDeUnaEdicion_QNAME = new QName("http://publicar.ws/", "getEventoDeUnaEdicion");
+    private static final QName _GetEventoDeUnaEdicionResponse_QNAME = new QName("http://publicar.ws/", "getEventoDeUnaEdicionResponse");
+    private static final QName _GetEventosDTO_QNAME = new QName("http://publicar.ws/", "getEventosDTO");
+    private static final QName _GetEventosDTOResponse_QNAME = new QName("http://publicar.ws/", "getEventosDTOResponse");
+    private static final QName _GetInfoEdicion_QNAME = new QName("http://publicar.ws/", "getInfoEdicion");
+    private static final QName _GetInfoEdicionResponse_QNAME = new QName("http://publicar.ws/", "getInfoEdicionResponse");
+    private static final QName _GetTipoRegistro_QNAME = new QName("http://publicar.ws/", "getTipoRegistro");
+    private static final QName _GetTipoRegistroResponse_QNAME = new QName("http://publicar.ws/", "getTipoRegistroResponse");
+    private static final QName _GetUnEventoDTO_QNAME = new QName("http://publicar.ws/", "getUnEventoDTO");
+    private static final QName _GetUnEventoDTOResponse_QNAME = new QName("http://publicar.ws/", "getUnEventoDTOResponse");
+    private static final QName _ListarCategorias_QNAME = new QName("http://publicar.ws/", "listarCategorias");
+    private static final QName _ListarCategoriasResponse_QNAME = new QName("http://publicar.ws/", "listarCategoriasResponse");
+    private static final QName _ListarEdiciones_QNAME = new QName("http://publicar.ws/", "listarEdiciones");
+    private static final QName _ListarEdicionesAceptadas_QNAME = new QName("http://publicar.ws/", "listarEdicionesAceptadas");
+    private static final QName _ListarEdicionesAceptadasEvento_QNAME = new QName("http://publicar.ws/", "listarEdicionesAceptadasEvento");
+    private static final QName _ListarEdicionesAceptadasEventoResponse_QNAME = new QName("http://publicar.ws/", "listarEdicionesAceptadasEventoResponse");
+    private static final QName _ListarEdicionesAceptadasResponse_QNAME = new QName("http://publicar.ws/", "listarEdicionesAceptadasResponse");
+    private static final QName _ListarEdicionesIngresadas_QNAME = new QName("http://publicar.ws/", "listarEdicionesIngresadas");
+    private static final QName _ListarEdicionesIngresadasEvento_QNAME = new QName("http://publicar.ws/", "listarEdicionesIngresadasEvento");
+    private static final QName _ListarEdicionesIngresadasEventoResponse_QNAME = new QName("http://publicar.ws/", "listarEdicionesIngresadasEventoResponse");
+    private static final QName _ListarEdicionesIngresadasResponse_QNAME = new QName("http://publicar.ws/", "listarEdicionesIngresadasResponse");
+    private static final QName _ListarEdicionesOrganizador_QNAME = new QName("http://publicar.ws/", "listarEdicionesOrganizador");
+    private static final QName _ListarEdicionesOrganizadorAceptadas_QNAME = new QName("http://publicar.ws/", "listarEdicionesOrganizadorAceptadas");
+    private static final QName _ListarEdicionesOrganizadorAceptadasResponse_QNAME = new QName("http://publicar.ws/", "listarEdicionesOrganizadorAceptadasResponse");
+    private static final QName _ListarEdicionesOrganizadorResponse_QNAME = new QName("http://publicar.ws/", "listarEdicionesOrganizadorResponse");
+    private static final QName _ListarEdicionesRechazadas_QNAME = new QName("http://publicar.ws/", "listarEdicionesRechazadas");
+    private static final QName _ListarEdicionesRechazadasEvento_QNAME = new QName("http://publicar.ws/", "listarEdicionesRechazadasEvento");
+    private static final QName _ListarEdicionesRechazadasEventoResponse_QNAME = new QName("http://publicar.ws/", "listarEdicionesRechazadasEventoResponse");
+    private static final QName _ListarEdicionesRechazadasResponse_QNAME = new QName("http://publicar.ws/", "listarEdicionesRechazadasResponse");
+    private static final QName _ListarEdicionesResponse_QNAME = new QName("http://publicar.ws/", "listarEdicionesResponse");
+    private static final QName _ListarEventoExistentes_QNAME = new QName("http://publicar.ws/", "listarEventoExistentes");
+    private static final QName _ListarEventoExistentesResponse_QNAME = new QName("http://publicar.ws/", "listarEventoExistentesResponse");
+    private static final QName _ListarRegistrosDeEdicion_QNAME = new QName("http://publicar.ws/", "listarRegistrosDeEdicion");
+    private static final QName _ListarRegistrosDeEdicionResponse_QNAME = new QName("http://publicar.ws/", "listarRegistrosDeEdicionResponse");
+    private static final QName _ListarRegistrosDeUsuario_QNAME = new QName("http://publicar.ws/", "listarRegistrosDeUsuario");
+    private static final QName _ListarRegistrosDeUsuarioResponse_QNAME = new QName("http://publicar.ws/", "listarRegistrosDeUsuarioResponse");
+    private static final QName _ListarTiposRegistro_QNAME = new QName("http://publicar.ws/", "listarTiposRegistro");
+    private static final QName _ListarTiposRegistroResponse_QNAME = new QName("http://publicar.ws/", "listarTiposRegistroResponse");
+    private static final QName _ListarUnRegistroDeUsuario_QNAME = new QName("http://publicar.ws/", "listarUnRegistroDeUsuario");
+    private static final QName _ListarUnRegistroDeUsuarioResponse_QNAME = new QName("http://publicar.ws/", "listarUnRegistroDeUsuarioResponse");
+    private static final QName _SetCostoRegistro_QNAME = new QName("http://publicar.ws/", "setCostoRegistro");
+    private static final QName _SetCostoRegistroResponse_QNAME = new QName("http://publicar.ws/", "setCostoRegistroResponse");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: ws.eventos
@@ -281,6 +283,26 @@ public class ObjectFactory {
      */
     public AltaTipoRegistroResponse createAltaTipoRegistroResponse() {
         return new AltaTipoRegistroResponse();
+    }
+
+    /**
+     * Create an instance of {@link FinalizarEvento }
+     * 
+     * @return
+     *     the new instance of {@link FinalizarEvento }
+     */
+    public FinalizarEvento createFinalizarEvento() {
+        return new FinalizarEvento();
+    }
+
+    /**
+     * Create an instance of {@link FinalizarEventoResponse }
+     * 
+     * @return
+     *     the new instance of {@link FinalizarEventoResponse }
+     */
+    public FinalizarEventoResponse createFinalizarEventoResponse() {
+        return new FinalizarEventoResponse();
     }
 
     /**
@@ -998,6 +1020,32 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://publicar.ws/", name = "altaTipoRegistroResponse")
     public JAXBElement<AltaTipoRegistroResponse> createAltaTipoRegistroResponse(AltaTipoRegistroResponse value) {
         return new JAXBElement<>(_AltaTipoRegistroResponse_QNAME, AltaTipoRegistroResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link FinalizarEvento }{@code >}
+     * 
+     * @param value
+     *     Java instance representing xml element's value.
+     * @return
+     *     the new instance of {@link JAXBElement }{@code <}{@link FinalizarEvento }{@code >}
+     */
+    @XmlElementDecl(namespace = "http://publicar.ws/", name = "finalizarEvento")
+    public JAXBElement<FinalizarEvento> createFinalizarEvento(FinalizarEvento value) {
+        return new JAXBElement<>(_FinalizarEvento_QNAME, FinalizarEvento.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link FinalizarEventoResponse }{@code >}
+     * 
+     * @param value
+     *     Java instance representing xml element's value.
+     * @return
+     *     the new instance of {@link JAXBElement }{@code <}{@link FinalizarEventoResponse }{@code >}
+     */
+    @XmlElementDecl(namespace = "http://publicar.ws/", name = "finalizarEventoResponse")
+    public JAXBElement<FinalizarEventoResponse> createFinalizarEventoResponse(FinalizarEventoResponse value) {
+        return new JAXBElement<>(_FinalizarEventoResponse_QNAME, FinalizarEventoResponse.class, null, value);
     }
 
     /**

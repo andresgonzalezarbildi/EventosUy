@@ -76,10 +76,14 @@
                   <p><%= evento.getFechaAlta() %></p>
                 </div>
               </div>
-              <% if ("organizador".equalsIgnoreCase(rol)) { %>
+              <% if ("organizador".equalsIgnoreCase(rol) ) { %>
 			  <button class="btn"
 			  		onclick="window.location.href='<%=path%>/edicion?op=alta&id=<%= evento.getNombre() %>'">
 			    Crear Edición
+			  </button>
+			  <button class="btn"
+			  		onclick="window.location.href='<%=path%>/edicion?op=baja&id=<%= evento.getNombre() %>'">
+			    Finalizar Evento
 			  </button>
 			<% } %>
             </section>

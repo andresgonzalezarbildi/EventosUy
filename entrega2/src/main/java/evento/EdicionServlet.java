@@ -65,6 +65,12 @@ public class EdicionServlet extends HttpServlet {
                 case "listar":
                     listarEdiciones(req, res);
                     break;
+                    
+                case "baja":
+                	String idEventoa = req.getParameter("id");
+                	controladorEventos.finalizarEvento(idEventoa);
+                	res.sendRedirect(req.getContextPath()+"/eventos");
+                    break;
 
                 case "consultar":
                     HttpSession sesion = req.getSession(false);

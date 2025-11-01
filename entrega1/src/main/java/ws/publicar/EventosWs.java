@@ -340,4 +340,9 @@ public class EventosWs {
     public List<String> listarCategorias() {
         return ctrl.listarCategorias();
     }
+    
+    public void finalizarEvento(String nombreEvento) {
+    	ctrl.finalizarEvento(nombreEvento);
+    }
+    
 }

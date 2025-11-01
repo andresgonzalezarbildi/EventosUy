@@ -578,5 +578,6 @@ public interface EventosWs {
         String nombreEvento,
         @WebParam(name = "nombreEdicion", targetNamespace = "")
         String nombreEdicion);
-
 }
+
+

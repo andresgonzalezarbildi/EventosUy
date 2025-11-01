@@ -204,8 +204,9 @@
 				 
 				<div style="display:flex; flex-direction:column; align-items:center;">
 				<%
+		
 				    DataEvento ev = (DataEvento) request.getAttribute("evento");
-				    if (ev != null) {
+				    if (ev != null && !ev.isFinalizado()) {
 				        String nombreEvento = ev.getNombre();
 				        String imagenEvento = (ev.getImagen() != null && !ev.getImagen().isEmpty())
 				                              ? ev.getImagen()
@@ -225,7 +226,7 @@
 				<%
 				    } else {
 				%>
-				    <p style="text-align:center; color:#777;">No hay evento disponible.</p>
+				    <p style="text-align:center; color:#777;">El evento ya finalizo.</p>
 				<%
 				    }
 				%>
