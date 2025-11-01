@@ -19,8 +19,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
-import logica.Fabrica;
-import logica.interfaces.IControladorEvento;
+
 import ws.eventos.EventosService;
 import ws.eventos.EventosWs;
 

@@ -37,6 +37,7 @@
       <!-- Datos comunes -->
       <label for="nick">Nick:</label>
       <input type="text" id="nick" name="nick" required value="<%= nick %>">
+      <span id="nick-status"></span>
 
       <label for="nombre">Nombre:</label>
       <input type="text" id="nombre" name="nombre" required value="<%= nombre %>">
@@ -46,6 +47,7 @@
 
       <label for="correo">Correo electrónico:</label>
       <input type="email" id="correo" name="correo" required value="<%= correo %>">
+      <span id="correo-status"></span>
 
       <!-- Contraseñas -->
       <label for="password">Contraseña:</label>
@@ -81,6 +83,9 @@
   </main>
 
   <jsp:include page="footer.jsp" />
+ 
+
+
 </body>
 </html>
 

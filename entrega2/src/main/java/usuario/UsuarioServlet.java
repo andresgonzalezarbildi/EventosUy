@@ -33,8 +33,8 @@
 	
 	    private EventosService serviceEv = new EventosService();
 	    private UsuarioService serviceUs = new UsuarioService();
-		 EventosWs ce = serviceEv.getEventosPort();
-		 UsuarioWs cu = serviceUs.getUsuarioPort();
+		EventosWs ce = serviceEv.getEventosPort();
+		UsuarioWs cu = serviceUs.getUsuarioPort();
 	    @Override
 	    protected void doGet(HttpServletRequest req, HttpServletResponse res)
 	            throws ServletException, IOException {
@@ -195,7 +195,7 @@
 	                        eds = ce.listarEdicionesOrganizadorAceptadas(nick);
 	                    }
 	                } catch (EdicionNoExisteFault_Exception e) {
-	                    eds = new ArrayList<>(); // 👈 no usar Collections.emptyList()
+	                    eds = new ArrayList<>();
 	                }
 	                req.setAttribute("ediciones", eds);
 	
