@@ -141,8 +141,7 @@
 	            }}
 
 	            log("Modificando usuario: " + nick + ", nombre=" + nombre + ", imagen=" + imagen);
-	            
-	            cu.modificarUsuario(nick, nombre, descripcion, imagen, link, apellido, fechaNac);
+	            cu.modificarUsuario(nick, nombre, descripcion, imagen, link, apellido, fechaNac);	
 	         // Actualizar imagen en la sesión para que el header la muestre
 	            req.getSession().setAttribute("imagen", imagen);
 

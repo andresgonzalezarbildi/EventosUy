@@ -166,6 +166,7 @@ public class Principal {
         FinalizarEventoInternalFrame.setDefaultCloseOperation(JInternalFrame.HIDE_ON_CLOSE);
         
     }
+	private boolean datosCargados = false;
 
     private void initialize() {
 
@@ -182,12 +183,20 @@ public class Principal {
         JMenuBar menuBar = new JMenuBar();
         frmGestion.setJMenuBar(menuBar);
 
+
+
+
         // Menú Sistema
         JMenu menuSistema = new JMenu("Sistema");
         JMenuItem menuCarga = new JMenuItem("Carga de Datos");
         menuCarga.addActionListener(e -> {
-        	fabrica.getCargaDatos().cargarDatosIniciales();
-        	JOptionPane.showMessageDialog(frmGestion, "Los datos se cargaron correctamente.");
+            if (datosCargados) {
+                JOptionPane.showMessageDialog(frmGestion, "Los datos ya fueron cargados.");
+            } else {
+                fabrica.getCargaDatos().cargarDatosIniciales();
+                datosCargados = true; 
+                JOptionPane.showMessageDialog(frmGestion, "Los datos se cargaron correctamente.");
+            }
         });
         JMenuItem menuSalir = new JMenuItem("Salir");
         menuSalir.addActionListener(e -> {
