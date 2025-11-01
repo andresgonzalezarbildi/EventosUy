@@ -59,7 +59,9 @@
   DataEdicion edicion = (DataEdicion) request.getAttribute("edicion");
   boolean edicionActiva = false;
   if (edicion != null && edicion.getFechaFin() != null) {
-      edicionActiva = edicion.getFechaFin().isAfter(java.time.LocalDate.now());
+	  String hoy = java.time.LocalDate.now().toString();
+	  String fechaFin = edicion.getFechaFin();
+      edicionActiva = (edicion.getFechaFin().compareTo(hoy) > 0);
   }
 %>
 
