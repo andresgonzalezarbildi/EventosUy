@@ -34,12 +34,14 @@ public class SidebarCategorias extends HttpFilter implements Filter {
     @Override
     public void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws IOException, ServletException {
+    	
 
         String path = request.getRequestURI();
         System.out.println("[SidebarCategorias] pasando por: " + path);
-
-        
-        if (path.endsWith("ValidarUsuarioServlet") ||
+       
+        if (path.contains("/LoginServlet") ||
+                path.contains("/LogoutServlet")
+                ||path.endsWith("ValidarUsuarioServlet") ||
             path.contains("/img/") ||
             path.contains("/estilos/") ||
             path.contains("/js/")) {

@@ -7,24 +7,22 @@ import java.io.IOException;
 
 @WebServlet("/LogoutServlet")
 public class LogoutServlet extends HttpServlet {
-
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-      
         HttpSession sesion = request.getSession(false);
         if (sesion != null) {
             sesion.invalidate();
         }
 
-        
+       
         Cookie cookie = new Cookie("JSESSIONID", "");
         cookie.setMaxAge(0);
-        cookie.setPath(request.getContextPath()); 
+        cookie.setPath(request.getContextPath());
         response.addCookie(cookie);
 
-      
-        response.sendRedirect(request.getContextPath() + "/index.jsp");
+        request.getSession(true).setAttribute("logout_ok", "Sesión cerrada correctamente");
+        response.sendRedirect(request.getContextPath() + "/LoginServlet");
     }
 }

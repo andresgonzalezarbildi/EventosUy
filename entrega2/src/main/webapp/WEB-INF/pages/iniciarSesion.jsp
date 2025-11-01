@@ -60,6 +60,10 @@
         String usuarioIngresado = (String) request.getAttribute("usuarioIngresado");
       %>
 
+<% String msg = (String) session.getAttribute("logout_ok");
+   if (msg != null) { %>
+   <div class="alert alert-success"><%= msg %></div>
+   <% session.removeAttribute("logout_ok"); } %>
       <div class="messages">
         <% if ("ok".equals(registro)) { %>
           <p style="color:green;">Registro exitoso. Ahora podés iniciar sesión.</p>

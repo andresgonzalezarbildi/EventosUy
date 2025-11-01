@@ -1,6 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 
+
+
 <header class="navbar">
   <div class="container-fluid">
     <div class="row navbar-row text-center text-md-start">

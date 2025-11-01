@@ -84,6 +84,44 @@
 
   <jsp:include page="footer.jsp" />
  
+ <script>
+		function verificarDisponibilidad(campo, valor) {
+		  if (!valor || valor.trim() === "") {
+		    document.getElementById(campo + "-status").innerText = "";
+		    return;
+		  }
+		
+		  fetch("<%= request.getContextPath() %>/ValidarUsuarioServlet?" + campo + "=" + encodeURIComponent(valor))
+		    .then(res => res.json())
+		    .then(data => {
+		      const span = document.getElementById(campo + "-status");
+		      if (data.error) {
+		        span.style.color = "red";
+		        span.innerText = "Error de conexión";
+		      } else if (data.disponible) {
+		        span.style.color = "green";
+		        span.innerText = campo === "nick" ? "✔ Nick disponible" : "✔ Correo disponible";
+		      } else {
+		        span.style.color = "red";
+		        span.innerText = campo === "nick" ? "✖ Nick en uso" : "✖ Correo en uso";
+		      }
+		    })
+		    .catch(() => {
+		      const span = document.getElementById(campo + "-status");
+		      span.style.color = "red";
+		      span.innerText = "Error de conexión con el servidor";
+		    });
+		}
+		
+		document.addEventListener("DOMContentLoaded", () => {
+		  const nickInput = document.getElementById("nick");
+		  const correoInput = document.getElementById("correo");
+		
+		  nickInput.addEventListener("input", () => verificarDisponibilidad("nick", nickInput.value));
+		  correoInput.addEventListener("input", () => verificarDisponibilidad("correo", correoInput.value));
+		});
+</script>
+ 
 
 
 </body>
