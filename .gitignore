@@ -10,3 +10,5 @@ target/
 .metadata/
 Servers/
 
+img/*
+
