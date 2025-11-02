@@ -143,7 +143,7 @@
           <!-- Imagen a la derecha -->
          <div class="user-image ms-4 text-center">
 		  <a href="<%= ctx %>/UsuarioServlet?op=consultar&nick=<%= usuario.getNickname() %>">
-		    <img src="<%= request.getContextPath() + "/img/" + (usuario.getImagen() != null ? usuario.getImagen() : "PerfilSinFoto.jpg") %>" 
+		    <img src="<%= request.getContextPath() + "/MediaServlet?name=" + (usuario.getImagen() != null ? usuario.getImagen() : "PerfilSinFoto.jpg") %>" 
 		         alt="Foto Usuario" style="width:150px; height:150px; border-radius:8px; object-fit:cover; margin-bottom:0.5rem;">
 		  </a>
 		  <h4><%= usuario.getNickname() %></h4>

@@ -17,7 +17,10 @@
 	import jakarta.servlet.annotation.MultipartConfig;
 	import ws.eventos.EventosService;
 	import ws.eventos.EventosWs;
-	import ws.usuario.UsuarioWs;
+import ws.media.IOException_Exception;
+import ws.media.MediaService;
+import ws.media.MediaWs;
+import ws.usuario.UsuarioWs;
 	import ws.usuario.UsuarioNoExisteFault_Exception;
 	import ws.usuario.UsuarioService;
 	import ws.usuario.DataUsuario;
@@ -35,6 +38,9 @@
 	    private UsuarioService serviceUs = new UsuarioService();
 		EventosWs ce = serviceEv.getEventosPort();
 		UsuarioWs cu = serviceUs.getUsuarioPort();
+		private final MediaService mediaService = new MediaService();
+		private final MediaWs mediaPort = mediaService.getMediaPort();
+		
 	    @Override
 	    protected void doGet(HttpServletRequest req, HttpServletResponse res)
 	            throws ServletException, IOException {
@@ -95,28 +101,42 @@
 	            String link = usuario.getLink();
 	            String apellido = usuario.getApellido();
 	            String fechaNac = usuario.getFechaNacimiento();
+	            String correo = usuario.getCorreo();
 
 	            // Imagen
-	            Part filePart = req.getPart("imagen");
-	            String imagen = usuario.getImagen();
-	            if (filePart != null && filePart.getSize() > 0) {
-	                String submitted = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
-	                String ext = "";
-	                int dot = submitted.lastIndexOf('.');
-	                if (dot >= 0 && dot < submitted.length() - 1) ext = submitted.substring(dot).toLowerCase();
-	                String nuevoNombre = UUID.randomUUID().toString().replace("-", "") + ext;
+	            String imagen = null;
+	            Part filePart = null;
+	            try {
+	                filePart = req.getPart("imagen");
+	            } catch (Exception ignore) {
+	            }
 
-	                String imgDirPath = getServletContext().getRealPath("/img");
-	                if (imgDirPath != null) {
-	                    Path imgDir = Paths.get(imgDirPath);
-	                    Files.createDirectories(imgDir);
-	                    Path destino = imgDir.resolve(nuevoNombre);
-	                    try (InputStream in = filePart.getInputStream()) {
-	                        Files.copy(in, destino, StandardCopyOption.REPLACE_EXISTING);
-	                        imagen = nuevoNombre;
-	                    }
+	            if (filePart != null && filePart.getSize() > 0) {
+	                String contentType = filePart.getContentType();
+
+	                if (contentType == null || !contentType.startsWith("image/")) {
+	                    req.setAttribute("error",
+	                            "El archivo seleccionado no es una imagen válida. Solo se permiten JPG, PNG, GIF o WEBP.");
+	                    repoblarFormularioUsuario(req, res, nick, nombre, correo, descripcion, link, apellido, fechaNac);
+	                    return;
+	                }
+
+	                String submitted = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
+	                byte[] bytes;
+	                try (InputStream in = filePart.getInputStream()) {
+	                    bytes = in.readAllBytes();
+	                }
+
+	                try {
+	                    imagen = mediaPort.subirImagen(submitted, bytes);
+	                } catch (IOException_Exception ex) {
+	                    req.setAttribute("error",
+	                            "El archivo seleccionado no es una imagen válida o ocurrió un error al subirla.");
+	                	repoblarFormularioUsuario(req, res, nick, nombre, correo, descripcion, link, apellido, fechaNac);
+	                	return;
 	                }
 	            }
+	            
 	            String newPassword = req.getParameter("newPassword");
 	            String confirmPassword = req.getParameter("confirmPassword");
 	         	if (newPassword != null && !newPassword.isBlank() && newPassword.equals(confirmPassword)) {
@@ -231,4 +251,21 @@
 	            res.sendRedirect(req.getContextPath() + "/UsuarioServlet?op=listar");
 	        }
 	    }
+	    
+	    private void repoblarFormularioUsuario(HttpServletRequest req, HttpServletResponse res,
+	            String nick, String nombre, String correo,
+	            String descripcion, String link, String apellido,
+	            String fechaNac) throws ServletException, IOException {
+	        req.setAttribute("form_nick", nick);
+	        req.setAttribute("form_nombre", nombre);
+	        req.setAttribute("form_correo", correo);
+	        req.setAttribute("form_descripcion", descripcion);
+	        req.setAttribute("form_link", link);
+	        req.setAttribute("form_apellido", apellido);
+	        req.setAttribute("form_fechaNacimiento", fechaNac);
+	        req.getRequestDispatcher("/WEB-INF/pages/modificarUsuario.jsp").forward(req, res);
+	    }
+
 	}
+
+	

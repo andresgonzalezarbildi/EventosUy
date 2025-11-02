@@ -19,6 +19,9 @@ import java.util.UUID;
 import excepciones.UsuarioRepetidoException;
 import logica.Fabrica;
 import logica.interfaces.IControladorUsuario;
+import ws.media.IOException_Exception;
+import ws.media.MediaService;
+import ws.media.MediaWs;
 import ws.usuario.UsuarioRepetidoFault_Exception;
 import ws.usuario.UsuarioService;
 import ws.usuario.UsuarioWs;
@@ -29,7 +32,9 @@ public class RegistrarUsuarioServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     
     private UsuarioService serviceUs = new UsuarioService();
-	 UsuarioWs cu = serviceUs.getUsuarioPort();
+	UsuarioWs cu = serviceUs.getUsuarioPort();
+	private final MediaService mediaService = new MediaService();
+	private final MediaWs mediaPort = mediaService.getMediaPort();
     
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res)
@@ -80,43 +85,39 @@ public class RegistrarUsuarioServlet extends HttpServlet {
             return;
         }
 
+
         // subir imagen
-        String nombreImagenGuardada = null;
+        String imagen = null;
         Part filePart = null;
         try {
             filePart = req.getPart("imagen");
-        } catch (IllegalStateException ex) {
-            req.setAttribute("error", "error al subir la imagen");
-            repoblarFormulario(req, tipo, nombre, nick, correo, 
-                    req.getParameter("apellido"),
-                    req.getParameter("descripcion"),
-                    req.getParameter("link"),
-                    req.getParameter("fechaNacimiento"));
-            volverAFormTipo(req, res, tipo);
-            return;
-        } catch (ServletException | IOException ex) {
-            filePart = null;
+        } catch (Exception ignore) {
         }
 
         if (filePart != null && filePart.getSize() > 0) {
             String contentType = filePart.getContentType();
-            if (contentType != null && contentType.startsWith("image/")) {
-                String submitted = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
-                String ext = "";
-                int dot = submitted.lastIndexOf('.');
-                if (dot >= 0 && dot < submitted.length() - 1) ext = submitted.substring(dot).toLowerCase();
-                String nuevoNombre = UUID.randomUUID().toString().replace("-", "") + ext;
 
-                String imgDirPath = getServletContext().getRealPath("/img");
-                if (imgDirPath != null) {
-                    Path imgDir = Paths.get(imgDirPath);
-                    Files.createDirectories(imgDir);
-                    Path destino = imgDir.resolve(nuevoNombre);
-                    try (InputStream in = filePart.getInputStream()) {
-                        Files.copy(in, destino, StandardCopyOption.REPLACE_EXISTING);
-                    }
-                    nombreImagenGuardada = nuevoNombre;
-                } 
+            if (contentType == null || !contentType.startsWith("image/")) {
+                req.setAttribute("error",
+                        "El archivo seleccionado no es una imagen válida. Solo se permiten JPG, PNG, GIF o WEBP.");
+                repoblarFormulario(req, tipo, nombre, nick, correo, req.getParameter("apellido"), req.getParameter("descripcion"), req.getParameter("link"), req.getParameter("fechaNacimiento"));
+                volverAFormTipo(req, res, tipo);
+                return;
+            }
+
+            String submitted = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
+            byte[] bytes;
+            try (InputStream in = filePart.getInputStream()) {
+                bytes = in.readAllBytes();
+            }
+
+            try {
+                imagen = mediaPort.subirImagen(submitted, bytes);
+            } catch (IOException_Exception ex) {
+                req.setAttribute("error", "El archivo seleccionado no es una imagen válida o ocurrió un error al subirla.");
+                repoblarFormulario(req, tipo, nombre, nick, correo, req.getParameter("apellido"), req.getParameter("descripcion"), req.getParameter("link"), req.getParameter("fechaNacimiento"));
+                volverAFormTipo(req, res, tipo);
+                return;
             }
         }
 
@@ -169,7 +170,7 @@ public class RegistrarUsuarioServlet extends HttpServlet {
         	if (apellido != null && apellido.isBlank()) apellido = null;
         	
             cu.altaUsuario(
-                nick, nombre, correo, nombreImagenGuardada, password,
+                nick, nombre, correo, imagen, password,
                 tipo, descripcion, link, apellido, fechaNac
             );
             req.getSession().setAttribute("usuarioCreado", "Usuario creado");
@@ -210,10 +211,10 @@ public class RegistrarUsuarioServlet extends HttpServlet {
     }
 
     /** Helpers */
-    private static LocalDate parseFecha(String iso) {
-        try { return (iso == null || iso.isBlank()) ? null : LocalDate.parse(iso); }
-        catch (Exception e) { return null; }
-    }
+//    private static LocalDate parseFecha(String iso) {
+//        try { return (iso == null || iso.isBlank()) ? null : LocalDate.parse(iso); }
+//        catch (Exception e) { return null; }
+//    }
 
     private void volverAFormTipo(HttpServletRequest req, HttpServletResponse res, String tipo)
             throws ServletException, IOException {

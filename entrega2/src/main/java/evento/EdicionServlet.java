@@ -15,6 +15,9 @@ import ws.eventos.EventoNoExisteFault;
 import ws.eventos.EventoNoExisteFault_Exception;
 import ws.eventos.EventosService;
 import ws.eventos.EventosWs;
+import ws.media.IOException_Exception;
+import ws.media.MediaService;
+import ws.media.MediaWs;
 import ws.usuario.UsuarioNoExisteFault_Exception;
 import ws.usuario.UsuarioService;
 import ws.usuario.UsuarioWs;
@@ -33,9 +36,11 @@ import ws.eventos.DataEdicion;
 public class EdicionServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private EventosService service = new EventosService();
-	 EventosWs controladorEventos = service.getEventosPort();
-	 private UsuarioService serviceUs = new UsuarioService();
-	 UsuarioWs cu = serviceUs.getUsuarioPort();
+	EventosWs controladorEventos = service.getEventosPort();
+	private UsuarioService serviceUs = new UsuarioService();
+    UsuarioWs cu = serviceUs.getUsuarioPort();
+	private final MediaService mediaService = new MediaService();
+	private final MediaWs mediaPort = mediaService.getMediaPort();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res)
@@ -242,33 +247,35 @@ public class EdicionServlet extends HttpServlet {
         }
 
         // IMAGEN
-        String nombreImagenGuardada = null;
+        String imagenFileName = null;
+        Part filePart = null;
         try {
-            Part filePart = req.getPart("imagen");
-            if (filePart != null && filePart.getSize() > 0 && filePart.getContentType().startsWith("image/")) {
-
-                String submitted = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
-                String ext = "";
-                int dot = submitted.lastIndexOf('.');
-                if (dot >= 0) ext = submitted.substring(dot).toLowerCase();
-
-                String nuevoNombre = UUID.randomUUID().toString().replace("-", "") + ext;
-
-                Path imgDir = Paths.get(getServletContext().getRealPath("/img"));
-                Files.createDirectories(imgDir);
-
-                Path destino = imgDir.resolve(nuevoNombre);
-                try (InputStream in = filePart.getInputStream()) {
-                    Files.copy(in, destino, StandardCopyOption.REPLACE_EXISTING);
-                }
-
-                nombreImagenGuardada = nuevoNombre;
-            }
-        } catch (IllegalStateException ex) {
-            setErrorYReenviar(req, res, "Error al subir la imagen (tamaño excedido o inválido).",
-                    nombreEdicion, sigla, ciudad, pais, fechaInicioStr, fechaFinStr, nombreEvento);
-            return;
+            filePart = req.getPart("imagen");
+        } catch (Exception ignore) {
         }
+
+        if (filePart != null && filePart.getSize() > 0) {
+            String contentType = filePart.getContentType();
+
+            if (contentType == null || !contentType.startsWith("image/")) {
+                setErrorYReenviar(req, res, "El archivo seleccionado no es una imagen válida. Solo se permiten JPG, PNG, GIF o WEBP.", nombreEdicion, sigla, ciudad, pais, fechaInicioStr, fechaFinStr, nombreEvento);
+                return;
+            }
+
+            String submitted = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
+            byte[] bytes;
+            try (InputStream in = filePart.getInputStream()) {
+                bytes = in.readAllBytes();
+            }
+
+            try {
+                imagenFileName = mediaPort.subirImagen(submitted, bytes);
+            } catch (IOException_Exception ex) {
+                setErrorYReenviar(req, res, "El archivo seleccionado no es una imagen válida o ocurrió un error al subirla.", nombreEdicion, sigla, ciudad, pais, fechaInicioStr, fechaFinStr, nombreEvento);
+                return;
+            }
+        }
+        
         String fechaAltaParam = LocalDate.now().toString();
 
 
@@ -283,7 +290,7 @@ public class EdicionServlet extends HttpServlet {
                     fechaFinStr,
                     fechaAltaParam,
                     nickname,
-                    nombreImagenGuardada
+                    imagenFileName
             );
             res.sendRedirect(req.getContextPath() + "/evento?op=consultar&id=" +
                     URLEncoder.encode(nombreEvento, "UTF-8"));

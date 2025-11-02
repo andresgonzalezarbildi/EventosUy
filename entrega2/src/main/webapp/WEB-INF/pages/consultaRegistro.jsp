@@ -41,7 +41,7 @@
               <div style="text-align:center; margin-bottom:1.5rem;">
               <h2 style="margin-bottom: 1rem; color: var(--color-primary); text-align:center;">Detalle del Registro
           </h2>
-                <img src="<%= request.getContextPath() %>/img/<%= imagen %>" alt="Imagen de la edición"
+                <img src="<%= request.getContextPath() %>/MediaServlet?name=<%= imagen %>" alt="Imagen de la edición"
                   style="max-width: 350px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
               </div>
               <div class="row gy-2 mb-3">

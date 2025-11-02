@@ -91,7 +91,7 @@
 				%>
 				    <div style="margin-bottom:12px; text-align:center;">
 				        <a href="<%= request.getContextPath() %>/edicion?op=consultar&id=<%= nombreEdicion %>">
-				            <img src="<%= request.getContextPath() %>/img/<%= imagenEdicion %>" 
+				            <img src="<%= request.getContextPath() %>/MediaServlet?name=<%= imagenEdicion %>" 
 				                 alt="Consultar Evento"
 				                 style="max-width:150px; width:100%; cursor:pointer; border-radius:8px; 
 				                        box-shadow:0 2px 6px rgba(0,0,0,0.2);">

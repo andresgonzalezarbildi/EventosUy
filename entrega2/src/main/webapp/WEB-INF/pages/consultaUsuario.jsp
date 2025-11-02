@@ -40,7 +40,7 @@
 
             <!-- Foto y nickname arriba, centrados -->
             <div style="text-align:center; margin-bottom:1.5rem;">
-                <img src="<%= request.getContextPath() + "/img/" + (usuario.getImagen() != null ? usuario.getImagen() : "PerfilSinFoto.jpg") %>" 
+                <img src="<%= request.getContextPath() + "/MediaServlet?name=" + (usuario.getImagen() != null ? usuario.getImagen() : "PerfilSinFoto.jpg") %>" 
                      alt="Foto Usuario" style="width:150px; height:150px; border-radius:8px; object-fit:cover; margin-bottom:0.5rem;">
                 <div style="font-weight:bold; font-size:1.2rem;"><%= usuario.getNickname() %></div>
             </div>
