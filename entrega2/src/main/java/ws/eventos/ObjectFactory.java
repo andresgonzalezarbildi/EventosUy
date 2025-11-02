@@ -26,6 +26,7 @@ public class ObjectFactory {
 
     private final static QName _CategoriaRepetidaFault_QNAME = new QName("http://publicar.ws/", "CategoriaRepetidaFault");
     private final static QName _EdicionNoExisteFault_QNAME = new QName("http://publicar.ws/", "EdicionNoExisteFault");
+    private final static QName _EdicionSinComenzarFault_QNAME = new QName("http://publicar.ws/", "EdicionSinComenzarFault");
     private final static QName _EventoConEdicionesPendientesFaultFault_QNAME = new QName("http://publicar.ws/", "EventoConEdicionesPendientesFaultFault");
     private final static QName _EventoNoExisteFault_QNAME = new QName("http://publicar.ws/", "EventoNoExisteFault");
     private final static QName _EventoRepetidoFault_QNAME = new QName("http://publicar.ws/", "EventoRepetidoFault");
@@ -44,6 +45,8 @@ public class ObjectFactory {
     private final static QName _AltaRegistroResponse_QNAME = new QName("http://publicar.ws/", "altaRegistroResponse");
     private final static QName _AltaTipoRegistro_QNAME = new QName("http://publicar.ws/", "altaTipoRegistro");
     private final static QName _AltaTipoRegistroResponse_QNAME = new QName("http://publicar.ws/", "altaTipoRegistroResponse");
+    private final static QName _ConfirmarAsistencia_QNAME = new QName("http://publicar.ws/", "confirmarAsistencia");
+    private final static QName _ConfirmarAsistenciaResponse_QNAME = new QName("http://publicar.ws/", "confirmarAsistenciaResponse");
     private final static QName _FinalizarEvento_QNAME = new QName("http://publicar.ws/", "finalizarEvento");
     private final static QName _FinalizarEventoResponse_QNAME = new QName("http://publicar.ws/", "finalizarEventoResponse");
     private final static QName _GetEventoDeUnaEdicion_QNAME = new QName("http://publicar.ws/", "getEventoDeUnaEdicion");
@@ -114,6 +117,16 @@ public class ObjectFactory {
      */
     public EdicionNoExisteFault createEdicionNoExisteFault() {
         return new EdicionNoExisteFault();
+    }
+
+    /**
+     * Create an instance of {@link EdicionSinComenzarFault }
+     * 
+     * @return
+     *     the new instance of {@link EdicionSinComenzarFault }
+     */
+    public EdicionSinComenzarFault createEdicionSinComenzarFault() {
+        return new EdicionSinComenzarFault();
     }
 
     /**
@@ -294,6 +307,26 @@ public class ObjectFactory {
      */
     public AltaTipoRegistroResponse createAltaTipoRegistroResponse() {
         return new AltaTipoRegistroResponse();
+    }
+
+    /**
+     * Create an instance of {@link ConfirmarAsistencia }
+     * 
+     * @return
+     *     the new instance of {@link ConfirmarAsistencia }
+     */
+    public ConfirmarAsistencia createConfirmarAsistencia() {
+        return new ConfirmarAsistencia();
+    }
+
+    /**
+     * Create an instance of {@link ConfirmarAsistenciaResponse }
+     * 
+     * @return
+     *     the new instance of {@link ConfirmarAsistenciaResponse }
+     */
+    public ConfirmarAsistenciaResponse createConfirmarAsistenciaResponse() {
+        return new ConfirmarAsistenciaResponse();
     }
 
     /**
@@ -813,6 +846,19 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link EdicionSinComenzarFault }{@code >}
+     * 
+     * @param value
+     *     Java instance representing xml element's value.
+     * @return
+     *     the new instance of {@link JAXBElement }{@code <}{@link EdicionSinComenzarFault }{@code >}
+     */
+    @XmlElementDecl(namespace = "http://publicar.ws/", name = "EdicionSinComenzarFault")
+    public JAXBElement<EdicionSinComenzarFault> createEdicionSinComenzarFault(EdicionSinComenzarFault value) {
+        return new JAXBElement<>(_EdicionSinComenzarFault_QNAME, EdicionSinComenzarFault.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link EventoConEdicionesPendientesFault }{@code >}
      * 
      * @param value
@@ -1044,6 +1090,32 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://publicar.ws/", name = "altaTipoRegistroResponse")
     public JAXBElement<AltaTipoRegistroResponse> createAltaTipoRegistroResponse(AltaTipoRegistroResponse value) {
         return new JAXBElement<>(_AltaTipoRegistroResponse_QNAME, AltaTipoRegistroResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ConfirmarAsistencia }{@code >}
+     * 
+     * @param value
+     *     Java instance representing xml element's value.
+     * @return
+     *     the new instance of {@link JAXBElement }{@code <}{@link ConfirmarAsistencia }{@code >}
+     */
+    @XmlElementDecl(namespace = "http://publicar.ws/", name = "confirmarAsistencia")
+    public JAXBElement<ConfirmarAsistencia> createConfirmarAsistencia(ConfirmarAsistencia value) {
+        return new JAXBElement<>(_ConfirmarAsistencia_QNAME, ConfirmarAsistencia.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ConfirmarAsistenciaResponse }{@code >}
+     * 
+     * @param value
+     *     Java instance representing xml element's value.
+     * @return
+     *     the new instance of {@link JAXBElement }{@code <}{@link ConfirmarAsistenciaResponse }{@code >}
+     */
+    @XmlElementDecl(namespace = "http://publicar.ws/", name = "confirmarAsistenciaResponse")
+    public JAXBElement<ConfirmarAsistenciaResponse> createConfirmarAsistenciaResponse(ConfirmarAsistenciaResponse value) {
+        return new JAXBElement<>(_ConfirmarAsistenciaResponse_QNAME, ConfirmarAsistenciaResponse.class, null, value);
     }
 
     /**

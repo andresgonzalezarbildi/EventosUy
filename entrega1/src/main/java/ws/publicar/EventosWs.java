@@ -5,6 +5,7 @@ import java.util.List;
 
 import excepciones.CategoriaRepetidaException;
 import excepciones.EdicionNoExisteException;
+import excepciones.EdicionSinComenzarException;
 import excepciones.EventoConEdicionesPedientesException;
 import excepciones.EventoNoExisteException;
 import excepciones.EventoRepetidoException;
@@ -25,6 +26,7 @@ import ws.exceptions.EventoRepetidoFault;
 import ws.exceptions.TipoRegistroRepetidoFault;
 import ws.exceptions.TransicionEstadoInvalidaFault;
 import ws.exceptions.UsuarioNoExisteFault;
+import ws.exceptions.EdicionSinComenzarFault;
 import logica.datatypes.DataEdicion;
 import logica.datatypes.DataEvento;
 import logica.datatypes.DataRegistro;
@@ -349,6 +351,14 @@ public class EventosWs {
       } catch (EventoConEdicionesPedientesException e) {
         throw new EventoConEdicionesPendientesFault(e.getMessage());
       }
+    }
+    
+    public void confirmarAsistencia(String nombreEdicion, String nickname) throws EdicionSinComenzarFault {
+    	try {
+    		ctrl.confirmarAsistencia(nombreEdicion, nickname);
+    	} catch(EdicionSinComenzarException e) {
+    		throw new EdicionSinComenzarFault(e.getMessage());
+    	}
     }
     
 }
