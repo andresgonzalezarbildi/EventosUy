@@ -16,6 +16,8 @@ import ws.eventos.EventoNoExisteFault_Exception;
 import ws.eventos.EventosService;
 import ws.eventos.EventosWs;
 import ws.usuario.UsuarioNoExisteFault_Exception;
+import ws.usuario.UsuarioService;
+import ws.usuario.UsuarioWs;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
@@ -32,6 +34,8 @@ public class EdicionServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private EventosService service = new EventosService();
 	 EventosWs controladorEventos = service.getEventosPort();
+	 private UsuarioService serviceUs = new UsuarioService();
+	 UsuarioWs cu = serviceUs.getUsuarioPort();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res)
@@ -67,9 +71,29 @@ public class EdicionServlet extends HttpServlet {
                     break;
                     
                 case "baja":
-                	String idEventoa = req.getParameter("id");
-                	controladorEventos.finalizarEvento(idEventoa);
-                	res.sendRedirect(req.getContextPath()+"/eventos");
+                    HttpSession session = req.getSession(false);
+                    if (session == null || session.getAttribute("usuario") == null) {
+                        res.sendRedirect(req.getContextPath() + "/login?error=DebeIniciarSesion");
+                        return;
+                    }
+
+                    String usuario =
+                    		(String) session.getAttribute("usuario");
+
+                    ws.usuario.DataUsuario datausu = cu.verInfoUsuario(usuario);
+                    
+                    if (datausu.getTipo() == null || !datausu.getTipo().equalsIgnoreCase("organizador")) {
+                        res.sendRedirect(req.getContextPath() + "/accesoDenegado.jsp");
+                        return;
+                    }
+
+                    
+                    String idEventoa = req.getParameter("id");
+                    if (idEventoa != null && !idEventoa.isEmpty()) {
+                        controladorEventos.finalizarEvento(idEventoa);
+                    }
+
+                    res.sendRedirect(req.getContextPath() + "/eventos");
                     break;
 
                 case "consultar":
