@@ -46,7 +46,7 @@
 		
 		<% if (ed != null) { %>
 			<% if (ed.getImagen() != null && !ed.getImagen().isEmpty()) { %>
-			  <img src="<%= request.getContextPath() %>/img/<%= ed.getImagen() %>" 
+			  <img src="<%= request.getContextPath() %>/MediaServlet?name=<%= ed.getImagen() %>" 
 			       alt="Imagen de la edición" style="max-width:300px;border-radius:8px;">
           <dl
             style="display:grid; grid-template-columns: 150px 1fr; row-gap:0.5rem; column-gap:1rem; margin-bottom:2rem;">
@@ -214,7 +214,7 @@
 				%>
 				    <div style="margin-bottom:12px; text-align:center;">
 				        <a href="<%= request.getContextPath() %>/evento?op=consultar&id=<%= nombreEvento %>">
-				            <img src="<%= request.getContextPath() %>/img/<%= imagenEvento %>" 
+				            <img src="<%= request.getContextPath() %>/MediaServlet?name=<%= imagenEvento %>" 
 				                 alt="Consultar Evento"
 				                 style="max-width:150px; width:100%; cursor:pointer; border-radius:8px; 
 				                        box-shadow:0 2px 6px rgba(0,0,0,0.2);">

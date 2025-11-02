@@ -61,7 +61,7 @@
     <a href="<%= request.getContextPath() %>/UsuarioServlet?op=consultar&nick=<%= nickname %>">
       <p class="navbar_username"><%= nickname %></p>
       <img class="perfil_image"
-           src="<%= request.getContextPath() %>/img/<%= imagen %>"
+           src="<%= request.getContextPath() %>/MediaServlet?name=<%= imagen %>"
            alt="foto perfil"
            onerror="this.onerror=null; this.src='<%= request.getContextPath() %>/img/PerfilSinFoto.jpg';" />
     </a>

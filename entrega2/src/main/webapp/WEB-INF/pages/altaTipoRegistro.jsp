@@ -89,7 +89,7 @@
                     <% if (edicion != null) { %>
                         <div style="text-align:center; margin-top:1rem;">
                             <a href="<%= path %>/edicion?op=consultar&id=<%= edicion.getNombre() %>">
-                                <img src="<%= path %>/img/<%= (edicion.getImagen() != null && !edicion.getImagen().isEmpty()) ? edicion.getImagen() : "EventoSinFoto.png" %>"
+                                <img src="<%= path %>/MediaServlet?name=<%= (edicion.getImagen() != null && !edicion.getImagen().isEmpty()) ? edicion.getImagen() : "EventoSinFoto.png" %>"
                                      alt="Consultar Edición"
                                      style="max-width:150px; width:100%; cursor:pointer; border-radius:8px;
                                             box-shadow:0 2px 6px rgba(0,0,0,0.2);">

@@ -64,7 +64,7 @@
 		              %>
 		               <div class="row contenido-principal-card" onclick="window.location.href='<%= detalleUrl %>'">
 		               	<div class="col-12 col-md-3 contenido-principal-card-imagen">
-		                  <img src="<%= ctx %>/img/<%=imagen %>" alt="foto usuario">
+		                  <img src="<%= ctx %>/MediaServlet?name=<%=imagen %>" alt="foto usuario">
 		                </div>
 		                <div class="col-12 col-md-9 contenido-principal-card-informacion col-12">
 		                  <p class="contenido-principal-card-informacion-titulo"><%= nickname %></p>
