@@ -83,6 +83,7 @@
 			  </button>
 			  <button class="btn"
 			  		onclick="window.location.href='<%=path%>/edicion?op=baja&id=<%= evento.getNombre() %>'">
+			  		
 			    Finalizar Evento
 			  </button>
 			<% } %>
