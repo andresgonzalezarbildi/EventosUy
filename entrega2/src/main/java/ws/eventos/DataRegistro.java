@@ -22,6 +22,7 @@ import jakarta.xml.bind.annotation.XmlType;
  *         <element name="costo" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         <element name="fecha" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         <element name="asistente" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         <element name="confirmarAsistentcia" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
  *       </sequence>
  *     </restriction>
  *   </complexContent>
@@ -37,7 +38,8 @@ import jakarta.xml.bind.annotation.XmlType;
     "tipoRegistro",
     "costo",
     "fecha",
-    "asistente"
+    "asistente",
+    "confirmarAsistentcia"
 })
 public class DataRegistro {
 
@@ -47,6 +49,7 @@ public class DataRegistro {
     protected Integer costo;
     protected String fecha;
     protected String asistente;
+    protected boolean confirmarAsistentcia;
 
     /**
      * Obtiene el valor de la propiedad evento.
@@ -190,6 +193,22 @@ public class DataRegistro {
      */
     public void setAsistente(String value) {
         this.asistente = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad confirmarAsistentcia.
+     * 
+     */
+    public boolean isConfirmarAsistentcia() {
+        return confirmarAsistentcia;
+    }
+
+    /**
+     * Define el valor de la propiedad confirmarAsistentcia.
+     * 
+     */
+    public void setConfirmarAsistentcia(boolean value) {
+        this.confirmarAsistentcia = value;
     }
 
 }

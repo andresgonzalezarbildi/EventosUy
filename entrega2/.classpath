@@ -9,7 +9,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/Apache Tomcat v11.0"/>
-	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/logicaEventosUy.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/angus-activation.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/angus-mail.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/FastInfoset.jar"/>
@@ -34,5 +33,6 @@
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/stax-ex.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/streambuffer.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/woodstox-core.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/logicaEventosUy.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

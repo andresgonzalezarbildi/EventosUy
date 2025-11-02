@@ -18,7 +18,7 @@ import java.io.IOException;
 /**
  * Servlet implementation class IniciarSesion
  */
-@WebServlet("/IniciarSesionMobile")
+@WebServlet("/mobile/IniciarSesion")
 public class IniciarSesionMobile extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private UsuarioService service = null;
@@ -63,8 +63,9 @@ public class IniciarSesionMobile extends HttpServlet {
       sesion.setAttribute("usuario", usuario.getNickname());
       sesion.setAttribute("correo", usuario.getCorreo());
       sesion.setAttribute("imagen", usuario.getImagen());
+      sesion.setAttribute("rol", usuario.getTipo());
       
-      res.sendRedirect(req.getContextPath() + "/listarEventosMobile");
+      res.sendRedirect(req.getContextPath() + "/mobile/listarEventos");
       return;
 	    
 	  }catch(PasswordIncorrectaFault_Exception e) {

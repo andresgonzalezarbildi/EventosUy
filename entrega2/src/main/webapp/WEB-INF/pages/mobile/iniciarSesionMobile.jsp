@@ -53,7 +53,7 @@
 			          <p class="alert alert-danger"><%= error %></p>
 			        <% } %>
 			      </div>
-						<form action="<%=request.getContextPath()%>/IniciarSesionMobile" method="post">
+						<form action="<%=request.getContextPath()%>/mobile/IniciarSesion" method="post">
 						  <div class="form-group">
 						    <label for="usuario">Usuario</label>
 						    <input 

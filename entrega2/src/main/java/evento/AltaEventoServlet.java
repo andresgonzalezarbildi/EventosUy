@@ -19,10 +19,13 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
-import logica.Fabrica;
-import logica.interfaces.IControladorEvento;
+
 import ws.eventos.EventosService;
 import ws.eventos.EventosWs;
+import ws.media.IOException_Exception;
+import ws.media.MediaService;
+import ws.media.MediaWs;
+
 
 
 @MultipartConfig
@@ -30,7 +33,10 @@ import ws.eventos.EventosWs;
 public class AltaEventoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private EventosService service = new EventosService();
-	 EventosWs controladorEventos = service.getEventosPort();
+	EventosWs controladorEventos = service.getEventosPort();
+	private MediaService mediaService = new MediaService();
+	private MediaWs mediaPort = mediaService.getMediaPort();
+	 
        
     public AltaEventoServlet() {
         super();
@@ -69,37 +75,22 @@ public class AltaEventoServlet extends HttpServlet {
         }
         
     	// subir imagen
-        String nombreImagenGuardada = null;
-        Part filePart = null;
-        try {
-            filePart = req.getPart("imagen"); // nombre de l aimagen
-        } catch (IllegalStateException ex) {
-            req.setAttribute("error", "error al subir la imagen");
-            repoblarYVolver(req, res, nombre, descripcion, sigla, nombresCategorias);
-            return;
-        } catch (ServletException | IOException ex) {
-            filePart = null;
-        }
+        String imagenFileName = null;
+        Part filePart = req.getPart("imagen");
 
         if (filePart != null && filePart.getSize() > 0) {
             String contentType = filePart.getContentType();
             if (contentType != null && contentType.startsWith("image/")) {
-                String submitted = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
-                String ext = "";
-                int dot = submitted.lastIndexOf('.');
-                if (dot >= 0 && dot < submitted.length() - 1) ext = submitted.substring(dot).toLowerCase();
-                String nuevoNombre = UUID.randomUUID().toString().replace("-", "") + ext;
-
-                String imgDirPath = getServletContext().getRealPath("/img"); // <- carpeta pública
-                if (imgDirPath != null) {
-                    Path imgDir = Paths.get(imgDirPath);
-                    Files.createDirectories(imgDir);
-                    Path destino = imgDir.resolve(nuevoNombre);
-                    try (InputStream in = filePart.getInputStream()) {
-                        Files.copy(in, destino, StandardCopyOption.REPLACE_EXISTING);
-                    }
-                    nombreImagenGuardada = nuevoNombre;
-                } 
+                String submitted = Paths.get(filePart.getSubmittedFileName())
+                                         .getFileName().toString();
+                byte[] bytes;
+                try (InputStream in = filePart.getInputStream()) {
+                    bytes = in.readAllBytes();
+                }
+                try {
+                  imagenFileName = mediaPort.subirImagen(submitted, bytes);
+                } catch (IOException_Exception e) {
+                }
             }
         }
         
@@ -108,7 +99,7 @@ public class AltaEventoServlet extends HttpServlet {
         boolean exito = false;
         String mensaje;
         try {
-            controladorEventos.altaEvento(nombre, descripcion, sigla, nombresCategorias, FechaAltaAstring, nombreImagenGuardada);
+            controladorEventos.altaEvento(nombre, descripcion, sigla, nombresCategorias, FechaAltaAstring,imagenFileName);
             mensaje = "El evento '" + nombre + "' fue creado correctamente.";
             exito = true; // marcar que se creó correctamente
         } catch (EventoRepetidoFault_Exception e) {

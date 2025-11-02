@@ -63,12 +63,18 @@
   border-radius: .5rem;
 }
 
+@media (max-width:768px){
+	.content-evento-imagen{
+		margin-bottom: 0.5rem;
+	}
+}
+
 .content-evento-titulo {
   font-size: 2rem;
   font-weight: bold;
   color: #212529;
   margin-bottom: 0.5rem;
-
+	text-align: center;
   justify-items: center;
 }
 
@@ -145,17 +151,23 @@ content-evento-informacion{
 }
 
 .contenido-main{
+	padding: 1rem;
   margin-bottom: 1rem;
   background-color: white;
   border: 1px solid var(--color-border);
   border-radius: 6px;
-  min-height: 200px; /* placeholder */
   display: flex;
   justify-content: center;
 }
 
 .informacion-label {
   font-weight: bold;
+}
+
+@media (max-width: 769px){
+	.informacion-label {
+		margin-bottom: 0;
+	}
 }
 
 @media (min-width:768px) {

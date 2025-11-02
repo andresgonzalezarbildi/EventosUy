@@ -1,6 +1,7 @@
 package ws;
 
 import ws.publicar.EventosWs;
+import ws.publicar.MediaWs;
 import ws.publicar.UsuarioWs;
 
 import javax.swing.SwingUtilities;
@@ -16,6 +17,8 @@ public class Main {
 
     UsuarioWs usuarioWs = new UsuarioWs();
     
+    MediaWs mediaWs = new MediaWs();
+    
     System.out.println("Web Services publicados");
     
     eventoWs.publicar();
@@ -23,6 +26,10 @@ public class Main {
     
     usuarioWs.publicar();
     System.out.println("  - UsuariosWS: http://localhost:9128/Servicios/UsuariosWS");
+    
+    mediaWs.publicar();
+    System.out.println("  - MediaWS: http://localhost:9128/Servicios/MediaWs");
+    
     
     SwingUtilities.invokeLater(()-> {
       Principal frame = new Principal();

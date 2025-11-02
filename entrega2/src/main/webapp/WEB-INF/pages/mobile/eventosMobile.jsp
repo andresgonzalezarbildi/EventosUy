@@ -72,7 +72,7 @@
                   try { if (e.getDescripcion() != null) descripcion = e.getDescripcion(); } catch (Exception ignore) {}
                   try { if (e.getImagen() != null) imagen = e.getImagen(); } catch (Exception ignore) {}
 
-                  String detalleUrl = ctx + "/evento"
+                  String detalleUrl = ctx + "/mobile/ConsultaEvento"
                                     + "?id=" + e.getNombre();
             %>
 

@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * Servlet implementation class listarEventos
  */
-@WebServlet("/listarEventosMobile")
+@WebServlet("/mobile/listarEventos")
 public class listarEventosMobile extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private EventosService service = null;
