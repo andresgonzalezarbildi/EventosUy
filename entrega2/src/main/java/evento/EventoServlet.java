@@ -103,7 +103,8 @@ public class EventoServlet extends HttpServlet {
                             controladorEventos.finalizarEvento(idEventoa);
                         } catch (EventoConEdicionesPendientesFault_Exception e) {
                             e.printStackTrace();
-                            res.sendRedirect(req.getContextPath() + "/eventos?error=EdicionesPendientes");
+                            res.sendRedirect(req.getContextPath() + "/evento?op=consultar&id=" + idEventoa + "&error=edicionesPendientes");
+
                             return;
                         }
                     }

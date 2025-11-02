@@ -76,17 +76,50 @@
                   <p><%= evento.getFechaAlta() %></p>
                 </div>
               </div>
-              <% if ("organizador".equalsIgnoreCase(rol) ) { %>
-			  <button class="btn"
-			  		onclick="window.location.href='<%=path%>/edicion?op=alta&id=<%= evento.getNombre() %>'">
-			    Crear Edición
-			  </button>
-			  <button class="btn"
-			  		onclick="window.location.href='<%=path%>/evento?op=baja&id=<%= evento.getNombre() %>'">
-			  		
-			    Finalizar Evento
-			  </button>
-			<% } %>
+             <% if ("organizador".equalsIgnoreCase(rol)) { %>
+  <div class="mt-3 text-center position-relative d-flex flex-column align-items-center">
+    <button class="btn btn-primary mb-2 custom-btn"
+      onclick="window.location.href='<%=path%>/edicion?op=alta&id=<%= evento.getNombre() %>'">
+      Crear Edición
+    </button>
+	  	<%
+		String nombreEventoEncoded = java.net.URLEncoder.encode(evento.getNombre(), "UTF-8");
+		%>
+	<button class="btn btn-danger custom-btn"
+	  onclick="window.location.href='<%=path%>/evento?op=baja&id=<%= nombreEventoEncoded %>'">
+	  Finalizar Evento
+	</button>
+
+
+    <% 
+    String error = request.getParameter("error");
+    if ("edicionesPendientes".equals(error)) {
+    %>
+      <!-- Toast dinámico -->
+      <div id="toastError"
+           class="toast align-items-center text-bg-danger border-0 position-absolute start-50 translate-middle-x mt-2"
+           role="alert" aria-live="assertive" aria-atomic="true"
+           data-bs-delay="5000" style="min-width: 300px;">
+        <div class="d-flex">
+          <div class="toast-body">
+            No se puede finalizar el evento porque tiene ediciones pendientes.
+          </div>
+          <button type="button" class="btn-close btn-close-white me-2 m-auto"
+                  data-bs-dismiss="toast" aria-label="Cerrar"></button>
+        </div>
+      </div>
+
+      <script>
+        document.addEventListener("DOMContentLoaded", () => {
+          const toast = new bootstrap.Toast(document.getElementById('toastError'));
+          toast.show();
+        });
+      </script>
+    <% } %>
+
+  </div>
+<% } %>
+
             </section>
             <aside class="col-12 col-md-5 content-ediciones">
               <div class="seccion-titulo-edicion">
@@ -131,5 +164,12 @@
   </main>
 
   <jsp:include page="footer.jsp"/>
+  
+
+
+
+
+
+  
 </body>
 </html>

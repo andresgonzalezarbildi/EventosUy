@@ -10,8 +10,6 @@
     Throwable excepcion = (Throwable) request.getAttribute("javax.servlet.error.exception");
     String uri = (String) request.getAttribute("javax.servlet.error.request_uri");
     if (uri == null) uri = request.getRequestURI();
-
-
     String customMsg = (String) request.getAttribute("mensajeError");
 
 
