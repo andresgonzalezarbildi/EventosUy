@@ -5,6 +5,7 @@ import java.util.List;
 
 import excepciones.CategoriaRepetidaException;
 import excepciones.EdicionNoExisteException;
+import excepciones.EventoConEdicionesPedientesException;
 import excepciones.EventoNoExisteException;
 import excepciones.EventoRepetidoException;
 import excepciones.TipoRegistroRepetidoException;
@@ -18,6 +19,7 @@ import logica.Fabrica;
 import logica.interfaces.IControladorEvento;
 import ws.exceptions.CategoriaRepetidaFault;
 import ws.exceptions.EdicionNoExisteFault;
+import ws.exceptions.EventoConEdicionesPendientesFault;
 import ws.exceptions.EventoNoExisteFault;
 import ws.exceptions.EventoRepetidoFault;
 import ws.exceptions.TipoRegistroRepetidoFault;
@@ -340,4 +342,13 @@ public class EventosWs {
     public List<String> listarCategorias() {
         return ctrl.listarCategorias();
     }
+    
+    public void finalizarEvento(String nombreEvento) throws EventoConEdicionesPendientesFault {
+    	try {
+        ctrl.finalizarEvento(nombreEvento);
+      } catch (EventoConEdicionesPedientesException e) {
+        throw new EventoConEdicionesPendientesFault(e.getMessage());
+      }
+    }
+    
 }

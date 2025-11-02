@@ -33,8 +33,8 @@
 	
 	    private EventosService serviceEv = new EventosService();
 	    private UsuarioService serviceUs = new UsuarioService();
-		 EventosWs ce = serviceEv.getEventosPort();
-		 UsuarioWs cu = serviceUs.getUsuarioPort();
+		EventosWs ce = serviceEv.getEventosPort();
+		UsuarioWs cu = serviceUs.getUsuarioPort();
 	    @Override
 	    protected void doGet(HttpServletRequest req, HttpServletResponse res)
 	            throws ServletException, IOException {
@@ -141,8 +141,7 @@
 	            }}
 
 	            log("Modificando usuario: " + nick + ", nombre=" + nombre + ", imagen=" + imagen);
-	            
-	            cu.modificarUsuario(nick, nombre, descripcion, imagen, link, apellido, fechaNac);
+	            cu.modificarUsuario(nick, nombre, descripcion, imagen, link, apellido, fechaNac);	
 	         // Actualizar imagen en la sesión para que el header la muestre
 	            req.getSession().setAttribute("imagen", imagen);
 
@@ -195,7 +194,7 @@
 	                        eds = ce.listarEdicionesOrganizadorAceptadas(nick);
 	                    }
 	                } catch (EdicionNoExisteFault_Exception e) {
-	                    eds = new ArrayList<>(); // 👈 no usar Collections.emptyList()
+	                    eds = new ArrayList<>();
 	                }
 	                req.setAttribute("ediciones", eds);
 	

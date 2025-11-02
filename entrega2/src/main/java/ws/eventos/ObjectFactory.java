@@ -26,6 +26,7 @@ public class ObjectFactory {
 
     private final static QName _CategoriaRepetidaFault_QNAME = new QName("http://publicar.ws/", "CategoriaRepetidaFault");
     private final static QName _EdicionNoExisteFault_QNAME = new QName("http://publicar.ws/", "EdicionNoExisteFault");
+    private final static QName _EventoConEdicionesPendientesFaultFault_QNAME = new QName("http://publicar.ws/", "EventoConEdicionesPendientesFaultFault");
     private final static QName _EventoNoExisteFault_QNAME = new QName("http://publicar.ws/", "EventoNoExisteFault");
     private final static QName _EventoRepetidoFault_QNAME = new QName("http://publicar.ws/", "EventoRepetidoFault");
     private final static QName _TipoRegistroRepetidoFault_QNAME = new QName("http://publicar.ws/", "TipoRegistroRepetidoFault");
@@ -43,6 +44,8 @@ public class ObjectFactory {
     private final static QName _AltaRegistroResponse_QNAME = new QName("http://publicar.ws/", "altaRegistroResponse");
     private final static QName _AltaTipoRegistro_QNAME = new QName("http://publicar.ws/", "altaTipoRegistro");
     private final static QName _AltaTipoRegistroResponse_QNAME = new QName("http://publicar.ws/", "altaTipoRegistroResponse");
+    private final static QName _FinalizarEvento_QNAME = new QName("http://publicar.ws/", "finalizarEvento");
+    private final static QName _FinalizarEventoResponse_QNAME = new QName("http://publicar.ws/", "finalizarEventoResponse");
     private final static QName _GetEventoDeUnaEdicion_QNAME = new QName("http://publicar.ws/", "getEventoDeUnaEdicion");
     private final static QName _GetEventoDeUnaEdicionResponse_QNAME = new QName("http://publicar.ws/", "getEventoDeUnaEdicionResponse");
     private final static QName _GetEventosDTO_QNAME = new QName("http://publicar.ws/", "getEventosDTO");
@@ -111,6 +114,16 @@ public class ObjectFactory {
      */
     public EdicionNoExisteFault createEdicionNoExisteFault() {
         return new EdicionNoExisteFault();
+    }
+
+    /**
+     * Create an instance of {@link EventoConEdicionesPendientesFault }
+     * 
+     * @return
+     *     the new instance of {@link EventoConEdicionesPendientesFault }
+     */
+    public EventoConEdicionesPendientesFault createEventoConEdicionesPendientesFault() {
+        return new EventoConEdicionesPendientesFault();
     }
 
     /**
@@ -281,6 +294,26 @@ public class ObjectFactory {
      */
     public AltaTipoRegistroResponse createAltaTipoRegistroResponse() {
         return new AltaTipoRegistroResponse();
+    }
+
+    /**
+     * Create an instance of {@link FinalizarEvento }
+     * 
+     * @return
+     *     the new instance of {@link FinalizarEvento }
+     */
+    public FinalizarEvento createFinalizarEvento() {
+        return new FinalizarEvento();
+    }
+
+    /**
+     * Create an instance of {@link FinalizarEventoResponse }
+     * 
+     * @return
+     *     the new instance of {@link FinalizarEventoResponse }
+     */
+    public FinalizarEventoResponse createFinalizarEventoResponse() {
+        return new FinalizarEventoResponse();
     }
 
     /**
@@ -780,6 +813,19 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link EventoConEdicionesPendientesFault }{@code >}
+     * 
+     * @param value
+     *     Java instance representing xml element's value.
+     * @return
+     *     the new instance of {@link JAXBElement }{@code <}{@link EventoConEdicionesPendientesFault }{@code >}
+     */
+    @XmlElementDecl(namespace = "http://publicar.ws/", name = "EventoConEdicionesPendientesFaultFault")
+    public JAXBElement<EventoConEdicionesPendientesFault> createEventoConEdicionesPendientesFaultFault(EventoConEdicionesPendientesFault value) {
+        return new JAXBElement<>(_EventoConEdicionesPendientesFaultFault_QNAME, EventoConEdicionesPendientesFault.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link EventoNoExisteFault }{@code >}
      * 
      * @param value
@@ -998,6 +1044,32 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://publicar.ws/", name = "altaTipoRegistroResponse")
     public JAXBElement<AltaTipoRegistroResponse> createAltaTipoRegistroResponse(AltaTipoRegistroResponse value) {
         return new JAXBElement<>(_AltaTipoRegistroResponse_QNAME, AltaTipoRegistroResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link FinalizarEvento }{@code >}
+     * 
+     * @param value
+     *     Java instance representing xml element's value.
+     * @return
+     *     the new instance of {@link JAXBElement }{@code <}{@link FinalizarEvento }{@code >}
+     */
+    @XmlElementDecl(namespace = "http://publicar.ws/", name = "finalizarEvento")
+    public JAXBElement<FinalizarEvento> createFinalizarEvento(FinalizarEvento value) {
+        return new JAXBElement<>(_FinalizarEvento_QNAME, FinalizarEvento.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link FinalizarEventoResponse }{@code >}
+     * 
+     * @param value
+     *     Java instance representing xml element's value.
+     * @return
+     *     the new instance of {@link JAXBElement }{@code <}{@link FinalizarEventoResponse }{@code >}
+     */
+    @XmlElementDecl(namespace = "http://publicar.ws/", name = "finalizarEventoResponse")
+    public JAXBElement<FinalizarEventoResponse> createFinalizarEventoResponse(FinalizarEventoResponse value) {
+        return new JAXBElement<>(_FinalizarEventoResponse_QNAME, FinalizarEventoResponse.class, null, value);
     }
 
     /**

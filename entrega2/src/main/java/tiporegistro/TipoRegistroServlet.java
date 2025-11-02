@@ -3,26 +3,23 @@ package tiporegistro;
 import java.io.IOException;
 import java.net.URLEncoder;
 
-import excepciones.EdicionNoExisteException;
-import excepciones.TipoRegistroRepetidoException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import logica.Fabrica;
-import logica.datatypes.DataEdicion;
-import logica.datatypes.DataRegistro;
-import logica.datatypes.DataTipoRegistro;
-import logica.interfaces.IControladorEvento;
+import ws.eventos.EdicionNoExisteFault_Exception;
+import ws.eventos.EventosService;
+import ws.eventos.EventosWs;
+import ws.eventos.TipoRegistroRepetidoFault_Exception;
 
 @WebServlet(name = "TipoRegistroServlet", urlPatterns = {"/TipoRegistroServlet"})
 public class TipoRegistroServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
-    private final Fabrica fabrica = Fabrica.getInstance();
-    private final IControladorEvento ce = fabrica.getControladorEvento();
+    private EventosService service = new EventosService();
+	EventosWs ce = service.getEventosPort();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res)
@@ -43,7 +40,7 @@ public class TipoRegistroServlet extends HttpServlet {
             case "consulta":
                 try {
                     mostrarConsulta(req, res);
-                } catch (EdicionNoExisteException e) {
+                } catch (EdicionNoExisteFault_Exception e) {
                     res.sendError(HttpServletResponse.SC_BAD_REQUEST, "Edición no encontrada");
                 }
                 break;
@@ -78,10 +75,10 @@ public class TipoRegistroServlet extends HttpServlet {
             return;
         }
 
-        DataEdicion ed = null;
+        ws.eventos.DataEdicion ed = null;
         try {
             ed = ce.getInfoEdicion(nombreEdicion);
-        } catch (EdicionNoExisteException e) {
+        } catch (EdicionNoExisteFault_Exception e) {
             res.sendError(HttpServletResponse.SC_BAD_REQUEST, "Edición no encontrada");
             return;
         }
@@ -123,15 +120,15 @@ public class TipoRegistroServlet extends HttpServlet {
             }
         } catch (NumberFormatException e) {
             error = "Cupo y costo deben ser números válidos.";
-        } catch (TipoRegistroRepetidoException e) {
+        } catch (TipoRegistroRepetidoFault_Exception e) {
             error = "Ya existe un tipo de registro con ese nombre para esta edición.";
         }
 
         // Siempre obtener DataEdicion para no romper el JSP
-        DataEdicion edicionObj = null;
+        ws.eventos.DataEdicion edicionObj = null;
         try {
             edicionObj = ce.getInfoEdicion(edicionNombre);
-        } catch (EdicionNoExisteException e) {
+        } catch (EdicionNoExisteFault_Exception e) {
             // opcional: mostrar mensaje de error general
         }
 
@@ -169,7 +166,7 @@ public class TipoRegistroServlet extends HttpServlet {
     }
 
     private void mostrarConsulta(HttpServletRequest req, HttpServletResponse res)
-            throws ServletException, IOException, EdicionNoExisteException {
+            throws ServletException, IOException, EdicionNoExisteFault_Exception {
         String nombreEdicion = req.getParameter("idEdicion");
         String rol = null;
         String nickname = null;
@@ -181,7 +178,7 @@ public class TipoRegistroServlet extends HttpServlet {
             rol = "visitante";
         }
 
-        DataRegistro registroAsistente = null;
+        ws.eventos.DataRegistro registroAsistente = null;
         if ("asistente".equalsIgnoreCase(rol)) {
             registroAsistente = ce.listarUnRegistroDeUsuario(nombreEdicion, nickname);
         }
@@ -191,14 +188,14 @@ public class TipoRegistroServlet extends HttpServlet {
 
         String evento = ce.getEventoDeUnaEdicion(nombreEdicion);
         String nombre = req.getParameter("id");
-        DataEdicion edicion = ce.getInfoEdicion(nombreEdicion);
+        ws.eventos.DataEdicion edicion = ce.getInfoEdicion(nombreEdicion);
 
         if (evento == null || edicion == null || nombre == null) {
             res.sendError(HttpServletResponse.SC_BAD_REQUEST, "Faltan parámetros");
             return;
         }
 
-        DataTipoRegistro tipoRegistro = ce.getTipoRegistro(evento, nombreEdicion, nombre);
+        ws.eventos.DataTipoRegistro tipoRegistro = ce.getTipoRegistro(evento, nombreEdicion, nombre);
         req.setAttribute("edicion", edicion);
         req.setAttribute("tipoRegistro", tipoRegistro);
         req.setAttribute("evento", evento);

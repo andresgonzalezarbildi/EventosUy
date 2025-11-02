@@ -163,6 +163,11 @@ public class RegistrarUsuarioServlet extends HttpServlet {
         }
 
         try {
+        	if (fechaNac != null && fechaNac.isBlank()) fechaNac = null;
+        	if (descripcion != null && descripcion.isBlank()) descripcion = null;
+        	if (link != null && link.isBlank()) link = null;
+        	if (apellido != null && apellido.isBlank()) apellido = null;
+        	
             cu.altaUsuario(
                 nick, nombre, correo, nombreImagenGuardada, password,
                 tipo, descripcion, link, apellido, fechaNac

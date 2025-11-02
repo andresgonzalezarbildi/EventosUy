@@ -11,12 +11,18 @@ public class LogoutServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        HttpSession sesion = request.getSession(false); // no crear si no existe
+        HttpSession sesion = request.getSession(false);
         if (sesion != null) {
-            sesion.invalidate(); //  destruye la sesión
+            sesion.invalidate();
         }
 
-        // Redirigir al login (podés agregar mensaje opcional)
-        response.sendRedirect(request.getContextPath() + "/eventos");
+       
+        Cookie cookie = new Cookie("JSESSIONID", "");
+        cookie.setMaxAge(0);
+        cookie.setPath(request.getContextPath());
+        response.addCookie(cookie);
+
+        request.getSession(true).setAttribute("logout_ok", "Sesión cerrada correctamente");
+        response.sendRedirect(request.getContextPath() + "/LoginServlet");
     }
 }
