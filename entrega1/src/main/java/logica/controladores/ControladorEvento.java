@@ -16,6 +16,7 @@ import excepciones.EventoRepetidoException;
 import excepciones.TipoRegistroRepetidoException;
 import excepciones.TransicionEstadoInvalidaException;
 import excepciones.UsuarioNoExisteException;
+import excepciones.EdicionSinComenzarException;
 import logica.clases.Asistente;
 import logica.clases.Categoria;
 import logica.clases.EdicionEvento;
@@ -835,14 +836,20 @@ public class ControladorEvento implements IControladorEvento {
     return  manejadorEvento.getEdicion(nombreEdicion).getEvento().getNombre();
   }
   
-  public void confirmarAsistencia(String nombreEdicion, String nickname) {
+  public void confirmarAsistencia(String nombreEdicion, String nickname) throws EdicionSinComenzarException {
 	 for (Evento e : manejadorEvento.getEventos().values()) {
 	    for (EdicionEvento ed : e.getEdiciones().values()) {
 	       if (nombreEdicion.equals(ed.getNombre()) ) {
-	          for (Registro r : ed.getRegistros()) {
-	             if (nickname.equals(r.getAsistente().getNickname())) {
-	                r.setConfirmarAsistencia();
-	             }
+		      LocalDate hoy = LocalDate.now();
+		      LocalDate fechaInicio = ed.getFechaIni();
+		      if (fechaInicio != null && hoy.isBefore(fechaInicio)) {
+	              throw new EdicionSinComenzarException("La edición aún no ha comenzado");
+	          } else {
+		          for (Registro r : ed.getRegistros()) {
+		             if (nickname.equals(r.getAsistente().getNickname())) {
+		                r.setConfirmarAsistencia();
+		             }
+		          }
 	          }
 	       }
 	    }

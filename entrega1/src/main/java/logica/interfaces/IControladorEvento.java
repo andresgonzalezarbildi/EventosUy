@@ -10,6 +10,7 @@ import excepciones.EventoRepetidoException;
 import excepciones.TipoRegistroRepetidoException;
 import excepciones.TransicionEstadoInvalidaException;
 import excepciones.UsuarioNoExisteException;
+import excepciones.EdicionSinComenzarException;
 import logica.datatypes.DataEdicion;
 import logica.datatypes.DataEvento;
 import logica.datatypes.DataRegistro;
@@ -52,7 +53,7 @@ public interface IControladorEvento {
     public void aceptarEdicion(String nombreEdicion, Boolean aceptada) throws EdicionNoExisteException, TransicionEstadoInvalidaException;
     public void  setCostoRegistro(String nickname, String edicion, String nombreTipo, int precio); 
     
-    public void confirmarAsistencia(String nombreEdicion, String nickname);
+    public void confirmarAsistencia(String nombreEdicion, String nickname) throws EdicionSinComenzarException;
     public void finalizarEvento(String nombreEvento) throws EventoConEdicionesPedientesException;
 
     public List<String> listarCategorias();
