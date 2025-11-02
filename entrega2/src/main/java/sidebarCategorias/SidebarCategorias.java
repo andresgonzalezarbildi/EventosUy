@@ -51,8 +51,9 @@ public class SidebarCategorias extends HttpFilter implements Filter {
 
       
         try {
-            EstadoServidorService serviceEstado = new EstadoServidorService();
-            EstadoServidor estadoWs = serviceEstado.getEstadoServidorPort();
+        	ws.estado.EstadoService serviceEstado = new ws.estado.EstadoService();
+        	ws.estado.EstadoServidor estadoWs = serviceEstado.getEstadoPort();
+
 
             String fechaInicioActual = estadoWs.getFechaInicio();
 

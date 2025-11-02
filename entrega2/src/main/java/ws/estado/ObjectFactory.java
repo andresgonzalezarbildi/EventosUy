@@ -24,8 +24,8 @@ import jakarta.xml.bind.annotation.XmlRegistry;
 @XmlRegistry
 public class ObjectFactory {
 
-    private final static QName _GetFechaInicio_QNAME = new QName("http://publicar.ws/", "getFechaInicio");
-    private final static QName _GetFechaInicioResponse_QNAME = new QName("http://publicar.ws/", "getFechaInicioResponse");
+    private static final QName _GetFechaInicio_QNAME = new QName("http://publicar.ws/", "getFechaInicio");
+    private static final QName _GetFechaInicioResponse_QNAME = new QName("http://publicar.ws/", "getFechaInicioResponse");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: ws.estado
