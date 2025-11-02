@@ -103,7 +103,9 @@ public class EventoServlet extends HttpServlet {
                             controladorEventos.finalizarEvento(idEventoa);
                         } catch (EventoConEdicionesPendientesFault_Exception e) {
                             e.printStackTrace();
-                            res.sendRedirect(req.getContextPath() + "/evento?op=consultar&id=" + idEventoa + "&error=edicionesPendientes");
+                            String idUtf8 = java.net.URLEncoder.encode(idEventoa, java.nio.charset.StandardCharsets.UTF_8); //esto arregla el conferencia choto
+                            res.sendRedirect(req.getContextPath() + "/evento?op=consultar&id=" + idUtf8 + "&error=edicionesPendientes");
+
 
                             return;
                         }

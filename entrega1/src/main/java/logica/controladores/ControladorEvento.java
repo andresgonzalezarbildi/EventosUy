@@ -859,7 +859,7 @@ public class ControladorEvento implements IControladorEvento {
       LocalDate hoy = LocalDate.now();
       for (EdicionEvento edi : ediciones.values()) {
     	  LocalDate fechaFin = edi.getFechaFin();
-          if (fechaFin != null && fechaFin.isAfter(hoy)) {
+          if (fechaFin != null && fechaFin.isAfter(hoy) && (edi.getEstado() != EstadoEdicion.RECHAZADA)) {
               throw new EventoConEdicionesPedientesException("El evento aún posee ediciones que no han finalizado.");
           }
       }
