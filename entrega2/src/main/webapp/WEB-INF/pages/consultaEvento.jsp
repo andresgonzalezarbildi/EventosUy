@@ -82,7 +82,7 @@
 			    Crear Edición
 			  </button>
 			  <button class="btn"
-			  		onclick="window.location.href='<%=path%>/edicion?op=baja&id=<%= evento.getNombre() %>'">
+			  		onclick="window.location.href='<%=path%>/evento?op=baja&id=<%= evento.getNombre() %>'">
 			  		
 			    Finalizar Evento
 			  </button>

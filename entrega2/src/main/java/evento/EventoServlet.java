@@ -6,9 +6,13 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import ws.eventos.EventoConEdicionesPendientesFault_Exception;
 import ws.eventos.EventoNoExisteFault;
 import ws.eventos.EventosService;
 import ws.eventos.EventosWs;
+import ws.usuario.UsuarioService;
+import ws.usuario.UsuarioWs;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -20,65 +24,97 @@ public class EventoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private EventosService service = new EventosService();
 	 EventosWs controladorEventos = service.getEventosPort();
-       
+	 private UsuarioService serviceUs = new UsuarioService();
+	 UsuarioWs cu = serviceUs.getUsuarioPort();
+	 
     public EventoServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
     
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse res)
+            throws ServletException, IOException {
+
         req.setCharacterEncoding("UTF-8");
-        res.setCharacterEncoding("UTF-8");
-        HttpSession session = req.getSession(false); 
-        if (session == null || session.getAttribute("usuarioLogueado") == null) {
-            res.sendRedirect(req.getContextPath() + "/login?error=DebeIniciarSesion");
-            return;
-        }
-        ws.usuario.DataUsuario usuario = (ws.usuario.DataUsuario) session.getAttribute("usuarioLogueado");
-        if (usuario == null || !usuario.getTipo().equalsIgnoreCase("organizador")) {
-            res.sendRedirect(req.getContextPath() + "/accesoDenegado.jsp");
-            return;
-        }
-
+        String op = req.getParameter("op") != null ? req.getParameter("op").toLowerCase() : "";
         String nombreEvento = (req.getParameter("id") != null) ? req.getParameter("id").trim() : "";
+        switch (op) {
 
-        if (!nombreEvento.isEmpty()) {
-            ws.eventos.DataEvento dataDelEventoAntes = null;
-            try {
-                dataDelEventoAntes = controladorEventos.getUnEventoDTO(nombreEvento);
-            } catch (ws.eventos.EventoNoExisteFault_Exception error) {
-                res.sendRedirect(req.getContextPath() + "/eventos?error=NoExiste");
-                return;
-            }
-
-            if (dataDelEventoAntes != null && dataDelEventoAntes.isFinalizado()) {
-                res.sendRedirect(req.getContextPath() + "/eventos?mensaje=finalizado");
-                return;
-            }
-
-            try {
-                ws.eventos.DataEvento dataDelEvento = controladorEventos.getUnEventoDTO(nombreEvento);
-                req.setAttribute("evento", dataDelEvento);
-
-                if (dataDelEvento != null) {
+            
+            case "consultar":
+                if (!nombreEvento.isEmpty()) {
+                    ws.eventos.DataEvento dataDelEventoAntes = null;
                     try {
-                        List<ws.eventos.DataEdicion> dataEdicionesDelEvento =
-                            controladorEventos.listarEdicionesAceptadasEvento(nombreEvento);
-                        req.setAttribute("ediciones", dataEdicionesDelEvento);
-                    } catch (ws.eventos.EdicionNoExisteFault_Exception e) {
-                    
+                        dataDelEventoAntes = controladorEventos.getUnEventoDTO(nombreEvento);
+                    } catch (ws.eventos.EventoNoExisteFault_Exception error) {
+                        res.sendRedirect(req.getContextPath() + "/eventos?error=NoExiste");
+                        return;
                     }
+
+                    if (dataDelEventoAntes != null && dataDelEventoAntes.isFinalizado()) {
+                        res.sendRedirect(req.getContextPath() + "/eventos?mensaje=finalizado");
+                        return;
+                    }
+
+                    try {
+                        ws.eventos.DataEvento dataDelEvento = controladorEventos.getUnEventoDTO(nombreEvento);
+                        req.setAttribute("evento", dataDelEvento);
+
+                        if (dataDelEvento != null) {
+                            try {
+                                List<ws.eventos.DataEdicion> dataEdicionesDelEvento =
+                                    controladorEventos.listarEdicionesAceptadasEvento(nombreEvento);
+                                req.setAttribute("ediciones", dataEdicionesDelEvento);
+                            } catch (ws.eventos.EdicionNoExisteFault_Exception e) {
+                                
+                            }
+                        }
+
+                        req.getRequestDispatcher("/WEB-INF/pages/consultaEvento.jsp").forward(req, res);
+
+                    } catch (ws.eventos.EventoNoExisteFault_Exception e) {
+                        res.sendRedirect(req.getContextPath() + "/eventos?error=NoExiste");
+                    }
+
+                } else {
+                    res.sendRedirect(req.getContextPath() + "/eventos");
+                }
+                break;
+
+            
+            case "baja":
+                HttpSession session = req.getSession(false);
+                if (session == null || session.getAttribute("usuario") == null) {
+                    res.sendRedirect(req.getContextPath() + "/login?error=DebeIniciarSesion");
+                    return;
                 }
 
-                req.getRequestDispatcher("/WEB-INF/pages/consultaEvento.jsp").forward(req, res);
+                String usuario = (String) session.getAttribute("usuario");
+                try {
+                    ws.usuario.DataUsuario datausu = cu.verInfoUsuario(usuario);
+                    if (datausu.getTipo() == null || !datausu.getTipo().equalsIgnoreCase("organizador")) {
+                        res.sendRedirect(req.getContextPath() + "/accesoDenegado.jsp");
+                        return;
+                    }
+                    String idEventoa = req.getParameter("id");
+                    if (idEventoa != null && !idEventoa.isEmpty()) {
+                        try {
+                            controladorEventos.finalizarEvento(idEventoa);
+                        } catch (EventoConEdicionesPendientesFault_Exception e) {
+                            e.printStackTrace();
+                            res.sendRedirect(req.getContextPath() + "/eventos?error=EdicionesPendientes");
+                            return;
+                        }
+                    }
+                } catch (ws.usuario.UsuarioNoExisteFault_Exception e) {
+                    e.printStackTrace();
+                    res.sendRedirect(req.getContextPath() + "/login?error=UsuarioNoExiste");
+                    return;
+                }
+                res.sendRedirect(req.getContextPath() + "/eventos");
+                break;
 
-            } catch (ws.eventos.EventoNoExisteFault_Exception e) {
-                res.sendRedirect(req.getContextPath() + "/eventos?error=NoExiste");
-            }
-
-        } else {
-            res.sendRedirect(req.getContextPath() + "/eventos");
         }
     }
 

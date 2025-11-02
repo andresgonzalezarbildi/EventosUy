@@ -41,7 +41,6 @@ public class EdicionServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
-        res.setCharacterEncoding("UTF-8");
 
         String op = req.getParameter("op") != null ? req.getParameter("op").toLowerCase() : "";
         String nombreEdicion = req.getParameter("id") != null ? req.getParameter("id") : "";
@@ -73,26 +72,20 @@ public class EdicionServlet extends HttpServlet {
                 case "baja":
                     HttpSession session = req.getSession(false);
                     if (session == null || session.getAttribute("usuario") == null) {
-                        res.sendRedirect(req.getContextPath() + "/login?error=DebeIniciarSesion");
+                    	res.sendRedirect(req.getContextPath() + "/eventos");
                         return;
                     }
-
                     String usuario =
                     		(String) session.getAttribute("usuario");
-
                     ws.usuario.DataUsuario datausu = cu.verInfoUsuario(usuario);
-                    
                     if (datausu.getTipo() == null || !datausu.getTipo().equalsIgnoreCase("organizador")) {
-                        res.sendRedirect(req.getContextPath() + "/accesoDenegado.jsp");
+                    	res.sendRedirect(req.getContextPath() + "/eventos");
                         return;
                     }
-
-                    
                     String idEventoa = req.getParameter("id");
                     if (idEventoa != null && !idEventoa.isEmpty()) {
                         controladorEventos.finalizarEvento(idEventoa);
                     }
-
                     res.sendRedirect(req.getContextPath() + "/eventos");
                     break;
 

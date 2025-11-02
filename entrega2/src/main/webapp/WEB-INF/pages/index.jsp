@@ -60,9 +60,8 @@
                    try { if (e.getImagen() != null) imagen = e.getImagen(); } catch (Exception ignore) {}
 
                    String id = URLEncoder.encode(nombre, "UTF-8");
-                   String detalleUrl = ctx + "/evento?id=" + id;
+                   String detalleUrl = ctx + "/evento?op=consultar&id=" + id;
             %>
-
               <div class="row contenido-principal-card"
                    onclick="window.location.href='<%= detalleUrl %>'">
                 <div class="col-12 col-md-3 contenido-principal-card-imagen">
