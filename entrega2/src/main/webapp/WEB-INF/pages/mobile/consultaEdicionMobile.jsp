@@ -4,13 +4,11 @@
 <%@ page import="ws.eventos.DataRegistro" %>
 <%@ page import="java.util.List" %>
 <%@ page import="ws.eventos.DataEvento" %>
+<%@ page import="ws.eventos.DataPatrocinio" %>
 <%@ page import="java.net.URLEncoder" %>
 <%
 	String ctx = request.getContextPath();
 	String rol = (String) request.getAttribute("rol");
-	if("asistente".equalsIgnoreCase(rol)){
-	  // Mandar a iniciar Sesion
-	}
 %>
 
 <!DOCTYPE html>
@@ -22,6 +20,7 @@
   <link rel="stylesheet" href="<%= ctx %>/estilos/normalize.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <link rel="stylesheet" href="<%= ctx %>/estilos/base.css">
+  <link rel="stylesheet" href="<%= ctx %>/estilos/consultaEdicionMobile.css">
 </head>
 
 
@@ -40,7 +39,7 @@
   <section class="content" style="margin-bottom: 1rem">
     <div class="container-fluid">
       <div class="row">
-        <div class="col-12 col-md-8 column" 
+        <div class="col-12 col-md-8" 
         	style="max-width: 100%; 
         	padding: 1.5rem; 
         	background: #fff; 
@@ -54,10 +53,10 @@
 	          </h2>
 							<% if (ed != null) { %>
 								<% if (ed.getImagen() != null && !ed.getImagen().isEmpty()) { %>
-								  <img src="<%= request.getContextPath() %>/img/<%= ed.getImagen() %>" 
+								  <img src="<%= request.getContextPath() %>/MediaServlet?name=<%= ed.getImagen() %>" 
 								       alt="Imagen de la edición" style="max-width:300px;border-radius:8px;">
-				          <dl
-				            style="display:grid; grid-template-columns: 150px 1fr; row-gap:0.5rem; column-gap:1rem; margin-bottom:2rem;">
+					       <div class="d-flex w-100">
+				          <dl>
 				            <dt><strong>Nombre:</strong></dt>
 				            <dd><%= ed.getNombre() %></dd>
 				            <dt><strong>Sigla:</strong></dt>
@@ -72,8 +71,9 @@
 				            <dd><%= ed.getFechaFin() %></dd>
 				            <dt><strong>Alta en Plataforma:</strong></dt>
 				            <dd><%= ed.getFechaAltaEnPlataforma() %></dd>
-				          </dl> 	      
-         				 	<section style="margin-bottom:2rem;">
+				          </dl>
+				          </div>      
+         				 	<section class="informacion">
 		    						<h3 style="margin-bottom:0.5rem; color: var(--color-primary);">Tipos de Registro</h3>
 			   					 	<div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
 							        <%
@@ -81,11 +81,11 @@
 							            if (tipos != null && !tipos.isEmpty()) {
 							                for (DataTipoRegistro tipo : tipos) {
 							        %>
-		                    <a href="<%= request.getContextPath() %>/TipoRegistroServlet?op=consulta&id=<%= URLEncoder.encode(tipo.getNombre(), "UTF-8") %>&idEdicion=<%= URLEncoder.encode(ed.getNombre(), "UTF-8") %>"
+		                    <span
 											   style="display:inline-block; background:#f0f0f0; padding:0.4rem 0.8rem;
 											          border-radius:12px; text-decoration:none; color:inherit;">
 											    <%= tipo.getNombre() %>
-												</a>
+												</span>
 							        <%
 						                }
 						            } else {
@@ -98,24 +98,39 @@
 			    					</div>
 									</section>
 				          <!-- Organizador -->
-			          	<section style="margin-bottom:2rem;">
+			          	<section class="informacion">
 				            <h3 style="margin-bottom:0.5rem; color: var(--color-primary);">Organizador</h3>
 				            <p><%= ed.getOrganizador() %></p>
 			          	</section>
 				          <!-- Patrocinios -->
-				          <section style="margin-bottom:2rem;">
+				          <section class="informacion">
 				            <h3 style="margin-bottom:0.5rem; color: var(--color-primary);">Patrocinios</h3>
 				            <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
-				              <span style="background:#e3f2fd; padding:0.4rem 0.8rem; border-radius:12px;"><%= ed.getPatrocinios() %></span> <!-- PATROCINIOS VAN HARCODEADOS! -->
+				              		    <%
+		      java.util.List<ws.eventos.DataPatrocinio> patros = ed.getPatrocinios();
+		      if (patros != null && !patros.isEmpty()) {
+		          for (DataPatrocinio p : patros) {
+		    %>
+		              <span style="background:#e3f2fd; padding:0.4rem 0.8rem; border-radius:12px;">
+		                <%= p.getCodigoDePatrocinio() %> (<%= p.getNivelDePatrocinio() %>)
+		              </span>
+		    <%
+		          }
+		      } else {
+		    %>
+		          <span style="color:#777;">No hay patrocinios registrados para esta edición.</span>
+		    <%
+		      }
+		    %>
 				            </div>
 				           </section>
 										<%  
 										if ( registroAsistente != null) {									
 										%>
-							        <section style="margin-bottom:2rem;">
+							        <section class="informacion">
 					           		<h3 style="margin-bottom:0.5rem; color: var(--color-primary);">Tu Registro:</h3>
-				              	<fieldset style="margin-top: 2rem; border: 1px solid #ccc; padding: 1rem; border-radius: 8px;">
-					                <dl style="display:grid; grid-template-columns: 150px 1fr; row-gap:0.5rem; column-gap:1rem;">
+				              	<fieldset class="card-registro">
+					                <dl>
 					                  <dt><strong>Tipo de Registro:</strong></dt>
 					                  <dd><%= registroAsistente.getTipoRegistro()%></dd>
 					                  <dt><strong>Costo:</strong></dt>
@@ -124,6 +139,8 @@
 					                  <dd><%= registroAsistente.getFecha() %></dd>
 					                </dl>
 					              </fieldset>
+					              
+					              <a href="<%= ctx %>/mobile/consultaRegistro?edicion=<%=ed.getNombre() %>" class="btn">Consultar Registro</a>
 							        </section>
 										<%
 										}
@@ -141,7 +158,7 @@
 				%>
 				    <div style="margin-bottom:12px; text-align:center;">
 				        <a href="<%= request.getContextPath() %>/mobile/ConsultaEvento?id=<%= nombreEvento %>">
-				            <img src="<%= request.getContextPath() %>/img/<%= imagenEvento %>" 
+				            <img src="<%= request.getContextPath() %>/MediaServlet?name=<%= imagenEvento %>" 
 				                 alt="Consultar Evento"
 				                 style="max-width:150px; width:100%; cursor:pointer; border-radius:8px; 
 				                        box-shadow:0 2px 6px rgba(0,0,0,0.2);">

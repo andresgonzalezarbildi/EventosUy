@@ -9,10 +9,11 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import ws.usuario.PasswordIncorrectaFault_Exception;
-import ws.usuario.UsuarioNoExisteFault_Exception;
-import ws.usuario.UsuarioService;
-import ws.usuario.UsuarioWs;
+import ws.usuarios.DataUsuario;
+import ws.usuarios.PasswordIncorrectaFault_Exception;
+import ws.usuarios.UsuarioNoExisteFault_Exception;
+import ws.usuarios.UsuarioService;
+import ws.usuarios.UsuarioWs;
 
 @WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {
@@ -37,7 +38,7 @@ public class LoginServlet extends HttpServlet {
 	    UsuarioWs cu = serviceUs.getUsuarioPort();
 
 	    try {
-	        ws.usuario.DataUsuario DataUsu = cu.login(ident, password);
+	        DataUsuario DataUsu = cu.login(ident, password);
 
 	        HttpSession sesion = request.getSession(true);
 	        sesion.setAttribute("usuario", DataUsu.getNickname());

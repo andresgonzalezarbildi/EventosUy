@@ -49,7 +49,7 @@
                   <p><%= evento.getNombre() %></p>
                 </div>
                 <div class="col-12 content-evento-imagen ">
-                  <img src="<%= path %>/img/<%=evento.getImagen() %>" alt="logo del evento">
+                  <img src="<%= request.getContextPath() %>/MediaServlet?name=<%=evento.getImagen() %>" alt="logo del evento">
                 </div>
               </div>
               <div class="col-12 content-evento-informacion">
@@ -98,7 +98,7 @@
                 onclick="window.location.href='<%= detalleUrl %>'">
                 <div class="content-edicion">
                   <div class="content-edicion-imagen">
-                    <img src="<%= path %>/img/<%=imagen%>" alt="logo de la edicion">
+                    <img src="<%= request.getContextPath() %>/MediaServlet?name=<%=imagen%>" alt="logo de la edicion">
                   </div>
                   <p class="content-edicion-titulo">
                     <%= nombre %>

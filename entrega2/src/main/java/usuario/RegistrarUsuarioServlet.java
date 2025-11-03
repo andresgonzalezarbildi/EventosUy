@@ -16,15 +16,12 @@ import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
 import java.util.UUID;
 
-import excepciones.UsuarioRepetidoException;
-import logica.Fabrica;
-import logica.interfaces.IControladorUsuario;
 import ws.media.IOException_Exception;
 import ws.media.MediaService;
 import ws.media.MediaWs;
-import ws.usuario.UsuarioRepetidoFault_Exception;
-import ws.usuario.UsuarioService;
-import ws.usuario.UsuarioWs;
+import ws.usuarios.UsuarioRepetidoFault_Exception;
+import ws.usuarios.UsuarioService;
+import ws.usuarios.UsuarioWs;
 
 @WebServlet("/usuarios/registrar")
 @MultipartConfig

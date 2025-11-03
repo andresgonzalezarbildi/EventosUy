@@ -7,9 +7,11 @@
 	HttpSession sesion = request.getSession(false); 
 	String nickname = null;
 	String imagen = "PerfilSinFoto.jpg";
+	String rol  = null;
 	
 	if (sesion != null) {
 	    nickname = (String) sesion.getAttribute("usuario");
+	    rol = (String) sesion.getAttribute("rol");
 	    if (sesion.getAttribute("imagen") != null) {
 	        imagen = (String) sesion.getAttribute("imagen");
 	    }
@@ -28,11 +30,11 @@
   <a class="navbar-brand d-flex align-items-center p-0 me-0 me-lg-2" href="<%=request.getContextPath()%>/mobile/listarEventos">
   	<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 1024 1024"><path fill="#159574" d="M0 1024V0h1024v1024zM960 64H64v896h896zM832 320H384v128h256v128H384v128h448v128H192V192h640z"/></svg>  
 	 </a>
-  <% if (logueado ) { %>
+  <% if (logueado && "Asistente".equals(rol)) { %>
   <div class="navbar_sesion p-0">
   	<div class="navbar_sesion_perfil">
     	<img class="perfil_image" 
-         src="<%= request.getContextPath() %>/img/<%= imagen %>"
+         src="<%= request.getContextPath() %>/MediaServlet?name=<%= imagen %>"
          alt="foto perfil" />
  		</div>
  	</div>
@@ -41,7 +43,7 @@
 
   <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-    	<% if (logueado) { %>
+    	<% if (logueado && "Asistente".equals(rol)) { %>
       <li class="nav-item active">
         <a class="nav-link" href="<%= request.getContextPath() %>/mobile/CerrarSesion">Cerrar Sesión <span class="sr-only">(current)</span></a>
       </li>

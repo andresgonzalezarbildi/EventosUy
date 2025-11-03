@@ -20,10 +20,10 @@
 import ws.media.IOException_Exception;
 import ws.media.MediaService;
 import ws.media.MediaWs;
-import ws.usuario.UsuarioWs;
-	import ws.usuario.UsuarioNoExisteFault_Exception;
-	import ws.usuario.UsuarioService;
-	import ws.usuario.DataUsuario;
+import ws.usuarios.UsuarioWs;
+	import ws.usuarios.UsuarioNoExisteFault_Exception;
+	import ws.usuarios.UsuarioService;
+	import ws.usuarios.DataUsuario;
 	
 	@WebServlet(name="UsuarioServlet", urlPatterns={"/UsuarioServlet"})
 	@MultipartConfig(
@@ -92,7 +92,7 @@ import ws.usuario.UsuarioWs;
 	        }
 
 	        try {
-	            ws.usuario.DataUsuario usuario = cu.verInfoUsuario(nick);
+	            DataUsuario usuario = cu.verInfoUsuario(nick);
 
 	            String nombre = req.getParameter("nombre");
 	            if (nombre == null || nombre.isBlank()) nombre = usuario.getNombre();
@@ -202,7 +202,7 @@ import ws.usuario.UsuarioWs;
 	        }
 	
 	        try {
-	            ws.usuario.DataUsuario usuario = cu.verInfoUsuario(nick);
+	            DataUsuario usuario = cu.verInfoUsuario(nick);
 	            req.setAttribute("usuario", usuario);
 	            String nickLogueado = (String) req.getSession().getAttribute("usuario");
 	            if ("Organizador".equalsIgnoreCase(usuario.getTipo())) {
@@ -244,7 +244,7 @@ import ws.usuario.UsuarioWs;
 	        }
 	
 	        try {
-	            ws.usuario.DataUsuario usuario = cu.verInfoUsuario(nick);
+	            DataUsuario usuario = cu.verInfoUsuario(nick);
 	            req.setAttribute("usuario", usuario);
 	            req.getRequestDispatcher("/WEB-INF/pages/modificarUsuario.jsp").forward(req, res);
 	        } catch (UsuarioNoExisteFault_Exception e) {

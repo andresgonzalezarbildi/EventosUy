@@ -48,7 +48,7 @@ public class ConsultaEventoMobile extends HttpServlet {
             List<DataEdicion> dataEdicionesDelEvento = controladorEventos.listarEdicionesAceptadasEvento(nombreEvento);
             req.setAttribute("ediciones", dataEdicionesDelEvento);
           }catch(EdicionNoExisteFault_Exception error) {
-            req.setAttribute("error", error.getMessage());
+            req.setAttribute("ediciones", null);
           }
         }
       }catch(EventoNoExisteFault_Exception error) {

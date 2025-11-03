@@ -33,6 +33,5 @@
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/stax-ex.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/streambuffer.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/woodstox-core.jar"/>
-	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/logicaEventosUy.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -7,11 +7,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.xml.ws.WebServiceException;
-import ws.usuario.DataUsuario;
-import ws.usuario.UsuarioService;
-import ws.usuario.UsuarioWs;
-import ws.usuario.PasswordIncorrectaFault_Exception;
-import ws.usuario.UsuarioNoExisteFault_Exception;
+import ws.usuarios.UsuarioNoExisteFault_Exception;
+import ws.usuarios.DataUsuario;
+import ws.usuarios.PasswordIncorrectaFault_Exception;
+import ws.usuarios.UsuarioService;
+import ws.usuarios.UsuarioWs;
 
 import java.io.IOException;
 
@@ -70,7 +70,7 @@ public class IniciarSesionMobile extends HttpServlet {
 	    
 	  }catch(PasswordIncorrectaFault_Exception e) {
 	    req.setAttribute("error", e.getMessage());
-	  }catch(UsuarioNoExisteFault_Exception e) {
+	  }catch( UsuarioNoExisteFault_Exception e) {
 	    req.setAttribute("error", e.getMessage());
 	  }catch(WebServiceException e) {
       req.setAttribute("error", "No se pudo conectar con el servidor.");

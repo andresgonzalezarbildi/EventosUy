@@ -7,11 +7,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import ws.eventos.EventoConEdicionesPendientesFault_Exception;
-import ws.eventos.EventoNoExisteFault;
 import ws.eventos.EventosService;
 import ws.eventos.EventosWs;
-import ws.usuario.UsuarioService;
-import ws.usuario.UsuarioWs;
+import ws.usuarios.DataUsuario;
+import ws.usuarios.UsuarioNoExisteFault_Exception;
+import ws.usuarios.UsuarioService;
+import ws.usuarios.UsuarioWs;
 
 import java.io.IOException;
 import java.util.List;
@@ -92,7 +93,7 @@ public class EventoServlet extends HttpServlet {
 
                 String usuario = (String) session.getAttribute("usuario");
                 try {
-                    ws.usuario.DataUsuario datausu = cu.verInfoUsuario(usuario);
+                    DataUsuario datausu = cu.verInfoUsuario(usuario);
                     if (datausu.getTipo() == null || !datausu.getTipo().equalsIgnoreCase("organizador")) {
                         res.sendRedirect(req.getContextPath() + "/accesoDenegado.jsp");
                         return;
@@ -110,7 +111,7 @@ public class EventoServlet extends HttpServlet {
                             return;
                         }
                     }
-                } catch (ws.usuario.UsuarioNoExisteFault_Exception e) {
+                } catch (UsuarioNoExisteFault_Exception e) {
                     e.printStackTrace();
                     res.sendRedirect(req.getContextPath() + "/login?error=UsuarioNoExiste");
                     return;

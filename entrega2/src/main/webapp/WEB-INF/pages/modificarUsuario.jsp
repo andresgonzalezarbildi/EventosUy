@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ page import="ws.usuario.DataUsuario" %>
+<%@ page import="ws.usuarios.DataUsuario" %>
 
 <%
     DataUsuario usuario = (DataUsuario) request.getAttribute("usuario");

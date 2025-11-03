@@ -18,9 +18,10 @@ import ws.eventos.EventosWs;
 import ws.media.IOException_Exception;
 import ws.media.MediaService;
 import ws.media.MediaWs;
-import ws.usuario.UsuarioNoExisteFault_Exception;
-import ws.usuario.UsuarioService;
-import ws.usuario.UsuarioWs;
+import ws.usuarios.DataUsuario;
+import ws.usuarios.UsuarioNoExisteFault_Exception;
+import ws.usuarios.UsuarioService;
+import ws.usuarios.UsuarioWs;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
@@ -82,7 +83,7 @@ public class EdicionServlet extends HttpServlet {
                     }
                     String usuario =
                     		(String) session.getAttribute("usuario");
-                    ws.usuario.DataUsuario datausu = cu.verInfoUsuario(usuario);
+                    DataUsuario datausu = cu.verInfoUsuario(usuario);
                     if (datausu.getTipo() == null || !datausu.getTipo().equalsIgnoreCase("organizador")) {
                     	res.sendRedirect(req.getContextPath() + "/eventos");
                         return;

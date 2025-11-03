@@ -22,19 +22,19 @@ public class DataRegistro {
     
   private String asistente;
   
-  private boolean confirmarAsistentcia;
+  private boolean confirmarAsistencia;
   
   public DataRegistro(){}
 
     public DataRegistro(String evento, String edicion, String tipoRegistro, 
-                        Integer costo, LocalDate fecha, String asistente, boolean confirmarAsistentcia) {
+                        Integer costo, LocalDate fecha, String asistente, boolean confirmarAsistencia) {
         this.evento = evento;
         this.edicion = edicion;
         this.tipoRegistro = tipoRegistro;
         this.costo = costo;
         this.fecha = fecha;
         this.asistente = asistente;
-        this.confirmarAsistentcia = confirmarAsistentcia;
+        this.confirmarAsistencia = confirmarAsistencia;
     }
     public String getEvento(){return evento; }
     public void setEvento(String evento) {this.evento = evento; }
@@ -54,8 +54,8 @@ public class DataRegistro {
     public String getAsistente(){ return asistente; }
     public void setAsistente(String asistente) { this.asistente = asistente; }
     
-    public boolean getConfirmarAsistentcia(){ return confirmarAsistentcia; }
-    public void setConfirmarAsistentcia(boolean confirmarAsistentcia) { this.confirmarAsistentcia = confirmarAsistentcia; }
+    public boolean isConfirmarAsistencia(){ return confirmarAsistencia; }
+    public void setConfirmarAsistencia(boolean confirmarAsistentcia) { this.confirmarAsistencia = confirmarAsistentcia; }
     
     @Override
     public String toString() {
