@@ -47,7 +47,7 @@ public class ConfirmarAsistenciaMobile extends HttpServlet {
             sesion.setAttribute("error", "Ocurrió un error al confirmar la asistencia.");
         }
 
-        String url = req.getContextPath() + "/mobile/consultaRegistro?edicion=" +
+        String url = req.getContextPath() + "/consultaRegistro?edicion=" +
                      URLEncoder.encode(idEdicion, "UTF-8");
         res.sendRedirect(url); // PRG
     }
