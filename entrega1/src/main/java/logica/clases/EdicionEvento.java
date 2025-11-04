@@ -25,9 +25,10 @@ public class EdicionEvento {
   private Evento eventoPadre;
   private String imagen;
   private EstadoEdicion estado;
+  private String video;
 
 
-  public EdicionEvento(String nombre, LocalDate fechaIni, LocalDate fechaFin, String ciudad, String pais, String sigla, LocalDate fechaAltaEnPlataforma, String imagen) {
+  public EdicionEvento(String nombre, LocalDate fechaIni, LocalDate fechaFin, String ciudad, String pais, String sigla, LocalDate fechaAltaEnPlataforma, String imagen, String video) {
     this.nombre = nombre;
     this.fechaIni = fechaIni;
     this.fechaFin = fechaFin;
@@ -40,6 +41,7 @@ public class EdicionEvento {
     this.listaRegistros = new HashMap<>();
     setImagen(imagen);
     this.estado = EstadoEdicion.INGRESADA;
+    this.video = (video == null || video.isBlank()) ? "EventoSinFoto.png" : video;
 
     // Hardcodeado hasta que este el alta
     this.agregarPatrocinio(new Patrocinio(LocalDate.now(), 5000, 10, "PAT001", Nivel.ORO));
@@ -227,5 +229,12 @@ public class EdicionEvento {
     }
     this.estado = EstadoEdicion.RECHAZADA;
   }
-
+  
+  public void setVideo(String video) {
+	  this.video = video;
+  }
+  
+  public String getVideo() {
+	  return this.video;
+  }
 }

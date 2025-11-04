@@ -71,6 +71,7 @@
 
             <label for="imagen">Imagen (opcional):</label>
             <input type="file" id="imagen" name="imagen" accept="image/*">
+            
 
             <div style="margin-top:1rem;display:flex;gap:1rem;">
               <button type="submit" class="btn btn-primary">Aceptar</button>

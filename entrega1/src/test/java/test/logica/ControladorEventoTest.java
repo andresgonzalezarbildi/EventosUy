@@ -741,7 +741,7 @@ public class ControladorEventoTest {
         }
         
         controlador.altaEdicionEvento("Evento Prueba 16", "Edición Prueba 16", "EP16", "Montevideo", "Uruguay", 
-                                    LocalDate.now(), LocalDate.now().plusDays(1), LocalDate.now(), "testOrg", "imagen.png");
+                                    LocalDate.now(), LocalDate.now().plusDays(1), LocalDate.now(), "testOrg", "imagen.png", null);
         
         DataEdicion edicion = controlador.getInfoEdicion("Edición Prueba 16");
         assertNotNull(edicion);

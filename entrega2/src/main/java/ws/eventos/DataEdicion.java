@@ -32,6 +32,7 @@ import jakarta.xml.bind.annotation.XmlType;
  *         <element name="organizador" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         <element name="tiposRegistro" type="{http://publicar.ws/}dataTipoRegistro" maxOccurs="unbounded" minOccurs="0"/>
  *         <element name="patrocinios" type="{http://publicar.ws/}dataPatrocinio" maxOccurs="unbounded" minOccurs="0"/>
+ *         <element name="video" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *       </sequence>
  *     </restriction>
  *   </complexContent>
@@ -54,7 +55,8 @@ import jakarta.xml.bind.annotation.XmlType;
     "evento",
     "organizador",
     "tiposRegistro",
-    "patrocinios"
+    "patrocinios",
+    "video"
 })
 public class DataEdicion {
 
@@ -73,6 +75,7 @@ public class DataEdicion {
     protected List<DataTipoRegistro> tiposRegistro;
     @XmlElement(nillable = true)
     protected List<DataPatrocinio> patrocinios;
+    protected String video;
 
     /**
      * Obtiene el valor de la propiedad nombre.
@@ -398,6 +401,30 @@ public class DataEdicion {
             patrocinios = new ArrayList<>();
         }
         return this.patrocinios;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad video.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getVideo() {
+        return video;
+    }
+
+    /**
+     * Define el valor de la propiedad video.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setVideo(String value) {
+        this.video = value;
     }
 
 }

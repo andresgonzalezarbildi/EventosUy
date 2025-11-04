@@ -327,7 +327,7 @@ public class CargaDatos implements ICargaDatos {
     try {
       controladorEvento.altaEdicionEvento("Montevideo Rock", "Montevideo Rock 2025", "MONROCK25",
           "Montevideo", "Uruguay", LocalDate.of(2025, 11, 20),
-          LocalDate.of(2025, 11, 22), LocalDate.of(2025, 3, 12), "imm", "IMG-EDEV01.jpeg");
+          LocalDate.of(2025, 11, 22), LocalDate.of(2025, 3, 12), "imm", "IMG-EDEV01.jpeg", null);
       try {
         controladorEvento.aceptarEdicion("Montevideo Rock 2025", true);
       } catch (EdicionNoExisteException ignored) {
@@ -342,7 +342,7 @@ public class CargaDatos implements ICargaDatos {
     try {
       controladorEvento.altaEdicionEvento("Maratón de Montevideo", "Maratón de Montevideo 2025",
           "MARATON25", "Montevideo", "Uruguay", LocalDate.of(2025, 9, 14),
-          LocalDate.of(2025, 9, 14), LocalDate.of(2025, 2, 5), "imm", "IMG-EDEV02.png");
+          LocalDate.of(2025, 9, 14), LocalDate.of(2025, 2, 5), "imm", "IMG-EDEV02.png", null);
       
       controladorEvento.aceptarEdicion("Maratón de Montevideo 2025", true);
          
@@ -352,7 +352,7 @@ public class CargaDatos implements ICargaDatos {
     try {
       controladorEvento.altaEdicionEvento("Maratón de Montevideo", "Maratón de Montevideo 2024", 
           "MARATON24", "Montevideo", "Uruguay", LocalDate.of(2024, 9, 14),
-          LocalDate.of(2024, 9, 14), LocalDate.of(2024, 4, 21), "imm", "IMG-EDEV03.jpeg");
+          LocalDate.of(2024, 9, 14), LocalDate.of(2024, 4, 21), "imm", "IMG-EDEV03.jpeg", null);
       try {
         controladorEvento.aceptarEdicion("Maratón de Montevideo 2024", true);
       } catch (EdicionNoExisteException ignored) {
@@ -367,7 +367,7 @@ public class CargaDatos implements ICargaDatos {
     try {
       controladorEvento.altaEdicionEvento("Maratón de Montevideo", "Maratón de Montevideo 2022", 
           "MARATON22", "Montevideo", "Uruguay", LocalDate.of(2022, 9, 14), 
-          LocalDate.of(2022, 9, 14), LocalDate.of(2022, 5, 21), "imm", "IMG-EDEV04.jpeg");
+          LocalDate.of(2022, 9, 14), LocalDate.of(2022, 5, 21), "imm", "IMG-EDEV04.jpeg", null);
       try {
         controladorEvento.aceptarEdicion("Maratón de Montevideo 2022", false);
       } catch (EdicionNoExisteException ignored) {
@@ -382,7 +382,7 @@ public class CargaDatos implements ICargaDatos {
     try {
       controladorEvento.altaEdicionEvento("Montevideo Comics", "Montevideo Comics 2024",
           "COMICS24", "Montevideo", "Uruguay", LocalDate.of(2024, 7, 18), 
-          LocalDate.of(2024, 7, 21), LocalDate.of(2024, 6, 20), "miseventos", "IMG-EDEV05.jpeg");
+          LocalDate.of(2024, 7, 21), LocalDate.of(2024, 6, 20), "miseventos", "IMG-EDEV05.jpeg", null);
       try {
         controladorEvento.aceptarEdicion("Montevideo Comics 2024", true);
       } catch (EdicionNoExisteException ignored) {
@@ -397,7 +397,7 @@ public class CargaDatos implements ICargaDatos {
     try {
       controladorEvento.altaEdicionEvento("Montevideo Comics", "Montevideo Comics 2025", "COMICS25",
           "Montevideo", "Uruguay", LocalDate.of(2025, 8, 4), LocalDate.of(2025, 8, 6),
-          LocalDate.of(2025, 7, 4), "miseventos", "IMG-EDEV06.jpeg");
+          LocalDate.of(2025, 7, 4), "miseventos", "IMG-EDEV06.jpeg", null);
       try {
         controladorEvento.aceptarEdicion("Montevideo Comics 2025", true);
       } catch (EdicionNoExisteException ignored) {
@@ -412,7 +412,7 @@ public class CargaDatos implements ICargaDatos {
     try {
       controladorEvento.altaEdicionEvento("Expointer Uruguay", "Expointer Uruguay 2025", 
           "EXPOAGRO25", "Durazno", "Uruguay", LocalDate.of(2025, 9, 11), 
-          LocalDate.of(2025, 9, 17), LocalDate.of(2025, 2, 1), "miseventos", "IMG-EDEV07.jpeg");
+          LocalDate.of(2025, 9, 17), LocalDate.of(2025, 2, 1), "miseventos", "IMG-EDEV07.jpeg", null);
       //solo ingresada
     } catch (UsuarioNoExisteException ignored) {
       // si existe ignoro
@@ -422,7 +422,7 @@ public class CargaDatos implements ICargaDatos {
       controladorEvento.altaEdicionEvento("Conferencia de Tecnología", 
           "Tecnología Punta del Este 2026", "CONFTECH26", "Punta del Este", "Uruguay", 
           LocalDate.of(2026, 4, 6), LocalDate.of(2026, 4, 10), LocalDate.of(2025, 8, 1), 
-          "udelar", "IMG-EDEV08.jpeg");
+          "udelar", "IMG-EDEV08.jpeg", null);
       try {
       	controladorEvento.aceptarEdicion("Tecnología Punta del Este 2026", true);
       } catch (EdicionNoExisteException ignored) {
@@ -437,7 +437,7 @@ public class CargaDatos implements ICargaDatos {
     try {
       controladorEvento.altaEdicionEvento("Conferencia de Tecnología", "Mobile World Congress 2025",
           "MWC", "Barcelona", "España", LocalDate.of(2025, 12, 12), LocalDate.of(2025, 12, 15),
-          LocalDate.of(2025, 8, 21), "techcorp", "EdicionSinFoto.png");
+          LocalDate.of(2025, 8, 21), "techcorp", "EdicionSinFoto.png", null);
       try {
         controladorEvento.aceptarEdicion("Mobile World Congress 2025", true);
       } catch (EdicionNoExisteException ignored) {
@@ -452,7 +452,7 @@ public class CargaDatos implements ICargaDatos {
     try {
       controladorEvento.altaEdicionEvento("Conferencia de Tecnología", "Web Summit 2026", 
           "WS26", "Lisboa", "Portugal", LocalDate.of(2026, 1, 13), LocalDate.of(2026, 2, 1), 
-          LocalDate.of(2025, 6, 4), "techcorp", "EdicionSinFoto.png");
+          LocalDate.of(2025, 6, 4), "techcorp", "EdicionSinFoto.png", null);
       try {
         controladorEvento.aceptarEdicion("Web Summit 2026", true);
       } catch (EdicionNoExisteException ignored) {
@@ -467,7 +467,7 @@ public class CargaDatos implements ICargaDatos {
     try {
       controladorEvento.altaEdicionEvento("Montevideo Fashion Week", "Montevideo Fashion Week 2026",
           "MFW26", "Nueva York", "Estados Unidos", LocalDate.of(2026, 2, 16), 
-          LocalDate.of(2026, 2, 20), LocalDate.of(2025, 10, 2), "mec", "IMG-EDEV11.jpeg");
+          LocalDate.of(2026, 2, 20), LocalDate.of(2025, 10, 2), "mec", "IMG-EDEV11.jpeg", null);
       //solo ingresada
     } catch (UsuarioNoExisteException ignored) {
       // si existe ignoro

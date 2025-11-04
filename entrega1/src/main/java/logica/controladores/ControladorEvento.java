@@ -103,7 +103,8 @@ public class ControladorEvento implements IControladorEvento {
       edicion.getPatrociniosDTO(),
       edicion.getImagen(),
       edicion.getEstado().name().toLowerCase(),
-      edicion.getEvento().getNombre()
+      edicion.getEvento().getNombre(),
+      edicion.getVideo()
         );
 	}
 
@@ -237,7 +238,7 @@ public class ControladorEvento implements IControladorEvento {
   }
       
   public void altaEdicionEvento(
-              String nombreEvento, String nombreEdicion, String sigla, String ciudad, String pais, LocalDate fechaInicio, LocalDate fechaFin, LocalDate fechaAltaEnPlataforma, String organizadorNick, String imagen) throws UsuarioNoExisteException {
+              String nombreEvento, String nombreEdicion, String sigla, String ciudad, String pais, LocalDate fechaInicio, LocalDate fechaFin, LocalDate fechaAltaEnPlataforma, String organizadorNick, String imagen, String video) throws UsuarioNoExisteException {
           if (nombreEvento == null || nombreEvento.isBlank())   
           	throw new IllegalArgumentException("El evento es obligatorio.");
         if (organizadorNick == null || organizadorNick.isBlank())   
@@ -279,7 +280,7 @@ public class ControladorEvento implements IControladorEvento {
             throw new IllegalArgumentException("Organizador inexistente: " + organizadorNick);
           }
           
-          EdicionEvento edicion = new EdicionEvento( nombreEdicion, fechaInicio, fechaFin, ciudad, pais, sigla, fechaAltaEnPlataforma != null ? fechaAltaEnPlataforma : LocalDate.now(), imagen);
+          EdicionEvento edicion = new EdicionEvento( nombreEdicion, fechaInicio, fechaFin, ciudad, pais, sigla, fechaAltaEnPlataforma != null ? fechaAltaEnPlataforma : LocalDate.now(), imagen, video);
           edicion.setOrganizador(org);
           edicion.setEventoPadre(evento);
           org.agregarEdicion(edicion);
@@ -518,7 +519,8 @@ public class ControladorEvento implements IControladorEvento {
     				    edi.getPatrociniosDTO(),
     				    edi.getImagen(),
     				    edi.getEstado().name().toLowerCase(),
-    				    edi.getEvento().getNombre()
+    				    edi.getEvento().getNombre(),
+    				    edi.getVideo()
     				);
     
     		}
@@ -556,7 +558,8 @@ public class ControladorEvento implements IControladorEvento {
                         edi.getPatrociniosDTO(),
                         edi.getImagen(),
                         edi.getEstadoString(),
-                        edi.getEvento().getNombre()
+                        edi.getEvento().getNombre(),
+                        edi.getVideo()
                     ));
                 }
             }
@@ -592,7 +595,8 @@ public class ControladorEvento implements IControladorEvento {
                         edi.getPatrociniosDTO(),
                         edi.getImagen(),
                         edi.getEstadoString(),
-                        edi.getEvento().getNombre()
+                        edi.getEvento().getNombre(),
+                        edi.getVideo()
                     ));
                 }
             }
@@ -630,7 +634,8 @@ public class ControladorEvento implements IControladorEvento {
               edi.getPatrociniosDTO(),
               edi.getImagen(),
               edi.getEstadoString(),
-              edi.getEvento().getNombre()
+              edi.getEvento().getNombre(),
+              edi.getVideo()
           ));
       }
   }
@@ -665,7 +670,8 @@ public class ControladorEvento implements IControladorEvento {
                         edi.getPatrociniosDTO(),
                         edi.getImagen(),
                         edi.getEstadoString(),
-                        edi.getEvento().getNombre()
+                        edi.getEvento().getNombre(),
+                        edi.getVideo()
                     ));
                 }
             }
@@ -703,7 +709,8 @@ public class ControladorEvento implements IControladorEvento {
                       edi.getPatrociniosDTO(),
                       edi.getImagen(),
                       edi.getEstadoString(),
-                      edi.getEvento().getNombre()
+                      edi.getEvento().getNombre(),
+                      edi.getVideo()
                   ));
               }
           }
@@ -740,7 +747,8 @@ public class ControladorEvento implements IControladorEvento {
                             edi.getPatrociniosDTO(),
                             edi.getImagen(),
                             edi.getEstadoString(),
-                            edi.getEvento().getNombre()
+                            edi.getEvento().getNombre(),
+                            edi.getVideo()
                         ));
                     }
                 }
@@ -777,7 +785,8 @@ public class ControladorEvento implements IControladorEvento {
                         edi.getPatrociniosDTO(),
                         edi.getImagen(),
                         edi.getEstadoString(),
-                        edi.getEvento().getNombre()
+                        edi.getEvento().getNombre(),
+                        edi.getVideo()
                     ));
                 }
             }
@@ -814,7 +823,8 @@ public class ControladorEvento implements IControladorEvento {
                             edi.getPatrociniosDTO(),
                             edi.getImagen(),
                             edi.getEstadoString(),
-                            edi.getEvento().getNombre()
+                            edi.getEvento().getNombre(),
+                            edi.getVideo()
                         ));
                     }
                 }

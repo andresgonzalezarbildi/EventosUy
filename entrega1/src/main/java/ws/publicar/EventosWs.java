@@ -79,14 +79,15 @@ public class EventosWs {
         @WebParam(name = "fechaFin") String fechaFinStr,
         @WebParam(name = "fechaAltaEnPlataforma") String fechaAltaStr,
         @WebParam(name = "organizadorNick") String organizadorNick,
-        @WebParam(name = "imagen") String imagen
+        @WebParam(name = "imagen") String imagen,
+        @WebParam(name = "video") String video
     ) throws UsuarioNoExisteFault {
 
         try {
             LocalDate fInicio = LocalDate.parse(fechaInicioStr);
             LocalDate fFin = LocalDate.parse(fechaFinStr);
             LocalDate fAlta = LocalDate.parse(fechaAltaStr);
-            ctrl.altaEdicionEvento(nombreEvento, nombreEdicion, sigla, ciudad, pais, fInicio, fFin, fAlta, organizadorNick, imagen);
+            ctrl.altaEdicionEvento(nombreEvento, nombreEdicion, sigla, ciudad, pais, fInicio, fFin, fAlta, organizadorNick, imagen,video);
         } catch (UsuarioNoExisteException e) {
             throw new UsuarioNoExisteFault(e.getMessage());
         }
