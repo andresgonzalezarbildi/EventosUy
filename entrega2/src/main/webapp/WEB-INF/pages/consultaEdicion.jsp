@@ -148,26 +148,38 @@
 		  <h3 style="margin-bottom:0.5rem; color: var(--color-primary);">Registros de la Edición</h3>
 		  <div style="display:flex; flex-direction:column; gap:0.5rem; flex-wrap:wrap;">
 		
-		    <%
-		    if (registros != null && !registros.isEmpty()) {
-		        for (DataRegistro reg : registros) {
-		    %>
-		        <div style="background:#e3f2fd; padding:0.6rem 1rem; border-radius:12px;">
-		        	<button onclick="window.location.href='<%= request.getContextPath() %>/registroEd?op=consultar&idEdicion=<%= ed.getNombre() %>&idAsistente=<%= reg.getAsistente() %>'">
-		        		<b>Asistente:</b> <%= reg.getAsistente() %>
-		    		</button>
-<%-- 		            <p><b>Tipo de Registro:</b> <%= reg.getTipoRegistro() %></p> --%>
-<%-- 		            <p><b>Fecha:</b> <%= reg.getFechaRegistro() %></p> --%>
-		        </div>    
+		   <%
+if (registros != null && !registros.isEmpty()) {
+    for (DataRegistro reg : registros) {
+%>
 
-		    <%
-		        }
-		    } else {
-		    %>
-		        <p>No hay registros para esta edición.</p>
-		    <%
-		    }
-		    %>
+    <div style="background:#e3f2fd; padding:0.6rem 1rem; border-radius:12px;">
+        <%
+        if (reg.isConfirmarAsistencia()) {
+        %>
+            <button onclick="window.location.href='<%= request.getContextPath() %>/registroEd?op=consultar&idEdicion=<%= ed.getNombre() %>&idAsistente=<%= reg.getAsistente() %>'">
+                <%= reg.getAsistente() %> <b>: Asistió al evento</b>
+            </button>
+        <%
+        } else {
+        %>
+            <button onclick="window.location.href='<%= request.getContextPath() %>/registroEd?op=consultar&idEdicion=<%= ed.getNombre() %>&idAsistente=<%= reg.getAsistente() %>'">
+                <%= reg.getAsistente() %> <b>: No asistió al evento</b>
+            </button>
+        <%
+        }
+        %>
+    </div>
+
+<%
+    } // fin del for
+} else {
+%>
+    <p>No hay registros para esta edición.</p>
+<%
+}
+%>
+
 
 
 				    

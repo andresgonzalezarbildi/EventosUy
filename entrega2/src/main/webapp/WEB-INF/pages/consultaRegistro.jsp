@@ -51,6 +51,7 @@
                 <p class="col-12 col-md-6"><span class="negrita">Tipo de registro:</span> <%= nomTipoRegistro %></p>
                 <p class="col-12 col-md-6"><span class="negrita">Tipo de registro:</span> <%= nomTipoRegistro %></p>
                 <p class="col-12 col-md-6"><span class="negrita">Código de patrocinio:</span>-</p>
+               
                 
                 <% if ("asistente".equalsIgnoreCase(rol)) { %>
                     <p class="col-12 col-md-6"><span class="negrita">Evento:</span><%= nomEvento %></p>
