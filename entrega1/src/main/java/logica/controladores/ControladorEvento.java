@@ -848,12 +848,14 @@ public class ControladorEvento implements IControladorEvento {
 		          for (Registro r : ed.getRegistros()) {
 		             if (nickname.equals(r.getAsistente().getNickname())) {
 		                r.setConfirmarAsistencia();
+		                return;
 		             }
 		          }
 	          }
 	       }
 	    }
 	 }
+	 throw new EdicionSinComenzarException("La edición o el registro no existe");
   }
   
   public void finalizarEvento(String nombreEvento) throws EventoConEdicionesPedientesException {
