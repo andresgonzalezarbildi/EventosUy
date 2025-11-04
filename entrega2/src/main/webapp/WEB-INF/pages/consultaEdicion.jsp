@@ -95,7 +95,7 @@
 		       && nickname != null 
 		       && ed.getOrganizador() != null 
 		       && ed.getOrganizador().equalsIgnoreCase(nickname)) { %>
-			<button onclick="window.location.href='<%= request.getContextPath() %>/TipoRegistroServlet?op=alta&idEdicion=<%= URLEncoder.encode(ed.getNombre(), "UTF-8") %>'">
+			<button class="btn" style="margin-top: 0.5rem" onclick="window.location.href='<%= request.getContextPath() %>/TipoRegistroServlet?op=alta&idEdicion=<%= URLEncoder.encode(ed.getNombre(), "UTF-8") %>'">
 
 		        Agregar Tipo de Registro
 		    </button>

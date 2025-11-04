@@ -182,7 +182,7 @@ public class UsuarioWs {
         @WebParam(name = "password") String password
     )throws UsuarioNoExisteFault, PasswordIncorrectaFault{
       try {
-        return ctrl.login(ident, password);
+        return ctrl.loginMovil(ident, password);
       } catch (UsuarioNoExisteException e) {
         throw new UsuarioNoExisteFault(e.getMessage());
       }catch (PasswordIncorrectaException e) {

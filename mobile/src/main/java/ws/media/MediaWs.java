@@ -27,26 +27,6 @@ public interface MediaWs {
 
     /**
      * 
-     * @param nombreArchivo
-     * @return
-     *     returns byte[]
-     * @throws IOException_Exception
-     */
-    @WebMethod
-    @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "obtenerImagen", targetNamespace = "http://publicar.ws/", className = "ws.media.ObtenerImagen")
-    @ResponseWrapper(localName = "obtenerImagenResponse", targetNamespace = "http://publicar.ws/", className = "ws.media.ObtenerImagenResponse")
-    @Action(input = "http://publicar.ws/MediaWs/obtenerImagenRequest", output = "http://publicar.ws/MediaWs/obtenerImagenResponse", fault = {
-        @FaultAction(className = IOException_Exception.class, value = "http://publicar.ws/MediaWs/obtenerImagen/Fault/IOException")
-    })
-    public byte[] obtenerImagen(
-        @WebParam(name = "nombreArchivo", targetNamespace = "")
-        String nombreArchivo)
-        throws IOException_Exception
-    ;
-
-    /**
-     * 
      * @param imagenBytes
      * @param nombreArchivo
      * @return
@@ -65,6 +45,26 @@ public interface MediaWs {
         String nombreArchivo,
         @WebParam(name = "imagenBytes", targetNamespace = "")
         byte[] imagenBytes)
+        throws IOException_Exception
+    ;
+
+    /**
+     * 
+     * @param nombreArchivo
+     * @return
+     *     returns byte[]
+     * @throws IOException_Exception
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "obtenerImagen", targetNamespace = "http://publicar.ws/", className = "ws.media.ObtenerImagen")
+    @ResponseWrapper(localName = "obtenerImagenResponse", targetNamespace = "http://publicar.ws/", className = "ws.media.ObtenerImagenResponse")
+    @Action(input = "http://publicar.ws/MediaWs/obtenerImagenRequest", output = "http://publicar.ws/MediaWs/obtenerImagenResponse", fault = {
+        @FaultAction(className = IOException_Exception.class, value = "http://publicar.ws/MediaWs/obtenerImagen/Fault/IOException")
+    })
+    public byte[] obtenerImagen(
+        @WebParam(name = "nombreArchivo", targetNamespace = "")
+        String nombreArchivo)
         throws IOException_Exception
     ;
 

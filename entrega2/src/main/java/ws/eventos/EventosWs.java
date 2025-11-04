@@ -28,130 +28,41 @@ public interface EventosWs {
 
     /**
      * 
-     * @return
-     *     returns java.util.List<ws.eventos.DataEvento>
-     * @throws EventoNoExisteFault_Exception
+     * @param nombre
+     * @throws CategoriaRepetidaFault_Exception
      */
     @WebMethod
-    @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "listarEventoExistentes", targetNamespace = "http://publicar.ws/", className = "ws.eventos.ListarEventoExistentes")
-    @ResponseWrapper(localName = "listarEventoExistentesResponse", targetNamespace = "http://publicar.ws/", className = "ws.eventos.ListarEventoExistentesResponse")
-    @Action(input = "http://publicar.ws/EventosWs/listarEventoExistentesRequest", output = "http://publicar.ws/EventosWs/listarEventoExistentesResponse", fault = {
-        @FaultAction(className = EventoNoExisteFault_Exception.class, value = "http://publicar.ws/EventosWs/listarEventoExistentes/Fault/EventoNoExisteFault")
+    @RequestWrapper(localName = "altaCategoria", targetNamespace = "http://publicar.ws/", className = "ws.eventos.AltaCategoria")
+    @ResponseWrapper(localName = "altaCategoriaResponse", targetNamespace = "http://publicar.ws/", className = "ws.eventos.AltaCategoriaResponse")
+    @Action(input = "http://publicar.ws/EventosWs/altaCategoriaRequest", output = "http://publicar.ws/EventosWs/altaCategoriaResponse", fault = {
+        @FaultAction(className = CategoriaRepetidaFault_Exception.class, value = "http://publicar.ws/EventosWs/altaCategoria/Fault/CategoriaRepetidaFault")
     })
-    public List<DataEvento> listarEventoExistentes()
-        throws EventoNoExisteFault_Exception
+    public void altaCategoria(
+        @WebParam(name = "nombre", targetNamespace = "")
+        String nombre)
+        throws CategoriaRepetidaFault_Exception
     ;
 
     /**
      * 
      * @param nombreEdicion
      * @param nombreEvento
+     * @param nombreTipo
      * @return
-     *     returns java.util.List<ws.eventos.DataTipoRegistro>
+     *     returns ws.eventos.DataTipoRegistro
      */
     @WebMethod
     @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "listarTiposRegistro", targetNamespace = "http://publicar.ws/", className = "ws.eventos.ListarTiposRegistro")
-    @ResponseWrapper(localName = "listarTiposRegistroResponse", targetNamespace = "http://publicar.ws/", className = "ws.eventos.ListarTiposRegistroResponse")
-    @Action(input = "http://publicar.ws/EventosWs/listarTiposRegistroRequest", output = "http://publicar.ws/EventosWs/listarTiposRegistroResponse")
-    public List<DataTipoRegistro> listarTiposRegistro(
+    @RequestWrapper(localName = "getTipoRegistro", targetNamespace = "http://publicar.ws/", className = "ws.eventos.GetTipoRegistro")
+    @ResponseWrapper(localName = "getTipoRegistroResponse", targetNamespace = "http://publicar.ws/", className = "ws.eventos.GetTipoRegistroResponse")
+    @Action(input = "http://publicar.ws/EventosWs/getTipoRegistroRequest", output = "http://publicar.ws/EventosWs/getTipoRegistroResponse")
+    public DataTipoRegistro getTipoRegistro(
         @WebParam(name = "nombreEvento", targetNamespace = "")
         String nombreEvento,
         @WebParam(name = "nombreEdicion", targetNamespace = "")
-        String nombreEdicion);
-
-    /**
-     * 
-     * @param nombreEdicion
-     * @return
-     *     returns java.util.List<ws.eventos.DataRegistro>
-     */
-    @WebMethod
-    @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "listarRegistrosDeEdicion", targetNamespace = "http://publicar.ws/", className = "ws.eventos.ListarRegistrosDeEdicion")
-    @ResponseWrapper(localName = "listarRegistrosDeEdicionResponse", targetNamespace = "http://publicar.ws/", className = "ws.eventos.ListarRegistrosDeEdicionResponse")
-    @Action(input = "http://publicar.ws/EventosWs/listarRegistrosDeEdicionRequest", output = "http://publicar.ws/EventosWs/listarRegistrosDeEdicionResponse")
-    public List<DataRegistro> listarRegistrosDeEdicion(
-        @WebParam(name = "nombreEdicion", targetNamespace = "")
-        String nombreEdicion);
-
-    /**
-     * 
-     * @param nickname
-     * @return
-     *     returns java.util.List<ws.eventos.DataRegistro>
-     */
-    @WebMethod
-    @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "listarRegistrosDeUsuario", targetNamespace = "http://publicar.ws/", className = "ws.eventos.ListarRegistrosDeUsuario")
-    @ResponseWrapper(localName = "listarRegistrosDeUsuarioResponse", targetNamespace = "http://publicar.ws/", className = "ws.eventos.ListarRegistrosDeUsuarioResponse")
-    @Action(input = "http://publicar.ws/EventosWs/listarRegistrosDeUsuarioRequest", output = "http://publicar.ws/EventosWs/listarRegistrosDeUsuarioResponse")
-    public List<DataRegistro> listarRegistrosDeUsuario(
-        @WebParam(name = "nickname", targetNamespace = "")
-        String nickname);
-
-    /**
-     * 
-     * @param nombreEvento
-     * @return
-     *     returns java.util.List<ws.eventos.DataEdicion>
-     * @throws EdicionNoExisteFault_Exception
-     */
-    @WebMethod
-    @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "listarEdicionesRechazadasEvento", targetNamespace = "http://publicar.ws/", className = "ws.eventos.ListarEdicionesRechazadasEvento")
-    @ResponseWrapper(localName = "listarEdicionesRechazadasEventoResponse", targetNamespace = "http://publicar.ws/", className = "ws.eventos.ListarEdicionesRechazadasEventoResponse")
-    @Action(input = "http://publicar.ws/EventosWs/listarEdicionesRechazadasEventoRequest", output = "http://publicar.ws/EventosWs/listarEdicionesRechazadasEventoResponse", fault = {
-        @FaultAction(className = EdicionNoExisteFault_Exception.class, value = "http://publicar.ws/EventosWs/listarEdicionesRechazadasEvento/Fault/EdicionNoExisteFault")
-    })
-    public List<DataEdicion> listarEdicionesRechazadasEvento(
-        @WebParam(name = "nombreEvento", targetNamespace = "")
-        String nombreEvento)
-        throws EdicionNoExisteFault_Exception
-    ;
-
-    /**
-     * 
-     * @param nombreEvento
-     * @return
-     *     returns java.util.List<ws.eventos.DataEdicion>
-     * @throws EdicionNoExisteFault_Exception
-     */
-    @WebMethod
-    @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "listarEdicionesIngresadasEvento", targetNamespace = "http://publicar.ws/", className = "ws.eventos.ListarEdicionesIngresadasEvento")
-    @ResponseWrapper(localName = "listarEdicionesIngresadasEventoResponse", targetNamespace = "http://publicar.ws/", className = "ws.eventos.ListarEdicionesIngresadasEventoResponse")
-    @Action(input = "http://publicar.ws/EventosWs/listarEdicionesIngresadasEventoRequest", output = "http://publicar.ws/EventosWs/listarEdicionesIngresadasEventoResponse", fault = {
-        @FaultAction(className = EdicionNoExisteFault_Exception.class, value = "http://publicar.ws/EventosWs/listarEdicionesIngresadasEvento/Fault/EdicionNoExisteFault")
-    })
-    public List<DataEdicion> listarEdicionesIngresadasEvento(
-        @WebParam(name = "nombreEvento", targetNamespace = "")
-        String nombreEvento)
-        throws EdicionNoExisteFault_Exception
-    ;
-
-    /**
-     * 
-     * @param nombreEvento
-     * @return
-     *     returns java.util.List<ws.eventos.DataEdicion>
-     * @throws EdicionNoExisteFault_Exception
-     * @throws EventoNoExisteFault_Exception
-     */
-    @WebMethod
-    @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "listarEdicionesAceptadasEvento", targetNamespace = "http://publicar.ws/", className = "ws.eventos.ListarEdicionesAceptadasEvento")
-    @ResponseWrapper(localName = "listarEdicionesAceptadasEventoResponse", targetNamespace = "http://publicar.ws/", className = "ws.eventos.ListarEdicionesAceptadasEventoResponse")
-    @Action(input = "http://publicar.ws/EventosWs/listarEdicionesAceptadasEventoRequest", output = "http://publicar.ws/EventosWs/listarEdicionesAceptadasEventoResponse", fault = {
-        @FaultAction(className = EdicionNoExisteFault_Exception.class, value = "http://publicar.ws/EventosWs/listarEdicionesAceptadasEvento/Fault/EdicionNoExisteFault"),
-        @FaultAction(className = EventoNoExisteFault_Exception.class, value = "http://publicar.ws/EventosWs/listarEdicionesAceptadasEvento/Fault/EventoNoExisteFault")
-    })
-    public List<DataEdicion> listarEdicionesAceptadasEvento(
-        @WebParam(name = "nombreEvento", targetNamespace = "")
-        String nombreEvento)
-        throws EdicionNoExisteFault_Exception, EventoNoExisteFault_Exception
-    ;
+        String nombreEdicion,
+        @WebParam(name = "nombreTipo", targetNamespace = "")
+        String nombreTipo);
 
     /**
      * 
@@ -167,19 +78,42 @@ public interface EventosWs {
 
     /**
      * 
-     * @param nombre
-     * @throws CategoriaRepetidaFault_Exception
+     * @param idEdicion
+     * @return
+     *     returns ws.eventos.DataEdicion
+     * @throws EdicionNoExisteFault_Exception
      */
     @WebMethod
-    @RequestWrapper(localName = "altaCategoria", targetNamespace = "http://publicar.ws/", className = "ws.eventos.AltaCategoria")
-    @ResponseWrapper(localName = "altaCategoriaResponse", targetNamespace = "http://publicar.ws/", className = "ws.eventos.AltaCategoriaResponse")
-    @Action(input = "http://publicar.ws/EventosWs/altaCategoriaRequest", output = "http://publicar.ws/EventosWs/altaCategoriaResponse", fault = {
-        @FaultAction(className = CategoriaRepetidaFault_Exception.class, value = "http://publicar.ws/EventosWs/altaCategoria/Fault/CategoriaRepetidaFault")
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "getInfoEdicion", targetNamespace = "http://publicar.ws/", className = "ws.eventos.GetInfoEdicion")
+    @ResponseWrapper(localName = "getInfoEdicionResponse", targetNamespace = "http://publicar.ws/", className = "ws.eventos.GetInfoEdicionResponse")
+    @Action(input = "http://publicar.ws/EventosWs/getInfoEdicionRequest", output = "http://publicar.ws/EventosWs/getInfoEdicionResponse", fault = {
+        @FaultAction(className = EdicionNoExisteFault_Exception.class, value = "http://publicar.ws/EventosWs/getInfoEdicion/Fault/EdicionNoExisteFault")
     })
-    public void altaCategoria(
-        @WebParam(name = "nombre", targetNamespace = "")
-        String nombre)
-        throws CategoriaRepetidaFault_Exception
+    public DataEdicion getInfoEdicion(
+        @WebParam(name = "idEdicion", targetNamespace = "")
+        String idEdicion)
+        throws EdicionNoExisteFault_Exception
+    ;
+
+    /**
+     * 
+     * @param nombreEvento
+     * @return
+     *     returns java.util.List<ws.eventos.DataEdicion>
+     * @throws EventoNoExisteFault_Exception
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "listarEdiciones", targetNamespace = "http://publicar.ws/", className = "ws.eventos.ListarEdiciones")
+    @ResponseWrapper(localName = "listarEdicionesResponse", targetNamespace = "http://publicar.ws/", className = "ws.eventos.ListarEdicionesResponse")
+    @Action(input = "http://publicar.ws/EventosWs/listarEdicionesRequest", output = "http://publicar.ws/EventosWs/listarEdicionesResponse", fault = {
+        @FaultAction(className = EventoNoExisteFault_Exception.class, value = "http://publicar.ws/EventosWs/listarEdiciones/Fault/EventoNoExisteFault")
+    })
+    public List<DataEdicion> listarEdiciones(
+        @WebParam(name = "nombreEvento", targetNamespace = "")
+        String nombreEvento)
+        throws EventoNoExisteFault_Exception
     ;
 
     /**
@@ -206,26 +140,6 @@ public interface EventosWs {
 
     /**
      * 
-     * @param idEdicion
-     * @return
-     *     returns ws.eventos.DataEdicion
-     * @throws EdicionNoExisteFault_Exception
-     */
-    @WebMethod
-    @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "getInfoEdicion", targetNamespace = "http://publicar.ws/", className = "ws.eventos.GetInfoEdicion")
-    @ResponseWrapper(localName = "getInfoEdicionResponse", targetNamespace = "http://publicar.ws/", className = "ws.eventos.GetInfoEdicionResponse")
-    @Action(input = "http://publicar.ws/EventosWs/getInfoEdicionRequest", output = "http://publicar.ws/EventosWs/getInfoEdicionResponse", fault = {
-        @FaultAction(className = EdicionNoExisteFault_Exception.class, value = "http://publicar.ws/EventosWs/getInfoEdicion/Fault/EdicionNoExisteFault")
-    })
-    public DataEdicion getInfoEdicion(
-        @WebParam(name = "idEdicion", targetNamespace = "")
-        String idEdicion)
-        throws EdicionNoExisteFault_Exception
-    ;
-
-    /**
-     * 
      * @param edicion
      * @param nickname
      * @param nombreTipo
@@ -244,76 +158,6 @@ public interface EventosWs {
         String nombreTipo,
         @WebParam(name = "precio", targetNamespace = "")
         int precio);
-
-    /**
-     * 
-     * @param costo
-     * @param cupos
-     * @param descripcion
-     * @param nombreEdicion
-     * @param nombreEvento
-     * @param nombreTipoRegistro
-     * @throws TipoRegistroRepetidoFault_Exception
-     */
-    @WebMethod
-    @RequestWrapper(localName = "altaTipoRegistro", targetNamespace = "http://publicar.ws/", className = "ws.eventos.AltaTipoRegistro")
-    @ResponseWrapper(localName = "altaTipoRegistroResponse", targetNamespace = "http://publicar.ws/", className = "ws.eventos.AltaTipoRegistroResponse")
-    @Action(input = "http://publicar.ws/EventosWs/altaTipoRegistroRequest", output = "http://publicar.ws/EventosWs/altaTipoRegistroResponse", fault = {
-        @FaultAction(className = TipoRegistroRepetidoFault_Exception.class, value = "http://publicar.ws/EventosWs/altaTipoRegistro/Fault/TipoRegistroRepetidoFault")
-    })
-    public void altaTipoRegistro(
-        @WebParam(name = "nombreEvento", targetNamespace = "")
-        String nombreEvento,
-        @WebParam(name = "nombreEdicion", targetNamespace = "")
-        String nombreEdicion,
-        @WebParam(name = "nombreTipoRegistro", targetNamespace = "")
-        String nombreTipoRegistro,
-        @WebParam(name = "descripcion", targetNamespace = "")
-        String descripcion,
-        @WebParam(name = "costo", targetNamespace = "")
-        Integer costo,
-        @WebParam(name = "cupos", targetNamespace = "")
-        Integer cupos)
-        throws TipoRegistroRepetidoFault_Exception
-    ;
-
-    /**
-     * 
-     * @param arg0
-     * @throws EventoConEdicionesPendientesFault_Exception
-     */
-    @WebMethod
-    @RequestWrapper(localName = "finalizarEvento", targetNamespace = "http://publicar.ws/", className = "ws.eventos.FinalizarEvento")
-    @ResponseWrapper(localName = "finalizarEventoResponse", targetNamespace = "http://publicar.ws/", className = "ws.eventos.FinalizarEventoResponse")
-    @Action(input = "http://publicar.ws/EventosWs/finalizarEventoRequest", output = "http://publicar.ws/EventosWs/finalizarEventoResponse", fault = {
-        @FaultAction(className = EventoConEdicionesPendientesFault_Exception.class, value = "http://publicar.ws/EventosWs/finalizarEvento/Fault/EventoConEdicionesPendientesFault")
-    })
-    public void finalizarEvento(
-        @WebParam(name = "arg0", targetNamespace = "")
-        String arg0)
-        throws EventoConEdicionesPendientesFault_Exception
-    ;
-
-    /**
-     * 
-     * @param nombreEdicion
-     * @param nombreEvento
-     * @param nombreTipo
-     * @return
-     *     returns ws.eventos.DataTipoRegistro
-     */
-    @WebMethod
-    @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "getTipoRegistro", targetNamespace = "http://publicar.ws/", className = "ws.eventos.GetTipoRegistro")
-    @ResponseWrapper(localName = "getTipoRegistroResponse", targetNamespace = "http://publicar.ws/", className = "ws.eventos.GetTipoRegistroResponse")
-    @Action(input = "http://publicar.ws/EventosWs/getTipoRegistroRequest", output = "http://publicar.ws/EventosWs/getTipoRegistroResponse")
-    public DataTipoRegistro getTipoRegistro(
-        @WebParam(name = "nombreEvento", targetNamespace = "")
-        String nombreEvento,
-        @WebParam(name = "nombreEdicion", targetNamespace = "")
-        String nombreEdicion,
-        @WebParam(name = "nombreTipo", targetNamespace = "")
-        String nombreTipo);
 
     /**
      * 
@@ -355,6 +199,26 @@ public interface EventosWs {
     @ResponseWrapper(localName = "listarCategoriasResponse", targetNamespace = "http://publicar.ws/", className = "ws.eventos.ListarCategoriasResponse")
     @Action(input = "http://publicar.ws/EventosWs/listarCategoriasRequest", output = "http://publicar.ws/EventosWs/listarCategoriasResponse")
     public List<String> listarCategorias();
+
+    /**
+     * 
+     * @param nombre
+     * @return
+     *     returns ws.eventos.DataEvento
+     * @throws EventoNoExisteFault_Exception
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "getUnEventoDTO", targetNamespace = "http://publicar.ws/", className = "ws.eventos.GetUnEventoDTO")
+    @ResponseWrapper(localName = "getUnEventoDTOResponse", targetNamespace = "http://publicar.ws/", className = "ws.eventos.GetUnEventoDTOResponse")
+    @Action(input = "http://publicar.ws/EventosWs/getUnEventoDTORequest", output = "http://publicar.ws/EventosWs/getUnEventoDTOResponse", fault = {
+        @FaultAction(className = EventoNoExisteFault_Exception.class, value = "http://publicar.ws/EventosWs/getUnEventoDTO/Fault/EventoNoExisteFault")
+    })
+    public DataEvento getUnEventoDTO(
+        @WebParam(name = "nombre", targetNamespace = "")
+        String nombre)
+        throws EventoNoExisteFault_Exception
+    ;
 
     /**
      * 
@@ -402,42 +266,51 @@ public interface EventosWs {
 
     /**
      * 
-     * @param nombre
-     * @return
-     *     returns ws.eventos.DataEvento
-     * @throws EventoNoExisteFault_Exception
+     * @param arg0
+     * @throws EventoConEdicionesPendientesFault_Exception
      */
     @WebMethod
-    @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "getUnEventoDTO", targetNamespace = "http://publicar.ws/", className = "ws.eventos.GetUnEventoDTO")
-    @ResponseWrapper(localName = "getUnEventoDTOResponse", targetNamespace = "http://publicar.ws/", className = "ws.eventos.GetUnEventoDTOResponse")
-    @Action(input = "http://publicar.ws/EventosWs/getUnEventoDTORequest", output = "http://publicar.ws/EventosWs/getUnEventoDTOResponse", fault = {
-        @FaultAction(className = EventoNoExisteFault_Exception.class, value = "http://publicar.ws/EventosWs/getUnEventoDTO/Fault/EventoNoExisteFault")
+    @RequestWrapper(localName = "finalizarEvento", targetNamespace = "http://publicar.ws/", className = "ws.eventos.FinalizarEvento")
+    @ResponseWrapper(localName = "finalizarEventoResponse", targetNamespace = "http://publicar.ws/", className = "ws.eventos.FinalizarEventoResponse")
+    @Action(input = "http://publicar.ws/EventosWs/finalizarEventoRequest", output = "http://publicar.ws/EventosWs/finalizarEventoResponse", fault = {
+        @FaultAction(className = EventoConEdicionesPendientesFault_Exception.class, value = "http://publicar.ws/EventosWs/finalizarEvento/Fault/EventoConEdicionesPendientesFault")
     })
-    public DataEvento getUnEventoDTO(
-        @WebParam(name = "nombre", targetNamespace = "")
-        String nombre)
-        throws EventoNoExisteFault_Exception
+    public void finalizarEvento(
+        @WebParam(name = "arg0", targetNamespace = "")
+        String arg0)
+        throws EventoConEdicionesPendientesFault_Exception
     ;
 
     /**
      * 
+     * @param costo
+     * @param cupos
+     * @param descripcion
+     * @param nombreEdicion
      * @param nombreEvento
-     * @return
-     *     returns java.util.List<ws.eventos.DataEdicion>
-     * @throws EventoNoExisteFault_Exception
+     * @param nombreTipoRegistro
+     * @throws TipoRegistroRepetidoFault_Exception
      */
     @WebMethod
-    @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "listarEdiciones", targetNamespace = "http://publicar.ws/", className = "ws.eventos.ListarEdiciones")
-    @ResponseWrapper(localName = "listarEdicionesResponse", targetNamespace = "http://publicar.ws/", className = "ws.eventos.ListarEdicionesResponse")
-    @Action(input = "http://publicar.ws/EventosWs/listarEdicionesRequest", output = "http://publicar.ws/EventosWs/listarEdicionesResponse", fault = {
-        @FaultAction(className = EventoNoExisteFault_Exception.class, value = "http://publicar.ws/EventosWs/listarEdiciones/Fault/EventoNoExisteFault")
+    @RequestWrapper(localName = "altaTipoRegistro", targetNamespace = "http://publicar.ws/", className = "ws.eventos.AltaTipoRegistro")
+    @ResponseWrapper(localName = "altaTipoRegistroResponse", targetNamespace = "http://publicar.ws/", className = "ws.eventos.AltaTipoRegistroResponse")
+    @Action(input = "http://publicar.ws/EventosWs/altaTipoRegistroRequest", output = "http://publicar.ws/EventosWs/altaTipoRegistroResponse", fault = {
+        @FaultAction(className = TipoRegistroRepetidoFault_Exception.class, value = "http://publicar.ws/EventosWs/altaTipoRegistro/Fault/TipoRegistroRepetidoFault")
     })
-    public List<DataEdicion> listarEdiciones(
+    public void altaTipoRegistro(
         @WebParam(name = "nombreEvento", targetNamespace = "")
-        String nombreEvento)
-        throws EventoNoExisteFault_Exception
+        String nombreEvento,
+        @WebParam(name = "nombreEdicion", targetNamespace = "")
+        String nombreEdicion,
+        @WebParam(name = "nombreTipoRegistro", targetNamespace = "")
+        String nombreTipoRegistro,
+        @WebParam(name = "descripcion", targetNamespace = "")
+        String descripcion,
+        @WebParam(name = "costo", targetNamespace = "")
+        Integer costo,
+        @WebParam(name = "cupos", targetNamespace = "")
+        Integer cupos)
+        throws TipoRegistroRepetidoFault_Exception
     ;
 
     /**
@@ -474,6 +347,59 @@ public interface EventosWs {
 
     /**
      * 
+     * @param nombreEdicion
+     * @return
+     *     returns java.util.List<ws.eventos.DataRegistro>
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "listarRegistrosDeEdicion", targetNamespace = "http://publicar.ws/", className = "ws.eventos.ListarRegistrosDeEdicion")
+    @ResponseWrapper(localName = "listarRegistrosDeEdicionResponse", targetNamespace = "http://publicar.ws/", className = "ws.eventos.ListarRegistrosDeEdicionResponse")
+    @Action(input = "http://publicar.ws/EventosWs/listarRegistrosDeEdicionRequest", output = "http://publicar.ws/EventosWs/listarRegistrosDeEdicionResponse")
+    public List<DataRegistro> listarRegistrosDeEdicion(
+        @WebParam(name = "nombreEdicion", targetNamespace = "")
+        String nombreEdicion);
+
+    /**
+     * 
+     * @param nombreEdicion
+     * @param nombreEvento
+     * @return
+     *     returns java.util.List<ws.eventos.DataTipoRegistro>
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "listarTiposRegistro", targetNamespace = "http://publicar.ws/", className = "ws.eventos.ListarTiposRegistro")
+    @ResponseWrapper(localName = "listarTiposRegistroResponse", targetNamespace = "http://publicar.ws/", className = "ws.eventos.ListarTiposRegistroResponse")
+    @Action(input = "http://publicar.ws/EventosWs/listarTiposRegistroRequest", output = "http://publicar.ws/EventosWs/listarTiposRegistroResponse")
+    public List<DataTipoRegistro> listarTiposRegistro(
+        @WebParam(name = "nombreEvento", targetNamespace = "")
+        String nombreEvento,
+        @WebParam(name = "nombreEdicion", targetNamespace = "")
+        String nombreEdicion);
+
+    /**
+     * 
+     * @param arg0
+     * @param arg1
+     * @throws EdicionSinComenzarFault_Exception
+     */
+    @WebMethod
+    @RequestWrapper(localName = "confirmarAsistencia", targetNamespace = "http://publicar.ws/", className = "ws.eventos.ConfirmarAsistencia")
+    @ResponseWrapper(localName = "confirmarAsistenciaResponse", targetNamespace = "http://publicar.ws/", className = "ws.eventos.ConfirmarAsistenciaResponse")
+    @Action(input = "http://publicar.ws/EventosWs/confirmarAsistenciaRequest", output = "http://publicar.ws/EventosWs/confirmarAsistenciaResponse", fault = {
+        @FaultAction(className = EdicionSinComenzarFault_Exception.class, value = "http://publicar.ws/EventosWs/confirmarAsistencia/Fault/EdicionSinComenzarFault")
+    })
+    public void confirmarAsistencia(
+        @WebParam(name = "arg0", targetNamespace = "")
+        String arg0,
+        @WebParam(name = "arg1", targetNamespace = "")
+        String arg1)
+        throws EdicionSinComenzarFault_Exception
+    ;
+
+    /**
+     * 
      * @param nombreOrganizador
      * @return
      *     returns java.util.List<ws.eventos.DataEdicion>
@@ -481,12 +407,12 @@ public interface EventosWs {
      */
     @WebMethod
     @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "listarEdicionesOrganizadorAceptadas", targetNamespace = "http://publicar.ws/", className = "ws.eventos.ListarEdicionesOrganizadorAceptadas")
-    @ResponseWrapper(localName = "listarEdicionesOrganizadorAceptadasResponse", targetNamespace = "http://publicar.ws/", className = "ws.eventos.ListarEdicionesOrganizadorAceptadasResponse")
-    @Action(input = "http://publicar.ws/EventosWs/listarEdicionesOrganizadorAceptadasRequest", output = "http://publicar.ws/EventosWs/listarEdicionesOrganizadorAceptadasResponse", fault = {
-        @FaultAction(className = EdicionNoExisteFault_Exception.class, value = "http://publicar.ws/EventosWs/listarEdicionesOrganizadorAceptadas/Fault/EdicionNoExisteFault")
+    @RequestWrapper(localName = "listarEdicionesOrganizador", targetNamespace = "http://publicar.ws/", className = "ws.eventos.ListarEdicionesOrganizador")
+    @ResponseWrapper(localName = "listarEdicionesOrganizadorResponse", targetNamespace = "http://publicar.ws/", className = "ws.eventos.ListarEdicionesOrganizadorResponse")
+    @Action(input = "http://publicar.ws/EventosWs/listarEdicionesOrganizadorRequest", output = "http://publicar.ws/EventosWs/listarEdicionesOrganizadorResponse", fault = {
+        @FaultAction(className = EdicionNoExisteFault_Exception.class, value = "http://publicar.ws/EventosWs/listarEdicionesOrganizador/Fault/EdicionNoExisteFault")
     })
-    public List<DataEdicion> listarEdicionesOrganizadorAceptadas(
+    public List<DataEdicion> listarEdicionesOrganizador(
         @WebParam(name = "nombreOrganizador", targetNamespace = "")
         String nombreOrganizador)
         throws EdicionNoExisteFault_Exception
@@ -511,23 +437,67 @@ public interface EventosWs {
 
     /**
      * 
-     * @param nombreOrganizador
+     * @param nombreEdicion
+     * @return
+     *     returns java.lang.String
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "getEventoDeUnaEdicion", targetNamespace = "http://publicar.ws/", className = "ws.eventos.GetEventoDeUnaEdicion")
+    @ResponseWrapper(localName = "getEventoDeUnaEdicionResponse", targetNamespace = "http://publicar.ws/", className = "ws.eventos.GetEventoDeUnaEdicionResponse")
+    @Action(input = "http://publicar.ws/EventosWs/getEventoDeUnaEdicionRequest", output = "http://publicar.ws/EventosWs/getEventoDeUnaEdicionResponse")
+    public String getEventoDeUnaEdicion(
+        @WebParam(name = "nombreEdicion", targetNamespace = "")
+        String nombreEdicion);
+
+    /**
+     * 
+     * @return
+     *     returns java.util.List<ws.eventos.DataEvento>
+     * @throws EventoNoExisteFault_Exception
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "listarEventoExistentes", targetNamespace = "http://publicar.ws/", className = "ws.eventos.ListarEventoExistentes")
+    @ResponseWrapper(localName = "listarEventoExistentesResponse", targetNamespace = "http://publicar.ws/", className = "ws.eventos.ListarEventoExistentesResponse")
+    @Action(input = "http://publicar.ws/EventosWs/listarEventoExistentesRequest", output = "http://publicar.ws/EventosWs/listarEventoExistentesResponse", fault = {
+        @FaultAction(className = EventoNoExisteFault_Exception.class, value = "http://publicar.ws/EventosWs/listarEventoExistentes/Fault/EventoNoExisteFault")
+    })
+    public List<DataEvento> listarEventoExistentes()
+        throws EventoNoExisteFault_Exception
+    ;
+
+    /**
+     * 
      * @return
      *     returns java.util.List<ws.eventos.DataEdicion>
      * @throws EdicionNoExisteFault_Exception
      */
     @WebMethod
     @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "listarEdicionesOrganizador", targetNamespace = "http://publicar.ws/", className = "ws.eventos.ListarEdicionesOrganizador")
-    @ResponseWrapper(localName = "listarEdicionesOrganizadorResponse", targetNamespace = "http://publicar.ws/", className = "ws.eventos.ListarEdicionesOrganizadorResponse")
-    @Action(input = "http://publicar.ws/EventosWs/listarEdicionesOrganizadorRequest", output = "http://publicar.ws/EventosWs/listarEdicionesOrganizadorResponse", fault = {
-        @FaultAction(className = EdicionNoExisteFault_Exception.class, value = "http://publicar.ws/EventosWs/listarEdicionesOrganizador/Fault/EdicionNoExisteFault")
+    @RequestWrapper(localName = "listarEdicionesAceptadas", targetNamespace = "http://publicar.ws/", className = "ws.eventos.ListarEdicionesAceptadas")
+    @ResponseWrapper(localName = "listarEdicionesAceptadasResponse", targetNamespace = "http://publicar.ws/", className = "ws.eventos.ListarEdicionesAceptadasResponse")
+    @Action(input = "http://publicar.ws/EventosWs/listarEdicionesAceptadasRequest", output = "http://publicar.ws/EventosWs/listarEdicionesAceptadasResponse", fault = {
+        @FaultAction(className = EdicionNoExisteFault_Exception.class, value = "http://publicar.ws/EventosWs/listarEdicionesAceptadas/Fault/EdicionNoExisteFault")
     })
-    public List<DataEdicion> listarEdicionesOrganizador(
-        @WebParam(name = "nombreOrganizador", targetNamespace = "")
-        String nombreOrganizador)
+    public List<DataEdicion> listarEdicionesAceptadas()
         throws EdicionNoExisteFault_Exception
     ;
+
+    /**
+     * 
+     * @param nickname
+     * @return
+     *     returns java.util.List<ws.eventos.DataRegistro>
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "listarRegistrosDeUsuario", targetNamespace = "http://publicar.ws/", className = "ws.eventos.ListarRegistrosDeUsuario")
+    @ResponseWrapper(localName = "listarRegistrosDeUsuarioResponse", targetNamespace = "http://publicar.ws/", className = "ws.eventos.ListarRegistrosDeUsuarioResponse")
+    @Action(input = "http://publicar.ws/EventosWs/listarRegistrosDeUsuarioRequest", output = "http://publicar.ws/EventosWs/listarRegistrosDeUsuarioResponse")
+    public List<DataRegistro> listarRegistrosDeUsuario(
+        @WebParam(name = "nickname", targetNamespace = "")
+        String nickname);
 
     /**
      * 
@@ -566,54 +536,84 @@ public interface EventosWs {
 
     /**
      * 
-     * @param arg0
-     * @param arg1
-     * @throws EdicionSinComenzarFault_Exception
-     */
-    @WebMethod
-    @RequestWrapper(localName = "confirmarAsistencia", targetNamespace = "http://publicar.ws/", className = "ws.eventos.ConfirmarAsistencia")
-    @ResponseWrapper(localName = "confirmarAsistenciaResponse", targetNamespace = "http://publicar.ws/", className = "ws.eventos.ConfirmarAsistenciaResponse")
-    @Action(input = "http://publicar.ws/EventosWs/confirmarAsistenciaRequest", output = "http://publicar.ws/EventosWs/confirmarAsistenciaResponse", fault = {
-        @FaultAction(className = EdicionSinComenzarFault_Exception.class, value = "http://publicar.ws/EventosWs/confirmarAsistencia/Fault/EdicionSinComenzarFault")
-    })
-    public void confirmarAsistencia(
-        @WebParam(name = "arg0", targetNamespace = "")
-        String arg0,
-        @WebParam(name = "arg1", targetNamespace = "")
-        String arg1)
-        throws EdicionSinComenzarFault_Exception
-    ;
-
-    /**
-     * 
-     * @param nombreEdicion
-     * @return
-     *     returns java.lang.String
-     */
-    @WebMethod
-    @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "getEventoDeUnaEdicion", targetNamespace = "http://publicar.ws/", className = "ws.eventos.GetEventoDeUnaEdicion")
-    @ResponseWrapper(localName = "getEventoDeUnaEdicionResponse", targetNamespace = "http://publicar.ws/", className = "ws.eventos.GetEventoDeUnaEdicionResponse")
-    @Action(input = "http://publicar.ws/EventosWs/getEventoDeUnaEdicionRequest", output = "http://publicar.ws/EventosWs/getEventoDeUnaEdicionResponse")
-    public String getEventoDeUnaEdicion(
-        @WebParam(name = "nombreEdicion", targetNamespace = "")
-        String nombreEdicion);
-
-    /**
-     * 
+     * @param nombreOrganizador
      * @return
      *     returns java.util.List<ws.eventos.DataEdicion>
      * @throws EdicionNoExisteFault_Exception
      */
     @WebMethod
     @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "listarEdicionesAceptadas", targetNamespace = "http://publicar.ws/", className = "ws.eventos.ListarEdicionesAceptadas")
-    @ResponseWrapper(localName = "listarEdicionesAceptadasResponse", targetNamespace = "http://publicar.ws/", className = "ws.eventos.ListarEdicionesAceptadasResponse")
-    @Action(input = "http://publicar.ws/EventosWs/listarEdicionesAceptadasRequest", output = "http://publicar.ws/EventosWs/listarEdicionesAceptadasResponse", fault = {
-        @FaultAction(className = EdicionNoExisteFault_Exception.class, value = "http://publicar.ws/EventosWs/listarEdicionesAceptadas/Fault/EdicionNoExisteFault")
+    @RequestWrapper(localName = "listarEdicionesOrganizadorAceptadas", targetNamespace = "http://publicar.ws/", className = "ws.eventos.ListarEdicionesOrganizadorAceptadas")
+    @ResponseWrapper(localName = "listarEdicionesOrganizadorAceptadasResponse", targetNamespace = "http://publicar.ws/", className = "ws.eventos.ListarEdicionesOrganizadorAceptadasResponse")
+    @Action(input = "http://publicar.ws/EventosWs/listarEdicionesOrganizadorAceptadasRequest", output = "http://publicar.ws/EventosWs/listarEdicionesOrganizadorAceptadasResponse", fault = {
+        @FaultAction(className = EdicionNoExisteFault_Exception.class, value = "http://publicar.ws/EventosWs/listarEdicionesOrganizadorAceptadas/Fault/EdicionNoExisteFault")
     })
-    public List<DataEdicion> listarEdicionesAceptadas()
+    public List<DataEdicion> listarEdicionesOrganizadorAceptadas(
+        @WebParam(name = "nombreOrganizador", targetNamespace = "")
+        String nombreOrganizador)
         throws EdicionNoExisteFault_Exception
+    ;
+
+    /**
+     * 
+     * @param nombreEvento
+     * @return
+     *     returns java.util.List<ws.eventos.DataEdicion>
+     * @throws EdicionNoExisteFault_Exception
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "listarEdicionesIngresadasEvento", targetNamespace = "http://publicar.ws/", className = "ws.eventos.ListarEdicionesIngresadasEvento")
+    @ResponseWrapper(localName = "listarEdicionesIngresadasEventoResponse", targetNamespace = "http://publicar.ws/", className = "ws.eventos.ListarEdicionesIngresadasEventoResponse")
+    @Action(input = "http://publicar.ws/EventosWs/listarEdicionesIngresadasEventoRequest", output = "http://publicar.ws/EventosWs/listarEdicionesIngresadasEventoResponse", fault = {
+        @FaultAction(className = EdicionNoExisteFault_Exception.class, value = "http://publicar.ws/EventosWs/listarEdicionesIngresadasEvento/Fault/EdicionNoExisteFault")
+    })
+    public List<DataEdicion> listarEdicionesIngresadasEvento(
+        @WebParam(name = "nombreEvento", targetNamespace = "")
+        String nombreEvento)
+        throws EdicionNoExisteFault_Exception
+    ;
+
+    /**
+     * 
+     * @param nombreEvento
+     * @return
+     *     returns java.util.List<ws.eventos.DataEdicion>
+     * @throws EdicionNoExisteFault_Exception
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "listarEdicionesRechazadasEvento", targetNamespace = "http://publicar.ws/", className = "ws.eventos.ListarEdicionesRechazadasEvento")
+    @ResponseWrapper(localName = "listarEdicionesRechazadasEventoResponse", targetNamespace = "http://publicar.ws/", className = "ws.eventos.ListarEdicionesRechazadasEventoResponse")
+    @Action(input = "http://publicar.ws/EventosWs/listarEdicionesRechazadasEventoRequest", output = "http://publicar.ws/EventosWs/listarEdicionesRechazadasEventoResponse", fault = {
+        @FaultAction(className = EdicionNoExisteFault_Exception.class, value = "http://publicar.ws/EventosWs/listarEdicionesRechazadasEvento/Fault/EdicionNoExisteFault")
+    })
+    public List<DataEdicion> listarEdicionesRechazadasEvento(
+        @WebParam(name = "nombreEvento", targetNamespace = "")
+        String nombreEvento)
+        throws EdicionNoExisteFault_Exception
+    ;
+
+    /**
+     * 
+     * @param nombreEvento
+     * @return
+     *     returns java.util.List<ws.eventos.DataEdicion>
+     * @throws EdicionNoExisteFault_Exception
+     * @throws EventoNoExisteFault_Exception
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "listarEdicionesAceptadasEvento", targetNamespace = "http://publicar.ws/", className = "ws.eventos.ListarEdicionesAceptadasEvento")
+    @ResponseWrapper(localName = "listarEdicionesAceptadasEventoResponse", targetNamespace = "http://publicar.ws/", className = "ws.eventos.ListarEdicionesAceptadasEventoResponse")
+    @Action(input = "http://publicar.ws/EventosWs/listarEdicionesAceptadasEventoRequest", output = "http://publicar.ws/EventosWs/listarEdicionesAceptadasEventoResponse", fault = {
+        @FaultAction(className = EdicionNoExisteFault_Exception.class, value = "http://publicar.ws/EventosWs/listarEdicionesAceptadasEvento/Fault/EdicionNoExisteFault"),
+        @FaultAction(className = EventoNoExisteFault_Exception.class, value = "http://publicar.ws/EventosWs/listarEdicionesAceptadasEvento/Fault/EventoNoExisteFault")
+    })
+    public List<DataEdicion> listarEdicionesAceptadasEvento(
+        @WebParam(name = "nombreEvento", targetNamespace = "")
+        String nombreEvento)
+        throws EdicionNoExisteFault_Exception, EventoNoExisteFault_Exception
     ;
 
 }
