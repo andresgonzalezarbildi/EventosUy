@@ -67,9 +67,9 @@
        <%} %>
     </ul>
     <% if(logueado){ %>
-    <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    <form class="form-inline my-2 my-lg-0 col-md-8">
+      <input class="form-control mr-sm-2 col-md-7" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0 col-md-4" type="submit">Search</button>
     </form>
     <%} %>
   </div>

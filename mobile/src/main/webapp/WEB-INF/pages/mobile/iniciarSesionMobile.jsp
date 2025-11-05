@@ -25,7 +25,7 @@
   <!-- Main Content -->
   <section class="content">
     <div class="container-fluid">
-      <div class="row">
+      <div class="row d-md-flex justify-content-md-center">
         <!-- Contenido principal -->
         <main class="col-12 col-md-9">
           <div class="contenido-principal">

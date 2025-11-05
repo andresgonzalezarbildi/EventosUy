@@ -11,3 +11,38 @@
 	padding: 1rem; 
 	border-radius: 8px;
 }
+
+.cuadro-principal{
+	padding-top: 1rem;
+	margin: 0 4px;
+ 	width: 100%; 
+        	background: #fff; 
+        	border: 1px solid var(--color-border); 
+        	border-radius: var(--radius); 
+        	box-shadow: 0 2px 6px rgba(0,0,0,0.1);	
+}
+
+.datos {
+  display: grid;
+  grid-template-columns: 1fr; /* una sola columna por defecto (celular) */
+  gap: 0.25rem 1rem;
+}
+
+/* Tablet o más ancho */
+@media (min-width: 768px) {
+  .datos {
+    grid-template-columns: 1fr 2fr; /* dos columnas: dos pares por fila */
+    column-gap: 1rem;
+  }
+}
+
+/* dt y dd alineados mejor */
+.datos dt {
+  font-weight: 600;
+  color: #444;
+  margin-bottom: 0;
+}
+.datos dd {
+  margin: 0 0 0.5rem 0;
+}
+

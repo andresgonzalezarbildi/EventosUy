@@ -36,43 +36,36 @@
  <jsp:include page="headerMobile.jsp" />
 
   <!-- Main + Sidebar -->
-  <section class="content" style="margin-bottom: 1rem">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-12 col-md-8" 
-        	style="max-width: 100%; 
-        	padding: 1.5rem; 
-        	background: #fff; 
-        	border: 1px solid var(--color-border); 
-        	border-radius: var(--radius); 
-        	box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+  <section class="content mx-auto container-fluid d-flex justify-content-center" style="margin-bottom: 1rem">
+        <div class="row cuadro-principal">
 		      <!-- Columna izquierda: imagen y datos -->
-		      <div class="flex-grow-1 d-flex flex-column align-items-center">
-        	<main class="d-flex flex-column justify-content-center align-items-center">
+		      <div class="col-12 col-md-8">
+        	<main class="pl-md-4 d-flex flex-column justify-content-center align-items-center">
 	          <h2 style="margin-bottom: 1rem; color: var(--color-primary); text-align:center;">Detalle de Edición
 	          </h2>
 							<% if (ed != null) { %>
 								<% if (ed.getImagen() != null && !ed.getImagen().isEmpty()) { %>
 								  <img src="<%= request.getContextPath() %>/MediaServlet?name=<%= ed.getImagen() %>" 
 								       alt="Imagen de la edición" style="max-width:300px;border-radius:8px;">
-					       <div class="d-flex w-100">
-				          <dl>
-				            <dt><strong>Nombre:</strong></dt>
-				            <dd><%= ed.getNombre() %></dd>
-				            <dt><strong>Sigla:</strong></dt>
-				            <dd><%= ed.getSigla() %></dd>
-				            <dt><strong>Ciudad:</strong></dt>
-				            <dd><%= ed.getCiudad() %></dd>
-				            <dt><strong>País:</strong></dt>
-				            <dd><%= ed.getPais() %></dd>
-				            <dt><strong>Fecha Inicio:</strong></dt>
-				            <dd><%= ed.getFechaIni() %></dd>
-				            <dt><strong>Fecha Fin:</strong></dt>
-				            <dd><%= ed.getFechaFin() %></dd>
-				            <dt><strong>Alta en Plataforma:</strong></dt>
-				            <dd><%= ed.getFechaAltaEnPlataforma() %></dd>
-				          </dl>
-				          </div>      
+					       <div class="w-100">
+  <dl class="datos">
+    <dt><strong>Nombre:</strong></dt>
+    <dd><%= ed.getNombre() %></dd>
+    <dt><strong>Sigla:</strong></dt>
+    <dd><%= ed.getSigla() %></dd>
+    <dt><strong>Ciudad:</strong></dt>
+    <dd><%= ed.getCiudad() %></dd>
+    <dt><strong>País:</strong></dt>
+    <dd><%= ed.getPais() %></dd>
+    <dt><strong>Fecha Inicio:</strong></dt>
+    <dd><%= ed.getFechaIni() %></dd>
+    <dt><strong>Fecha Fin:</strong></dt>
+    <dd><%= ed.getFechaFin() %></dd>
+    <dt><strong>Alta en Plataforma:</strong></dt>
+    <dd><%= ed.getFechaAltaEnPlataforma() %></dd>
+  </dl>
+</div>
+     
          				 	<section class="informacion">
 		    						<h3 style="margin-bottom:0.5rem; color: var(--color-primary);">Tipos de Registro</h3>
 			   					 	<div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
@@ -147,7 +140,7 @@
 										%>
 					</main>
 				 </div>			 
-				<div style="display:flex; flex-direction:column; align-items:center;">
+				<div class="col-12 col-md-3" style="display:flex; flex-direction:column; align-items:center;">
 				<%
 				    DataEvento ev = (DataEvento) request.getAttribute("evento");
 				    if (ev != null) {
@@ -180,8 +173,6 @@
 				<% } %>
 				</div>
 
-</div>
-</div>
 </div>
  </section>
   <jsp:include page="footerMobile.jsp" />
