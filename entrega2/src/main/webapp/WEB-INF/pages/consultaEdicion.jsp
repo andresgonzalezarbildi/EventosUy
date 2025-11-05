@@ -155,19 +155,27 @@ if (registros != null && !registros.isEmpty()) {
 
     <div style="background:#e3f2fd; padding:0.6rem 1rem; border-radius:12px;">
         <%
-        if (reg.isConfirmarAsistencia()) {
+        String hoy = java.time.LocalDate.now().toString();
+        String fechaFin = ed.getFechaFin();
+        if ((fechaFin.compareTo(hoy) < 0) && (reg.isConfirmarAsistencia()) ) {
         %>
             <button onclick="window.location.href='<%= request.getContextPath() %>/registroEd?op=consultar&idEdicion=<%= ed.getNombre() %>&idAsistente=<%= reg.getAsistente() %>'">
                 <%= reg.getAsistente() %> <b>: Asistió al evento</b>
             </button>
         <%
-        } else {
+        } else if (fechaFin.compareTo(hoy) < 0) {
         %>
             <button onclick="window.location.href='<%= request.getContextPath() %>/registroEd?op=consultar&idEdicion=<%= ed.getNombre() %>&idAsistente=<%= reg.getAsistente() %>'">
                 <%= reg.getAsistente() %> <b>: No asistió al evento</b>
             </button>
         <%
-        }
+        } else {
+        %>
+            <button onclick="window.location.href='<%= request.getContextPath() %>/registroEd?op=consultar&idEdicion=<%= ed.getNombre() %>&idAsistente=<%= reg.getAsistente() %>'">
+                <%= reg.getAsistente() %> 
+            </button>
+        <%
+        } 
         %>
     </div>
 
