@@ -3,42 +3,53 @@ package evento;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
+import jakarta.xml.ws.WebServiceException;
+
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import excepciones.EventoNoExisteException;
-import logica.interfaces.IControladorEvento;
-import logica.Fabrica;
-import logica.datatypes.DataEvento;
+import ws.eventos.DataEvento;
+import ws.eventos.EventoNoExisteFault_Exception;
+import ws.eventos.EventosService;
+import ws.eventos.EventosWs;
 
 @WebServlet("/eventos")
 public class ListarEventosServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
-    private Fabrica fabrica = Fabrica.getInstance();
-    private IControladorEvento ce = fabrica.getControladorEvento();
-    
+    private EventosService service = null;
+
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
-    	
-
-
-        DataEvento[] eventosArray = null;
-        List<DataEvento> eventosList = Collections.emptyList();
-
+      throws ServletException, IOException {
+        req.setAttribute("errorWs", false);
+        List<DataEvento> eventos = Collections.emptyList();
+        
         try {
-            eventosArray = ce.listarEventoExistentes();
-            if (eventosArray != null) {
-                eventosList = Arrays.asList(eventosArray);
-            }
-        } catch (EventoNoExisteException e) {}
+          if(service == null) {
+            service = new EventosService();
+          }
+          EventosWs controladorEvento = service.getEventosPort();
 
-        req.setAttribute("eventos", eventosList);
+          eventos = controladorEvento.listarEventoExistentes();
+
+          req.setAttribute("eventos", eventos);
+          req.setAttribute("eventosCount", eventos.size());
+
+        } catch (EventoNoExisteFault_Exception e) {
+            req.setAttribute("error", e.getMessage());
+            req.setAttribute("eventos", eventos);
+            req.setAttribute("eventosCount", 0);
+
+        } catch (WebServiceException e) {
+            req.setAttribute("errorWs", true);
+            req.setAttribute("error", "No se pudo conectar con el servidor de eventos.");
+            req.setAttribute("eventos", eventos);
+            req.setAttribute("eventosCount", 0);
+        }
 
         req.getRequestDispatcher("/WEB-INF/pages/index.jsp").forward(req, resp);
-
     }
 }
 

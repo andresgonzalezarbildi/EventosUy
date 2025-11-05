@@ -1,68 +1,65 @@
 package usuario;
 
-import jakarta.servlet.*;
-import jakarta.servlet.http.*;
-import jakarta.servlet.annotation.*;
 import java.io.IOException;
 
-import logica.Fabrica;
-import logica.interfaces.IControladorUsuario;
-import logica.datatypes.DataUsuario;
-import logica.clases.Asistente;
-import logica.clases.Organizador;
-import excepciones.UsuarioNoExisteException;
-import excepciones.PasswordIncorrectaException;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import ws.usuarios.DataUsuario;
+import ws.usuarios.PasswordIncorrectaFault_Exception;
+import ws.usuarios.UsuarioNoExisteFault_Exception;
+import ws.usuarios.UsuarioService;
+import ws.usuarios.UsuarioWs;
 
 @WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {
 	
-	 @Override
-	    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-	            throws ServletException, IOException {
-	        // Muestra el formulario de login
+  private static final long serialVersionUID = 1L;
+
+  @Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+	        throws ServletException, IOException {
+	    
+	    request.getRequestDispatcher("/WEB-INF/pages/iniciarSesion.jsp").forward(request, response);
+	}
+
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+	        throws ServletException, IOException {
+
+	    String ident = request.getParameter("usuario");
+	    String password = request.getParameter("password");
+
+	    UsuarioService serviceUs = new UsuarioService();
+	    UsuarioWs cu = serviceUs.getUsuarioPort();
+
+	    try {
+	        DataUsuario DataUsu = cu.login(ident, password);
+
+	        HttpSession sesion = request.getSession(true);
+	        sesion.setAttribute("usuario", DataUsu.getNickname());
+	        sesion.setAttribute("correo", DataUsu.getCorreo());
+	        sesion.setAttribute("imagen", DataUsu.getImagen());
+
+	        String rol = (DataUsu.getApellido() != null) ? "asistente" : "organizador";
+	        sesion.setAttribute("rol", rol);
+
+	        response.sendRedirect(request.getContextPath() + "/eventos");
+
+	    } catch (UsuarioNoExisteFault_Exception | PasswordIncorrectaFault_Exception e) {
+
+	        request.setAttribute("error", "Usuario o contraseña incorrectos");
+	        request.setAttribute("usuarioIngresado", ident); // para rellenar el input
+	        request.getRequestDispatcher("/WEB-INF/pages/iniciarSesion.jsp").forward(request, response);
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        request.setAttribute("error", "Ocurrió un error inesperado");
 	        request.getRequestDispatcher("/WEB-INF/pages/iniciarSesion.jsp").forward(request, response);
 	    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
-        String ident = request.getParameter("usuario");
-        String password = request.getParameter("password");
-
-        Fabrica fabrica = Fabrica.getInstance();
-        IControladorUsuario ctrlUsuario = fabrica.getControladorUsuario();
-        
-        try {
-         
-            DataUsuario DataUsu = ctrlUsuario.login(ident, password);
-            
-            
-            HttpSession sesion = request.getSession(true);
-            sesion.setAttribute("usuario", DataUsu.getNickname());
-            sesion.setAttribute("correo", DataUsu.getCorreo());
-            sesion.setAttribute("imagen", DataUsu.getImagen());
-
-           
-            String rol;
-
-            if (DataUsu.getApellido() != null) {
-                rol = "asistente";
-            } else {
-                rol = "organizador";
-            }
-
-            sesion.setAttribute("rol", rol);
-            response.sendRedirect(request.getContextPath() + "/eventos");
-
-
-        } catch (UsuarioNoExisteException | PasswordIncorrectaException e) {
-            
-            response.sendRedirect("pages/iniciarSesion.jsp?error=1");
-        } catch (Exception e) {
-            
-            e.printStackTrace();
-            response.sendRedirect("pages/iniciarSesion.jsp?error=1");
-        }
-    }
+	}
 }

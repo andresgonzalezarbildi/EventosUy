@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="logica.datatypes.DataEvento" %>
-<%@ page import="logica.datatypes.DataEdicion" %>
-<%@ page import="java.util.List" %>
+<%@ page import="ws.eventos.DataEvento" %>
+<%@ page import="java.util.List, ws.eventos.DataEdicion" %>
+
 <%
 	String path = request.getContextPath();
 
@@ -11,7 +11,8 @@
 	boolean logueado = (nickname != null);
 	
 	DataEvento evento = (DataEvento) request.getAttribute("evento");
-	DataEdicion[] ediciones = (DataEdicion[]) request.getAttribute("ediciones");
+
+	List<DataEdicion> ediciones = (List<DataEdicion>) request.getAttribute("ediciones");
 
 %>
 <!DOCTYPE html>
@@ -45,7 +46,7 @@
                   <p><%= evento.getNombre() %></p>
                 </div>
                 <div class="col-12 content-evento-imagen ">
-                  <img src="<%= path %>/img/<%=evento.getImagen() %>" alt="logo del evento">
+                  <img src="<%= path %>/MediaServlet?name=<%=evento.getImagen() %>" alt="logo del evento">
                 </div>
               </div>
               <div class="col-12 row content-evento-informacion">
@@ -75,9 +76,50 @@
                   <p><%= evento.getFechaAlta() %></p>
                 </div>
               </div>
-              <% if ("organizador".equalsIgnoreCase(rol)){ %>
-              	<button class="btn" onclick="window.location.href='<%=path%>/edicion'">Crear Edicion</button>
-              <%} %>
+             <% if ("organizador".equalsIgnoreCase(rol)) { %>
+  <div class="mt-3 text-center position-relative d-flex flex-column align-items-center">
+    <button class="btn btn-primary mb-2 custom-btn"
+      onclick="window.location.href='<%=path%>/edicion?op=alta&id=<%= evento.getNombre() %>'">
+      Crear Edición
+    </button>
+	  	<%
+		String nombreEventoEncoded = java.net.URLEncoder.encode(evento.getNombre(), "UTF-8");
+		%>
+	<button class="btn btn-danger custom-btn"
+	  onclick="window.location.href='<%=path%>/evento?op=baja&id=<%= nombreEventoEncoded %>'">
+	  Finalizar Evento
+	</button>
+
+
+    <% 
+    String error = request.getParameter("error");
+    if ("edicionesPendientes".equals(error)) {
+    %>
+      <!-- Toast dinámico -->
+      <div id="toastError"
+           class="toast align-items-center text-bg-danger border-0 position-absolute start-50 translate-middle-x mt-2"
+           role="alert" aria-live="assertive" aria-atomic="true"
+           data-bs-delay="5000" style="min-width: 300px;">
+        <div class="d-flex">
+          <div class="toast-body">
+            No se puede finalizar el evento porque tiene ediciones pendientes.
+          </div>
+          <button type="button" class="btn-close btn-close-white me-2 m-auto"
+                  data-bs-dismiss="toast" aria-label="Cerrar"></button>
+        </div>
+      </div>
+
+      <script>
+        document.addEventListener("DOMContentLoaded", () => {
+          const toast = new bootstrap.Toast(document.getElementById('toastError'));
+          toast.show();
+        });
+      </script>
+    <% } %>
+
+  </div>
+<% } %>
+
             </section>
             <aside class="col-12 col-md-5 content-ediciones">
               <div class="seccion-titulo-edicion">
@@ -88,18 +130,16 @@
                	for(DataEdicion edicion: ediciones){ 
                		String nombre = "";
                     String imagen = "EdicionSinFoto.png";
-
                     try { if (edicion.getNombre() != null) nombre = edicion.getNombre(); } catch (Exception ignore) {}
                     try { if (edicion.getImagen() != null) imagen = edicion.getImagen(); } catch (Exception ignore) {}
-
                     String detalleUrl = path + "/edicion"
-                                      + "?id=" + edicion.getNombre();
+                            + "?op=consultar&id=" + edicion.getNombre();
                %>
               <div class="ediciones"
                 onclick="window.location.href='<%= detalleUrl %>'">
                 <div class="content-edicion">
                   <div class="content-edicion-imagen">
-                    <img src="<%= path %>/img/<%=imagen%>" alt="logo de la edicion">
+                    <img src="<%= path %>/MediaServlet?name=<%=imagen%>" alt="logo de la edicion">
                   </div>
                   <p class="content-edicion-titulo">
                     <%= nombre %>
@@ -112,7 +152,11 @@
               %>
               
             </aside>
-            <% } %>
+            <% } else{
+             %>
+             <h1>El evento No Existe</h1>
+            <%
+            }%>
           </div>
       </div>
 
@@ -120,5 +164,12 @@
   </main>
 
   <jsp:include page="footer.jsp"/>
+  
+
+
+
+
+
+  
 </body>
 </html>

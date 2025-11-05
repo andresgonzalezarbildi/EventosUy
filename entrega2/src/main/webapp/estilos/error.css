@@ -1,0 +1,44 @@
+@charset "UTF-8";
+@import url("https://fonts.googleapis.com/css?family=Fira+Code&display=swap");
+
+.error-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4rem 1rem;
+  margin: 2rem 0;
+  background-color: white;
+  border-radius: 16px;
+  text-align: center;
+  font-family: "Fira Code", monospace;
+}
+
+.error-page .error-box img {
+  width: 256px;
+  height: auto; 
+}
+
+.error-page .error-box h1 {
+  margin-top: 1rem;
+  font-size: 35px;
+  line-height: 1.2;
+}
+
+.error-page .error-box h1 span {
+  font-size: 60px;
+  display: inline-block;
+}
+
+.error-page .error-box p {
+  margin-top: 1rem;
+}
+
+.error-page .error-box p.info {
+  margin-top: 4em;
+  font-size: 12px;
+}
+
+.error-page .error-box p.info a {
+  text-decoration: none;
+  color: rgb(84, 84, 206);
+}
