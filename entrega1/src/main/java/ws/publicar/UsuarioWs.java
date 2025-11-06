@@ -24,8 +24,8 @@ public class UsuarioWs {
     public UsuarioWs() {}
 
     @WebMethod(exclude = true)
-    public void publicar() {
-        endpoint = Endpoint.publish("http://localhost:9128/Servicios/UsuariosWS", this);
+    public void publicar(String url) {
+      endpoint = Endpoint.publish(url, this);
     }
 
     @WebMethod(exclude = true)

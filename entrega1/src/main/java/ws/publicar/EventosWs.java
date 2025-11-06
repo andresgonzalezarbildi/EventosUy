@@ -40,10 +40,10 @@ public class EventosWs {
     private final IControladorEvento ctrl = Fabrica.getInstance().getControladorEvento();
 
     @WebMethod(exclude = true)
-    public void publicar() {
-        endpoint = Endpoint.publish("http://localhost:9128/Servicios/EventosWS", this);
+    public void publicar(String url) {
+      endpoint = Endpoint.publish(url, this);
     }
-
+    
     @WebMethod(exclude = true)
     public Endpoint getEndpoint() {
         return endpoint;

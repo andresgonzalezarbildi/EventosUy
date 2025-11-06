@@ -1,4 +1,3 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="ws.eventos.DataEdicion" %>
 <%@ page import="ws.eventos.DataTipoRegistro" %>
 <%@ page import="ws.eventos.DataRegistro" %>
@@ -16,7 +15,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Detalle de EdiciÃ³n</title>
+  <title>Detalle de Edición</title>
   <link rel="stylesheet" href="<%= ctx %>/estilos/normalize.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <link rel="stylesheet" href="<%= ctx %>/estilos/base.css">
@@ -41,12 +40,12 @@
 		      <!-- Columna izquierda: imagen y datos -->
 		      <div class="col-12 col-md-8">
         	<main class="pl-md-4 d-flex flex-column justify-content-center align-items-center">
-	          <h2 style="margin-bottom: 1rem; color: var(--color-primary); text-align:center;">Detalle de EdiciÃ³n
+	          <h2 style="margin-bottom: 1rem; color: var(--color-primary); text-align:center;">Detalle de Edición
 	          </h2>
 							<% if (ed != null) { %>
 								<% if (ed.getImagen() != null && !ed.getImagen().isEmpty()) { %>
 								  <img src="<%= request.getContextPath() %>/MediaServlet?name=<%= ed.getImagen() %>" 
-								       alt="Imagen de la ediciÃ³n" style="max-width:300px;border-radius:8px;">
+								       alt="Imagen de la edición" style="max-width:300px;border-radius:8px;">
 					       <div class="w-100">
   <dl class="datos">
     <dt><strong>Nombre:</strong></dt>
@@ -55,7 +54,7 @@
     <dd><%= ed.getSigla() %></dd>
     <dt><strong>Ciudad:</strong></dt>
     <dd><%= ed.getCiudad() %></dd>
-    <dt><strong>PaÃ­s:</strong></dt>
+    <dt><strong>País:</strong></dt>
     <dd><%= ed.getPais() %></dd>
     <dt><strong>Fecha Inicio:</strong></dt>
     <dd><%= ed.getFechaIni() %></dd>
@@ -83,7 +82,7 @@
 						                }
 						            } else {
 							        %>
-			                		<p>No hay tipos de registro disponibles para esta ediciÃ³n.</p>
+			                		<p>No hay tipos de registro disponibles para esta edición.</p>
 							        <%
 							            }
 							        %>
@@ -111,7 +110,7 @@
 		          }
 		      } else {
 		    %>
-		          <span style="color:#777;">No hay patrocinios registrados para esta ediciÃ³n.</span>
+		          <span style="color:#777;">No hay patrocinios registrados para esta edición.</span>
 		    <%
 		      }
 		    %>
@@ -169,7 +168,7 @@
 				%>
 				<% } 
 				} else { %>
-			  	<p class="alerta-error">No se encontrÃ³ la ediciÃ³n solicitada.</p>
+			  	<p class="alerta-error">No se encontró la edición solicitada.</p>
 				<% } %>
 				</div>
 
