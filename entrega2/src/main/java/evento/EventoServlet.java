@@ -9,10 +9,10 @@ import jakarta.servlet.http.HttpSession;
 import ws.eventos.EventoConEdicionesPendientesFault_Exception;
 import ws.eventos.EventosService;
 import ws.eventos.EventosWs;
-import ws.usuarios.DataUsuario;
-import ws.usuarios.UsuarioNoExisteFault_Exception;
-import ws.usuarios.UsuarioService;
-import ws.usuarios.UsuarioWs;
+import ws.usuario.DataUsuario;
+import ws.usuario.UsuarioNoExisteFault_Exception;
+import ws.usuario.UsuarioService;
+import ws.usuario.UsuarioWs;
 
 import java.io.IOException;
 import java.util.List;

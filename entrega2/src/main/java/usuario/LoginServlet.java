@@ -9,11 +9,11 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import ws.usuarios.DataUsuario;
-import ws.usuarios.PasswordIncorrectaFault_Exception;
-import ws.usuarios.UsuarioNoExisteFault_Exception;
-import ws.usuarios.UsuarioService;
-import ws.usuarios.UsuarioWs;
+import ws.usuario.DataUsuario;
+import ws.usuario.PasswordIncorrectaFault_Exception;
+import ws.usuario.UsuarioNoExisteFault_Exception;
+import ws.usuario.UsuarioService;
+import ws.usuario.UsuarioWs;
 
 @WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {

@@ -19,9 +19,9 @@ import java.util.UUID;
 import ws.media.IOException_Exception;
 import ws.media.MediaService;
 import ws.media.MediaWs;
-import ws.usuarios.UsuarioRepetidoFault_Exception;
-import ws.usuarios.UsuarioService;
-import ws.usuarios.UsuarioWs;
+import ws.usuario.UsuarioRepetidoFault_Exception;
+import ws.usuario.UsuarioService;
+import ws.usuario.UsuarioWs;
 
 @WebServlet("/usuarios/registrar")
 @MultipartConfig

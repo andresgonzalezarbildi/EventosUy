@@ -2,7 +2,7 @@
 <web-app xmlns="https://jakarta.ee/xml/ns/jakartaee" version="6.0">
   <display-name>mobile</display-name>
 
-  <!-- Ajustá el JSP real que exista -->
+  
   <error-page>
     <error-code>404</error-code>
     <location>/errores</location>
