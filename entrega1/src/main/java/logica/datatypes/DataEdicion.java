@@ -32,13 +32,14 @@ public class DataEdicion {
 
     private List<DataTipoRegistro> tiposRegistro = new ArrayList<DataTipoRegistro>();
     private List<DataPatrocinio> patrocinios = new ArrayList<DataPatrocinio>();
+    private String video;
 
     public DataEdicion() {}
 
     public DataEdicion(String nombre, LocalDate fechaIni, LocalDate fechaFin,
                        String ciudad, String pais, String sigla, LocalDate fechaAltaEnPlataforma,
                        String organizador, List<DataTipoRegistro> tiposRegistro,
-                       List<DataPatrocinio> patrocinios, String imagen, String estado, String evento) {
+                       List<DataPatrocinio> patrocinios, String imagen, String estado, String evento, String video) {
         this.nombre = nombre;
         this.fechaIni = fechaIni;
         this.fechaFin = fechaFin;
@@ -52,6 +53,7 @@ public class DataEdicion {
         this.imagen = imagen;
         this.estado = estado;
         this.evento = evento;
+        this.video = video;
     }
 
     // Getters
@@ -68,6 +70,7 @@ public class DataEdicion {
     public List<DataPatrocinio> getPatrocinios() { return patrocinios; }
     public String getEstado() { return estado; }
     public String getEvento() { return evento; }
+    public String getVideo() { return video; }
     
     // Setters
     public void setNombre(String nombre) { this.nombre = nombre; }
@@ -83,6 +86,7 @@ public class DataEdicion {
     public void setPatrocinios(List<DataPatrocinio> patrocinios) { this.patrocinios = patrocinios; }
     public void setEstado(String estado) { this.estado = estado; }
     public void setEvento(String evento) { this.evento = evento; }
+    public void setVideo(String video) { this.video = video; }
     
     public String toString() {
       return nombre;

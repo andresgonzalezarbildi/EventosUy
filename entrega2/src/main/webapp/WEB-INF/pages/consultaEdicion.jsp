@@ -48,6 +48,8 @@
 			<% if (ed.getImagen() != null && !ed.getImagen().isEmpty()) { %>
 			  <img src="<%= request.getContextPath() %>/MediaServlet?name=<%= ed.getImagen() %>" 
 			       alt="Imagen de la edición" style="max-width:300px;border-radius:8px;">
+      
+			       
           <dl
             style="display:grid; grid-template-columns: 150px 1fr; row-gap:0.5rem; column-gap:1rem; margin-bottom:2rem;">
             <dt><strong>Nombre:</strong></dt>
@@ -232,6 +234,35 @@ if (registros != null && !registros.isEmpty()) {
 				                              ? ev.getImagen()
 				                              : "EventoSinFoto.png";
 				%>
+				
+				<div style="margin-bottom:12px; text-align:center;">
+					<%
+						String raw = ed.getVideo(); // puede ser watch?v=..., youtu.be/..., shorts/..., o ya embed
+						String id = null;
+						if (raw != null) {
+						    java.util.regex.Pattern p = java.util.regex.Pattern.compile(
+						        "(?:youtu\\.be/|youtube\\.com/(?:watch\\?v=|embed/|shorts/))([A-Za-z0-9_-]{11})"
+						    );
+						    java.util.regex.Matcher m = p.matcher(raw);
+						    if (m.find()) id = m.group(1);
+						}
+						String embedUrl = (id != null) ? ("https://www.youtube-nocookie.com/embed/" + id) : null;
+						%>
+						
+						<% if (embedUrl != null) { %>
+						<iframe width="426" height="240"
+						        src="<%= embedUrl %>"
+						        title="YouTube video player" frameborder="0"
+						        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+						        referrerpolicy="strict-origin-when-cross-origin"
+						        allowfullscreen></iframe>
+						<% } else { %>
+						<p>No se pudo reconocer el video o no posee.</p>
+						<% } %>
+				</div>
+				
+				
+				
 				    <div style="margin-bottom:12px; text-align:center;">
 				        <a href="<%= request.getContextPath() %>/evento?op=consultar&id=<%= nombreEvento %>">
 				            <img src="<%= request.getContextPath() %>/MediaServlet?name=<%= imagenEvento %>" 

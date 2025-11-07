@@ -75,6 +75,10 @@
 
                     <label for="imagen">Imagen (opcional):</label>
                     <input type="file" id="imagen" name="imagen" class="form-control mb-3" accept="image/*">
+                    
+                    <label for="nombre">URL Video (opcional):</label>
+                    <input type="text" id="video" name="video" class="form-control mb-2"
+                           value="<%= request.getAttribute("video") != null ? request.getAttribute("video") : "" %>">
 
                     <div class="mt-3">
                         <button type="submit" class="btn btn-primary">Aceptar</button>
