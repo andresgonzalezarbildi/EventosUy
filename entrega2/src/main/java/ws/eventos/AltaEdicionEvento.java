@@ -26,6 +26,7 @@ import jakarta.xml.bind.annotation.XmlType;
  *         <element name="fechaAltaEnPlataforma" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         <element name="organizadorNick" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         <element name="imagen" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         <element name="video" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *       </sequence>
  *     </restriction>
  *   </complexContent>
@@ -45,7 +46,8 @@ import jakarta.xml.bind.annotation.XmlType;
     "fechaFin",
     "fechaAltaEnPlataforma",
     "organizadorNick",
-    "imagen"
+    "imagen",
+    "video"
 })
 public class AltaEdicionEvento {
 
@@ -59,6 +61,7 @@ public class AltaEdicionEvento {
     protected String fechaAltaEnPlataforma;
     protected String organizadorNick;
     protected String imagen;
+    protected String video;
 
     /**
      * Obtiene el valor de la propiedad nombreEvento.
@@ -298,6 +301,30 @@ public class AltaEdicionEvento {
      */
     public void setImagen(String value) {
         this.imagen = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad video.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getVideo() {
+        return video;
+    }
+
+    /**
+     * Define el valor de la propiedad video.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setVideo(String value) {
+        this.video = value;
     }
 
 }

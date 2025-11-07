@@ -20,10 +20,10 @@
 import ws.media.IOException_Exception;
 import ws.media.MediaService;
 import ws.media.MediaWs;
-import ws.usuarios.UsuarioWs;
-	import ws.usuarios.UsuarioNoExisteFault_Exception;
-	import ws.usuarios.UsuarioService;
-	import ws.usuarios.DataUsuario;
+import ws.usuario.UsuarioWs;
+	import ws.usuario.UsuarioNoExisteFault_Exception;
+	import ws.usuario.UsuarioService;
+	import ws.usuario.DataUsuario;
 	
 	@WebServlet(name="UsuarioServlet", urlPatterns={"/UsuarioServlet"})
 	@MultipartConfig(

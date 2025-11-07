@@ -18,13 +18,30 @@ public class MediaWs {
   private Endpoint endpoint = null;
   
   @WebMethod(exclude = true)
-  public void publicar() {
-      endpoint = Endpoint.publish("http://localhost:9128/Servicios/MediaWs", this);
+  public void publicar(String url) {
+    endpoint = Endpoint.publish(url, this);
   }
 
   @WebMethod(exclude = true)
   public Endpoint getEndpoint() {
       return endpoint;
+  }
+  
+  private static Path jarImgDir() throws IOException {
+      try {
+          Path jarDir = Paths.get(MediaWs.class
+                  .getProtectionDomain()
+                  .getCodeSource()
+                  .getLocation()
+                  .toURI())
+                  .getParent();
+
+          Path imgDir = jarDir.resolve("img").toAbsolutePath().normalize();
+          Files.createDirectories(imgDir);
+          return imgDir;
+      } catch (Exception e) {
+          throw new IOException("No se pudo determinar la carpeta del jar", e);
+      }
   }
   
   @WebMethod
@@ -40,7 +57,7 @@ public class MediaWs {
     }
 
 
-    Path dir = Paths.get("img");
+    Path dir = jarImgDir();    
     Files.createDirectories(dir);
 
 
@@ -78,7 +95,7 @@ public class MediaWs {
         throw new IOException("Nombre de archivo inválido");
     }
 
-    Path dir = Paths.get("img");
+    Path dir = jarImgDir();
     Path file = dir.resolve(nombreArchivo).normalize();
 
     if (!file.startsWith(dir)) {

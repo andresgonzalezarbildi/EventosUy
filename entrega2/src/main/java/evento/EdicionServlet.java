@@ -18,10 +18,9 @@ import ws.eventos.EventosWs;
 import ws.media.IOException_Exception;
 import ws.media.MediaService;
 import ws.media.MediaWs;
-import ws.usuarios.DataUsuario;
-import ws.usuarios.UsuarioNoExisteFault_Exception;
-import ws.usuarios.UsuarioService;
-import ws.usuarios.UsuarioWs;
+import ws.usuario.DataUsuario;
+import ws.usuario.UsuarioService;
+import ws.usuario.UsuarioWs;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
@@ -182,6 +181,7 @@ public class EdicionServlet extends HttpServlet {
         final String nombreEvento = req.getParameter("id");
         final String fechaInicioStr = req.getParameter("fechaInicio");
         final String fechaFinStr = req.getParameter("fechaFin");
+        final String video = req.getParameter("video");
 
         // Validación de datos obligatorios
         if (nombreEdicion == null || nombreEdicion.isEmpty() ||
@@ -189,7 +189,7 @@ public class EdicionServlet extends HttpServlet {
             nombreEvento == null || nombreEvento.isEmpty()) {
 
             setErrorYReenviar(req, res, "Faltan datos obligatorios para crear la edición.",
-                    nombreEdicion, sigla, ciudad, pais, fechaInicioStr, fechaFinStr, nombreEvento);
+                    nombreEdicion, sigla, ciudad, pais, fechaInicioStr, fechaFinStr, nombreEvento, video);
             return;
         }
 
@@ -199,7 +199,7 @@ public class EdicionServlet extends HttpServlet {
         if (fechaInicioStr == null || fechaFinStr == null ||
             fechaInicioStr.isBlank() || fechaFinStr.isBlank()) {
             setErrorYReenviar(req, res, "Debe ingresar ambas fechas.",
-                    nombreEdicion, sigla, ciudad, pais, fechaInicioStr, fechaFinStr, nombreEvento);
+                    nombreEdicion, sigla, ciudad, pais, fechaInicioStr, fechaFinStr, nombreEvento, video);
             return;
         }
 
@@ -207,7 +207,7 @@ public class EdicionServlet extends HttpServlet {
         if (!fechaInicioStr.matches("\\d{4}-\\d{2}-\\d{2}") ||
             !fechaFinStr.matches("\\d{4}-\\d{2}-\\d{2}")) {
             setErrorYReenviar(req, res, "Formato de fecha inválido. Use YYYY-MM-DD.",
-                    nombreEdicion, sigla, ciudad, pais, fechaInicioStr, fechaFinStr, nombreEvento);
+                    nombreEdicion, sigla, ciudad, pais, fechaInicioStr, fechaFinStr, nombreEvento, video);
             return;
         }
 
@@ -217,13 +217,13 @@ public class EdicionServlet extends HttpServlet {
         // Comparar lexicográficamente porque las fechas ISO mantienen orden temporal
         if (fechaInicioStr.compareTo(hoy) < 0) {
             setErrorYReenviar(req, res, "La fecha de inicio no puede ser anterior a la fecha actual.",
-                    nombreEdicion, sigla, ciudad, pais, fechaInicioStr, fechaFinStr, nombreEvento);
+                    nombreEdicion, sigla, ciudad, pais, fechaInicioStr, fechaFinStr, nombreEvento, video);
             return;
         }
 
         if (fechaFinStr.compareTo(fechaInicioStr) < 0) {
             setErrorYReenviar(req, res, "La fecha de fin no puede ser anterior a la fecha de inicio.",
-                    nombreEdicion, sigla, ciudad, pais, fechaInicioStr, fechaFinStr, nombreEvento);
+                    nombreEdicion, sigla, ciudad, pais, fechaInicioStr, fechaFinStr, nombreEvento, video);
             return;
         }
 
@@ -236,14 +236,14 @@ public class EdicionServlet extends HttpServlet {
             eventoDTO = controladorEventos.getUnEventoDTO(nombreEvento);
         } catch (EventoNoExisteFault_Exception e) {
             setErrorYReenviar(req, res, "El evento no existe.",
-                    nombreEdicion, sigla, ciudad, pais, fechaInicioStr, fechaFinStr, nombreEvento);
+                    nombreEdicion, sigla, ciudad, pais, fechaInicioStr, fechaFinStr, nombreEvento, video);
             return;
         }
         String fechaAltaEvento = eventoDTO.getFechaAlta(); // ya viene como String del WS
         if (fechaInicioStr.compareTo(fechaAltaEvento) < 0) {
             setErrorYReenviar(req, res, 
                 "La fecha de inicio de la edición no puede ser anterior a la fecha de alta del evento.",
-                nombreEdicion, sigla, ciudad, pais, fechaInicioStr, fechaFinStr, nombreEvento);
+                nombreEdicion, sigla, ciudad, pais, fechaInicioStr, fechaFinStr, nombreEvento, video);
             return;
         }
 
@@ -259,7 +259,7 @@ public class EdicionServlet extends HttpServlet {
             String contentType = filePart.getContentType();
 
             if (contentType == null || !contentType.startsWith("image/")) {
-                setErrorYReenviar(req, res, "El archivo seleccionado no es una imagen válida. Solo se permiten JPG, PNG, GIF o WEBP.", nombreEdicion, sigla, ciudad, pais, fechaInicioStr, fechaFinStr, nombreEvento);
+                setErrorYReenviar(req, res, "El archivo seleccionado no es una imagen válida. Solo se permiten JPG, PNG, GIF o WEBP.", nombreEdicion, sigla, ciudad, pais, fechaInicioStr, fechaFinStr, nombreEvento, video);
                 return;
             }
 
@@ -272,7 +272,7 @@ public class EdicionServlet extends HttpServlet {
             try {
                 imagenFileName = mediaPort.subirImagen(submitted, bytes);
             } catch (IOException_Exception ex) {
-                setErrorYReenviar(req, res, "El archivo seleccionado no es una imagen válida o ocurrió un error al subirla.", nombreEdicion, sigla, ciudad, pais, fechaInicioStr, fechaFinStr, nombreEvento);
+                setErrorYReenviar(req, res, "El archivo seleccionado no es una imagen válida o ocurrió un error al subirla.", nombreEdicion, sigla, ciudad, pais, fechaInicioStr, fechaFinStr, nombreEvento, video);
                 return;
             }
         }
@@ -291,7 +291,8 @@ public class EdicionServlet extends HttpServlet {
                     fechaFinStr,
                     fechaAltaParam,
                     nickname,
-                    imagenFileName
+                    imagenFileName,
+                    video
             );
             res.sendRedirect(req.getContextPath() + "/evento?op=consultar&id=" +
                     URLEncoder.encode(nombreEvento, "UTF-8"));
@@ -303,14 +304,14 @@ public class EdicionServlet extends HttpServlet {
         catch (Exception e) {
             e.printStackTrace();
             setErrorYReenviar(req, res, "Error al registrar la edición.",
-                    nombreEdicion, sigla, ciudad, pais, fechaInicioStr, fechaFinStr, nombreEvento);
+                    nombreEdicion, sigla, ciudad, pais, fechaInicioStr, fechaFinStr, nombreEvento, video);
         }
     }
 
     private void setErrorYReenviar(HttpServletRequest req, HttpServletResponse res,
                                    String mensajeError, String nombreEdicion, String sigla,
                                    String ciudad, String pais, String fechaInicioStr,
-                                   String fechaFinStr, String nombreEvento)
+                                   String fechaFinStr, String nombreEvento, String video)
             throws ServletException, IOException {
         req.setAttribute("error", mensajeError);
         req.setAttribute("nombre", nombreEdicion);
@@ -320,6 +321,7 @@ public class EdicionServlet extends HttpServlet {
         req.setAttribute("fechaInicio", fechaInicioStr);
         req.setAttribute("fechaFin", fechaFinStr);
         req.setAttribute("nomEv", nombreEvento);
+        req.setAttribute("video", video);
         req.getRequestDispatcher("/WEB-INF/pages/altaEdicion.jsp").forward(req, res);
     }
 

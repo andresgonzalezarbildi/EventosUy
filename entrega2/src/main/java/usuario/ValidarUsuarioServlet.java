@@ -5,9 +5,9 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 import java.io.IOException;
 
-import ws.usuarios.UsuarioService;
-import ws.usuarios.UsuarioWs;
-import ws.usuarios.UsuarioNoExisteFault_Exception;
+import ws.usuario.UsuarioService;
+import ws.usuario.UsuarioWs;
+import ws.usuario.UsuarioNoExisteFault_Exception;
 
 @WebServlet("/ValidarUsuarioServlet")
 public class ValidarUsuarioServlet extends HttpServlet {

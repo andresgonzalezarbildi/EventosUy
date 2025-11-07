@@ -1,15 +1,17 @@
 /bin/
 bin/
 target/
+*/target/
+*.log
+
 *.class
 .bat
-*.war
-!entrega2/src/main/webapp/WEB-INF/lib/logicaEventosUy.jar
-!lib/*.jar
+/*.jar
+/*.war
+lib/*.jar
 
 .metadata/
 Servers/
 
-img/*
-
 /build/
+img/*

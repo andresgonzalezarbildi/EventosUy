@@ -13,8 +13,8 @@ public class EstadoServidor {
     private Endpoint endpoint = null;
 
     @WebMethod(exclude = true)
-    public void publicar() {
-        endpoint = Endpoint.publish("http://localhost:9128/Servicios/EstadoServidorWS", this);
+    public void publicar(String url) {
+      endpoint = Endpoint.publish(url, this);
     }
 
     @WebMethod(exclude = true)

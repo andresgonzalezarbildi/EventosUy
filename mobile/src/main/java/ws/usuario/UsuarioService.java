@@ -1,8 +1,13 @@
 
 package ws.usuario;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
+import java.util.Properties;
+
 import javax.xml.namespace.QName;
 import jakarta.xml.ws.Service;
 import jakarta.xml.ws.WebEndpoint;
@@ -22,21 +27,37 @@ public class UsuarioService
     extends Service
 {
 
-    private final static URL USUARIOSERVICE_WSDL_LOCATION;
-    private final static WebServiceException USUARIOSERVICE_EXCEPTION;
-    private final static QName USUARIOSERVICE_QNAME = new QName("http://publicar.ws/", "UsuarioService");
+	  private static final URL USUARIOSERVICE_WSDL_LOCATION;
+	  private static final WebServiceException USUARIOSERVICE_EXCEPTION;
+	  private static final QName USUARIOSERVICE_QNAME = new QName("http://publicar.ws/", "UsuarioService");
 
-    static {
-        URL url = null;
-        WebServiceException e = null;
-        try {
-            url = new URL("http://localhost:9128/Servicios/UsuariosWS?wsdl");
-        } catch (MalformedURLException ex) {
-            e = new WebServiceException(ex);
-        }
-        USUARIOSERVICE_WSDL_LOCATION = url;
-        USUARIOSERVICE_EXCEPTION = e;
-    }
+	  static {
+	      URL url = null;
+	      WebServiceException ex = null;
+	      try {
+	          String configPath = System.getProperty("user.home")
+	              + File.separator + ".eventosUy"
+	              + File.separator + "cliente.properties";
+
+	          Properties p = new Properties();
+	          try (FileInputStream in = new FileInputStream(configPath)) {
+	              p.load(in);
+	          }
+
+	          String protocol = p.getProperty("Protocol", "http");
+	          String host     = p.getProperty("Host", "localhost");
+	          String port     = p.getProperty("Port", "9128");
+	          String base     = p.getProperty("Base", "/Servicios");
+
+	          String baseURL = protocol + "://" + host + ":" + port + base;
+	          url = URI.create(baseURL + "/UsuariosWS?wsdl").toURL();
+	      } catch (Exception e0) {
+	          ex = new WebServiceException(e0);
+	      }
+	      USUARIOSERVICE_WSDL_LOCATION = url;
+	      USUARIOSERVICE_EXCEPTION = ex;
+	  }
+
 
     public UsuarioService() {
         super(__getWsdlLocation(), USUARIOSERVICE_QNAME);
