@@ -34,68 +34,6 @@
           <failOnMissingWebXml>false</failOnMissingWebXml>
         </configuration>
       </plugin>
-
-      <!-- Plugin wsimport automático -->
-      <plugin>
-        <groupId>com.sun.xml.ws</groupId>
-        <artifactId>jaxws-maven-plugin</artifactId>
-        <version>4.0.3</version>
-        <executions>
-
-          <!-- Usuarios -->
-          <execution>
-            <id>wsimport-usuarios</id>
-            <goals><goal>wsimport</goal></goals>
-            <configuration>
-              <wsdlUrls>
-                <wsdlUrl>http://localhost:9128/Servicios/UsuariosWS?wsdl</wsdlUrl>
-              </wsdlUrls>
-              <packageName>ws.usuario</packageName>
-              <xnocompile>true</xnocompile>
-            </configuration>
-          </execution>
-
-          <!-- Eventos -->
-          <execution>
-            <id>wsimport-eventos</id>
-            <goals><goal>wsimport</goal></goals>
-            <configuration>
-              <wsdlUrls>
-                <wsdlUrl>http://localhost:9128/Servicios/EventosWS?wsdl</wsdlUrl>
-              </wsdlUrls>
-              <packageName>ws.eventos</packageName>
-              <xnocompile>true</xnocompile>
-            </configuration>
-          </execution>
-
-          <!-- Media -->
-          <execution>
-            <id>wsimport-media</id>
-            <goals><goal>wsimport</goal></goals>
-            <configuration>
-              <wsdlUrls>
-                <wsdlUrl>http://localhost:9128/Servicios/MediaWS?wsdl</wsdlUrl>
-              </wsdlUrls>
-              <packageName>ws.media</packageName>
-              <xnocompile>true</xnocompile>
-            </configuration>
-          </execution>
-
-          <!-- Estado -->
-          <execution>
-            <id>wsimport-estado</id>
-            <goals><goal>wsimport</goal></goals>
-            <configuration>
-              <wsdlUrls>
-                <wsdlUrl>http://localhost:9128/Servicios/EstadoServidorWS?wsdl</wsdlUrl>
-              </wsdlUrls>
-              <packageName>ws.estado</packageName>
-              <xnocompile>true</xnocompile>
-            </configuration>
-          </execution>
-
-        </executions>
-      </plugin>
     </plugins>
   </build>
 

@@ -15,15 +15,15 @@ import java.util.Properties;
 public class Main {
   public static void main(String[] args) {
     try {
-      // 1. Cargar configuración externa
+
       String configPath = System.getProperty("user.home")
-          + File.separator + ".eventosUy"     // o ".volandoUy" si querés seguir la guía del profe
+          + File.separator + ".eventosUy"    
           + File.separator + "servidor_central.properties";
 
       Properties properties = new Properties();
       properties.load(new FileInputStream(new File(configPath)));
 
-      // 2. Leer propiedades
+
       String protocol = properties.getProperty("Protocol", "http");
       String host = properties.getProperty("Host", "0.0.0.0");
       String port = properties.getProperty("Port", "9128");
@@ -33,7 +33,7 @@ public class Main {
 
       System.out.println("Publicando servicios en: " + baseURL);
 
-      // 3. Publicar WS con URLs tomadas del archivo
+
       EventosWs eventoWs = new EventosWs();
       UsuarioWs usuarioWs = new UsuarioWs();
       MediaWs mediaWs = new MediaWs();
@@ -46,7 +46,6 @@ public class Main {
 
       System.out.println("Web Services publicados correctamente.");
 
-      // 4. Iniciar Swing si aplica
       SwingUtilities.invokeLater(() -> {
         Principal frame = new Principal();
         frame.setLocationRelativeTo(null);
