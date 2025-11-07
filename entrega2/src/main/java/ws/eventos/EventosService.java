@@ -1,8 +1,13 @@
 
 package ws.eventos;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
+import java.util.Properties;
+
 import javax.xml.namespace.QName;
 import jakarta.xml.ws.Service;
 import jakarta.xml.ws.WebEndpoint;
@@ -22,21 +27,36 @@ public class EventosService
     extends Service
 {
 
-    private final static URL EVENTOSSERVICE_WSDL_LOCATION;
-    private final static WebServiceException EVENTOSSERVICE_EXCEPTION;
-    private final static QName EVENTOSSERVICE_QNAME = new QName("http://publicar.ws/", "EventosService");
+  private static final URL EVENTOSSERVICE_WSDL_LOCATION;
+  private static final WebServiceException EVENTOSSERVICE_EXCEPTION;
+  private static final QName EVENTOSSERVICE_QNAME = new QName("http://publicar.ws/", "EventosService");
 
-    static {
-        URL url = null;
-        WebServiceException e = null;
-        try {
-            url = new URL("http://localhost:9128/Servicios/EventosWS?wsdl");
-        } catch (MalformedURLException ex) {
-            e = new WebServiceException(ex);
-        }
-        EVENTOSSERVICE_WSDL_LOCATION = url;
-        EVENTOSSERVICE_EXCEPTION = e;
-    }
+  static {
+      URL url = null;
+      WebServiceException ex = null;
+      try {
+          String configPath = System.getProperty("user.home")
+              + File.separator + ".eventosUy"
+              + File.separator + "cliente.properties";
+
+          Properties p = new Properties();
+          try (FileInputStream in = new FileInputStream(configPath)) {
+              p.load(in);
+          }
+
+          String protocol = p.getProperty("Protocol", "http");
+          String host     = p.getProperty("Host", "localhost");
+          String port     = p.getProperty("Port", "9128");
+          String base     = p.getProperty("Base", "/Servicios");
+
+          String baseURL = protocol + "://" + host + ":" + port + base;
+          url = URI.create(baseURL + "/EventosWS?wsdl").toURL();
+      } catch (Exception e0) {
+          ex = new WebServiceException(e0);
+      }
+      EVENTOSSERVICE_WSDL_LOCATION = url;
+      EVENTOSSERVICE_EXCEPTION = ex;
+  }
 
     public EventosService() {
         super(__getWsdlLocation(), EVENTOSSERVICE_QNAME);
