@@ -1,0 +1,87 @@
+
+package ws.eventos;
+
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlType;
+
+
+/**
+ * <p>Clase Java para listarUnRegistroDeUsuario complex type.
+ * 
+ * <p>El siguiente fragmento de esquema especifica el contenido que se espera que haya en esta clase.
+ * 
+ * <pre>{@code
+ * <complexType name="listarUnRegistroDeUsuario">
+ *   <complexContent>
+ *     <restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+ *       <sequence>
+ *         <element name="nombreEdicion" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         <element name="nickname" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *       </sequence>
+ *     </restriction>
+ *   </complexContent>
+ * </complexType>
+ * }</pre>
+ * 
+ * 
+ */
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "listarUnRegistroDeUsuario", propOrder = {
+    "nombreEdicion",
+    "nickname"
+})
+public class ListarUnRegistroDeUsuario {
+
+    protected String nombreEdicion;
+    protected String nickname;
+
+    /**
+     * Obtiene el valor de la propiedad nombreEdicion.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getNombreEdicion() {
+        return nombreEdicion;
+    }
+
+    /**
+     * Define el valor de la propiedad nombreEdicion.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setNombreEdicion(String value) {
+        this.nombreEdicion = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad nickname.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getNickname() {
+        return nickname;
+    }
+
+    /**
+     * Define el valor de la propiedad nickname.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setNickname(String value) {
+        this.nickname = value;
+    }
+
+}
