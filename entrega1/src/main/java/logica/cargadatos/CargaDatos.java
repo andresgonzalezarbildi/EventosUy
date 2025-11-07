@@ -3,11 +3,13 @@ package logica.cargadatos;
 
 import excepciones.CategoriaRepetidaException;
 import excepciones.EdicionNoExisteException;
+import excepciones.EventoConEdicionesPedientesException;
 import excepciones.EventoRepetidoException;
 import excepciones.TipoRegistroRepetidoException;
 import excepciones.TransicionEstadoInvalidaException;
 import excepciones.UsuarioNoExisteException;
 import excepciones.UsuarioRepetidoException;
+import excepciones.EdicionSinComenzarException;
 import java.time.LocalDate;
 import java.util.List;
 import logica.interfaces.ICargaDatos;
@@ -318,6 +320,17 @@ public class CargaDatos implements ICargaDatos {
     } catch (EventoRepetidoException ignored) {
       // si existe ignoro
     }
+    try {
+        //01/01/2025 
+        controladorEvento.altaEvento("Global", 
+            "Aventureros en grupo", "GBL", 
+            List.of("Cultura"), LocalDate.of(2025, 1, 1), "IMG-EV08.jpeg");
+      } catch (IllegalArgumentException ignored) {
+        // si existe ignoro
+      } catch (EventoRepetidoException ignored) {
+        // si existe ignoro
+      }
+    
     
     // Carga edición de evento
     //public void altaEdicionEvento(String nombreEvento, String nombreEdicion, String sigla, 
@@ -327,7 +340,7 @@ public class CargaDatos implements ICargaDatos {
     try {
       controladorEvento.altaEdicionEvento("Montevideo Rock", "Montevideo Rock 2025", "MONROCK25",
           "Montevideo", "Uruguay", LocalDate.of(2025, 11, 20),
-          LocalDate.of(2025, 11, 22), LocalDate.of(2025, 3, 12), "imm", "IMG-EDEV01.jpeg");
+          LocalDate.of(2025, 11, 22), LocalDate.of(2025, 3, 12), "imm", "IMG-EDEV01.jpeg", "https://www.youtube.com/watch?v=YFbRrUX04tU");
       try {
         controladorEvento.aceptarEdicion("Montevideo Rock 2025", true);
       } catch (EdicionNoExisteException ignored) {
@@ -342,7 +355,7 @@ public class CargaDatos implements ICargaDatos {
     try {
       controladorEvento.altaEdicionEvento("Maratón de Montevideo", "Maratón de Montevideo 2025",
           "MARATON25", "Montevideo", "Uruguay", LocalDate.of(2025, 9, 14),
-          LocalDate.of(2025, 9, 14), LocalDate.of(2025, 2, 5), "imm", "IMG-EDEV02.png");
+          LocalDate.of(2025, 9, 14), LocalDate.of(2025, 2, 5), "imm", "IMG-EDEV02.png", "https://www.youtube.com/watch?v=Pg7Jw787MgE");
       
       controladorEvento.aceptarEdicion("Maratón de Montevideo 2025", true);
          
@@ -352,7 +365,7 @@ public class CargaDatos implements ICargaDatos {
     try {
       controladorEvento.altaEdicionEvento("Maratón de Montevideo", "Maratón de Montevideo 2024", 
           "MARATON24", "Montevideo", "Uruguay", LocalDate.of(2024, 9, 14),
-          LocalDate.of(2024, 9, 14), LocalDate.of(2024, 4, 21), "imm", "IMG-EDEV03.jpeg");
+          LocalDate.of(2024, 9, 14), LocalDate.of(2024, 4, 21), "imm", "IMG-EDEV03.jpeg", "https://www.youtube.com/watch?v=hxDn4EEMank");
       try {
         controladorEvento.aceptarEdicion("Maratón de Montevideo 2024", true);
       } catch (EdicionNoExisteException ignored) {
@@ -367,7 +380,7 @@ public class CargaDatos implements ICargaDatos {
     try {
       controladorEvento.altaEdicionEvento("Maratón de Montevideo", "Maratón de Montevideo 2022", 
           "MARATON22", "Montevideo", "Uruguay", LocalDate.of(2022, 9, 14), 
-          LocalDate.of(2022, 9, 14), LocalDate.of(2022, 5, 21), "imm", "IMG-EDEV04.jpeg");
+          LocalDate.of(2022, 9, 14), LocalDate.of(2022, 5, 21), "imm", "IMG-EDEV04.jpeg", null);
       try {
         controladorEvento.aceptarEdicion("Maratón de Montevideo 2022", false);
       } catch (EdicionNoExisteException ignored) {
@@ -382,7 +395,7 @@ public class CargaDatos implements ICargaDatos {
     try {
       controladorEvento.altaEdicionEvento("Montevideo Comics", "Montevideo Comics 2024",
           "COMICS24", "Montevideo", "Uruguay", LocalDate.of(2024, 7, 18), 
-          LocalDate.of(2024, 7, 21), LocalDate.of(2024, 6, 20), "miseventos", "IMG-EDEV05.jpeg");
+          LocalDate.of(2024, 7, 21), LocalDate.of(2024, 6, 20), "miseventos", "IMG-EDEV05.jpeg", "https://www.youtube.com/watch?v=4n0itnXxCMg");
       try {
         controladorEvento.aceptarEdicion("Montevideo Comics 2024", true);
       } catch (EdicionNoExisteException ignored) {
@@ -397,7 +410,7 @@ public class CargaDatos implements ICargaDatos {
     try {
       controladorEvento.altaEdicionEvento("Montevideo Comics", "Montevideo Comics 2025", "COMICS25",
           "Montevideo", "Uruguay", LocalDate.of(2025, 8, 4), LocalDate.of(2025, 8, 6),
-          LocalDate.of(2025, 7, 4), "miseventos", "IMG-EDEV06.jpeg");
+          LocalDate.of(2025, 7, 4), "miseventos", "IMG-EDEV06.jpeg", "https://www.youtube.com/watch?v=jRJt4i7G-SY");
       try {
         controladorEvento.aceptarEdicion("Montevideo Comics 2025", true);
       } catch (EdicionNoExisteException ignored) {
@@ -412,7 +425,7 @@ public class CargaDatos implements ICargaDatos {
     try {
       controladorEvento.altaEdicionEvento("Expointer Uruguay", "Expointer Uruguay 2025", 
           "EXPOAGRO25", "Durazno", "Uruguay", LocalDate.of(2025, 9, 11), 
-          LocalDate.of(2025, 9, 17), LocalDate.of(2025, 2, 1), "miseventos", "IMG-EDEV07.jpeg");
+          LocalDate.of(2025, 9, 17), LocalDate.of(2025, 2, 1), "miseventos", "IMG-EDEV07.jpeg", "https://www.youtube.com/watch?v=NFjb-JujCCY");
       //solo ingresada
     } catch (UsuarioNoExisteException ignored) {
       // si existe ignoro
@@ -422,7 +435,7 @@ public class CargaDatos implements ICargaDatos {
       controladorEvento.altaEdicionEvento("Conferencia de Tecnología", 
           "Tecnología Punta del Este 2026", "CONFTECH26", "Punta del Este", "Uruguay", 
           LocalDate.of(2026, 4, 6), LocalDate.of(2026, 4, 10), LocalDate.of(2025, 8, 1), 
-          "udelar", "IMG-EDEV08.jpeg");
+          "udelar", "IMG-EDEV08.jpeg", "https://www.youtube.com/watch?v=IPukuYb9xWw");
       try {
       	controladorEvento.aceptarEdicion("Tecnología Punta del Este 2026", true);
       } catch (EdicionNoExisteException ignored) {
@@ -437,7 +450,7 @@ public class CargaDatos implements ICargaDatos {
     try {
       controladorEvento.altaEdicionEvento("Conferencia de Tecnología", "Mobile World Congress 2025",
           "MWC", "Barcelona", "España", LocalDate.of(2025, 12, 12), LocalDate.of(2025, 12, 15),
-          LocalDate.of(2025, 8, 21), "techcorp", "EdicionSinFoto.png");
+          LocalDate.of(2025, 8, 21), "techcorp", "EdicionSinFoto.png", "https://www.youtube.com/watch?v=zNVbgEJfgz8");
       try {
         controladorEvento.aceptarEdicion("Mobile World Congress 2025", true);
       } catch (EdicionNoExisteException ignored) {
@@ -452,7 +465,7 @@ public class CargaDatos implements ICargaDatos {
     try {
       controladorEvento.altaEdicionEvento("Conferencia de Tecnología", "Web Summit 2026", 
           "WS26", "Lisboa", "Portugal", LocalDate.of(2026, 1, 13), LocalDate.of(2026, 2, 1), 
-          LocalDate.of(2025, 6, 4), "techcorp", "EdicionSinFoto.png");
+          LocalDate.of(2025, 6, 4), "techcorp", "EdicionSinFoto.png", null);
       try {
         controladorEvento.aceptarEdicion("Web Summit 2026", true);
       } catch (EdicionNoExisteException ignored) {
@@ -467,11 +480,26 @@ public class CargaDatos implements ICargaDatos {
     try {
       controladorEvento.altaEdicionEvento("Montevideo Fashion Week", "Montevideo Fashion Week 2026",
           "MFW26", "Nueva York", "Estados Unidos", LocalDate.of(2026, 2, 16), 
-          LocalDate.of(2026, 2, 20), LocalDate.of(2025, 10, 2), "mec", "IMG-EDEV11.jpeg");
+          LocalDate.of(2026, 2, 20), LocalDate.of(2025, 10, 2), "mec", "IMG-EDEV11.jpeg", null);
       //solo ingresada
     } catch (UsuarioNoExisteException ignored) {
       // si existe ignoro
     }
+    
+    try {
+        controladorEvento.altaEdicionEvento("Global", "Descubre la Magia de Machu Picchu",
+            "MAPI25", "Cusco", "Perú", LocalDate.of(2025, 11, 10), 
+            LocalDate.of(2025, 11, 30), LocalDate.of(2025, 8, 7), "miseventos", "IMG-EDEV12.jpeg", "https://www.youtube.com/watch?v=cnMa-Sm9H4k");
+	        try {
+	            controladorEvento.aceptarEdicion("Descubre la Magia de Machu Picchu", true);
+	        } catch (EdicionNoExisteException ignored) {
+	           // si existe ignoro
+	        } catch (TransicionEstadoInvalidaException ignored) {
+	           // si existe ignoro
+	        }
+      } catch (UsuarioNoExisteException ignored) {
+        // si existe ignoro
+      }
 
     //Carga tipos de registro
     //altaTipoRegistro(String nombreEvento, String nombreEdicion, String nombreTipoRegistro, 
@@ -716,6 +744,22 @@ public class CargaDatos implements ICargaDatos {
     } catch (TipoRegistroRepetidoException ignored) {
       // si existe ignoro
     }
+    try {
+       controladorEvento.altaTipoRegistro("Global", "Descubre la Magia de Machu Picchu",
+            "plus50", "Viaje para personas con más de 50 años", 250, 10);
+    } catch (IllegalArgumentException ignored) {
+       // si existe ignoro
+    } catch (TipoRegistroRepetidoException ignored) {
+       // si existe ignoro
+    }
+    try {
+       controladorEvento.altaTipoRegistro("Global", "Descubre la Magia de Machu Picchu",
+            "Mayores", "Viaje para personas mayores de 18 años", 300, 20);
+    } catch (IllegalArgumentException ignored) {
+       // si existe ignoro
+    } catch (TipoRegistroRepetidoException ignored) {
+       // si existe ignoro
+    }
     
     // Carga registros a ediciones de eventos
     try {
@@ -749,20 +793,52 @@ public class CargaDatos implements ICargaDatos {
         
         controladorEvento.altaRegistro("Conferencia de Tecnología", "Tecnología Punta del Este 2026", "Estudiante", "msilva",
                 LocalDate.of(2025, 10, 1));
-        controladorEvento.setCostoRegistro("msilva", "Tecnología Punta del Este 2026", "Estudiante", 0);
+        //controladorEvento.setCostoRegistro("msilva", "Tecnología Punta del Este 2026", "Estudiante", 0);
         
         controladorEvento.altaRegistro("Conferencia de Tecnología", "Tecnología Punta del Este 2026", "General", "andrearod",
                 LocalDate.of(2025, 10, 6));
-        controladorEvento.setCostoRegistro("msilva" , "Tecnología Punta del Este 2026" , "General", 0);
+        //controladorEvento.setCostoRegistro("msilva" , "Tecnología Punta del Este 2026" , "General", 0);
         
         controladorEvento.altaRegistro("Conferencia de Tecnología", "Tecnología Punta del Este 2026", "General", "MariR",
                 LocalDate.of(2025, 10, 10));
+
+        controladorEvento.altaRegistro("Global", "Descubre la Magia de Machu Picchu", "Mayores", "atorres",
+                LocalDate.of(2025, 11, 07));
+        
+        controladorEvento.altaRegistro("Global", "Descubre la Magia de Machu Picchu", "Mayores", "msilva",
+                LocalDate.of(2025, 8, 10));
+
+        controladorEvento.altaRegistro("Global", "Descubre la Magia de Machu Picchu", "plus50", "AnaG",
+                LocalDate.of(2025, 9, 30));
         
     } catch (IllegalArgumentException ignored) {
       // No hago nada
     } catch (UsuarioNoExisteException ignored) {
       // No hago nada
     }
+    
 
+    // Asistencia a Ediciones:
+      // public void confirmarAsistencia(String nombreEdicion, String nickname) throws EdicionSinComenzarException;
+    try {
+     	controladorEvento.confirmarAsistencia("Montevideo Rock 2025","sofirod"); //1
+      controladorEvento.confirmarAsistencia("Maratón de Montevideo 2025", "sofirod");//4
+      controladorEvento.confirmarAsistencia("Maratón de Montevideo 2025", "AnaG");//6
+      controladorEvento.confirmarAsistencia("Montevideo Comics 2024","SofiM");//9
+      controladorEvento.confirmarAsistencia("Descubre la Magia de Machu Picchu","atorres");//13
+      controladorEvento.confirmarAsistencia("Descubre la Magia de Machu Picchu", "AnaG");//15
+    } catch (EdicionSinComenzarException ignored) {
+       // No hago nada
+    }
+
+    
+    // Finalizar evento:
+      //    public void finalizarEvento(String nombreEvento) throws EventoConEdicionesPedientesException;
+    try {
+    	controladorEvento.finalizarEvento("Global");
+    } catch (EventoConEdicionesPedientesException ignored) {
+       // No hago nada
+    }
+    
   }
 }
