@@ -6,7 +6,7 @@ rm -f *.jar *.war
 
 cd entrega1
 mvn clean package -DskipTests
-cp $(find target -name "*.jar" | grep -v "original" | head -n 1) "$ROOT"
+cp $(find target -name "*jar-with-dependencies.jar" | head -n 1) "$ROOT"
 cd "$ROOT"
 
 cd entrega2
