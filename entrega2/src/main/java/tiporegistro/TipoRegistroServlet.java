@@ -2,7 +2,6 @@ package tiporegistro;
 
 import java.io.IOException;
 import java.net.URLEncoder;
-
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -19,7 +18,7 @@ public class TipoRegistroServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     private EventosService service = new EventosService();
-	EventosWs ce = service.getEventosPort();
+    EventosWs ce = service.getEventosPort();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res)
@@ -69,76 +68,106 @@ public class TipoRegistroServlet extends HttpServlet {
 
     private void mostrarFormularioAlta(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
-        String nombreEdicion = req.getParameter("idEdicion");
-        if (nombreEdicion == null || nombreEdicion.isEmpty()) {
-            res.sendError(HttpServletResponse.SC_BAD_REQUEST, "Edición no especificada");
+        HttpSession sesion = req.getSession(false);
+        String rol = (sesion != null) ? (String) sesion.getAttribute("rol") : null;
+        String nickname = (sesion != null) ? (String) sesion.getAttribute("usuario") : null;
+
+        if (rol == null || !"organizador".equalsIgnoreCase(rol)) {
+            res.sendRedirect(req.getContextPath() + "/");
             return;
         }
 
-        ws.eventos.DataEdicion ed = null;
+        String nombreEdicion = req.getParameter("idEdicion");
+        if (nombreEdicion == null || nombreEdicion.isEmpty()) {
+            res.sendRedirect(req.getContextPath() + "/");
+            return;
+        }
+
+        ws.eventos.DataEdicion ed;
         try {
             ed = ce.getInfoEdicion(nombreEdicion);
         } catch (EdicionNoExisteFault_Exception e) {
-            res.sendError(HttpServletResponse.SC_BAD_REQUEST, "Edición no encontrada");
+            res.sendRedirect(req.getContextPath() + "/");
+            return;
+        }
+
+        if (!ed.getOrganizador().equalsIgnoreCase(nickname)) {
+            res.sendRedirect(req.getContextPath() + "/");
             return;
         }
 
         String nombreEvento = ce.getEventoDeUnaEdicion(nombreEdicion);
-
         req.setAttribute("edicion", ed);
         req.setAttribute("evento", nombreEvento);
         req.setAttribute("nombreEdicion", nombreEdicion);
-
         req.getRequestDispatcher("/WEB-INF/pages/altaTipoRegistro.jsp").forward(req, res);
     }
 
     private void procesarAlta(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
 
+        HttpSession sesion = req.getSession(false);
+        String rol = (sesion != null) ? (String) sesion.getAttribute("rol") : null;
+        String nickname = (sesion != null) ? (String) sesion.getAttribute("usuario") : null;
+
+        if (rol == null || !"organizador".equalsIgnoreCase(rol)) {
+            res.sendRedirect(req.getContextPath() + "/");
+            return;
+        }
+
+        String nombreEdicion = req.getParameter("edicion");
+        if (nombreEdicion == null || nombreEdicion.isEmpty()) {
+            res.sendRedirect(req.getContextPath() + "/");
+            return;
+        }
+
+        ws.eventos.DataEdicion ed;
+        try {
+            ed = ce.getInfoEdicion(nombreEdicion);
+        } catch (EdicionNoExisteFault_Exception e) {
+            res.sendRedirect(req.getContextPath() + "/");
+            return;
+        }
+
+        if (!ed.getOrganizador().equalsIgnoreCase(nickname)) {
+            res.sendRedirect(req.getContextPath() + "/");
+            return;
+        }
+
         String evento = req.getParameter("evento");
-        String edicionNombre = req.getParameter("edicion");
         String nombre = req.getParameter("nombre");
         String descripcion = req.getParameter("descripcion");
         String costoStr = req.getParameter("costo");
         String cupoStr = req.getParameter("cupo");
 
-        int costo = 0;
-        int cupo = 0;
         String error = null;
 
         try {
-            costo = Integer.parseInt(costoStr);
-            cupo = Integer.parseInt(cupoStr);
+            int costo = Integer.parseInt(costoStr);
+            int cupo = Integer.parseInt(cupoStr);
 
             if (cupo <= 0) {
                 error = "El cupo debe ser mayor a 0.";
             } else {
-                ce.altaTipoRegistro(evento, edicionNombre, nombre, descripcion, costo, cupo);
+                ce.altaTipoRegistro(evento, nombreEdicion, nombre, descripcion, costo, cupo);
                 res.sendRedirect(req.getContextPath() + "/edicion?op=consultar&id="
-                        + URLEncoder.encode(edicionNombre, "UTF-8"));
+                        + URLEncoder.encode(nombreEdicion, "UTF-8"));
                 return;
             }
+
         } catch (NumberFormatException e) {
             error = "Cupo y costo deben ser números válidos.";
         } catch (TipoRegistroRepetidoFault_Exception e) {
             error = "Ya existe un tipo de registro con ese nombre para esta edición.";
         }
 
-        // Siempre obtener DataEdicion para no romper el JSP
-        ws.eventos.DataEdicion edicionObj = null;
-        try {
-            edicionObj = ce.getInfoEdicion(edicionNombre);
-        } catch (EdicionNoExisteFault_Exception e) {
-            // opcional: mostrar mensaje de error general
-        }
-
-        req.setAttribute("edicion", edicionObj); // <-- DataEdicion siempre
-        req.setAttribute("nombreEdicion", edicionNombre);
+        req.setAttribute("edicion", ed);
+        req.setAttribute("nombreEdicion", nombreEdicion);
         req.setAttribute("evento", evento);
         req.setAttribute("nombre", nombre);
         req.setAttribute("descripcion", descripcion);
-        req.setAttribute("costo", costo);
-        req.setAttribute("cupo", cupo);
+        req.setAttribute("costo", costoStr);
+        req.setAttribute("cupo", cupoStr);
         req.setAttribute("error", error);
 
         req.getRequestDispatcher("/WEB-INF/pages/altaTipoRegistro.jsp").forward(req, res);
