@@ -210,26 +210,38 @@ public class registroServlet extends HttpServlet {
         	}
         
         try {
-        	String hoy = java.time.LocalDate.now().toString();
+            String hoy = java.time.LocalDate.now().toString();
             ctrlEv.altaRegistro(nomEvento, nombreEdicion, nombreTipoRegistro, nickname, hoy);
             req.getSession().setAttribute("flash_ok", "Registro realizado correctamente.");
             res.sendRedirect(req.getContextPath() + "/eventos");
             return;
-        } catch (IllegalStateException ex) { 
-            req.getSession().setAttribute("flash_error", ex.getMessage());
-            res.sendRedirect(req.getContextPath()
-                + "/registroEd?op=alta&idEdicion=" + nombreEdicion + "&id=" + nombreTipoRegistro);
-            return;
+
         } catch (UsuarioNoExisteFault_Exception ex) {
             req.getSession().setAttribute("flash_error", "El asistente no existe o no tiene permisos.");
-            res.sendRedirect(req.getContextPath()
-                + "/registroEd?op=alta&idEdicion=" + nombreEdicion + "&id=" + nombreTipoRegistro);
-            return;
-       }
-    }
+
+        } catch (IllegalStateException ex) {
+            req.getSession().setAttribute("flash_error", ex.getMessage());
+
+        } catch (jakarta.xml.ws.soap.SOAPFaultException ex) {
+            String msg = ex.getMessage();
+            if (msg != null && msg.contains("No hay cupo disponible")) {
+                req.getSession().setAttribute("flash_error", "No quedan cupos disponibles para esta edición.");
+            } else if (msg != null && msg.contains("Ya finalizo el evento")) {
+                req.getSession().setAttribute("flash_error", "El evento ya finalizó, no puede registrarse.");
+            } else {
+                req.getSession().setAttribute("flash_error", "Error inesperado: " + msg);
+            }
+
+        } catch (Exception ex) {
+            req.getSession().setAttribute("flash_error", "Error general: " + ex.getMessage());
+        }
+
+        res.sendRedirect(req.getContextPath()
+            + "/registroEd?op=alta&idEdicion=" + nombreEdicion + "&id=" + nombreTipoRegistro);
+
 
     	
-    	
+    }
     }
     
     
