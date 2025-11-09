@@ -252,10 +252,7 @@ if (registros != null && !registros.isEmpty()) {
 						<% if (embedUrl != null) { %>
 						<iframe width="426" height="240"
 						        src="<%= embedUrl %>"
-						        title="YouTube video player" frameborder="0"
-						        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-						        referrerpolicy="strict-origin-when-cross-origin"
-						        allowfullscreen></iframe>
+						        title="YouTube video player"></iframe>
 						<% } else { %>
 						<p>No se pudo reconocer el video o no posee.</p>
 						<% } %>

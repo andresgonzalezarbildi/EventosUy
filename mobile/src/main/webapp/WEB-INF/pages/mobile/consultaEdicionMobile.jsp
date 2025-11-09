@@ -64,6 +64,28 @@
     <dd><%= ed.getFechaAltaEnPlataforma() %></dd>
   </dl>
 </div>
+<div style="display:flex; flex-direction:column; align-items:center;">
+					<%
+						String raw = ed.getVideo(); // puede ser watch?v=..., youtu.be/..., shorts/..., o ya embed
+						String id = null;
+						if (raw != null) {
+						    java.util.regex.Pattern p = java.util.regex.Pattern.compile(
+						        "(?:youtu\\.be/|youtube\\.com/(?:watch\\?v=|embed/|shorts/))([A-Za-z0-9_-]{11})"
+						    );
+						    java.util.regex.Matcher m = p.matcher(raw);
+						    if (m.find()) id = m.group(1);
+						}
+						String embedUrl = (id != null) ? ("https://www.youtube-nocookie.com/embed/" + id) : null;
+						%>
+						
+						<% if (embedUrl != null) { %>
+						<iframe width="384" height="216"
+						        src="<%= embedUrl %>"
+						        title="YouTube video player"></iframe>
+						<% } else { %>
+						<p>No se pudo reconocer el video o no posee.</p>
+						<% } %>
+				</div>	 
      
          				 	<section class="informacion">
 		    						<h3 style="margin-bottom:0.5rem; color: var(--color-primary);">Tipos de Registro</h3>
