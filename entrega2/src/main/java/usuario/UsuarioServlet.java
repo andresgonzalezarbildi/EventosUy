@@ -236,13 +236,20 @@ import ws.usuario.UsuarioWs;
 	
 	    private void modificarUsuario(HttpServletRequest req, HttpServletResponse res)
 	            throws ServletException, IOException {
-	
+
 	        String nick = req.getParameter("nick");
+	        String nickLogueado = (String) req.getSession().getAttribute("usuario");
+
 	        if (nick == null) {
 	            res.sendRedirect(req.getContextPath() + "/UsuarioServlet?op=listar");
 	            return;
 	        }
-	
+
+	        if (nickLogueado == null || !nick.equalsIgnoreCase(nickLogueado)) {
+	            res.sendRedirect(req.getContextPath() + "/UsuarioServlet?op=consultar&nick=" + nickLogueado);
+	            return;
+	        }
+
 	        try {
 	            DataUsuario usuario = cu.verInfoUsuario(nick);
 	            req.setAttribute("usuario", usuario);
