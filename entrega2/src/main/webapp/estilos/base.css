@@ -172,6 +172,7 @@ h1{
   font-size: large;
   font-weight: bold;
   margin-bottom: 1rem;
+  padding: 0.5rem
 }
 
 .btn:hover {
