@@ -33,7 +33,7 @@ public class AltaEventoServlet extends HttpServlet {
     private final EventosWs controladorEventos = service.getEventosPort();
 
     private final MediaService mediaService = new MediaService();
-    private final MediaWs mediaPort = mediaService.getMediaPort(); // o getMediaWsPort()
+    private final MediaWs mediaPort = mediaService.getMediaPort(); 
 
     public AltaEventoServlet() {
         super();
@@ -42,6 +42,15 @@ public class AltaEventoServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
+
+        String usuarioLog = (String) req.getSession().getAttribute("usuario");
+        String rol = (String) req.getSession().getAttribute("rol"); 
+
+        if (usuarioLog == null || !"Organizador".equalsIgnoreCase(rol)) {
+            res.sendRedirect(req.getContextPath() + "/");
+            return;
+        }
+
         try {
             List<String> categorias = controladorEventos.listarCategorias();
             req.setAttribute("categorias", categorias);
@@ -57,10 +66,17 @@ public class AltaEventoServlet extends HttpServlet {
         req.setCharacterEncoding("UTF-8");
         res.setCharacterEncoding("UTF-8");
 
+        String usuarioLog = (String) req.getSession().getAttribute("usuario");
+        String rol = (String) req.getSession().getAttribute("rol");
         String nombre = req.getParameter("nombre");
         String descripcion = req.getParameter("descripcion");
         String sigla = req.getParameter("sigla");
 
+        if (usuarioLog == null || !"Organizador".equalsIgnoreCase(rol)) {
+            res.sendRedirect(req.getContextPath() + "/");
+            return;
+        }
+        
         // Categorías
         String[] categoriasArray = req.getParameterValues("categorias");
         List<String> nombresCategorias = new ArrayList<>();
