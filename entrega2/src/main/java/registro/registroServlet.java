@@ -206,7 +206,7 @@ public class registroServlet extends HttpServlet {
         final String nomEvento = ctrlEv.getEventoDeUnaEdicion(nombreEdicion);
         final String nombreTipoRegistro = req.getParameter("id");
 
-        // Validación básica
+     
         if (nombreEdicion == null || nombreEdicion.isEmpty() ||
             nomEvento == null || nomEvento.isEmpty()) {
 
@@ -219,10 +219,10 @@ public class registroServlet extends HttpServlet {
         try {
             String hoy = java.time.LocalDate.now().toString();
 
-            // Llamada al servicio web
+          
             ctrlEv.altaRegistro(nomEvento, nombreEdicion, nombreTipoRegistro, nickname, hoy);
 
-            // Si no lanza excepción, el registro fue exitoso
+          
             req.getSession().setAttribute("flash_ok", "Registro realizado correctamente.");
             res.sendRedirect(req.getContextPath() + "/eventos");
             return;
@@ -233,7 +233,7 @@ public class registroServlet extends HttpServlet {
         } catch (IllegalStateException ex) {
             req.getSession().setAttribute("flash_error", ex.getMessage());
 
-        // ✅ Corregido: solo capturamos SOAPFaultException
+       
         } catch (jakarta.xml.ws.soap.SOAPFaultException ex) {
             String msg = ex.getMessage();
 
@@ -249,7 +249,7 @@ public class registroServlet extends HttpServlet {
             req.getSession().setAttribute("flash_error", "Error general: " + ex.getMessage());
         }
 
-        // En todos los casos de error redirige al formulario de registro
+       
         res.sendRedirect(req.getContextPath()
             + "/registroEd?op=alta&idEdicion=" + nombreEdicion + "&id=" + nombreTipoRegistro);
     }
