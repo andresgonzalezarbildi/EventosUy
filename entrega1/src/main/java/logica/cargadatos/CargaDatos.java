@@ -820,16 +820,37 @@ public class CargaDatos implements ICargaDatos {
 
     // Asistencia a Ediciones:
       // public void confirmarAsistencia(String nombreEdicion, String nickname) throws EdicionSinComenzarException;
-    try {
-     	controladorEvento.confirmarAsistencia("Montevideo Rock 2025","sofirod"); //1
-      controladorEvento.confirmarAsistencia("Maratón de Montevideo 2025", "sofirod");//4
-      controladorEvento.confirmarAsistencia("Maratón de Montevideo 2025", "AnaG");//6
-      controladorEvento.confirmarAsistencia("Montevideo Comics 2024","SofiM");//9
-      controladorEvento.confirmarAsistencia("Descubre la Magia de Machu Picchu","atorres");//13
-      controladorEvento.confirmarAsistencia("Descubre la Magia de Machu Picchu", "AnaG");//15
-    } catch (EdicionSinComenzarException ignored) {
-       // No hago nada
-    }
+	    try {
+	     	controladorEvento.confirmarAsistencia("Montevideo Rock 2025","sofirod"); //1
+	    } catch (EdicionSinComenzarException ignored) {
+	    	System.out.println("Montevideo Rock 2025 sofirod");
+	    }
+	    try {
+	    	controladorEvento.confirmarAsistencia("Maratón de Montevideo 2025", "sofirod");//4
+	    } catch (EdicionSinComenzarException ignored) {
+	    	System.out.println("Maratón de Montevideo 2025 sofirod");
+	     }
+     	 try {
+     		 controladorEvento.confirmarAsistencia("Maratón de Montevideo 2025", "AnaG");//6
+     	} catch (EdicionSinComenzarException ignored) {
+     		System.out.println("Maratón de Montevideo 2025 AnaG");
+         }
+     	 try { 
+     		 controladorEvento.confirmarAsistencia("Montevideo Comics 2024","SofiM");//9
+     	} catch (EdicionSinComenzarException ignored) {
+     		System.out.println("Montevideo Comics 2024 SofiM");
+         }
+     	 try { 
+     		 controladorEvento.confirmarAsistencia("Descubre la Magia de Machu Picchu","atorres");//13
+     	} catch (EdicionSinComenzarException ignored) {
+     		System.out.println("Descubre la Magia de Machu Picchu atorres");
+         }
+     	 try {  
+     		 controladorEvento.confirmarAsistencia("Descubre la Magia de Machu Picchu", "AnaG");//15
+     	} catch (EdicionSinComenzarException ignored) {
+     		System.out.println("Descubre la Magia de Machu Picchu  AnaG");
+        }
+    
 
     
     // Finalizar evento:
