@@ -184,8 +184,12 @@ public class registroServlet extends HttpServlet {
     }
     
     
-    private void altaRegistro(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-    	
+    private void altaRegistro(HttpServletRequest req, HttpServletResponse res)
+            throws ServletException, IOException {
+
+        req.setCharacterEncoding("UTF-8");
+        res.setCharacterEncoding("UTF-8");
+
         HttpSession sesion = req.getSession(false);
         String rol = "visitante";
         String nickname = null;
@@ -197,21 +201,28 @@ public class registroServlet extends HttpServlet {
 
         req.setAttribute("rol", rol);
         req.setAttribute("nickname", nickname);
+
         String nombreEdicion = (req.getParameter("idEdicion") != null) ? req.getParameter("idEdicion") : "";
         final String nomEvento = ctrlEv.getEventoDeUnaEdicion(nombreEdicion);
         final String nombreTipoRegistro = req.getParameter("id");
-       
+
+        // Validación básica
         if (nombreEdicion == null || nombreEdicion.isEmpty() ||
-        	    nomEvento == null || nomEvento.isEmpty()) {
-              req.setAttribute("mensajeError", "Faltan datos obligatorios para crear el registro." );
-              req.setAttribute("javax.servlet.error.status_code", 500);
-              req.getRequestDispatcher("/WEB-INF/pages/error.jsp").forward(req, res);
-        	    return;
-        	}
-        
+            nomEvento == null || nomEvento.isEmpty()) {
+
+            req.setAttribute("mensajeError", "Faltan datos obligatorios para crear el registro.");
+            req.setAttribute("javax.servlet.error.status_code", 500);
+            req.getRequestDispatcher("/WEB-INF/pages/error.jsp").forward(req, res);
+            return;
+        }
+
         try {
             String hoy = java.time.LocalDate.now().toString();
+
+            // Llamada al servicio web
             ctrlEv.altaRegistro(nomEvento, nombreEdicion, nombreTipoRegistro, nickname, hoy);
+
+            // Si no lanza excepción, el registro fue exitoso
             req.getSession().setAttribute("flash_ok", "Registro realizado correctamente.");
             res.sendRedirect(req.getContextPath() + "/eventos");
             return;
@@ -222,8 +233,10 @@ public class registroServlet extends HttpServlet {
         } catch (IllegalStateException ex) {
             req.getSession().setAttribute("flash_error", ex.getMessage());
 
+        // ✅ Corregido: solo capturamos SOAPFaultException
         } catch (jakarta.xml.ws.soap.SOAPFaultException ex) {
             String msg = ex.getMessage();
+
             if (msg != null && msg.contains("No hay cupo disponible")) {
                 req.getSession().setAttribute("flash_error", "No quedan cupos disponibles para esta edición.");
             } else if (msg != null && msg.contains("Ya finalizo el evento")) {
@@ -236,12 +249,10 @@ public class registroServlet extends HttpServlet {
             req.getSession().setAttribute("flash_error", "Error general: " + ex.getMessage());
         }
 
+        // En todos los casos de error redirige al formulario de registro
         res.sendRedirect(req.getContextPath()
             + "/registroEd?op=alta&idEdicion=" + nombreEdicion + "&id=" + nombreTipoRegistro);
-
-
-    	
     }
-    }
-    
+
+}
     
