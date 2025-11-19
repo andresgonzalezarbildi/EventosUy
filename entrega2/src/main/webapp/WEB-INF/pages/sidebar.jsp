@@ -1,0 +1,74 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page import="java.util.List" %>
+
+<%
+    String nickname = (String) session.getAttribute("usuario");
+    String rol = (String) session.getAttribute("rol");
+    boolean logueado = (nickname != null);
+    List<String> categorias = (List<String>) request.getAttribute("categorias");
+    if (categorias == null) categorias = List.of();
+    
+%>
+
+<aside class="col-12 col-md-3">
+
+
+  <!-- Acciones -->
+  <div class="content-bar">
+    <div class="content-bar-seccion">
+      <div class="seccion-titulo"><h3>Acciones</h3></div>
+      <div class="content-bar-seccion-list">
+        <div class="content-bar-seccion-list-options" onclick="location.href='<%= request.getContextPath() %>/UsuarioServlet?op=listar'">
+          <span>Usuarios</span>
+        </div>
+        <div class="content-bar-seccion-list-options" onclick="window.location.href='<%= request.getContextPath() %>/'">
+          <span>Instituciónes</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+    <!-- Categorías -->
+		<%
+      if ( !categorias.isEmpty()) {
+     %>
+        <div class="content-bar">
+        <div class="content-bar-seccion">
+          <div class="seccion-titulo"><h3>Categorías</h3></div>
+          <div class="content-bar-seccion-list">
+      <%  
+      for (String nombreCat : categorias) {
+    %>
+    	<div class="content-bar-seccion-list-options" onclick="window.location.href='<%= request.getContextPath() %>'"><span><%= nombreCat %></span></div>
+     <%
+        }
+      %>
+        </div>
+        </div>
+      </div>
+      <%
+      }
+    %>
+
+
+
+
+<% if ("organizador".equalsIgnoreCase(rol)) { %>
+  <div class="content-bar">
+    <div class="content-bar-seccion">
+      <div class="seccion-titulo"><h3>Mi Perfil</h3></div>
+      <div class="content-bar-seccion-list">
+        <div class="content-bar-seccion-list-options"
+             onclick="window.location.href='<%= request.getContextPath() %>/evento/alta'">
+          <span>Alta Evento</span>
+        </div>
+        <div class="content-bar-seccion-list-options"
+             onclick="window.location.href='<%= request.getContextPath() %>/'">
+          <span>Alta Institución</span>
+        </div>
+      </div>
+    </div>
+  </div>
+<% } %>
+
+</aside>

@@ -1,0 +1,17 @@
+.lista-scrollable {
+    width: auto;
+    max-height: 100px; /* altura máxima antes de que aparezca el scroll */
+    overflow-y: auto;  /* scroll vertical automático si el contenido supera la altura */
+    border: 1px solid #ccc;
+    padding: 5px;
+    margin: 0px;
+}
+.lista-scrollable ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.lista-scrollable li {
+    padding: 8px;
+    border-bottom: 1px solid #eee;
+}

@@ -1,0 +1,17 @@
+/bin/
+bin/
+target/
+*/target/
+*.log
+
+*.class
+.bat
+/*.jar
+/*.war
+lib/*.jar
+
+.metadata/
+Servers/
+
+/build/
+img/*

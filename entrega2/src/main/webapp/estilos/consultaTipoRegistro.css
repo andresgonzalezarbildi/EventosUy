@@ -1,0 +1,17 @@
+.content-row{
+  justify-content: space-around;
+}
+
+.content-consulta{
+  background-color: white;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  min-height: 200px; /* placeholder */
+  padding: 1rem;
+  max-width: 600px;
+  font-size: medium;
+}
+
+.form-titulo{
+  color: var(--color-primary)
+}
