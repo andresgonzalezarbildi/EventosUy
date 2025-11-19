@@ -2,8 +2,11 @@
 
 A full event-management platform built as a distributed system with desktop, web, and mobile interfaces. It supports user management, events, editions, registrations, sponsorships, authentication, media handling, search, and more.
 
-**Repository:**  
-https://github.com/andresgonzalezarbildi/EventosUy
+<h1 align="center"><a href=""> EventosUy </a></h1>
+<p align="center">
+  <img src="https://raw.githubusercontent.com/andresgonzalezarbildi/EventosUy/refs/heads/main/EventosUy.png" alt="Web's and app's screenshots" />
+</p>
+
 
 ---
 
